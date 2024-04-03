@@ -1,0 +1,156 @@
+/*Características generales */
+*{
+-fx-font-family: Verdana;
+}
+.icon {
+    -fx-glyph-name: "FILTER_LIST";
+}
+
+
+.layoutFondoTotal {
+    /*-fx-background-color: rgba(158, 34, 144, 0.3);*/
+    -fx-background-color: rgba(200, 200, 200, 0.5);
+}
+    #buttonIntro {
+      /*  -fx-background-color: rgba(173, 127, 168, 0.7);*/
+        -fx-background-color: rgba(158, 34, 144, 0.7);
+        -fx-border-radius: 5; /* Radio de esquinas para redondear el botón */
+        -fx-background-radius: 5; /* Radio de esquinas para redondear el fondo del botón */
+        -fx-padding: 10 20; /* Ajuste de espaciado interno para mejorar la apariencia */
+        -fx-text-fill: white; /* Color del texto en el botón */
+        -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.3) , 5, 0.0 , 0 , 1 );   /*Efecto de borde */
+    }
+
+
+#idBackgroundFrangment{
+    -fx-background-color: rgb(21, 17, 17);
+}
+#fragmentCharget{
+    -fx-background-color: rgba(28, 26, 26, 0.5);
+}
+
+
+.containerLogin{
+    -fx-spacing: 10;
+    -fx-alignment: center; /* Asegúrate de que la alineación vertical esté centrada */
+    /* Alineación vertical centrada */
+}
+
+/*BIENVENIDA*/
+.textSaludoBienvenida{
+    --block-font-family: verdana bold;
+    -fx-font-size: 30;
+    -fx-font-style: italic;
+    fx-font-weight: bold;
+    -fx-font-smoothing-type:gray ;
+    -fx-text-fill: #582c6b;
+}
+
+.buttonIntroInicio{
+    -fx-background-color: rgba(158, 34, 144, 0.7);
+    -fx-border-radius: 5; /* Radio de esquinas para redondear el botón */
+    -fx-background-radius: 5; /* Radio de esquinas para redondear el fondo del botón */
+    -fx-padding: 10 20; /* Ajuste de espaciado interno para mejorar la apariencia */
+    -fx-text-fill: white; /* Color del texto en el botón */
+    -fx-font-size: 1.2em; /* Tamaño del fuente */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 5, 0.0, 0, 1); /* Efecto de borde */
+
+}
+
+/*FRAGMENT PACIENTE/DOCTOR*/
+.layoutFondoFragment {
+    /*-fx-background-color: rgba(158, 34, 144, 0.3);*/
+    -fx-background-color: rgba(66, 49, 49, 0.5);
+}
+
+#textoDoctor{
+    -fx-font-family: Verdana;
+    -fx-font-size: 18;
+    -fx-padding: 10 0 0 0; /* top, right, bottom, left */
+    -fx-translate-y: -20;
+}
+/*la view del login */
+#containerTextLogin{
+    -fx-spacing: 10;
+    -fx-alignment: center;
+    -fx-padding: 0 20 20 20; /* top, right, bottom, left */
+
+}
+/**/
+#linearOne {
+    -fx-spacing: 10;
+    -fx-alignment: baseline-center; /* Alineación vertical centrada */
+}
+.textSaludo{
+    -fx-spacing: 10;
+     -fx-alignment: baseline-center; /* Alineación vertical centrada */
+}
+#imgLogin{
+    -fx-spacing: 10;
+       -fx-alignment: baseline-center; /* Alineación vertical centrada */
+}
+#imagRecord{
+
+    -fx-alignment: center;
+}
+#banerPerfil{}
+
+    /* interfaz usuario*/
+
+.buttonContainer {
+    -fx-spacing: 10; /* Espaciado entre los botones */
+    -fx-padding: 10;
+}
+
+.buttonInterfaz{
+    -fx-background-color: rgba(158, 34, 144, 0.7);
+    -fx-border-radius: 5; /* Radio de esquinas para redondear el botón */
+    -fx-background-radius: 5; /* Radio de esquinas para redondear el fondo del botón */
+    -fx-padding: 10 20; /* Ajuste de espaciado interno para mejorar la apariencia */
+    -fx-text-fill: white; /* Color del texto en el botón */
+    -fx-font-size: 2em; /* Tamaño del fuente */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 5, 0.0, 0, 1); /* Efecto de borde */
+    -fx-min-width: 50px; /* Ancho mínimo del botón */
+    -fx-max-width: 50px; /* Ancho máximo del botón */
+    -fx-min-height: 50px; /* Altura mínima del botón */
+    -fx-max-height: 50px; /* Altura máxima del botón */
+}
+.buttonInterfaz.iconIntro {
+    -fx-font-size:1.5em; /* Tamaño del fuente del icono */
+    -fx-padding: 0 5; /* Ajuste de espaciado interno del icono */
+}
+
+/*Interfaz de usuario medico, perfil */
+.buttonWithIcon .icon {
+    -fx-font-size:1.5em; /* Tamaño del fuente del icono */
+    -fx-padding: 0 5; /* Ajuste de espaciado interno del icono */
+}
+
+
+.buttonWithIcon .iconIntro {
+    -fx-font-size: 20px; /* Tamaño del fuente del icono */
+    -fx-padding: 0 5; /* Ajuste de espaciado interno del icono */
+}
+/*registro usuario */
+.imagRecord{
+    -fx-alignment: center;
+
+}
+
+/*fondo backgraund chat*/
+.fondoChat {
+
+    -fx-background-color: rgba(158, 34, 144, 0.7);
+    -fx-background-size: cover;
+}
+
+/*Search*/
+
+.fondosearch {
+
+    -fx-background-color: rgba(245, 240, 244, 0.7);
+    -fx-background-size: cover;
+}
+.fragmentSearch{
+    -fx-border-color: black;
+}
