@@ -286,8 +286,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     @Override
     public void openCalendarView() {
         try {
-            mainStage.setTitle("Te esperamos pronto!!");
-            loadView("/org/example/proyectotfg/jfx-calendar-view.fxml");
+            mainStage.setTitle("Tu calendario de citas!!");
+            loadView("/org/example/proyectotfg/appointmentNotifiers/jfx-calendar-view.fxml");
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
