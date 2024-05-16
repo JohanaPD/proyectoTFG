@@ -14,5 +14,6 @@ public class MainApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+        System.out.println("Print johana");
     }
 }
