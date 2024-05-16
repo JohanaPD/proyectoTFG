@@ -59,6 +59,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
 
     /*   ================================================================================================
         ======================================vistas principales =====================================================*/
+
     public void loadFirstView() {
         try {
             // FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("entradaView.fxml"));
@@ -268,7 +269,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-servicios.fxml"));
                     Node fragment = fxmlLoader.load();
                     ControllerFragmentServicios controller = fxmlLoader.getController();
-                    controller.setData(String.valueOf(us.getNames()), String.valueOf(us.getSpeciality()));
+                    controller.setData(String.valueOf(us.getNames()), String.valueOf(us.getSpecialty()));
                     contenedorHBox2.getChildren().add(fragment);
                 }
 
@@ -310,10 +311,16 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     }
 
     @Override
-    public void abrirBusqueda(String busqueda) {
+    public void openSearch(String busqueda) {
         try {
-            loadView("");
-        } catch (ThereIsNoView e) {
+            List<ProfessionalUser> professionalUsers = connect.searchProfessionalsUsers(busqueda);
+            if (!professionalUsers.isEmpty()) {
+                loadView("/org/example/proyectotfg/search-view.fxml");
+                ControllerSearch controllerSearch = (ControllerSearch) controllerActual;
+                controllerSearch.loadSearchs(professionalUsers);
+            }
+
+        } catch (ThereIsNoView | NonexistingUser | DataAccessException | OperationsDBException e) {
             showError("Error", e.getMessage());
         }
     }

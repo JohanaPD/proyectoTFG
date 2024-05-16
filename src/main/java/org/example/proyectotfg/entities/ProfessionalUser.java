@@ -17,22 +17,22 @@ import java.util.List;
 
 public class ProfessionalUser extends Person {
     private String collegiate;
-    private String speciality;
+    private String specialty;
     private String description;
     private List<NormalUser> patients = new ArrayList<>();
 
 
 
-    public ProfessionalUser(int idPerson, String names, String lastNames, String passScript, Date birthDate, Date registrationDate, String email, TypeUser typeUser, StatesUser stateUser,Direction direction, Date lastActivityDate, String collegiate, String speciality, String description) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public ProfessionalUser(int idPerson, String names, String lastNames, String passScript, Date birthDate, Date registrationDate, String email, TypeUser typeUser, StatesUser stateUser, Direction direction, Date lastActivityDate, String collegiate, String specialty, String description) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         super(idPerson,names,lastNames,passScript,birthDate,registrationDate,email,typeUser,stateUser,direction,lastActivityDate);
         setCollegiate(collegiate);
-        setSpeciality(speciality);
+        setSpecialty(specialty);
         setDescription(description);
     }
-    public ProfessionalUser(String names, String lastNames, String passScript, Date birthDate, Date registrationDate, String email, TypeUser typeUser, Direction direction, String collegiate, String speciality, String description) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public ProfessionalUser(String names, String lastNames, String passScript, Date birthDate, Date registrationDate, String email, TypeUser typeUser, Direction direction, String collegiate, String specialty, String description) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         super(names, lastNames, passScript, birthDate, registrationDate, email, typeUser,  direction);
         setCollegiate(collegiate);
-        setSpeciality(speciality);
+        setSpecialty(specialty);
         setDescription(description);
     }
 
@@ -64,15 +64,15 @@ public class ProfessionalUser extends Person {
     }
 
 
-    public String getSpeciality() {
-        return speciality;
+    public String getSpecialty() {
+        return specialty;
     }
 
 
-    public void setSpeciality(String speciality) throws NullArgumentException, IncorrectDataException {
-        if (speciality != null) {
-            if (VerificatorSetter.stringVerificator(speciality, speciality.length())) {
-                this.speciality = speciality;
+    public void setSpecialty(String specialty) throws NullArgumentException, IncorrectDataException {
+        if (specialty != null) {
+            if (VerificatorSetter.stringVerificator(specialty, specialty.length())) {
+                this.specialty = specialty;
             } else {
                 throw new IncorrectDataException("Verifica los datos introducidos, solo se aceptan letras");
             }
@@ -118,7 +118,7 @@ public class ProfessionalUser extends Person {
     public String toString() {
         return "ProfessionalUser{" +
                 "collegiate='" + collegiate + '\'' +
-                ", speciality='" + speciality + '\'' +
+                ", speciality='" + specialty + '\'' +
                 ", description='" + description + '\'' +
                 ", patients=" + patients +
                 '}';

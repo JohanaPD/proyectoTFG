@@ -70,7 +70,7 @@
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin></TextArea>
-                                        <Button fx:id="buttonBusqueda" maxHeight="54.0" maxWidth="-Infinity" minHeight="35.0" minWidth="20.0" mnemonicParsing="false" onAction="#abrirBusqueda" prefHeight="35.0" prefWidth="20.0" styleClass="buttonInterfaz" stylesheets="@styles.css">
+                                        <Button fx:id="buttonBusqueda" maxHeight="54.0" maxWidth="-Infinity" minHeight="35.0" minWidth="20.0" mnemonicParsing="false" onAction="#openSearch" prefHeight="35.0" prefWidth="20.0" styleClass="buttonInterfaz" stylesheets="@styles.css">
                                             <graphic>
                                                 <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>

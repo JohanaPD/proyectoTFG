@@ -1,17 +1,33 @@
 package org.example.proyectotfg.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import org.example.proyectotfg.entities.ProfessionalUser;
+import org.example.proyectotfg.exceptions.ThereIsNoView;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorFirstScreen;
 import org.example.proyectotfg.mediators.ViewController;
 
 import javax.swing.text.View;
+import java.io.IOException;
+import java.util.List;
 
-public class ControllerSearch  implements ViewController {
+public class ControllerSearch implements ViewController {
     MediatorFirstScreen mediator;
+    @FXML
+    private VBox mainContainer;
+
+    public void initialize() {
+
+    }
+
     @Override
     public void setMediator(Mediator mediador) {
-        mediator=(MediatorFirstScreen)mediador;
+        mediator = (MediatorFirstScreen) mediador;
     }
 
     @Override
@@ -23,6 +39,22 @@ public class ControllerSearch  implements ViewController {
     public void setMainController(MainController mainController) {
 
     }
+
+   /* public void loadSearchs(List<ProfessionalUser> professionalUsers) throws ThereIsNoView {
+        try {
+            for (ProfessionalUser us : professionalUsers) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fragment-info-serch.fxml"));
+                Node fragment = fxmlLoader.load();
+                FragmentInfoSerchController controller = fxmlLoader.getController();
+                controller.setData(String.valueOf(us.getFullName()), String.valueOf(us.getEspecialidad()), String.valueOf(us.getFicheros()), 5);
+                mainContainer.getChildren().add(fragment);
+            }
+            resultSearch.setContent(contenedorVBox);
+
+        } catch (IOException e) {
+            throw new ThereIsNoView("Error a la hora de cargar el fragmento: " + e.getMessage());
+        }
+    }*/
 
     public void volverIncio(ActionEvent actionEvent) {
     }
@@ -91,7 +123,7 @@ public class ControllerSearch implements Serializable, ViewController, Initializ
     }
 
 
-    public List<UsuarioEspecifico> cargarUsuarioPsicologo(String titulo) throws NonexistingUser, DataAccessException {
+        public List<UsuarioEspecifico> cargarUsuarioProfesional(String titulo) throws NonexistingUser, DataAccessException {
         List<UsuarioEspecifico> psicologosEspecialistas = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:identifier.sqlite")) {
             String sql = "SELECT u.nombre, h.especialidad, h.presentacion, h.urlImagen FROM HISTORIALES h, USUARIOS u WHERE u.nombre LIKE ? OR h.especialidad LIKE ?;";

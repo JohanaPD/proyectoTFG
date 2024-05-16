@@ -5,19 +5,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import org.example.proyectotfg.entities.ProfessionalUser;
-import org.example.proyectotfg.exceptions.NonexistingUser;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorFirstScreen;
 import org.example.proyectotfg.mediators.ViewController;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,9 +89,10 @@ public class InterfazIncialController  implements ViewController, Initializable 
 
     }
 
-    public void abrirBusqueda(ActionEvent actionEvent) {
+    public void openSearch(ActionEvent actionEvent) {
+        String textoBusqueda = serchBuscar.getText();
+        mediator.openSearch(textoBusqueda);
     }
-
     public void VolverAtras(ActionEvent actionEvent) {
     }
 

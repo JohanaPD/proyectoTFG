@@ -137,6 +137,38 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     public ProfessionalUser buscarPsicologo(String nombre) {
         return null;
     }
+    @Override
+    public List<ProfessionalUser> searchProfessionalsUsers(String nameUser) throws NonexistingUser, DataAccessException, OperationsDBException {
+        List<ProfessionalUser> professionalUsers = new ArrayList<>();
+
+        String sql = "SELECT u.user_names, p.specialty, p.description FROM professional_user p, person u WHERE (u.user_name LIKE ? OR p.specialty LIKE ?) and p.id_person=u.id_person;";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, "%" + nameUser + "%");
+            statement.setString(2, "%" + nameUser + "%");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                boolean found = false;
+                while (resultSet.next()) {
+                    found = true;
+                    ProfessionalUser nuevo = new ProfessionalUser();
+                    nuevo.setNames(resultSet.getString("user_names"));
+                    nuevo.setSpecialty(resultSet.getString("specialty"));
+                    nuevo.setDescription(resultSet.getString("description"));
+                    professionalUsers.add(nuevo);
+                }
+                if (!found) {
+                    throw new NonexistingUser("No se encontraron usuarios con el criterio: " + nameUser);
+                }
+            } catch (IncorrectDataException | NoSuchAlgorithmException | InvalidKeySpecException |
+                     NullArgumentException e) {
+                throw new OperationsDBException("Error al obtener los datos del usuario");
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("Error al acceder a la base de datos: " + e.getMessage());
+        }
+
+        return professionalUsers;
+    }
+
 
     @Override
     public int searchIdDirection(Direction direction) throws OperationsDBException {
@@ -418,7 +450,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             try (PreparedStatement preparedStatement = connection.prepareStatement(textoConsulta)) {
                 preparedStatement.setInt(1, professionalUser.getIdPerson());
                 preparedStatement.setString(2, professionalUser.getCollegiate());
-                preparedStatement.setString(3, professionalUser.getSpeciality());
+                preparedStatement.setString(3, professionalUser.getSpecialty());
                 preparedStatement.setString(4, professionalUser.getDescription());
                 preparedStatement.executeUpdate();
 
@@ -488,7 +520,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                 String description = resultSet.getString("description");
 
                 person.setCollegiate(collegiate);
-                person.setSpeciality(specialty);
+                person.setSpecialty(specialty);
                 person.setDescription(description);
             }
         } catch (SQLException | NullArgumentException | IncorrectDataException e) {
