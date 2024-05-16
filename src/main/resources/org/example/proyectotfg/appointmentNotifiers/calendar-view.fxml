@@ -4,20 +4,20 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.geometry.Insets?>
-<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.Tooltip?>
 
 <StackPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.appointmentNotifiers.CalendarViewController">
-    <Button fx:id="addEventButton" prefWidth="55" prefHeight="55" styleClass="add-event-button" tooltip="Add Event">
+    <Button fx:id="addEventButton" prefWidth="55" prefHeight="55" styleClass="add-event-button" StackPane.alignment="BOTTOM_RIGHT">
         <graphic>
             <ImageView>
-                <Image url="@/org/example/proyectotfg/img/psicologo.png" />  <!-- Ensure the image path is correct -->
+                <Image url="@/org/example/proyectotfg/img/psicologo.png" />  <!-- Asegúrate de que la ruta de la imagen es correcta -->
             </ImageView>
         </graphic>
+        <tooltip>
+            <Tooltip text="Add Event" />
+        </tooltip>
         <StackPane.margin>
             <Insets bottom="30" right="40" />
         </StackPane.margin>
-        <StackPane.alignment>
-            <Pos value="BOTTOM_RIGHT" />
-        </StackPane.alignment>
     </Button>
 </StackPane>

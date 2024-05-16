@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.appointmentNotifiers.JFXCalendarController">
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="15" padding="10">
+        <HBox>
             <Button fx:id="menuButton" >
             </Button>
             <Label text="Calendar" fx:id="calendarLabel" />
@@ -27,7 +27,7 @@
         </HBox>
     </top>
     <left>
-        <VBox fx:id="leftPane" spacing="5" padding="10" minWidth="200">
+        <VBox fx:id="leftPane" spacing="5"  minWidth="200">
             <Label text="Events" style="-fx-font-size: 16;"/>
             <CheckBox text="Optional" fx:id="optionalCheckBox"/>
             <CheckBox text="Normal" fx:id="standardCheckBox"/>
@@ -35,13 +35,13 @@
             <CheckBox text="Urgent" fx:id="criticalCheckBox"/>
             <CheckBox text="Completed" fx:id="completedCheckBox"/>
             <Separator/>
-            <Label text=" Semanal" graphicTextGap="10">
+            <Label text=" Semanal" >
 
             </Label>
-            <Label text=" Mensual" graphicTextGap="10">
+            <Label text=" Mensual" >
 
             </Label>
-            <Label text=" Anual" graphicTextGap="10">
+            <Label text=" Anual" >
 
             </Label>
         </VBox>

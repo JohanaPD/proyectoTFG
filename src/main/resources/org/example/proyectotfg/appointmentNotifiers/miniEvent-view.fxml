@@ -2,20 +2,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Pos?>
-
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.appointmentNotifiers.MiniEventPaneController"
-      styleClass="event-pane" minHeight="70" prefHeight="70" maxHeight="70" padding="5,5,5,5">
+      styleClass="event-pane" minHeight="70" prefHeight="70" maxHeight="70">
     <children>
         <VBox fx:id="priorityBox" alignment="CENTER" styleClass="priority-box"
               minHeight="10" prefHeight="10" minWidth="10" prefWidth="10">
         </VBox>
-        <Label fx:id="titleLabel" wrapText="true" styleClass="event-title" padding="0,0,0,10"/>
+        <Label fx:id="titleLabel" wrapText="true" styleClass="event-title" />
         <HBox fx:id="iconBox" alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS">
-            <ImageView fx:id="org/example/proyectotfg/img/icon_confianza.png" />
+            <ImageView fx:id="iconImageView">
+                <image>
+                    <Image url="@/org/example/proyectotfg/img/icon_confianza.png"/>
+                </image>
+            </ImageView>
         </HBox>
     </children>
 </VBox>

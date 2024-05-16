@@ -17,7 +17,6 @@ import org.example.proyectotfg.MainApplication;
 import org.example.proyectotfg.entities.NormalUser;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
-import org.example.proyectotfg.enumAndTypes.MailStructure;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
 import org.example.proyectotfg.exceptions.*;
 import org.example.proyectotfg.functions.FunctionsApp;
@@ -26,7 +25,6 @@ import org.example.proyectotfg.mediators.*;
 
 //import javax.mail.MessagingException;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -289,7 +287,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void openCalendarView() {
         try {
             mainStage.setTitle("Te esperamos pronto!!");
-            loadView("/org/example/proyectotfg/appointmentNotifiers/jfx-calendar-view.fxml");
+            loadView("/org/example/proyectotfg/jfx-calendar-view.fxml");
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }

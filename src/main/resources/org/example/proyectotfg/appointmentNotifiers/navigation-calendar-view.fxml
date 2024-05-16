@@ -32,7 +32,7 @@
             </tooltip>
         </Button>
     </HBox>
-    <TilePane fx:id="navigationCalendarGrid" tileAlignment="CENTER" prefColumns="7" padding="10,0,0,0">
+    <TilePane fx:id="navigationCalendarGrid" tileAlignment="CENTER" prefColumns="7" >
         <!-- Day headers and cells will be dynamically added by the controller -->
     </TilePane>
 </VBox>
