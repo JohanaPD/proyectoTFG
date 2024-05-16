@@ -9,6 +9,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.layout.Pane?>
 
+
 <BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.appointmentNotifiers.JFXCalendarController">
     <top>
         <HBox>

@@ -56,6 +56,7 @@ public class JFXCalendarController implements ViewController, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         selectedDate = LocalDate.now();
         todayButton.setOnAction(e -> selectToday());
         menuButton.setOnAction(e -> toggleLeftPaneVisibility());

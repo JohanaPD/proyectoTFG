@@ -12,4 +12,5 @@ module org.example.proyectotfg {
     exports org.example.proyectotfg.controllers;
     opens org.example.proyectotfg.controllers to javafx.fxml;
     opens org.example.proyectotfg.controllers.appointmentNotifiers to javafx.fxml;
+
 }
