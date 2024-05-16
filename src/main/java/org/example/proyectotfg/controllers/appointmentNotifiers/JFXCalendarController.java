@@ -16,8 +16,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class JFXCalendarController implements ViewController, Initializable {
-    @FXML
-    private Button menuButton;
+    @FXML private Button menuButton;
     @FXML private Button todayButton;
     @FXML private Label calendarLabel;
     @FXML private Label dateLabel;
@@ -31,14 +30,18 @@ public class JFXCalendarController implements ViewController, Initializable {
     private LocalDate selectedDate;
     private CalendarEventManager eventManager;
 
-    public void JFXCalendar(CalendarEventManager eventManager) {
+    public JFXCalendarController() {
+        // Constructor vacío
+    }
+
+    public void setEventManager(CalendarEventManager eventManager) {
         this.eventManager = eventManager;
         selectedDate = LocalDate.now();
     }
 
     @Override
-    public void setMediator(Mediator mediador) {
-
+    public void setMediator(Mediator mediator) {
+        // Implementación del método
     }
 
     @Override
@@ -48,10 +51,12 @@ public class JFXCalendarController implements ViewController, Initializable {
 
     @Override
     public void setMainController(MainController mainController) {
-
+        // Implementación del método
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        selectedDate = LocalDate.now();
         todayButton.setOnAction(e -> selectToday());
         menuButton.setOnAction(e -> toggleLeftPaneVisibility());
         updateDateDisplay();
@@ -72,11 +77,6 @@ public class JFXCalendarController implements ViewController, Initializable {
     }
 
     private void refreshCalendarViews() {
-        // Logic to refresh the views based on the current view mode
-    }
-
-    public void setEventManager(CalendarEventManager eventManager) {
-        this.eventManager = eventManager;
-        // Additional setup when setting a new event manager
+        // Lógica para actualizar las vistas del calendario
     }
 }
