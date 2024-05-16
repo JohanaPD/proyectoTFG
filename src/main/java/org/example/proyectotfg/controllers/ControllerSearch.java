@@ -40,21 +40,20 @@ public class ControllerSearch implements ViewController {
 
     }
 
-   /* public void loadSearchs(List<ProfessionalUser> professionalUsers) throws ThereIsNoView {
+    public void loadSearchs(List<ProfessionalUser> professionalUsers) throws ThereIsNoView {
         try {
             for (ProfessionalUser us : professionalUsers) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fragment-info-serch.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-infoSearch_view.fxml"));
                 Node fragment = fxmlLoader.load();
                 FragmentInfoSerchController controller = fxmlLoader.getController();
-                controller.setData(String.valueOf(us.getFullName()), String.valueOf(us.getEspecialidad()), String.valueOf(us.getFicheros()), 5);
+                controller.setData(String.valueOf(us.getNames()), String.valueOf(us.getSpecialty()),"/org/example/proyectotfg/imgUsuario/doctor3.png", 5);
                 mainContainer.getChildren().add(fragment);
             }
-            resultSearch.setContent(contenedorVBox);
 
         } catch (IOException e) {
             throw new ThereIsNoView("Error a la hora de cargar el fragmento: " + e.getMessage());
         }
-    }*/
+    }
 
     public void volverIncio(ActionEvent actionEvent) {
     }

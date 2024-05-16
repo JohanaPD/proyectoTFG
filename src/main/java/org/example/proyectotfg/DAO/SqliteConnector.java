@@ -137,11 +137,12 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     public ProfessionalUser buscarPsicologo(String nombre) {
         return null;
     }
+
     @Override
     public List<ProfessionalUser> searchProfessionalsUsers(String nameUser) throws NonexistingUser, DataAccessException, OperationsDBException {
         List<ProfessionalUser> professionalUsers = new ArrayList<>();
 
-        String sql = "SELECT u.user_names, p.specialty, p.description FROM professional_user p, person u WHERE (u.user_name LIKE ? OR p.specialty LIKE ?) and p.id_person=u.id_person;";
+        String sql = "SELECT u.user_names, p.specialty, p.description FROM professional_user p, person u WHERE (u.user_names LIKE ? OR p.specialty LIKE ?) and p.id_person=u.id_person;";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, "%" + nameUser + "%");
             statement.setString(2, "%" + nameUser + "%");
