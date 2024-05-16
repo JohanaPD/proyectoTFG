@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane fx:id="scrollPane"
+            fx:controller="org.example.proyectotfg.controllers.appointmentNotifiers.CalendarWeekController"
+            prefWidth="650" prefHeight="500"
+            fitToWidth="true" fitToHeight="true"
+            hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            style="-fx-background-color: WHITE;"
+            xmlns:fx="http://javafx.com/fxml">
+
+    <HBox fx:id="daysPane"  spacing="10">
+        <!-- Los contenedores VBox para cada día se añadirán dinámicamente desde el controlador -->
+    </HBox>
+</ScrollPane>

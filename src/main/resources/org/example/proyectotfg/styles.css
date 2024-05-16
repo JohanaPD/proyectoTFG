@@ -21,6 +21,15 @@
         -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.3) , 5, 0.0 , 0 , 1 );   /*Efecto de borde */
     }
 
+.buttonIntroRegistro {
+    /*  -fx-background-color: rgba(173, 127, 168, 0.7);*/
+    -fx-background-color: rgba(158, 34, 144, 0.7);
+    -fx-border-radius: 5; /* Radio de esquinas para redondear el botón */
+    -fx-background-radius: 5; /* Radio de esquinas para redondear el fondo del botón */
+    -fx-padding: 10 10; /* Ajuste de espaciado interno para mejorar la apariencia */
+    -fx-text-fill: white; /* Color del texto en el botón */
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.3) , 5, 0.0 , 0 , 1 );   /*Efecto de borde */
+}
 
 #idBackgroundFrangment{
     -fx-background-color: rgb(21, 17, 17);
@@ -154,3 +163,32 @@
 .fragmentSearch{
     -fx-border-color: black;
 }
+/*Interfaz donde se incluyen todos los fragment*/
+.text-area-rounded {
+    -fx-background-radius: 10;
+    -fx-border-radius: 40;
+    -fx-text-alignment:  baseline-center;
+
+}
+/*Botones calendar*/
+
+.botonCalendar {
+    -fx-background-color: rgba(200, 200, 200, 0.5); /* Color de fondo suave */
+    -fx-text-fill: #9E228F; /* Color del texto */
+    -fx-font-size: 14px; /* Tamaño de fuente */
+    -fx-padding: 10px 10px; /* Relleno */
+    -fx-border-color: #9E228F; /* Color del borde */
+    -fx-border-width: 2px; /* Ancho del borde */
+    -fx-border-radius: 10px; /* Borde redondeado */
+    -fx-background-radius: 20px; /* Borde redondeado */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0); /* Sombra */
+    -fx-cursor: hand; /* Cursor al pasar el ratón */
+    -fx-alignment: center;
+}
+
+.botonCalendar:hover {
+    -fx-background-color: rgba(158, 34, 144, 0.7); /* Cambio de color de fondo al pasar el ratón */
+    -fx-border-color: rgb(255, 255, 255); /* Cambio de color del borde al pasar el ratón */
+    -fx-border-color: rgb(255, 255, 255);
+}
+

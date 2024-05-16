@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.appointmentNotifiers.CalendarMonthController">
+    <center>
+        <ScrollPane fx:id="mainPane" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" style="-fx-background-color: WHITE; -fx-border-width: 1 1 0 0; -fx-border-color: #E0E0E0;">
+            <TilePane fx:id="calendarPage" prefColumns="7" style="-fx-background-color: WHITE;">
+                <!-- Los días del calendario se añadirán dinámicamente desde el controlador -->
+            </TilePane>
+        </ScrollPane>
+    </center>
+</BorderPane>

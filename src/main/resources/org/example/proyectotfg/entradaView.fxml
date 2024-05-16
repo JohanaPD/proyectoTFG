@@ -1,16 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.proyectotfg.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<AnchorPane prefHeight="455.0" prefWidth="360" styleClass="layoutFondoTotal" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.EntryController">
+<children>
+    <VBox maxHeight="-Infinity" maxWidth="360" prefHeight="522.0" prefWidth="402.0" stylesheets="@styles.css">
+        <children>
+            <BorderPane prefHeight="130.0" prefWidth="360.0">
+                <center>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textSaludoBienvenida" text="El  primer paso&#10; hacia  una salud &#10;completa" textAlignment="CENTER" BorderPane.alignment="CENTER">
+                        <BorderPane.margin>
+                            <Insets bottom="20.0" top="40.0" />
+                        </BorderPane.margin></Text>
+                </center>
+            </BorderPane>
+            <BorderPane prefHeight="157.0" prefWidth="360.0">
+                <VBox.margin>
+                    <Insets />
+                </VBox.margin>
+                <center>
+                    <ImageView fitHeight="97.0" fitWidth="395.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                        <image>
+                            <Image url="@img/logo.png" />
+                        </image>
+                        <BorderPane.margin>
+                            <Insets bottom="20.0" top="20.0" />
+                        </BorderPane.margin>
+                    </ImageView>
+                </center>
+            </BorderPane>
+            <BorderPane prefHeight="178.0" prefWidth="360.0">
+                <center>
+                    <Button id="buttonIntroInicio" fx:id="buttonEntrar" maxWidth="315.0" mnemonicParsing="false" onAction="#introFirstView" prefHeight="48.0" prefWidth="302.0" styleClass="buttonIntroInicio" stylesheets="@styles.css" text="Empieza Ahora!!" BorderPane.alignment="CENTER">
+                        <BorderPane.margin>
+                            <Insets />
+                        </BorderPane.margin></Button>
+                </center>
+            </BorderPane>
+        </children>
+        <padding>
+            <Insets top="20.0" />
+        </padding>
+    </VBox>
+</children>
+<padding>
+    <Insets top="40.0" />
+</padding>
+</AnchorPane>
