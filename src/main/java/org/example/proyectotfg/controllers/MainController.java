@@ -79,15 +79,15 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             showError("Error", "Error al cargar la aplicación");
         }
     }
-
     /*   ================================================================================================
        ====================================CARGAR TODOS LOS SCENE ==============================*/
     private void loadInterfazInicial() {
         try {
-            loadView("/org/example/proyectotfg/initial-interface.fxml");
+            loadView("/org/example/proyectotfg/interfaz-inicial-view.fxml");
             InitialInterfaceController initialInterfaceController = (InitialInterfaceController) controllerActual;
             initialInterfaceController.loadServices();
             initialInterfaceController.setTextWelcome(person.getNames());
+            initialInterfaceController.setUser(person);
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
@@ -146,8 +146,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
-
-
     }
 
     @Override
@@ -202,11 +200,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         }
     }
 
-    void updateLastActivity(Person person) {
-        //este metodo debe llamar a la DAO y registrar en la tabla del usuario que se ha conectado, la ultima actividad
-
-    }
-
    /*   ================================================================================================
         ======================================vistas principales =====================================================*/
 
@@ -239,12 +232,9 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-servicios.fxml"));
                 Parent fragment = fxmlLoader.load();
                 ControllerFragmentServicios controller = fxmlLoader.getController();
-                //ojo con el mediator
-                //controller.setMediador(this);
                 controller.setData(String.valueOf(map.getKey()), String.valueOf(map.getValue()));
                 contenedorHBox.getChildren().add(fragment);
             }
-            // Añade el HBox al contenedor
             AnchorPane.setTopAnchor(contenedorHBox, 0.0);
             AnchorPane.setRightAnchor(contenedorHBox, 0.0);
             AnchorPane.setBottomAnchor(contenedorHBox, 0.0);
@@ -269,22 +259,17 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-servicios.fxml"));
                     Node fragment = fxmlLoader.load();
                     ControllerFragmentServicios controller = fxmlLoader.getController();
-                    //cargar imagen
+
                     String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", imageIndex);
                     imageIndex = (imageIndex % totalImages) + 1;
-
                     controller.setData(String.valueOf(us.getNames()), String.valueOf(imagePath));
                     contenedorHBox2.getChildren().add(fragment);
                 }
-
-
                 AnchorPane.setTopAnchor(contenedorHBox2, 0.0);
                 AnchorPane.setRightAnchor(contenedorHBox2, 0.0);
                 AnchorPane.setBottomAnchor(contenedorHBox2, 0.0);
                 AnchorPane.setLeftAnchor(contenedorHBox2, 0.0);
-
                 return contenedorHBox2;
-
             } catch (IOException ioe) {
                 throw new RuntimeException("Error cargando el fragmento de servicio", ioe);
             }
@@ -299,6 +284,16 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         try {
             mainStage.setTitle("Te esperamos pronto!!");
             loadView("/org/example/proyectotfg/appointmentNotifiers/jfx-calendar-view.fxml");
+        } catch (ThereIsNoView e) {
+            showError("Error", e.getMessage());
+        }
+    }
+
+    @Override
+    public void updatePersonalData(Person user) {
+        try {
+            mainStage.setTitle("Modifica tus datos en solo un minuto!!");
+            loadView("/org/example/proyectotfg/update-user.fxml");
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
@@ -330,7 +325,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 controllerSearch.setStringSearch(busqueda);
                 controllerSearch.loadSearchs(professionalUsers);
             }
-
         } catch (ThereIsNoView | NonexistingUser | DataAccessException | OperationsDBException e) {
             showError("Error", e.getMessage());
         }

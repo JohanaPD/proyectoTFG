@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
 import org.example.proyectotfg.exceptions.NonexistingUser;
 
@@ -27,4 +28,6 @@ public interface MediatorFirstScreen {
     Parent initializeProfessionals(List<ProfessionalUser> professionalUsers) throws NonexistingUser;
 
     void openCalendarView();
+
+    void updatePersonalData(Person user);
 }

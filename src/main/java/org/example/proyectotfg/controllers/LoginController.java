@@ -25,27 +25,22 @@ import java.util.stream.Stream;
 
 public class LoginController implements ViewController {
     private MediatorProfile mediator;
-
     @FXML
     TextField reciveUser;
     @FXML
     PasswordField recivePasswor;
     @FXML
     private ComboBox<String> tipoUsuario;
-    //recuperar contraseña
     @FXML
     private Hyperlink recoverLink;
 
     public void initialize() {
         // Creamos un Stream de elementos para el ComboBox
         Stream<String> opcionesStream = Stream.of("PSICOLOGO", "COACH", "USUARIO_NORMAL", "ENTRENADOR_PERSONAL", "MINDFULNESS");
-
         // Convertimos el Stream a ObservableList directamente
         ObservableList<String> opcionesList = opcionesStream.collect(Collectors.toCollection(FXCollections::observableArrayList));
-
         // Asignamos las opciones al ComboBox
         tipoUsuario.setItems(opcionesList);
-
         // Si quieres seleccionar un ítem por defecto (opcional)
         tipoUsuario.getSelectionModel().selectFirst();
     }
@@ -63,13 +58,10 @@ public class LoginController implements ViewController {
     void userRegister(ActionEvent event) throws IOException, ThereIsNoView {
         mediator.userRegister();
     }
-
     @FXML
     void recovLink(ActionEvent event) throws IOException, ThereIsNoView {
         mediator.recoverPassword();
-
     }
-
     @Override
     public void setMediator(Mediator mediador) {
         this.mediator = (MediatorProfile) mediador;
@@ -82,8 +74,5 @@ public class LoginController implements ViewController {
 
     @Override
     public void setMainController(MainController mainController) {
-
     }
-
-
 }

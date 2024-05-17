@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import org.example.proyectotfg.DAO.SqliteConnector;
+import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
 import org.example.proyectotfg.exceptions.IncorrectDataException;
 import org.example.proyectotfg.exceptions.NonexistingUser;
@@ -31,71 +32,77 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class InitialInterfaceController implements ViewController, Initializable {
-
-
-    @FXML
-    private HBox banerPerfil;
     @FXML
     private Text textSaludo;
-
-    @FXML
-    private Button buttonBusqueda;
-
     @FXML
     private ScrollPane contenedorListaPersonas;
-
     @FXML
     private AnchorPane contenedorListaServicios;
-
     @FXML
     private TextArea serchBuscar;
 
-    MediatorFirstScreen mediator;
+    private MediatorFirstScreen mediator;
     HashMap<String, String> servicios = new HashMap<>();
     List<ProfessionalUser> usuariosEspecificos = new ArrayList<>();
-    @Override
-    public void setMediator(Mediator mediador) {
-        this.mediator=(MediatorFirstScreen) mediador;
+    private Person user;
+
+    public Person getUser() {
+        return user;
     }
 
+    public void setUser(Person user) {
+        this.user = user;
+    }
 
+    @Override
+    public void setMediator(Mediator mediador) {
+        this.mediator = (MediatorFirstScreen) mediador;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         servicios = getServicio();
         try {
-            usuariosEspecificos= SqliteConnector.getProfesionales();
-        } catch (SQLException|IncorrectDataException| NonexistingUser|OperationsDBException|
-                NoSuchAlgorithmException | InvalidKeySpecException | NullArgumentException e) {
-          //todo: meter cambios
+            usuariosEspecificos = SqliteConnector.getProfesionales();
+        } catch (SQLException | IncorrectDataException | NonexistingUser | OperationsDBException |
+                 NoSuchAlgorithmException | InvalidKeySpecException | NullArgumentException e) {
+            //todo: meter cambios
         }
-
     }
+
     public void setTextWelcome(String name) {
         textSaludo.setText("Hola, " + name);
     }
 
     public void loadServices() {
-        Parent listaServicios= mediator.initializeServicios(servicios);
+        Parent listaServicios = mediator.initializeServicios(servicios);
         contenedorListaServicios.getChildren().add(listaServicios);
         try {
             Parent professionalUserBox = mediator.initializeProfessionals(usuariosEspecificos);
             contenedorListaPersonas.setContent(professionalUserBox);
         } catch (NonexistingUser e) {
-
             //todo:  Manejar la excepción adecuadamente
         }
     }
-
-
     public HashMap<String, String> getServicio() {
         HashMap<String, String> servicios = new HashMap<>();
         servicios.put("Medico", "/org/example/proyectotfg/img/psicologo.png");
         servicios.put("Foros", "/org/example/proyectotfg/img/factores.png");
         servicios.put("Comunidad", "/org/example/proyectotfg/img/gestion.png");
         servicios.put("Consultas", "/org/example/proyectotfg/img/consulta.png");
-
         return servicios;
+    }
+    public void openSearch(ActionEvent actionEvent) {
+        String textoBusqueda = serchBuscar.getText();
+        mediator.openSearch(textoBusqueda);
+    }
+
+    public void adminSetting(ActionEvent actionEvent) {
+        mediator.updatePersonalData(user);
+    }
+
+    public void openCalendar(ActionEvent actionEvent) {
+        mediator.openCalendarView();
     }
 
     @Override
@@ -105,18 +112,5 @@ public class InitialInterfaceController implements ViewController, Initializable
 
     @Override
     public void setMainController(MainController mainController) {
-
     }
-
-    public void openSearch(ActionEvent actionEvent) {
-        String textoBusqueda = serchBuscar.getText();
-        mediator.openSearch(textoBusqueda);
-    }
-    public void VolverAtras(ActionEvent actionEvent) {
-    }
-
-    public void openCalendar(ActionEvent actionEvent) {
-    mediator.openCalendarView();
-    }
-
 }

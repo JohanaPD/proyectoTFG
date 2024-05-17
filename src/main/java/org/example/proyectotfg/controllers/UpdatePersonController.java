@@ -1,10 +1,13 @@
 package org.example.proyectotfg.controllers;
 
+import javafx.event.ActionEvent;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.ViewController;
 
-public class PruebaController implements ViewController {
+public class UpdatePersonController implements ViewController {
     private Mediator mediator;
+
+
 
     @Override
     public void setMediator(Mediator mediator) {
@@ -21,4 +24,10 @@ public class PruebaController implements ViewController {
 
     }
 
+    public void updateData(ActionEvent actionEvent) {
+    }
+
+    public void volverHome(ActionEvent actionEvent) {
+
+    }
 }

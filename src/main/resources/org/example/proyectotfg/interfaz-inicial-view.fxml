@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox id="layoutMajor" maxHeight="654.0" maxWidth="360.0" prefHeight="654.0" prefWidth="360.0" styleClass="layoutFondoTotal" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.InitialInterfaceController">
+<VBox id="layoutMajor" maxHeight="654.0" maxWidth="360.0" prefHeight="654.0" prefWidth="360.0" styleClass="layoutFondoTotal" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.InitialInterfaceController">
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
     </padding>
@@ -66,7 +60,7 @@
                             <children>
                                 <HBox prefHeight="100.0" prefWidth="200.0">
                                     <children>
-                                        <TextArea fx:id="serchBuscar" prefHeight="32.0" prefWidth="311.0" promptText="Serch" styleClass="text-area-rounded" stylesheets="@styles.css">
+                                        <TextArea fx:id="serchBuscar" prefHeight="40.0" prefWidth="311.0" promptText="Serch" styleClass="text-area-rounded" stylesheets="@styles.css">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin></TextArea>
@@ -91,27 +85,27 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <AnchorPane id="fragmentServicios" fx:id="contenedorListaServicios" maxHeight="1.7976931348623157E308" maxWidth="378.0" prefHeight="82.0" prefWidth="361.0">
+        <AnchorPane id="fragmentServicios" fx:id="contenedorListaServicios" maxHeight="1.7976931348623157E308" maxWidth="378.0" prefHeight="100.0" prefWidth="378.0">
             <VBox.margin>
-                <Insets bottom="10.0" top="20.0" />
+                <Insets bottom="20.0" top="10.0" />
             </VBox.margin></AnchorPane>
         <AnchorPane id="fragmentPsicolo" prefHeight="200.0" prefWidth="360.0">
             <children>
                 <ScrollPane fx:id="contenedorListaPersonas" prefHeight="200.0" prefWidth="382.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-               <padding>
-                  <Insets top="5.0" />
-               </padding>
+                    <padding>
+                        <Insets top="20.0" />
+                    </padding>
                 </ScrollPane>
             </children></AnchorPane>
         <AnchorPane prefHeight="91.0" prefWidth="360.0" stylesheets="@styles.css">
             <children>
                 <HBox id="containerButton" alignment="BASELINE_CENTER" layoutY="19.0" prefHeight="82.0" prefWidth="380.0" styleClass="buttonContainer" stylesheets="@styles.css">
                     <children>
-                        <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#VolverAtras" prefHeight="30.0" styleClass="buttonInterfaz" stylesheets="@styles.css">
+                        <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#adminSetting" prefHeight="30.0" styleClass="buttonInterfaz" stylesheets="@styles.css">
                             <graphic>
-                                <ImageView fitHeight="27.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="27.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@img/icons8-confianza-64.png" />
+                                        <Image url="@img/admin-settings.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
