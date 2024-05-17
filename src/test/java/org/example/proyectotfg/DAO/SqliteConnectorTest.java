@@ -97,7 +97,7 @@ class SqliteConnectorTest {
         direction.setPostalCode(12345);
         professionalUser.setDirection(direction);
         professionalUser.setCollegiate("123456");
-        professionalUser.setSpeciality("Psychiatry");
+        professionalUser.setSpecialty("Psychiatry");
         professionalUser.setDescription("Experienced psychiatrist");
 
         // Simulamos el registro de un usuario profesional
