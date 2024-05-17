@@ -326,7 +326,29 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         return professionalUser;
     }
 
-    private static Direction chargeDirection(int idDirection) throws OperationsDBException {
+    public static ProfessionalUser chargeProfesionalUserById(int id) throws OperationsDBException {
+        ProfessionalUser professionalUser = null;
+        String consulta = "SELECT * FROM professional_user WHERE id_person=?;";
+
+        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String collegiate = resultSet.getString("collegiate");
+                String specialty = resultSet.getString("specialty");
+                String description = resultSet.getString("description");
+                professionalUser = new ProfessionalUser(collegiate, specialty, description);
+            }
+
+        } catch (SQLException | NullArgumentException | IncorrectDataException | NoSuchAlgorithmException |
+                 InvalidKeySpecException e) {
+            throw new OperationsDBException("Error al encontrar la dirección");
+        }
+        return professionalUser;
+    }
+
+    public static Direction chargeDirection(int idDirection) throws OperationsDBException {
         Direction direction = null;
         String consulta = "SELECT * FROM direction WHERE id_direction=?;";
 

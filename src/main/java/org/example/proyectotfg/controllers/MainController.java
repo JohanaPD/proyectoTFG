@@ -293,6 +293,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void updatePersonalData(Person user) {
         try {
             mainStage.setTitle("Modifica tus datos en solo un minuto!!");
+            controllerActual.setMediator(this);
             loadView("/org/example/proyectotfg/update-user.fxml");
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());

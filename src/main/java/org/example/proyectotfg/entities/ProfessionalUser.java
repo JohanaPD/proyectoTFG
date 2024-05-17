@@ -35,6 +35,12 @@ public class ProfessionalUser extends Person {
         setSpecialty(specialty);
         setDescription(description);
     }
+    public ProfessionalUser(String collegiate, String specialty, String description) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+        super();
+        setCollegiate(collegiate);
+        setSpecialty(specialty);
+        setDescription(description);
+    }
 
     public ProfessionalUser() throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
         super();
