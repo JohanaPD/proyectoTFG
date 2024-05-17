@@ -121,7 +121,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
 
     @Override
     public void haciaAtras() {
-
     }
     /*=======================================================================================================
      * ==========================================HACER REGISTRO =============================================*/
@@ -257,34 +256,34 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     }
 
     @Override
-    public Node initializeProfessionals(List<ProfessionalUser> professionalUsers) throws NonexistingUser {
+    public Parent initializeProfessionals(List<ProfessionalUser> professionalUsers) throws NonexistingUser {
         HBox contenedorHBox2 = new HBox(6);
         if (professionalUsers != null) {
             contenedorHBox2.setAlignment(Pos.CENTER);
             contenedorHBox2.setMaxWidth(100);
             contenedorHBox2.setMaxHeight(130);
             try {
+                int imageIndex = 1; // Inicializa el índice de la imagen
+                int totalImages = 6; // Total de imágenes disponibles
                 for (ProfessionalUser us : professionalUsers) {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-servicios.fxml"));
                     Node fragment = fxmlLoader.load();
                     ControllerFragmentServicios controller = fxmlLoader.getController();
-                    controller.setData(String.valueOf(us.getNames()), String.valueOf(us.getSpecialty()));
+                    //cargar imagen
+                    String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", imageIndex);
+                    imageIndex = (imageIndex % totalImages) + 1;
+
+                    controller.setData(String.valueOf(us.getNames()), String.valueOf(imagePath));
                     contenedorHBox2.getChildren().add(fragment);
                 }
 
-                // Envolver el HBox en un ScrollPane
-                ScrollPane scrollPane = new ScrollPane(contenedorHBox2);
-                scrollPane.setFitToWidth(true); // Ajustar el ancho del contenido al ancho del ScrollPane
-                scrollPane.setFitToHeight(true); // Ajustar la altura del contenido al alto del ScrollPane
-                scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED); // Mostrar la barra de desplazamiento horizontal según sea necesario
-                scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED); // Mostrar la barra de desplazamiento vertical según sea necesario
 
-                AnchorPane.setTopAnchor(scrollPane, 0.0);
-                AnchorPane.setRightAnchor(scrollPane, 0.0);
-                AnchorPane.setBottomAnchor(scrollPane, 0.0);
-                AnchorPane.setLeftAnchor(scrollPane, 0.0);
+                AnchorPane.setTopAnchor(contenedorHBox2, 0.0);
+                AnchorPane.setRightAnchor(contenedorHBox2, 0.0);
+                AnchorPane.setBottomAnchor(contenedorHBox2, 0.0);
+                AnchorPane.setLeftAnchor(contenedorHBox2, 0.0);
 
-                return scrollPane;
+                return contenedorHBox2;
 
             } catch (IOException ioe) {
                 throw new RuntimeException("Error cargando el fragmento de servicio", ioe);
@@ -314,6 +313,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void regresar() {
         try {
             loadView("/org/example/proyectotfg/initial-interface.fxml");
+            loadInterfazInicial();
+            controllerActual.setMediator(this);
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }

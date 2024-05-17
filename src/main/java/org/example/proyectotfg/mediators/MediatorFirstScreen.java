@@ -24,7 +24,7 @@ public interface MediatorFirstScreen {
 
     Parent initializeServicios(HashMap<String, String> servicios);
 
-    Node initializeProfessionals(List<ProfessionalUser> professionalUsers) throws NonexistingUser;
+    Parent initializeProfessionals(List<ProfessionalUser> professionalUsers) throws NonexistingUser;
 
     void openCalendarView();
 }

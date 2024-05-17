@@ -79,7 +79,7 @@ public class InitialInterfaceController implements ViewController, Initializable
         Parent listaServicios= mediator.initializeServicios(servicios);
         contenedorListaServicios.getChildren().add(listaServicios);
         try {
-            Node professionalUserBox = mediator.initializeProfessionals(usuariosEspecificos);
+            Parent professionalUserBox = mediator.initializeProfessionals(usuariosEspecificos);
             contenedorListaPersonas.setContent(professionalUserBox);
         } catch (NonexistingUser e) {
 

@@ -91,16 +91,16 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <AnchorPane id="fragmentServicios" fx:id="contenedorListaServicios" maxHeight="1.7976931348623157E308" maxWidth="378.0" prefHeight="100.0" prefWidth="378.0">
+        <AnchorPane id="fragmentServicios" fx:id="contenedorListaServicios" maxHeight="1.7976931348623157E308" maxWidth="378.0" prefHeight="82.0" prefWidth="361.0">
             <VBox.margin>
-                <Insets bottom="20.0" top="10.0" />
+                <Insets bottom="10.0" top="20.0" />
             </VBox.margin></AnchorPane>
         <AnchorPane id="fragmentPsicolo" prefHeight="200.0" prefWidth="360.0">
             <children>
                 <ScrollPane fx:id="contenedorListaPersonas" prefHeight="200.0" prefWidth="382.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                    <padding>
-                        <Insets top="20.0" />
-                    </padding>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
                 </ScrollPane>
             </children></AnchorPane>
         <AnchorPane prefHeight="91.0" prefWidth="360.0" stylesheets="@styles.css">
