@@ -36,7 +36,7 @@ C  0x000002c4a2018556  (no source info available)
 The last pc belongs to breakpoint (printed below).
 Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
 j  org.example.proyectotfg.DAO.SqliteConnector.getProfesionales()Ljava/util/List;+245 org.example.proyectotfg
-j  org.example.proyectotfg.controllers.InterfazIncialController.initialize(Ljava/net/URL;Ljava/util/ResourceBundle;)V+9 org.example.proyectotfg
+j  org.example.proyectotfg.controllers.InitialInterfaceController.initialize(Ljava/net/URL;Ljava/util/ResourceBundle;)V+9 org.example.proyectotfg
 j  javafx.fxml.FXMLLoader.loadImpl(Ljava/io/InputStream;Ljava/lang/Class;)Ljava/lang/Object;+269 javafx.fxml@21
 j  javafx.fxml.FXMLLoader.loadImpl(Ljava/lang/Class;)Ljava/lang/Object;+31 javafx.fxml@21
 j  javafx.fxml.FXMLLoader.load()Ljava/lang/Object;+17 javafx.fxml@21

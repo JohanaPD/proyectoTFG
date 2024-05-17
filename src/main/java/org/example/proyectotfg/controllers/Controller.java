@@ -26,7 +26,7 @@ public class Controller {
             views.add("entradaView.fxml");
             views.add("registro-view.fxml");
             views.add("login-general.fxml");
-            views.add("interfaz-inicial-view.fxml");
+            views.add("initial-interface.fxml");
             views.add("fragment-psicologos.fxml");
             views.add("fragment-servicios.fxml");
 

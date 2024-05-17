@@ -18,8 +18,9 @@ import java.util.List;
 
 public class ControllerSearch implements ViewController {
     MediatorFirstScreen mediator;
+
     @FXML
-    private VBox mainContainer;
+    private VBox listaResultados;
 
     public void initialize() {
 
@@ -46,8 +47,8 @@ public class ControllerSearch implements ViewController {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-infoSearch_view.fxml"));
                 Node fragment = fxmlLoader.load();
                 FragmentInfoSerchController controller = fxmlLoader.getController();
-                controller.setData(String.valueOf(us.getNames()), String.valueOf(us.getSpecialty()),"/org/example/proyectotfg/imgUsuario/doctor3.png", 5);
-                mainContainer.getChildren().add(fragment);
+                controller.setData(String.valueOf(us.getNames()), String.valueOf(us.getSpecialty()), "/org/example/proyectotfg/imgUsuario/doctor3.png", 5);
+                listaResultados.getChildren().add(fragment);
             }
 
         } catch (IOException e) {
@@ -56,6 +57,7 @@ public class ControllerSearch implements ViewController {
     }
 
     public void volverIncio(ActionEvent actionEvent) {
+        mediator.regresar();
     }
 }
 

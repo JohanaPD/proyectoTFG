@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class InterfazIncialController  implements ViewController, Initializable {
+public class InitialInterfaceController implements ViewController, Initializable {
 
 
     @FXML

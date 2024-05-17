@@ -17,7 +17,6 @@ import org.example.proyectotfg.MainApplication;
 import org.example.proyectotfg.entities.NormalUser;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
-import org.example.proyectotfg.enumAndTypes.MailStructure;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
 import org.example.proyectotfg.exceptions.*;
 import org.example.proyectotfg.functions.FunctionsApp;
@@ -26,7 +25,6 @@ import org.example.proyectotfg.mediators.*;
 
 //import javax.mail.MessagingException;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -85,10 +83,10 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
        ====================================CARGAR TODOS LOS SCENE ==============================*/
     private void loadInterfazInicial() {
         try {
-            loadView("/org/example/proyectotfg/interfaz-inicial-view.fxml");
-            InterfazIncialController interfazIncialController = (InterfazIncialController) controllerActual;
-            interfazIncialController.loadServices();
-            interfazIncialController.setTextWelcome(person.getNames());
+            loadView("/org/example/proyectotfg/initial-interface.fxml");
+            InitialInterfaceController initialInterfaceController = (InitialInterfaceController) controllerActual;
+            initialInterfaceController.loadServices();
+            initialInterfaceController.setTextWelcome(person.getNames());
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
@@ -304,7 +302,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     @Override
     public void regresar() {
         try {
-            loadView("");
+            loadView("/org/example/proyectotfg/initial-interface.fxml");
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
