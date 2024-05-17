@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -256,7 +257,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     }
 
     @Override
-    public Parent initializeProfessionals(List<ProfessionalUser> professionalUsers) throws NonexistingUser {
+    public Node initializeProfessionals(List<ProfessionalUser> professionalUsers) throws NonexistingUser {
         HBox contenedorHBox2 = new HBox(6);
         if (professionalUsers != null) {
             contenedorHBox2.setAlignment(Pos.CENTER);
@@ -271,16 +272,26 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                     contenedorHBox2.getChildren().add(fragment);
                 }
 
-                AnchorPane.setTopAnchor(contenedorHBox2, 0.0);
-                AnchorPane.setRightAnchor(contenedorHBox2, 0.0);
-                AnchorPane.setBottomAnchor(contenedorHBox2, 0.0);
-                AnchorPane.setLeftAnchor(contenedorHBox2, 0.0);
+                // Envolver el HBox en un ScrollPane
+                ScrollPane scrollPane = new ScrollPane(contenedorHBox2);
+                scrollPane.setFitToWidth(true); // Ajustar el ancho del contenido al ancho del ScrollPane
+                scrollPane.setFitToHeight(true); // Ajustar la altura del contenido al alto del ScrollPane
+                scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED); // Mostrar la barra de desplazamiento horizontal según sea necesario
+                scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED); // Mostrar la barra de desplazamiento vertical según sea necesario
+
+                AnchorPane.setTopAnchor(scrollPane, 0.0);
+                AnchorPane.setRightAnchor(scrollPane, 0.0);
+                AnchorPane.setBottomAnchor(scrollPane, 0.0);
+                AnchorPane.setLeftAnchor(scrollPane, 0.0);
+
+                return scrollPane;
 
             } catch (IOException ioe) {
-                throw  new NonexistingUser("Lista vacía");
+                throw new RuntimeException("Error cargando el fragmento de servicio", ioe);
             }
         }
 
+        // En caso de que professionalUsers sea null, devolver un contenedor vacío o manejar el caso adecuadamente
         return contenedorHBox2;
     }
 

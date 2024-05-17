@@ -3,6 +3,7 @@ package org.example.proyectotfg.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -10,12 +11,20 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import org.example.proyectotfg.DAO.SqliteConnector;
 import org.example.proyectotfg.entities.ProfessionalUser;
+import org.example.proyectotfg.exceptions.IncorrectDataException;
+import org.example.proyectotfg.exceptions.NonexistingUser;
+import org.example.proyectotfg.exceptions.NullArgumentException;
+import org.example.proyectotfg.exceptions.OperationsDBException;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorFirstScreen;
 import org.example.proyectotfg.mediators.ViewController;
 
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,18 +63,28 @@ public class InitialInterfaceController implements ViewController, Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         servicios = getServicio();
+        try {
+            usuariosEspecificos= SqliteConnector.getProfesionales();
+        } catch (SQLException|IncorrectDataException| NonexistingUser|OperationsDBException|
+                NoSuchAlgorithmException | InvalidKeySpecException | NullArgumentException e) {
+          //todo: meter cambios
+        }
 
     }
     public void setTextWelcome(String name) {
         textSaludo.setText("Hola, " + name);
     }
+
     public void loadServices() {
-        /*   try {*/
         Parent listaServicios= mediator.initializeServicios(servicios);
         contenedorListaServicios.getChildren().add(listaServicios);
-       /* } catch (NonexistingUser e) {
-            //TODO: cambiar
-        }*/
+        try {
+            Node professionalUserBox = mediator.initializeProfessionals(usuariosEspecificos);
+            contenedorListaPersonas.setContent(professionalUserBox);
+        } catch (NonexistingUser e) {
+
+            //todo:  Manejar la excepción adecuadamente
+        }
     }
 
 

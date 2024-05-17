@@ -1,5 +1,6 @@
 package org.example.proyectotfg.mediators;
 
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -23,7 +24,7 @@ public interface MediatorFirstScreen {
 
     Parent initializeServicios(HashMap<String, String> servicios);
 
-    Parent initializeProfessionals(List<ProfessionalUser> professionalUsers) throws NonexistingUser;
+    Node initializeProfessionals(List<ProfessionalUser> professionalUsers) throws NonexistingUser;
 
     void openCalendarView();
 }
