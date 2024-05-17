@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.proyectotfg.entities.ProfessionalUser;
@@ -13,12 +14,14 @@ import org.example.proyectotfg.mediators.MediatorFirstScreen;
 import org.example.proyectotfg.mediators.ViewController;
 
 import javax.swing.text.View;
+import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
 public class ControllerSearch implements ViewController {
     MediatorFirstScreen mediator;
-
+    @FXML
+    private Label detalleBusqueda;
     @FXML
     private VBox listaResultados;
 
@@ -54,6 +57,10 @@ public class ControllerSearch implements ViewController {
         } catch (IOException e) {
             throw new ThereIsNoView("Error a la hora de cargar el fragmento: " + e.getMessage());
         }
+    }
+
+    public void setStringSearch(String search) {
+        detalleBusqueda.setText("Resultados de busqueda ["+search+"]");
     }
 
     public void volverIncio(ActionEvent actionEvent) {

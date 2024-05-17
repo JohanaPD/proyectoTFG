@@ -315,6 +315,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             if (!professionalUsers.isEmpty()) {
                 loadView("/org/example/proyectotfg/search-view.fxml");
                 ControllerSearch controllerSearch = (ControllerSearch) controllerActual;
+                controllerSearch.setStringSearch(busqueda);
                 controllerSearch.loadSearchs(professionalUsers);
             }
 
