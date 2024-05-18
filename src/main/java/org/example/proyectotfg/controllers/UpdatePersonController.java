@@ -158,6 +158,127 @@ public class UpdatePersonController implements ViewController {
         if (correctDirection) {
             String mail = email.getText();
             if (mail.equalsIgnoreCase("")) {
+                mail = person.getEmail();
+            }
+            String confirMail = confirmarMail.getText();
+            String pass1 = textPassword.getText().trim();
+            String pass2 = textPassword2.getText().trim();
+
+            String errores = verificatorData(names, lastNames, mail, confirMail, pass1, pass2, nueva);
+            if (!errores.isEmpty()) {
+                ((MainController) mediator).showError("Errores en el registro", errores);
+            }
+        }
+    }
+
+
+    private String verificatorData(String names, String lastNames, String mail, String confirMail, String pass1, String pass2, Direction nueva) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
+        StringBuilder errores = new StringBuilder();
+
+        if (!names.isEmpty()) {
+            if (!VerificatorSetter.stringVerificator(names, 100)) {
+                errores.append("El nombre no puede contener números ni caracteres especiales.\n");
+            }
+            errores.append("El nombre es requerido.\n");
+        }
+
+        if (!lastNames.isEmpty()) {
+            if (!VerificatorSetter.stringVerificator(lastNames, 100)) {
+                errores.append("El apellido no puede contener números ni caracteres especiales.\n");
+            }
+            errores.append("El apellido es requerido.\n");
+        }
+
+        if (!mail.isEmpty() && !confirMail.isEmpty()) {
+            if (VerificatorSetter.validarCorreoElectronico(mail) && VerificatorSetter.validarCorreoElectronico(confirMail)) {
+                if (mail.equalsIgnoreCase(confirMail)) {
+                    TypeUser tipeUs = comboTypeUser.getValue();
+                    String tipeUser = tipeUs.toString();
+
+                    if (!pass1.isEmpty() || !pass2.isEmpty()) {
+                        if (!pass1.equals(pass2)) {
+                            errores.append("Las contraseñas no coinciden.\n");
+                        } else {
+                            // Actualizar con contraseña
+                            if (tipeUser.equalsIgnoreCase(String.valueOf(TypeUser.USUARIO_NORMAL))) {
+                                NormalUser nuevoUser = new NormalUser(names, lastNames, pass1, mail, nueva);
+                                mediator.updateAllDataPerson(nuevoUser);
+                            } else {
+                                // ProfessionalUser
+                                String college = colegiadoTextField.getText();
+                                String especialidad = especialidadTextField.getText();
+                                String descripcion = descripcionTextArea.getText();
+
+                                if (!college.equalsIgnoreCase("") || !especialidad.equalsIgnoreCase("") || !descripcion.equalsIgnoreCase("")) {
+                                    ProfessionalUser prof = new ProfessionalUser(names, lastNames, pass1, mail, nueva, college, especialidad, descripcion);
+                                    mediator.updateAllDataPerson(prof);
+                                } else {
+                                    errores.append("Datos profesionales incorrectos.\n");
+                                }
+                            }
+                        }
+                    } else {
+                        // Actualizar sin contraseña
+                        if (tipeUser.equalsIgnoreCase(String.valueOf(TypeUser.USUARIO_NORMAL))) {
+                            NormalUser nuevoUser = new NormalUser(names, lastNames, mail, nueva);
+                            mediator.updateDataPerson(nuevoUser);
+                        } else {
+                            // ProfessionalUser
+                            String college = colegiadoTextField.getText();
+                            String especialidad = especialidadTextField.getText();
+                            String descripcion = descripcionTextArea.getText();
+
+                            if (!college.equalsIgnoreCase("") || !especialidad.equalsIgnoreCase("") || !descripcion.equalsIgnoreCase("")) {
+                                ProfessionalUser prof = new ProfessionalUser(names, lastNames,  mail, nueva, college, especialidad, descripcion);
+                                mediator.updateDataPerson(prof);
+                            } else {
+                                errores.append("Datos profesionales incorrectos.\n");
+                            }
+                        }
+                    }
+                } else {
+                    errores.append("Los correos electrónicos no coinciden.\n");
+                }
+            } else {
+                errores.append("No has introducido o no tiene el formato correcto el correo.\n");
+            }
+        }
+
+        return errores.toString();
+    }
+
+
+  /*  public void updateData(ActionEvent actionEvent) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException, OperationsDBException {
+        boolean correctDirection = true;
+        String names = textNombre.getText();
+        if (names.equalsIgnoreCase("")) {
+            names = person.getNames();
+        }
+        String lastNames = textApellidos.getText();
+        if (lastNames.equalsIgnoreCase("")) {
+            lastNames = person.getLastNames();
+        }
+        String calle = textStreet.getText();
+        if (calle.equalsIgnoreCase("")) {
+            calle = person.getDirection().getStreet();
+        }
+        String city = textCity.getText();
+        if (city.equalsIgnoreCase("")) {
+            city = person.getDirection().getCity();
+        }
+        String codPostal = PostalCode.getText();
+        if (city.equalsIgnoreCase("")) {
+            codPostal = String.valueOf(person.getDirection().getPostalCode());
+        }
+        Direction nueva = null;
+        try {
+            nueva = new Direction(calle, city, Integer.parseInt(codPostal));
+        } catch (NumberFormatException e) {
+            correctDirection = false;
+        }
+        if (correctDirection) {
+            String mail = email.getText();
+            if (mail.equalsIgnoreCase("")) {
                 mail = person.getLastNames();
             }
             String confirMail = confirmarMail.getText();
@@ -309,7 +430,7 @@ public class UpdatePersonController implements ViewController {
 
         return errores.toString();
 
-    }
+    }*/
 
 
     public void volverHome(ActionEvent actionEvent) {

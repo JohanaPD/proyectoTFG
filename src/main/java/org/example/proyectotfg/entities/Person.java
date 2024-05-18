@@ -81,6 +81,13 @@ public abstract class Person {
         setDirection(direction);
     }
 
+    public Person(String names, String lastNames, String mail, Direction nueva) throws IncorrectDataException, NullArgumentException {
+        setNames(names);
+        setLastNames(lastNames);
+        setEmail(email);
+        setDirection(direction);
+    }
+
     public int getIdPerson() {
         return idPerson;
     }

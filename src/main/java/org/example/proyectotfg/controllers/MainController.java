@@ -198,16 +198,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         }
     }
 
-    @Override
-    public void updateAllDataPerson(ProfessionalUser nuevo) {
-
-    }
-
-    @Override
-    public void updateAllDataPerson(Person nuevo) {
-
-    }
-
    /*   ================================================================================================
         ======================================vistas principales =====================================================*/
 
@@ -316,17 +306,26 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         }
     }
 
-
     @Override
     public void updateDataPerson(ProfessionalUser user) {
-
+        SqliteConnector.updateNormalUser();
     }
 
     @Override
     public void updateDataPerson(NormalUser user) {
+        SqliteConnector.updateProfesionalUser();
+    }
+
+    @Override
+    public void updateAllDataPerson(ProfessionalUser nuevo) {
+        SqliteConnector.updateProfesionalUserWP(nuevo);
 
     }
 
+    @Override
+    public void updateAllDataPerson(Person nuevo) {
+        SqliteConnector.updateNormalUserWP(nuevo);
+    }
     @Override
     public void datosPerfilPsico(TextFlow descripcionCurriculum, Text nombreDoctor, ImageView imgmed, ProfessionalUser usuarioPerfilesCarga) {
 

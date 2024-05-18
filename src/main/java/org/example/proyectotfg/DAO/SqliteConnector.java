@@ -28,6 +28,18 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
     }
 
+    public static void updateProfesionalUserWP(ProfessionalUser nuevo) {
+    }
+
+    public static void updateNormalUserWP(Person nuevo) {
+    }
+
+    public static void updateNormalUser() {
+    }
+
+    public static void updateProfesionalUser() {
+    }
+
     @Override
     public void createTables() {
         String consultaDireccion = "CREATE TABLE IF NOT EXISTS  direction(" +
