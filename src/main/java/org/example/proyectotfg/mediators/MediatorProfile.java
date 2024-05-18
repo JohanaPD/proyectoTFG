@@ -25,7 +25,7 @@ public interface MediatorProfile {
     void makeRecordRegister(NormalUser user);
 
     void updateDataPerson(ProfessionalUser user);
-    void updateDataPerson(NormalUser user);
+    void updateDataPerson(NormalUser user) throws SQLException;
     void updateAllDataPerson(ProfessionalUser nuevo);
     void updateAllDataPerson(NormalUser nuevo) throws SQLException;
 

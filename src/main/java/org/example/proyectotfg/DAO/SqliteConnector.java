@@ -28,17 +28,6 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
     }
 
-    public static void updateProfesionalUserWP(ProfessionalUser nuevo) throws OperationsDBException {
-    }
-
-    public static void updateNormalUserWP(Person nuevo) throws OperationsDBException {
-    }
-
-    public static void updateNormalUser() throws OperationsDBException {
-    }
-
-    public static void updateProfesionalUser() throws OperationsDBException {
-    }
 
     @Override
     public void createTables() {
@@ -512,7 +501,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
     }
 
-    //métodos para cargar interfaz principal
+
     private List<ProfessionalUser> cargarHistorialesParaUsuarios() throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, SQLException, OperationsDBException {
         List<ProfessionalUser> usuariosEs = new ArrayList<>();
         String query2 = "SELECT * FROM person";
@@ -563,19 +552,74 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return person;
     }
-    /*  @Override
-    public NormalUser searchPatient(String nombre) {
-        return null;
+
+    public  void updateProfesionalUserWP(ProfessionalUser nuevo) throws OperationsDBException, SQLException {
+        String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, email = ?, id_direction = ? WHERE id_person = ?";
+        String updateProfessionalUserSQL = "UPDATE professional_user SET collegiate = ?, specialty = ?, description = ? WHERE id_person = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
+             PreparedStatement updateProfessionalUserStmt = connection.prepareStatement(updateProfessionalUserSQL)) {
+
+            connection.setAutoCommit(false);
+
+            updatePersonStmt.setString(1, nuevo.getNames());
+            updatePersonStmt.setString(2, nuevo.getLastNames());
+            updatePersonStmt.setString(3, nuevo.getEmail());
+            updatePersonStmt.setInt(4, nuevo.getDireccion().getIdDireccion());
+            updatePersonStmt.setInt(5, nuevo.getIdPerson());
+            updatePersonStmt.executeUpdate();
+
+
+            updateProfessionalUserStmt.setString(1, nuevo.getCollegiate());
+            updateProfessionalUserStmt.setString(2, nuevo.getSpecialty());
+            updateProfessionalUserStmt.setString(3, nuevo.getDescription());
+            updateProfessionalUserStmt.setInt(4, nuevo.getIdPerson());
+            updateProfessionalUserStmt.executeUpdate();
+
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw new OperationsDBException("Error al actualizar los datos del usuario profesional: " + e.getMessage());
+        }
+
     }
 
-    @Override
-    public PsychologistUser searchPhsycologist(String nombre) {
-        return null;
-    }*/
+    public  void updateNormalUserWP(NormalUser nuevo) throws OperationsDBException, SQLException {
+
+        String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, email = ?, id_direction = ? WHERE id_person = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL)) {
+
+            connection.setAutoCommit(false);
+
+            // Actualizar en tabla `person`
+            updatePersonStmt.setString(1, nuevo.getNames());
+            updatePersonStmt.setString(2, nuevo.getLastNames());
+            updatePersonStmt.setString(3, nuevo.getEmail());
+            updatePersonStmt.setInt(4, nuevo.getDireccion().getIdDireccion());
+            updatePersonStmt.setInt(5, nuevo.getIdPerson());
+            updatePersonStmt.executeUpdate();
+
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+        }
+    }
+
+    public  void updateNormalUser(NormalUser nuevo) throws OperationsDBException, SQLException {
+
+    }
+
+    public  void updateProfesionalUser(ProfessionalUser user) throws OperationsDBException {
+    }
 
 
     @Override
     public void close() throws Exception {
         connection.close();
     }
+
+
 }
