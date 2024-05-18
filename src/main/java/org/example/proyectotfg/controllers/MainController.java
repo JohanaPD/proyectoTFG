@@ -78,6 +78,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             showError("Error", "Error al cargar la aplicación");
         }
     }
+
     /*   ================================================================================================
        ====================================CARGAR TODOS LOS SCENE ==============================*/
     private void loadInterfazInicial() {
@@ -107,6 +108,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             throw new ThereIsNoView("La vista no existe o no se pudo cargar: " + e.getMessage());
         }
     }
+
     @Override
     public void openLogin() {
         try {
@@ -152,8 +154,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         String mensaje = FunctionsApp.devolverStringMail(user);
         SenderReaderMail sender = new SenderReaderMail();
         try {
-            sender.enviarMensajeHTML("meetpsychproject@gmail.com", user.getNames(),
-                    "Verificación de Cuenta", mensaje, user.getEmail(), passWordApp);
+            sender.enviarMensajeHTML("meetpsychproject@gmail.com", user.getNames(), "Verificación de Cuenta", mensaje, user.getEmail(), passWordApp);
         } catch (Exception e) {
             showError("Error", "Error al enviar el mensaje: " + e.getMessage());
         }
@@ -173,8 +174,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         String mensaje = FunctionsApp.devolverStringMail(user);
         SenderReaderMail sender = new SenderReaderMail();
         try {
-            sender.enviarMensajeHTML("meetpsychproject@gmail.com", user.getEmail(),
-                    "Verificación de Cuenta", mensaje, "meetpsychproject@gmail.com", passWordApp);
+            sender.enviarMensajeHTML("meetpsychproject@gmail.com", user.getEmail(), "Verificación de Cuenta", mensaje, "meetpsychproject@gmail.com", passWordApp);
         } catch (Exception e) {
             showError("Error", "Error al enviar el mensaje: " + e.getMessage());
         }
@@ -211,8 +211,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 loadInterfazInicial();
                 actualController.setMediator(this);
             }
-        } catch (InvalidKeySpecException | NonexistingUser | IncorrectLoginEception |
-                 DataAccessException | OperationsDBException e) {
+        } catch (InvalidKeySpecException | NonexistingUser | IncorrectLoginEception | DataAccessException |
+                 OperationsDBException e) {
             showError("Error", e.getMessage());
         }
     }
@@ -291,14 +291,15 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             showError("Error", e.getMessage());
         }
     }
-      /*   ================================================================================================
-        ====================================== Update Data =====================================================*/
+
+    /*   ================================================================================================
+      ====================================== Update Data =====================================================*/
     @Override
     public void updatePersonalData(Person user) throws OperationsDBException {
         try {
             mainStage.setTitle("Modifica tus datos en solo un minuto!!");
             loadView("/org/example/proyectotfg/update-user.fxml");
-            UpdatePersonController updatePerson= (UpdatePersonController) actualController;
+            UpdatePersonController updatePerson = (UpdatePersonController) actualController;
             updatePerson.chargePerson(person);
 
         } catch (ThereIsNoView e) {
@@ -308,24 +309,42 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
 
     @Override
     public void updateDataPerson(ProfessionalUser user) {
-        SqliteConnector.updateNormalUser();
+
+        try {
+            connect.updateNormalUser();
+        } catch (OperationsDBException e) {
+            showError("Error en la operaciones", e.getMessage());
+        }
     }
 
     @Override
     public void updateDataPerson(NormalUser user) {
-        SqliteConnector.updateProfesionalUser();
+        try {
+            connect.updateProfesionalUser();
+        } catch (OperationsDBException e) {
+            showError("Error en la operaciones", e.getMessage());
+        }
     }
 
     @Override
     public void updateAllDataPerson(ProfessionalUser nuevo) {
-        SqliteConnector.updateProfesionalUserWP(nuevo);
+        try {
+            connect.updateProfesionalUserWP(nuevo);
+        } catch (OperationsDBException e) {
+            showError("Error en la operaciones", e.getMessage());
+        }
 
     }
 
     @Override
     public void updateAllDataPerson(Person nuevo) {
-        SqliteConnector.updateNormalUserWP(nuevo);
+        try {
+            connect.updateNormalUserWP(nuevo);
+        } catch (OperationsDBException e) {
+            showError("Error en la operaciones", e.getMessage());
+        }
     }
+
     @Override
     public void datosPerfilPsico(TextFlow descripcionCurriculum, Text nombreDoctor, ImageView imgmed, ProfessionalUser usuarioPerfilesCarga) {
 
@@ -383,7 +402,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         showMessage(titleWindow, menssage, alerta);
     }
 
-    private static void showMessage(String titleWindow, String menssage, Alert alerta) {
+    private  void showMessage(String titleWindow, String menssage, Alert alerta) {
         alerta.setHeaderText(titleWindow);
         alerta.setContentText(menssage);
         alerta.showAndWait();

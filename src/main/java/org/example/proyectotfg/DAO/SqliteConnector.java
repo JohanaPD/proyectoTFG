@@ -28,17 +28,6 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
     }
 
-    public static void updateProfesionalUserWP(ProfessionalUser nuevo) {
-    }
-
-    public static void updateNormalUserWP(Person nuevo) {
-    }
-
-    public static void updateNormalUser() {
-    }
-
-    public static void updateProfesionalUser() {
-    }
 
     @Override
     public void createTables() {
@@ -419,14 +408,14 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                 Date registration = resultSet.getDate("registration_date");
                 String email = resultSet.getString("email");
                 String scripp_pass = resultSet.getString("pass_script");
-                String typeString=resultSet.getString("type_user");
+                String typeString = resultSet.getString("type_user");
                 TypeUser type = TypeUser.valueOf(typeString);
-                String typeState=resultSet.getString("user_state");
+                String typeState = resultSet.getString("user_state");
                 StatesUser state = StatesUser.valueOf(typeState);
                 Date last_activity = resultSet.getDate("last_activity");
                 int idDirection = resultSet.getInt("id_direction");
                 Direction direction = chargeDirection(idDirection);
-                Person enviar= new ProfessionalUser(id, nombres, apellidos,  scripp_pass, birrth, registration, email, type, state,direction, last_activity);
+                Person enviar = new ProfessionalUser(id, nombres, apellidos, scripp_pass, birrth, registration, email, type, state, direction, last_activity);
                 user = searchProfesionalPersonForId((ProfessionalUser) enviar);
                 usuarios.add(user);
             }
@@ -563,6 +552,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return person;
     }
+
     /*  @Override
     public NormalUser searchPatient(String nombre) {
         return null;
@@ -572,6 +562,21 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     public PsychologistUser searchPhsycologist(String nombre) {
         return null;
     }*/
+    @Override
+    public void updateProfesionalUserWP(ProfessionalUser nuevo) throws OperationsDBException {
+    }
+
+    @Override
+    public void updateNormalUserWP(Person nuevo) throws OperationsDBException {
+    }
+
+    @Override
+    public void updateNormalUser() throws OperationsDBException {
+    }
+
+    @Override
+    public void updateProfesionalUser() throws OperationsDBException {
+    }
 
 
     @Override

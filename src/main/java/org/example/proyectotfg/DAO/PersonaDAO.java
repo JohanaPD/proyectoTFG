@@ -36,4 +36,13 @@ public interface PersonaDAO {
 
     List<ProfessionalUser> searchProfessionalsUsers(String nameUser) throws NonexistingUser, DataAccessException, OperationsDBException;
 
+    void updateProfesionalUserWP(ProfessionalUser nuevo) throws OperationsDBException;
+
+    void updateNormalUserWP(Person nuevo) throws OperationsDBException;
+
+    void updateNormalUser() throws OperationsDBException;
+
+    void updateProfesionalUser() throws OperationsDBException;
+
+
 }
