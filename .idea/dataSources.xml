@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="MeetPsych" uuid="2c9e7092-6dcf-4136-8a08-d93a2fd3d1f7">
+    <data-source source="LOCAL" name="MeetPsych" uuid="92059600-0118-4b4a-b13f-5f517d07c9dd">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
