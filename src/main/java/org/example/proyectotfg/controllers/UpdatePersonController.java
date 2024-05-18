@@ -216,8 +216,6 @@ public class UpdatePersonController implements ViewController {
                                 if (descripcion.equalsIgnoreCase("")) {
                                     descripcion= replace.getCollegiate();
                                 }
-
-
                                 if (!college.equalsIgnoreCase("") || !especialidad.equalsIgnoreCase("") || !descripcion.equalsIgnoreCase("")) {
                                     ProfessionalUser prof = new ProfessionalUser(names, lastNames, pass1, mail, nueva, college, especialidad, descripcion);
                                     mediator.updateAllDataPerson(prof);
