@@ -153,11 +153,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void makeRecordRegister(ProfessionalUser user) {
         String mensaje = FunctionsApp.devolverStringMail(user);
         SenderReaderMail sender = new SenderReaderMail();
-        try {
-            sender.enviarMensajeHTML("meetpsychproject@gmail.com", user.getEmail(), "Verificación de Cuenta", mensaje, "meetpsychproject@gmail.com", passWordApp);
-        } catch (Exception e) {
-            showError("Error", "Error al enviar el mensaje: " + e.getMessage());
-        }
+        enviarEmail(sender, user.getEmail(), mensaje);
         try {
             connect.registerProfessionalUser(user);
             showInfo("Registro correcto", "Se ha registrado correctamente el usuario");
@@ -173,11 +169,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void makeRecordRegister(NormalUser user) {
         String mensaje = FunctionsApp.devolverStringMail(user);
         SenderReaderMail sender = new SenderReaderMail();
-        try {
-            sender.enviarMensajeHTML("meetpsychproject@gmail.com", user.getEmail(), "Verificación de Cuenta", mensaje, "meetpsychproject@gmail.com", passWordApp);
-        } catch (Exception e) {
-            showError("Error", "Error al enviar el mensaje: " + e.getMessage());
-        }
+        enviarEmail(sender, user.getEmail(), mensaje);
         try {
             connect.registerNormalUser(user);
             showInfo("Registro correcto", "Se ha registrado correctamente el usuario");
@@ -186,6 +178,14 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             showError("Error", e.getMessage());
         }
         person = user;
+    }
+
+    private void enviarEmail(SenderReaderMail sender, String user, String mensaje) {
+        try {
+            sender.enviarMensajeHTML("meetpsychproject@gmail.com", user, "Verificación de Cuenta", mensaje, "meetpsychproject@gmail.com", passWordApp);
+        } catch (Exception e) {
+            showError("Error", "Error al enviar el mensaje: " + e.getMessage());
+        }
     }
 
     @Override
