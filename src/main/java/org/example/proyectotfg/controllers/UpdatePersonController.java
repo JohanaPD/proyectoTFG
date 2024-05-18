@@ -17,6 +17,7 @@ import org.example.proyectotfg.exceptions.OperationsDBException;
 import org.example.proyectotfg.functions.FunctionsApp;
 import org.example.proyectotfg.functions.VerificatorSetter;
 import org.example.proyectotfg.mediators.Mediator;
+import org.example.proyectotfg.mediators.MediatorFirstScreen;
 import org.example.proyectotfg.mediators.MediatorProfile;
 import org.example.proyectotfg.mediators.ViewController;
 
@@ -81,13 +82,13 @@ public class UpdatePersonController implements ViewController {
     @FXML
     private PasswordField textPassword2;
 
-    private MediatorProfile mediator;
+    private MediatorFirstScreen mediator;
     private Person person;
     Connection conect;
 
     @Override
     public void setMediator(Mediator mediator) {
-        this.mediator = (MediatorProfile) mediator;
+        this.mediator = (MediatorFirstScreen) mediator;
     }
 
 
@@ -439,7 +440,7 @@ public class UpdatePersonController implements ViewController {
 
 
     public void volverHome(ActionEvent actionEvent) {
-        mediator.volverIncio();
+        mediator.regresar();
     }
 
     @Override
