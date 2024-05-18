@@ -12,15 +12,17 @@ import java.util.*;
 
 public class NormalUser extends Person {
     private String nickname;
-    private Deque<ProfessionalUser> serchs= new LinkedList<>();
-    private List<ProfessionalUser> psychologists= new ArrayList<>();
+    private Deque<ProfessionalUser> serchs = new LinkedList<>();
+    private List<ProfessionalUser> psychologists = new ArrayList<>();
     private boolean inTherapySession;
-//entra aqui
+
+    //entra aqui
     public NormalUser(int id, String nombres, String apellidos, String scrippPass, java.sql.Date birrth, java.sql.Date registration, String email, TypeUser type, StatesUser state, Direction direction, java.sql.Date lastActivity, String nickname) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
         super(id, nombres, apellidos, scrippPass, birrth, registration, email, type, state, direction, lastActivity);
         setNickname(nickname);
         setInTherapySession(false);
     }
+
     public NormalUser(String names, String lastNames, String passScript, Date birthday, Date registrationDate, String email, TypeUser typeUser, Direction direction) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         super(names, lastNames, passScript, birthday, registrationDate, email, typeUser, direction);
         this.inTherapySession = false;
@@ -31,6 +33,7 @@ public class NormalUser extends Person {
         setNickname(nickname);
         setInTherapySession(inTherapySession);
     }
+
     //constructor for test
     public NormalUser(int idPerson, String names, String lastNames, String passScript, Date birthDate,
                       Date registrationDate, String email, TypeUser typeUser, StatesUser state,
@@ -43,11 +46,11 @@ public class NormalUser extends Person {
     }
 
     public NormalUser(String names, String lastNames, String mail, String type, Direction nueva) throws IncorrectDataException, NullArgumentException {
-        super(names,lastNames,mail,type,nueva);
+        super(names, lastNames, mail, type, nueva);
     }
 
-    public NormalUser(String names, String lastNames, String mail, Direction nueva) {
-   super(names,lastNames,mail, nueva);
+    public NormalUser(String names, String lastNames, String mail, Direction nueva) throws IncorrectDataException, NullArgumentException {
+        super(names, lastNames, mail, nueva);
     }
 
 
@@ -86,9 +89,11 @@ public class NormalUser extends Person {
     public void setInTherapySession(boolean inTherapySession) {
         this.inTherapySession = inTherapySession;
     }
+
     public void addSearch(ProfessionalUser professionalUser) {
         psychologists.add(professionalUser);
     }
+
     public void addPsychologist(ProfessionalUser professionalUser) {
         psychologists.add(professionalUser);
     }
