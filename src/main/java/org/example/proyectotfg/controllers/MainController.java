@@ -308,19 +308,18 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     }
 
     @Override
-    public void updateDataPerson(ProfessionalUser user) {
-
+    public void updateDataPerson(NormalUser user) {
         try {
-            SqliteConnector.updateNormalUser();
-        } catch (OperationsDBException e) {
+            connect.updateNormalUser(user);
+        } catch (OperationsDBException|SQLException e) {
             showError("Error en la operaciones", e.getMessage());
         }
     }
 
     @Override
-    public void updateDataPerson(NormalUser user) {
+    public void updateDataPerson(ProfessionalUser user) {
         try {
-            SqliteConnector.updateProfesionalUser();
+            connect.updateProfesionalUser(user);
         } catch (OperationsDBException e) {
             showError("Error en la operaciones", e.getMessage());
         }
@@ -329,17 +328,16 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     @Override
     public void updateAllDataPerson(ProfessionalUser nuevo) {
         try {
-            SqliteConnector.updateProfesionalUserWP(nuevo);
-        } catch (OperationsDBException e) {
+            connect.updateProfesionalUserWP(nuevo);
+        } catch (OperationsDBException|SQLException e) {
             showError("Error en la operaciones", e.getMessage());
         }
-
     }
 
     @Override
     public void updateAllDataPerson(NormalUser nuevo) throws SQLException {
         try {
-            SqliteConnector.updateNormalUserWP(nuevo);
+            connect.updateNormalUserWP(nuevo);
         } catch (OperationsDBException e) {
             showError("Error en la operaciones", e.getMessage());
         }
