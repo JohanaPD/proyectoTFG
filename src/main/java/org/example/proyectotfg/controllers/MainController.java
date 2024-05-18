@@ -290,11 +290,13 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     }
 
     @Override
-    public void updatePersonalData(Person user) {
+    public void updatePersonalData(Person user) throws OperationsDBException {
         try {
             mainStage.setTitle("Modifica tus datos en solo un minuto!!");
-            controllerActual.setMediator(this);
             loadView("/org/example/proyectotfg/update-user.fxml");
+            UpdatePersonController updatePerson= (UpdatePersonController) controllerActual;
+            updatePerson.chargePerson(person);
+
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }

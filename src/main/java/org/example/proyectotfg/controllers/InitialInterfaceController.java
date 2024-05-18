@@ -97,7 +97,7 @@ public class InitialInterfaceController implements ViewController, Initializable
         mediator.openSearch(textoBusqueda);
     }
 
-    public void adminSetting(ActionEvent actionEvent) {
+    public void adminSetting(ActionEvent actionEvent) throws OperationsDBException {
         mediator.updatePersonalData(user);
     }
 

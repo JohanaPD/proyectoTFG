@@ -8,6 +8,7 @@ import javafx.scene.text.TextFlow;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
 import org.example.proyectotfg.exceptions.NonexistingUser;
+import org.example.proyectotfg.exceptions.OperationsDBException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,5 +30,5 @@ public interface MediatorFirstScreen {
 
     void openCalendarView();
 
-    void updatePersonalData(Person user);
+    void updatePersonalData(Person user) throws OperationsDBException;
 }

@@ -1,5 +1,6 @@
 package org.example.proyectotfg.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,7 +26,7 @@ public class UpdatePersonController implements ViewController, Initializable {
     private TextField colegiadoTextField;
 
     @FXML
-    private ComboBox<?> comboTypeUser;
+    private ComboBox<TypeUser> comboTypeUser;
 
     @FXML
     private TextField confirmarMail;
@@ -68,23 +69,39 @@ public class UpdatePersonController implements ViewController, Initializable {
 
     @FXML
     private PasswordField textPassword2;
+
     private MediatorProfile mediator;
-    Person person;
 
     @Override
     public void setMediator(Mediator mediator) {
         this.mediator = (MediatorProfile)mediator;
     }
 
-    public Person getPerson() {
-        return person;
+    public void initialize() {
+        comboTypeUser.setItems(FXCollections.observableArrayList(TypeUser.values()));
+        comboTypeUser.getSelectionModel().select(TypeUser.USUARIO_NORMAL);
+        setConditionalVisibility(comboTypeUser.getValue());  // Set initial visibility based on default selection
+
+        comboTypeUser.valueProperty().addListener((obs, oldVal, newVal) -> {
+            setConditionalVisibility(newVal);
+        });
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    private void setConditionalVisibility(TypeUser typeUser) {
+        boolean visible = typeUser != TypeUser.USUARIO_NORMAL;
+        colegiadoTextField.setText("");
+        colegiadoLabel.setVisible(visible);
+        colegiadoTextField.setVisible(visible);
+        especialidadTextField.setText("");
+        especialidadLabel.setVisible(visible);
+        especialidadTextField.setVisible(visible);
+        descripcionTextArea.setText("");
+        descripcionLabel.setVisible(visible);
+        descripcionTextArea.setVisible(visible);
+        /*dateNacimiento.setEditable(false);*/
     }
 
-   public void chargePerson() throws OperationsDBException {
+   public void chargePerson(Person person) throws OperationsDBException {
         textNombre.setText(person.getNames());
         textApellidos.setText(person.getLastNames());
         email.setText(person.getEmail());
@@ -102,11 +119,6 @@ public class UpdatePersonController implements ViewController, Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            chargePerson();
-        } catch (OperationsDBException e) {
-            //todo: hacer exception
-        }
     }
 
 
