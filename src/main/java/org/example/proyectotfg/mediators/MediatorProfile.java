@@ -10,6 +10,7 @@ import org.example.proyectotfg.exceptions.*;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.sql.SQLException;
 
 public interface MediatorProfile {
 
@@ -24,11 +25,11 @@ public interface MediatorProfile {
     void makeRecordRegister(NormalUser user);
 
     void updateDataPerson(ProfessionalUser user);
-
     void updateDataPerson(NormalUser user);
+    void updateAllDataPerson(ProfessionalUser nuevo);
+    void updateAllDataPerson(NormalUser nuevo) throws SQLException;
 
     void volverIncio();
 
-    void updateAllDataPerson(ProfessionalUser nuevo);
-    void updateAllDataPerson(Person nuevo);
+
 }

@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import org.example.proyectotfg.DAO.SqliteConnector;
 import org.example.proyectotfg.entities.Direction;
 import org.example.proyectotfg.entities.NormalUser;
@@ -21,6 +22,8 @@ import org.example.proyectotfg.mediators.ViewController;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -80,11 +83,13 @@ public class UpdatePersonController implements ViewController {
 
     private MediatorProfile mediator;
     private Person person;
+    Connection conect;
 
     @Override
     public void setMediator(Mediator mediator) {
         this.mediator = (MediatorProfile) mediator;
     }
+
 
     public void initialize() {
         comboTypeUser.setItems(FXCollections.observableArrayList(TypeUser.values()));
@@ -127,7 +132,7 @@ public class UpdatePersonController implements ViewController {
         this.person = person;
     }
 
-    public void updateData(ActionEvent actionEvent) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException, OperationsDBException {
+    public void updateData(ActionEvent actionEvent) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException, OperationsDBException, SQLException {
         boolean correctDirection = true;
         String names = textNombre.getText();
         if (names.equalsIgnoreCase("")) {
@@ -172,7 +177,7 @@ public class UpdatePersonController implements ViewController {
     }
 
 
-    private String verificatorData(String names, String lastNames, String mail, String confirMail, String pass1, String pass2, Direction nueva) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
+    private String verificatorData(String names, String lastNames, String mail, String confirMail, String pass1, String pass2, Direction nueva) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, SQLException {
         StringBuilder errores = new StringBuilder();
 
         if (!names.isEmpty()) {

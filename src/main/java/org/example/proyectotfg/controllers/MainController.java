@@ -337,7 +337,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     }
 
     @Override
-    public void updateAllDataPerson(Person nuevo) {
+    public void updateAllDataPerson(NormalUser nuevo) throws SQLException {
         try {
             connect.updateNormalUserWP(nuevo);
         } catch (OperationsDBException e) {

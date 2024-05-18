@@ -9,6 +9,7 @@ import org.example.proyectotfg.exceptions.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface PersonaDAO {
@@ -39,6 +40,8 @@ public interface PersonaDAO {
     void updateProfesionalUserWP(ProfessionalUser nuevo) throws OperationsDBException;
 
     void updateNormalUserWP(Person nuevo) throws OperationsDBException;
+
+    void updateNormalUserWP(NormalUser nuevo) throws OperationsDBException, SQLException;
 
     void updateNormalUser() throws OperationsDBException;
 
