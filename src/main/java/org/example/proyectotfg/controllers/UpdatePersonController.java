@@ -181,19 +181,16 @@ public class UpdatePersonController implements ViewController {
     private String verificatorData(String names, String lastNames, String mail, String confirMail, String pass1, String pass2, Direction nueva) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, SQLException {
         StringBuilder errores = new StringBuilder();
 
-        if (!names.isEmpty()) {
+
             if (!VerificatorSetter.stringVerificator(names, 100)) {
                 errores.append("El nombre no puede contener números ni caracteres especiales.\n");
             }
-            errores.append("El nombre es requerido.\n");
-        }
 
-        if (!lastNames.isEmpty()) {
+
+
             if (!VerificatorSetter.stringVerificator(lastNames, 100)) {
                 errores.append("El apellido no puede contener números ni caracteres especiales.\n");
             }
-            errores.append("El apellido es requerido.\n");
-        }
 
         if (!mail.isEmpty() && !confirMail.isEmpty()) {
             if (VerificatorSetter.validarCorreoElectronico(mail) && VerificatorSetter.validarCorreoElectronico(confirMail)) {

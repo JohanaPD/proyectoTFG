@@ -67,7 +67,7 @@ public class ProfessionalUser extends Person {
 
     }
 
-    public ProfessionalUser(String names, String lastNames, String mail, Direction nueva, String college, String especialidad, String descripcion) throws IncorrectDataException, NullArgumentException {
+    public ProfessionalUser(String names, String lastNames, String mail, Direction nueva, String collegiate, String specialty, String description) throws IncorrectDataException, NullArgumentException {
         super(names, lastNames, mail, nueva);
         setCollegiate(collegiate);
         setSpecialty(specialty);
