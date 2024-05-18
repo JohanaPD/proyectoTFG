@@ -42,7 +42,7 @@ public class NormalUser extends Person {
         super();
     }
 
-    public NormalUser(String names, String lastNames, String mail, String type, Direction nueva) {
+    public NormalUser(String names, String lastNames, String mail, String type, Direction nueva) throws IncorrectDataException, NullArgumentException {
         super(names,lastNames,mail,type,nueva);
     }
 
