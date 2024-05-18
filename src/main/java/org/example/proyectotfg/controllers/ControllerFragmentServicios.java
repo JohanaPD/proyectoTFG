@@ -5,42 +5,35 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import org.example.proyectotfg.exceptions.ThereIsNoView;
+import org.example.proyectotfg.mediators.Callback;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorFirstScreen;
 import org.example.proyectotfg.mediators.ViewController;
 
 import javafx.scene.input.MouseEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControllerFragmentServicios implements ViewController {
+public class ControllerFragmentServicios{
 
     @FXML
     private ImageView imgService;
 
     @FXML
     private Text titleService;
-    MediatorFirstScreen mediador;
+    private Callback callback;
 
     List<String> serviciosArray = new ArrayList<>();
 
 
-    @Override
-    public void setMediator(Mediator mediador) {
 
-        this.mediador = (MediatorFirstScreen) mediador;
+    public void setCallback(Callback callback) {
 
-    }
-
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
-
-    @Override
-    public void setMainController(MainController mainController) {
+        this.callback = (Callback) callback;
 
     }
+
 
     public ImageView getImgService() {
         return imgService;
@@ -78,13 +71,17 @@ public class ControllerFragmentServicios implements ViewController {
 
         String titulo = titleService.getText().trim().toString();
 
-        if(titulo!=null) {
+        if (titulo != null) {
             if (!serviciosArray.contains(titulo)) {
 
-            }else{
+            } else {
 
             }
         }
+    }
+
+    public void openFragmentInDetail(MouseEvent mouseEvent) {
+        callback.doAction();
     }
 }
 

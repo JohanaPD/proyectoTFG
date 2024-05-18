@@ -1,6 +1,5 @@
 package org.example.proyectotfg.mediators;
 
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -22,7 +21,7 @@ public interface MediatorFirstScreen {
 
     void openSearch(String busqueda);
 
-    void cargarVistaPSicologo();
+    void openProfessionalUser(ProfessionalUser professionalUser, int index);
 
     Parent initializeServicios(HashMap<String, String> servicios);
 

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<HBox maxHeight="90.0" maxWidth="-80" prefHeight="90.0" prefWidth="80.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.ControllerFragmentServicios">
+<HBox maxHeight="90.0" maxWidth="-80" onMouseClicked="#openFragmentInDetail" prefHeight="90.0" prefWidth="80.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.ControllerFragmentServicios">
     <children>
         <AnchorPane maxHeight="1.7976931348623157E308" prefHeight="90.0" prefWidth="80.0" styleClass="layoutFondoTotal" stylesheets="@styles.css">
             <children>

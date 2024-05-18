@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -37,7 +36,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     private Stage mainStage;
     private Mediator mediatorAplicado;
     SqliteConnector connect;
-    ViewController controllerActual;
+    ViewController actualController;
     Person person;
     String passWordApp = "j v g l r d n k f x kw m s b e";
 
@@ -65,8 +64,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("entradaView.fxml"));
             System.out.println("Desde el main  " + fxmlLoader.getLocation());
             Scene scene = new Scene(fxmlLoader.load());
-            controllerActual = fxmlLoader.getController();
-            controllerActual.setMainController(this);
+            actualController = fxmlLoader.getController();
+            actualController.setMainController(this);
             ViewController controller = fxmlLoader.getController();
             controller.setMediator(this);
             mainStage.setTitle("MeetPshyc!");
@@ -84,7 +83,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     private void loadInterfazInicial() {
         try {
             loadView("/org/example/proyectotfg/interfaz-inicial-view.fxml");
-            InitialInterfaceController initialInterfaceController = (InitialInterfaceController) controllerActual;
+            InitialInterfaceController initialInterfaceController = (InitialInterfaceController) actualController;
             initialInterfaceController.loadServices();
             initialInterfaceController.setTextWelcome(person.getNames());
             initialInterfaceController.setUser(person);
@@ -99,8 +98,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             FXMLLoader loader = new FXMLLoader(getClass().getResource(s));
             System.out.println("Desde el maincontroller " + loader.getLocation());
             Parent root = loader.load();
-            controllerActual = loader.getController();
-            controllerActual.setMediator(this);
+            actualController = loader.getController();
+            actualController.setMediator(this);
             mainStage.setScene(new Scene(root));
             mainStage.show();
         } catch (Exception e) {
@@ -211,7 +210,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 this.person = person;
                 mainStage.setTitle("Bienvenidos ");
                 loadInterfazInicial();
-                controllerActual.setMediator(this);
+                actualController.setMediator(this);
             }
         } catch (InvalidKeySpecException | NonexistingUser | IncorrectLoginEception |
                  DataAccessException | OperationsDBException e) {
@@ -261,8 +260,13 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                     ControllerFragmentServicios controller = fxmlLoader.getController();
 
                     String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", imageIndex);
-                    imageIndex = (imageIndex % totalImages) + 1;
+
                     controller.setData(String.valueOf(us.getNames()), String.valueOf(imagePath));
+                    int finalImageIndex = imageIndex;
+                    controller.setCallback(() -> {
+                        openProfessionalUser(us, finalImageIndex);
+                    });
+                    imageIndex = (imageIndex % totalImages) + 1;
                     contenedorHBox2.getChildren().add(fragment);
                 }
                 AnchorPane.setTopAnchor(contenedorHBox2, 0.0);
@@ -294,7 +298,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         try {
             mainStage.setTitle("Modifica tus datos en solo un minuto!!");
             loadView("/org/example/proyectotfg/update-user.fxml");
-            UpdatePersonController updatePerson= (UpdatePersonController) controllerActual;
+            UpdatePersonController updatePerson= (UpdatePersonController) actualController;
             updatePerson.chargePerson(person);
 
         } catch (ThereIsNoView e) {
@@ -310,9 +314,9 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     @Override
     public void regresar() {
         try {
-            loadView("/org/example/proyectotfg/initial-interface.fxml");
+            loadView("/org/example/proyectotfg/interfaz-inicial-view.fxml");
             loadInterfazInicial();
-            controllerActual.setMediator(this);
+            actualController.setMediator(this);
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
@@ -324,7 +328,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             List<ProfessionalUser> professionalUsers = connect.searchProfessionalsUsers(busqueda);
             if (!professionalUsers.isEmpty()) {
                 loadView("/org/example/proyectotfg/search-view.fxml");
-                ControllerSearch controllerSearch = (ControllerSearch) controllerActual;
+                ControllerSearch controllerSearch = (ControllerSearch) actualController;
                 controllerSearch.setStringSearch(busqueda);
                 controllerSearch.loadSearchs(professionalUsers);
             }
@@ -334,9 +338,11 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     }
 
     @Override
-    public void cargarVistaPSicologo() {
+    public void openProfessionalUser(ProfessionalUser professionalUser, int index) {
         try {
-            loadView("");
+            loadView("/org/example/proyectotfg/view-info-profesionalUser.fxml");
+            InfoProfesionalController infoProfesionalController = (InfoProfesionalController) actualController;
+            infoProfesionalController.setElementsPerson(professionalUser, index);
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }

@@ -13,13 +13,14 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="700.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.InfoProfesionalController">
+<?import javafx.scene.control.TextArea?>
+<AnchorPane prefHeight="700.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.InfoProfesionalController">
     <children>
         <VBox prefHeight="700.0" prefWidth="360.0">
             <children>
                 <BorderPane prefHeight="200.0" prefWidth="200.0">
                     <center>
-                        <ImageView fx:id="imgmed" fitHeight="134.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                        <ImageView fx:id="image" fitHeight="134.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                             <image>
                                 <Image url="@imgUsuario/doctor1.png" />
                             </image>
@@ -29,17 +30,17 @@
                 <VBox prefHeight="518.0" prefWidth="360.0">
                     <children>
                         <Pane prefHeight="32.0" prefWidth="360.0" />
-                        <Text fx:id="nombreDoctor" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor" textAlignment="CENTER" wrappingWidth="358.13671875">
+                        <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor" textAlignment="CENTER" wrappingWidth="358.13671875">
                             <font>
                                 <Font size="24.0" />
                             </font>
                         </Text>
-                  <Text fx:id="especialidad" layoutX="10.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="especialidad" textAlignment="CENTER" wrappingWidth="358.13671875">
+                  <Text fx:id="specialty" layoutX="10.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="especialidad" textAlignment="CENTER" wrappingWidth="358.13671875">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Text>
-                        <TextFlow fx:id="descripcionCurriculum" prefHeight="349.0" prefWidth="360.0" />
+                        <TextArea fx:id="description" prefHeight="349.0" prefWidth="360.0" />
                     </children>
                     <VBox.margin>
                         <Insets left="10.0" right="10.0" />
