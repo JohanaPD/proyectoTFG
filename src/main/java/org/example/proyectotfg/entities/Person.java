@@ -81,10 +81,10 @@ public abstract class Person {
         setDirection(direction);
     }
 
-    public Person(String names, String lastNames, String mail, Direction nueva) throws IncorrectDataException, NullArgumentException {
+    public Person(String names, String lastNames, String mail, Direction direction) throws IncorrectDataException, NullArgumentException {
         setNames(names);
         setLastNames(lastNames);
-        setEmail(email);
+        setEmail(mail);
         setDirection(direction);
     }
 

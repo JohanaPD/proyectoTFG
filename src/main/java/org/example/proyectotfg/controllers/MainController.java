@@ -310,7 +310,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     @Override
     public void updateDataPerson(NormalUser user) {
         try {
-            connect.updateNormalUser(user);
+            connect.updateNormalUserWP(user);
         } catch (OperationsDBException|SQLException e) {
             showError("Error en la operaciones", e.getMessage());
         }

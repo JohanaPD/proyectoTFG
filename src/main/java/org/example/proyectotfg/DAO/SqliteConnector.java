@@ -417,7 +417,9 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                 Direction direction = chargeDirection(idDirection);
                 Person enviar = new ProfessionalUser(id, nombres, apellidos, scripp_pass, birrth, registration, email, type, state, direction, last_activity);
                 user = searchProfesionalPersonForId((ProfessionalUser) enviar);
-                usuarios.add(user);
+                if (user.getTypeUser() != TypeUser.USUARIO_NORMAL) {
+                    usuarios.add(user);
+                }
             }
 
         } catch (SQLException e) {
@@ -608,9 +610,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
     }
 
-    public  void updateNormalUser(NormalUser nuevo) throws OperationsDBException, SQLException {
 
-    }
 
     public  void updateProfesionalUser(ProfessionalUser user) throws OperationsDBException {
     }
