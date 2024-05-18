@@ -426,7 +426,6 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         return usuarios;
     }
 
-
     @Override
     public Person registerPerson(Person person) throws OperationsDBException, DuplicateKeyException {
         Direction direction = registerDirection(person.getDirection());
@@ -553,30 +552,44 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         return person;
     }
 
-    /*  @Override
-    public NormalUser searchPatient(String nombre) {
-        return null;
-    }
 
-    @Override
-    public PsychologistUser searchPhsycologist(String nombre) {
-        return null;
-    }*/
     @Override
     public void updateProfesionalUserWP(ProfessionalUser nuevo) throws OperationsDBException {
     }
 
     @Override
-    public void updateNormalUserWP(Person nuevo) throws OperationsDBException {
+    public void updateNormalUserWP(NormalUser nuevo) throws OperationsDBException, SQLException {
+        String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, email = ?, id_direction = ? WHERE id_person = ?";
+        String updateNormalUserSQL = "UPDATE normal_user SET nickname = ?, in_therapy_session = ? WHERE id_person = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
+             PreparedStatement updateNormalUserStmt = connection.prepareStatement(updateNormalUserSQL)) {
+
+            connection.setAutoCommit(false);
+
+            // Actualizar en tabla `person`
+            updatePersonStmt.setString(1, nuevo.getNames());
+            updatePersonStmt.setString(2, nuevo.getLastNames());
+            updatePersonStmt.setString(3, nuevo.getEmail());
+            updatePersonStmt.setInt(4, nuevo.getDireccion().getIdDireccion());
+            updatePersonStmt.setInt(5, nuevo.getIdPerson());
+            updatePersonStmt.executeUpdate();
+
+            // Actualizar en tabla `normal_user`
+            updateNormalUserStmt.setString(1, nuevo.getNickname());
+            updateNormalUserStmt.setInt(2, nuevo.isInTherapySession() ? 1 : 0);
+            updateNormalUserStmt.setInt(3, nuevo.getIdPerson());
+            updateNormalUserStmt.executeUpdate();
+
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw new OperationsDBException("Error al actualizar los datos del usuario normal: " + e.getMessage());
+        }
     }
 
-    @Override
-    public void updateNormalUser() throws OperationsDBException {
-    }
 
-    @Override
-    public void updateProfesionalUser() throws OperationsDBException {
-    }
 
 
     @Override
