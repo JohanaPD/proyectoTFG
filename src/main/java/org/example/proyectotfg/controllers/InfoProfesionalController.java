@@ -47,6 +47,7 @@ public class InfoProfesionalController  implements ViewController {
 
     }
 
+<<<<<<< Updated upstream
     public void setElementsPerson(ProfessionalUser professionalUser, int index) {
         String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", index);
         Image imageProfessional = new Image(getClass().getResourceAsStream(imagePath));
@@ -54,6 +55,10 @@ public class InfoProfesionalController  implements ViewController {
         name.setText(professionalUser.getNames());
         specialty.setText(professionalUser.getSpecialty());
         description.setText(professionalUser.getDescription());
+=======
+    public void volverHome(ActionEvent actionEvent) {
+
+>>>>>>> Stashed changes
     }
     public void volverHome(ActionEvent actionEvent) {
         mediator.regresar();

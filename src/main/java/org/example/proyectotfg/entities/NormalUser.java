@@ -42,6 +42,10 @@ public class NormalUser extends Person {
         super();
     }
 
+    public NormalUser(String names, String lastNames, String mail, String type, Direction nueva) {
+        super(names,lastNames,mail,type,nueva);
+    }
+
 
     public Deque<ProfessionalUser> getSerchs() {
         return serchs;

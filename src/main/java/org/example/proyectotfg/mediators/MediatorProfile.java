@@ -2,6 +2,7 @@ package org.example.proyectotfg.mediators;
 
 
 import org.example.proyectotfg.entities.NormalUser;
+import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
 import org.example.proyectotfg.exceptions.*;
@@ -22,6 +23,12 @@ public interface MediatorProfile {
 
     void makeRecordRegister(NormalUser user);
 
+    void updateDataPerson(ProfessionalUser user);
+
+    void updateDataPerson(NormalUser user);
+
     void volverIncio();
 
+    void updateAllDataPerson(ProfessionalUser nuevo);
+    void updateAllDataPerson(Person nuevo);
 }

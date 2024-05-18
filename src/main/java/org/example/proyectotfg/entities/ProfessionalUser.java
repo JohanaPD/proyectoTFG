@@ -51,6 +51,13 @@ public class ProfessionalUser extends Person {
         super(idPerson, names, lastNames, passScript, birthDate, registrationDate, email, typeUser, stateUser, direction, lastActivity);
     }
 
+    public ProfessionalUser(String names, String lastNames, Date birthd, String mail, TypeUser tipeUs, Direction nueva, String college, String especialidad, String descripcion) throws IncorrectDataException, NullArgumentException {
+   super(names,lastNames,birthd,mail,tipeUs,nueva);
+        setCollegiate(collegiate);
+        setSpecialty(specialty);
+        setDescription(description);
+    }
+
 
     public String getCollegiate() {
         return collegiate;

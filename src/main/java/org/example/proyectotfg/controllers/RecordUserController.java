@@ -24,6 +24,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class RecordUserController implements ViewController {
+
     private MediatorProfile mediator;
     private MainController mainController;
 
@@ -54,7 +55,6 @@ public class RecordUserController implements ViewController {
     @FXML
     private TextField colegiadoTextField;
 
-
     @FXML
     private TextField especialidadTextField;
 
@@ -78,14 +78,13 @@ public class RecordUserController implements ViewController {
     @FXML
     private Label descripcionLabel;
 
-    ProfessionalUser psycologist;
-    NormalUser normalUser;
+   /* ProfessionalUser psycologist;
+    NormalUser normalUser;*/
 
     public void initialize() {
         comboTypeUser.setItems(FXCollections.observableArrayList(TypeUser.values()));
         comboTypeUser.getSelectionModel().select(TypeUser.USUARIO_NORMAL);
         setConditionalVisibility(comboTypeUser.getValue());  // Set initial visibility based on default selection
-
         comboTypeUser.valueProperty().addListener((obs, oldVal, newVal) -> {
             setConditionalVisibility(newVal);
         });
@@ -103,8 +102,6 @@ public class RecordUserController implements ViewController {
         descripcionLabel.setVisible(visible);
         descripcionTextArea.setVisible(visible);
         /*dateNacimiento.setEditable(false);*/
-
-
     }
 
     @FXML
@@ -133,11 +130,8 @@ public class RecordUserController implements ViewController {
                 if (birthDate != null) {
                     ZoneId zoneId = ZoneId.systemDefault();
                     birthd = Date.from(birthDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                    //recoger hora actual
                     LocalDateTime currentDateTime = LocalDateTime.now();
                     Date registrationDate = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
-                    //cambiarlo a enum
-                    //hago el psicologo
                     String errores = verificatorData(names, lastNames, mail, confirMail, registrationDate, birthd, pass1, pass2, nueva);
                     if (!errores.isEmpty()) {
                         ((MainController) mediator).showError("Errores en el registro", errores);
@@ -157,7 +151,6 @@ public class RecordUserController implements ViewController {
 
     private String verificatorData(String names, String lastNames, String mail, String confirMail, Date registrationDate, Date birthd, String pass1, String pass2, Direction nueva) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, IncompleteDataInRecord, IOException, DataAccessException, OperationsDBException, ThereIsNoView {
         StringBuilder errores = new StringBuilder();
-        System.out.println(errores);
         if (names.isEmpty()) {
             /*textNombre.setText("El nombre es requerido.\n");*/
             errores.append("El nombre es requerido.\n");
@@ -189,7 +182,6 @@ public class RecordUserController implements ViewController {
                             if (VerificatorSetter.stringVerificator(especialidad, 150)) {
                                 if (VerificatorSetter.stringVerificator(descripcion, 2000)) {
                                     ProfessionalUser nuevo = new ProfessionalUser(names, lastNames, pass1, birthd, registrationDate, mail, tipeUs, nueva, college, especialidad, descripcion);
-                                    System.out.println(nuevo.toString());
                                     mediator.makeRecordRegister(nuevo);
                                 } else {
                                     //corregir

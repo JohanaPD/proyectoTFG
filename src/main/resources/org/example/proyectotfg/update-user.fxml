@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
-<?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.UpdatePersonController" alignment="CENTER" spacing="10">
+
+<VBox alignment="CENTER" spacing="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="org.example.proyectotfg.controllers.UpdatePersonController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -38,19 +46,16 @@
         <TextField fx:id="confirmarMail" GridPane.columnIndex="3" GridPane.rowIndex="1" />
         <!-- Dirección -->
         <Label text="Calle:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <TextField fx:id="textCalle" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <TextField fx:id="textStreet" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <Label text="Ciudad:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
         <TextField fx:id="textCity" GridPane.columnIndex="3" GridPane.rowIndex="2" />
         <Label text="Código Postal:" GridPane.rowIndex="3" />
-        <TextField fx:id="textCodPostal" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <TextField fx:id="PostalCode" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <!-- Password y Repetir Password -->
         <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
         <PasswordField fx:id="textPassword" GridPane.columnIndex="1" GridPane.rowIndex="4" />
         <Label text="Repetir Password:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
         <PasswordField fx:id="textPassword2" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-        <!-- Fecha de Nacimiento y Perfil Profesional -->
-        <Label text="Fecha de Nacimiento:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-        <DatePicker fx:id="dateNacimiento" GridPane.columnIndex="1" GridPane.rowIndex="5" />
         <Label text="Perfil Profesional:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
         <ComboBox fx:id="comboTypeUser" prefHeight="26.0" prefWidth="149.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
             <items>

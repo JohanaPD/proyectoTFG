@@ -48,7 +48,7 @@ public abstract class Person {
         setState(StatesUser.NOT_VERIFIED);
     }
 
-//entra aquí
+    //entra aquí
     public Person(int idPerson, String names, String lastNames, String passScript, Date birthDate, Date registrationDate, String email, TypeUser typeUser, StatesUser state, Direction direction, Date lastActivityDate) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         setIdPerson(idPerson);
         setNames(names);
@@ -64,14 +64,29 @@ public abstract class Person {
         setState(StatesUser.NOT_VERIFIED);
     }
 
+    public Person(String names, String lastNames, Date birthd, String mail, TypeUser tipeUs, Direction nueva) throws IncorrectDataException, NullArgumentException {
+        setNames(names);
+        setLastNames(lastNames);
+        setBirthDate(birthDate);
+        setEmail(email);
+        setTypeUser(typeUser);
+        setDirection(direction);
+    }
+
+    public Person(String names, String lastNames, String mail, String type, Direction nueva) throws NullArgumentException, IncorrectDataException {
+        setNames(names);
+        setLastNames(lastNames);
+        setEmail(email);
+        setTypeUser(typeUser);
+        setDirection(direction);
+    }
 
     public int getIdPerson() {
         return idPerson;
     }
 
-
     public void setIdPerson(int idPerson) throws IncorrectDataException {
-        if (VerificatorSetter.numberVerificator(idPerson, 1000000000)&&idPerson>=0) {
+        if (VerificatorSetter.numberVerificator(idPerson, 1000000000) && idPerson >= 0) {
             this.idPerson = idPerson;
         } else {
             throw new IncorrectDataException("Verifica el id de persona, solo se aceptan números");
@@ -215,8 +230,6 @@ public abstract class Person {
    }*/
 
 
-
-
     public Date getRegistrationDate() {
         return registrationDate;
     }
@@ -245,7 +258,7 @@ public abstract class Person {
     public void setTypeUser(TypeUser typeUser) throws NullArgumentException {
         if (typeUser != null) {
             this.typeUser = typeUser;
-        }else {
+        } else {
             throw new NullArgumentException("Has introducido datos nulos a la hora de crear la persona");
         }
 
@@ -261,8 +274,6 @@ public abstract class Person {
     public void setPassScript(String passScript) throws NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         if (passScript != null) {
             this.passScript = FunctionsApp.generateStrongPasswordHash(passScript);
-
-
         } else {
             throw new NullArgumentException("Has introducido datos nulos a la hora de crear la persona");
         }

@@ -3,22 +3,30 @@ package org.example.proyectotfg.controllers;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import org.example.proyectotfg.DAO.SqliteConnector;
 import org.example.proyectotfg.entities.Direction;
+import org.example.proyectotfg.entities.NormalUser;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
+import org.example.proyectotfg.exceptions.IncorrectDataException;
+import org.example.proyectotfg.exceptions.NullArgumentException;
 import org.example.proyectotfg.exceptions.OperationsDBException;
+import org.example.proyectotfg.functions.FunctionsApp;
+import org.example.proyectotfg.functions.VerificatorSetter;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorProfile;
 import org.example.proyectotfg.mediators.ViewController;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
-public class UpdatePersonController implements ViewController, Initializable {
+public class UpdatePersonController implements ViewController {
     @FXML
     private Label colegiadoLabel;
 
@@ -53,13 +61,13 @@ public class UpdatePersonController implements ViewController, Initializable {
     private TextField textApellidos;
 
     @FXML
-    private TextField textCalle;
+    private TextField textStreet;
 
     @FXML
     private TextField textCity;
 
     @FXML
-    private TextField textCodPostal;
+    private TextField PostalCode;
 
     @FXML
     private TextField textNombre;
@@ -71,17 +79,17 @@ public class UpdatePersonController implements ViewController, Initializable {
     private PasswordField textPassword2;
 
     private MediatorProfile mediator;
+    private Person person;
 
     @Override
     public void setMediator(Mediator mediator) {
-        this.mediator = (MediatorProfile)mediator;
+        this.mediator = (MediatorProfile) mediator;
     }
 
     public void initialize() {
         comboTypeUser.setItems(FXCollections.observableArrayList(TypeUser.values()));
         comboTypeUser.getSelectionModel().select(TypeUser.USUARIO_NORMAL);
         setConditionalVisibility(comboTypeUser.getValue());  // Set initial visibility based on default selection
-
         comboTypeUser.valueProperty().addListener((obs, oldVal, newVal) -> {
             setConditionalVisibility(newVal);
         });
@@ -101,33 +109,211 @@ public class UpdatePersonController implements ViewController, Initializable {
         /*dateNacimiento.setEditable(false);*/
     }
 
-   public void chargePerson(Person person) throws OperationsDBException {
+    public void chargePerson(Person person) throws OperationsDBException {
         textNombre.setText(person.getNames());
         textApellidos.setText(person.getLastNames());
         email.setText(person.getEmail());
         confirmarMail.setText(person.getEmail());
-        Direction dir= person.getDirection();
-        textCalle.setText(dir.getStreet());
+        Direction dir = person.getDirection();
+        textStreet.setText(dir.getStreet());
         textCity.setText(dir.getCity());
-        textCodPostal.setText(String.valueOf(dir.getPostalCode()));
-        if(!person.getTypeUser().equals(TypeUser.USUARIO_NORMAL)){
-            ProfessionalUser profesionalPerson=SqliteConnector.chargeProfesionalUserById(person.getIdPerson());
+        PostalCode.setText(String.valueOf(dir.getPostalCode()));
+        if (!person.getTypeUser().equals(TypeUser.USUARIO_NORMAL)) {
+            ProfessionalUser profesionalPerson = SqliteConnector.chargeProfesionalUserById(person.getIdPerson());
             especialidadTextField.setText(profesionalPerson.getSpecialty());
             colegiadoLabel.setText(profesionalPerson.getCollegiate());
             descripcionTextArea.setText(profesionalPerson.getDescription());
         }
-    }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.person = person;
     }
 
+    public void updateData(ActionEvent actionEvent) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException, OperationsDBException {
+        boolean correctDirection = true;
+        String names = textNombre.getText();
+        if (names.equalsIgnoreCase("")) {
+            names = person.getNames();
+        }
+        String lastNames = textApellidos.getText();
+        if (lastNames.equalsIgnoreCase("")) {
+            lastNames = person.getLastNames();
+        }
+        String calle = textStreet.getText();
+        if (calle.equalsIgnoreCase("")) {
+            calle = person.getDirection().getStreet();
+        }
+        String city = textCity.getText();
+        if (city.equalsIgnoreCase("")) {
+            city = person.getDirection().getCity();
+        }
+        String codPostal = PostalCode.getText();
+        if (city.equalsIgnoreCase("")) {
+            codPostal = String.valueOf(person.getDirection().getPostalCode());
+        }
+        Direction nueva = null;
+        try {
+            nueva = new Direction(calle, city, Integer.parseInt(codPostal));
+        } catch (NumberFormatException e) {
+            correctDirection = false;
+        }
+        if (correctDirection) {
+            String mail = email.getText();
+            if (mail.equalsIgnoreCase("")) {
+                mail = person.getLastNames();
+            }
+            String confirMail = confirmarMail.getText();
+            String pass1 = textPassword.getText().trim();
+            String pass2 = textPassword2.getText().trim();
+            LocalDate birthDate = dateNacimiento.getValue();
+            Date birthd = null;
+            if (birthDate != null) {
+                ZoneId zoneId = ZoneId.systemDefault();
+                birthd = Date.from(birthDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                LocalDateTime currentDateTime = LocalDateTime.now();
+                Date registrationDate = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+                String errores = verificatorData(names, lastNames, mail, confirMail, birthd, pass1, pass2, nueva);
+                if (!errores.isEmpty()) {
+                    ((MainController) mediator).showError("Errores en el registro", errores);
+                } else {
+                    ((MainController) mediator).showError("Error", "No has definido una fecha en el calendario");
+                }
 
+            }
 
-    public void updateData(ActionEvent actionEvent) {
+        }
     }
+
+    private String verificatorData(String names, String lastNames, String mail, String confirMail, Date birthd, String pass1, String pass2, Direction nueva) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
+        StringBuilder errores = new StringBuilder();
+        System.out.println(errores);
+        if (!names.isEmpty()) {
+            if (!VerificatorSetter.stringVerificator(names, 100)) {
+                errores.append("El nombre no puede contener números ni caracteres especiales");
+            }
+            errores.append("El nombre es requerido.\n");
+        }
+        if (!lastNames.isEmpty()) {
+            if (!VerificatorSetter.stringVerificator(lastNames, 100)) {
+                errores.append("El apellido no puede contener números ni caracteres especiales");
+            }
+            errores.append("El apellido es requerido.\n");
+        }
+        if (!mail.isEmpty() && !confirMail.isEmpty()) {
+            if (VerificatorSetter.validarCorreoElectronico(mail) && VerificatorSetter.validarCorreoElectronico(confirMail)) {
+                if (mail.equalsIgnoreCase(confirMail)) {
+                    if (birthd != null) {
+                        int calculatorAge = FunctionsApp.calculateAge(person.getRegistrationDate(), birthd);
+                        if (calculatorAge >= 18 && calculatorAge <= 100) {
+                            if (!pass1.isEmpty() || !pass2.isEmpty()) {
+                                if (!pass1.equals(pass2)) {
+                                    errores.append("Las contraseñas no coinciden.\n");
+                                } else {
+                                    TypeUser tipeUs = comboTypeUser.getValue();
+                                    String tipeUser = tipeUs.toString();
+                                    System.out.println(tipeUser);
+                                    if (!tipeUser.equalsIgnoreCase(String.valueOf(TypeUser.USUARIO_NORMAL))) {
+                                        //aqui, llamar al metodo para hacer ver los datos del usuario especifico
+                                        ProfessionalUser prof = SqliteConnector.chargeProfesionalUserById(person.getIdPerson());
+                                        String college = colegiadoTextField.getText();
+                                        if (!college.equalsIgnoreCase("")) {
+                                            college = prof.getCollegiate();
+                                        }
+                                        String especialidad = especialidadTextField.getText();
+                                        if (!especialidad.equalsIgnoreCase("")) {
+                                            especialidad = prof.getSpecialty();
+                                        }
+                                        String descripcion = descripcionTextArea.getText();
+                                        if (!descripcion.equalsIgnoreCase("")) {
+                                            descripcion = prof.getDescription();
+                                        }
+                                        if (VerificatorSetter.stringVerificator(especialidad, 150)) {
+                                            if (VerificatorSetter.stringVerificator(descripcion, 2000)) {
+                                                ProfessionalUser nuevo = new ProfessionalUser(names, lastNames, pass1, birthd, person.getRegistrationDate(), mail, tipeUs, nueva, college, especialidad, descripcion);
+                                                mediator.updateAllDataPerson(nuevo);
+                                            } else {
+                                                errores.append("Datos profesionales incorrectos .\n");
+                                            }
+                                        }
+                                    } else {
+                                        NormalUser nuevouser = new NormalUser(names, lastNames, pass1, birthd, person.getRegistrationDate(), mail, tipeUs, nueva);
+                                        System.out.println(nuevouser.toString());
+                                        mediator.updateAllDataPerson(nuevouser);
+                                        if (!tipeUser.equalsIgnoreCase(String.valueOf(TypeUser.USUARIO_NORMAL))) {
+                                            ProfessionalUser prof = SqliteConnector.chargeProfesionalUserById(person.getIdPerson());
+                                            String college = colegiadoTextField.getText();
+                                            if (!college.equalsIgnoreCase("")) {
+                                                college = prof.getCollegiate();
+                                            }
+                                            String especialidad = especialidadTextField.getText();
+                                            if (!especialidad.equalsIgnoreCase("")) {
+                                                especialidad = prof.getSpecialty();
+                                            }
+                                            String descripcion = descripcionTextArea.getText();
+                                            if (!descripcion.equalsIgnoreCase("")) {
+                                                descripcion = prof.getDescription();
+                                            }
+                                            if (VerificatorSetter.stringVerificator(especialidad, 150)) {
+                                                if (VerificatorSetter.stringVerificator(descripcion, 2000)) {
+                                                    ProfessionalUser nuevo = new ProfessionalUser(names, lastNames, pass1, birthd, person.getRegistrationDate(), mail, tipeUs, nueva, college, especialidad, descripcion);
+                                                    mediator.updateDataPerson(nuevo);
+                                                } else {
+                                                    //todo: revisar
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                TypeUser tipeUs = comboTypeUser.getValue();
+                                String tipeUser = tipeUs.toString();
+                                System.out.println(tipeUser);
+                                if (!tipeUser.equalsIgnoreCase(String.valueOf(TypeUser.USUARIO_NORMAL))) {
+                                    ProfessionalUser prof = SqliteConnector.chargeProfesionalUserById(person.getIdPerson());
+                                    String college = colegiadoTextField.getText();
+                                    if (!college.equalsIgnoreCase("")) {
+                                        college = prof.getCollegiate();
+                                    }
+                                    String especialidad = especialidadTextField.getText();
+                                    if (!especialidad.equalsIgnoreCase("")) {
+                                        especialidad = prof.getSpecialty();
+                                    }
+                                    String descripcion = descripcionTextArea.getText();
+                                    if (!descripcion.equalsIgnoreCase("")) {
+                                        descripcion = prof.getDescription();
+                                    }
+                                    if (VerificatorSetter.stringVerificator(especialidad, 150)) {
+                                        if (VerificatorSetter.stringVerificator(descripcion, 2000)) {
+                                            ProfessionalUser nuevo = new ProfessionalUser(names, lastNames, birthd, mail, tipeUs, nueva, college, especialidad, descripcion);
+                                            mediator.updateDataPerson(nuevo);
+                                        } else {
+                                            //todo: revisar
+                                        }
+                                    }
+                                }
+                            }
+                                           } else {
+                            ((MainController) mediator).showError("Error", "Para inscribirte necesitas tener 18 años");
+                        }
+                    } else {
+                        String type = String.valueOf(person.getTypeUser());
+                        NormalUser nuevouser = new NormalUser(names, lastNames, mail, type, nueva);
+                        System.out.println(nuevouser.toString());
+                        mediator.updateDataPerson(nuevouser);
+                    }
+                    ((MainController) mediator).showError("Error", "Los correos electrónicos no coinciden.\n");
+                }
+            } else {
+                ((MainController) mediator).showError("Error", "No has introducido o no tiene el formato correcto el correo");
+            }
+        }
+
+
+        return errores.toString();
+
+    }
+
 
     public void volverHome(ActionEvent actionEvent) {
-
+        mediator.volverIncio();
     }
 
     @Override

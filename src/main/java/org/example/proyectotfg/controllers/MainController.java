@@ -188,7 +188,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         person = user;
     }
 
-
     @Override
     public void volverIncio() {
         try {
@@ -292,7 +291,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             showError("Error", e.getMessage());
         }
     }
-
+      /*   ================================================================================================
+        ====================================== Update Data =====================================================*/
     @Override
     public void updatePersonalData(Person user) throws OperationsDBException {
         try {
@@ -304,6 +304,17 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
+    }
+
+
+    @Override
+    public void updateDataPerson(ProfessionalUser user) {
+
+    }
+
+    @Override
+    public void updateDataPerson(NormalUser user) {
+
     }
 
     @Override
