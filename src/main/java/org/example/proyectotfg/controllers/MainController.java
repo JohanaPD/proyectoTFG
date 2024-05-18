@@ -154,7 +154,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         String mensaje = FunctionsApp.devolverStringMail(user);
         SenderReaderMail sender = new SenderReaderMail();
         try {
-            sender.enviarMensajeHTML("meetpsychproject@gmail.com", user.getNames(), "Verificación de Cuenta", mensaje, user.getEmail(), passWordApp);
+            sender.enviarMensajeHTML("meetpsychproject@gmail.com", user.getEmail(), "Verificación de Cuenta", mensaje, "meetpsychproject@gmail.com", passWordApp);
         } catch (Exception e) {
             showError("Error", "Error al enviar el mensaje: " + e.getMessage());
         }
