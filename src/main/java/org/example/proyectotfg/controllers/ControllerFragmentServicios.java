@@ -6,10 +6,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import org.example.proyectotfg.exceptions.ThereIsNoView;
 import org.example.proyectotfg.mediators.Callback;
-import org.example.proyectotfg.mediators.Mediator;
-import org.example.proyectotfg.mediators.MediatorFirstScreen;
-import org.example.proyectotfg.mediators.ViewController;
-
 import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
