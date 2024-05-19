@@ -73,12 +73,20 @@ public abstract class Person {
         setDirection(direction);
     }
 
-    public Person(String names, String lastNames, String mail, String type, Direction nueva) throws NullArgumentException, IncorrectDataException {
+    public Person(String names, String lastNames, String mail, TypeUser type, Direction nueva) throws NullArgumentException, IncorrectDataException {
         setNames(names);
         setLastNames(lastNames);
-        setEmail(email);
-        setTypeUser(typeUser);
-        setDirection(direction);
+        setEmail(mail);
+        setTypeUser(type);
+        setDirection(nueva);
+    }
+    public Person(String names, String lastNames,String passScript, String mail, TypeUser type, Direction nueva) throws NullArgumentException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException {
+        setNames(names);
+        setLastNames(lastNames);
+        setPassScript(passScript);
+        setEmail(mail);
+        setTypeUser(type);
+        setDirection(nueva);
     }
 
     public Person(int idPerson, String names, String lastNames, String mail, Direction direction) throws IncorrectDataException, NullArgumentException {
@@ -88,6 +96,14 @@ public abstract class Person {
         setEmail(mail);
         setDirection(direction);
     }
+    public Person(int idPerson, String names, String lastNames, String mail, Direction direction,TypeUser typeUser) throws IncorrectDataException, NullArgumentException {
+        setIdPerson(idPerson);
+        setNames(names);
+        setLastNames(lastNames);
+        setEmail(mail);
+        setDirection(direction);
+        setTypeUser(typeUser);
+    }
     public Person(int idPerson, String names, String lastNames, String pass, String mail, Direction direction) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         setIdPerson(idPerson);
         setNames(names);
@@ -95,6 +111,15 @@ public abstract class Person {
         setPassScript(pass);
         setEmail(mail);
         setDirection(direction);
+    }
+    public Person(int idPerson, String names, String lastNames, String pass, String mail, Direction direction,TypeUser type) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+        setIdPerson(idPerson);
+        setNames(names);
+        setLastNames(lastNames);
+        setPassScript(pass);
+        setEmail(mail);
+        setDirection(direction);
+        setTypeUser(type);
     }
 
     public int getIdPerson() {

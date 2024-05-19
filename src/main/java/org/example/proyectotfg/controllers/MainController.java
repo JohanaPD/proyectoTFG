@@ -336,7 +336,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             connect.updateProfesionalUser(nuevo);
             showInfo("Actualización correcta", "Se ha actualizado correctamente el usuario");
             regresar();
-        } catch (OperationsDBException e) {
+        } catch (OperationsDBException | SQLException e) {
             showError("Error en la operaciones", e.getMessage());
         }
     }

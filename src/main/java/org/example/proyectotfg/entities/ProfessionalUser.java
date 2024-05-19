@@ -52,22 +52,22 @@ public class ProfessionalUser extends Person {
         super(idPerson, names, lastNames, passScript, birthDate, registrationDate, email, typeUser, stateUser, direction, lastActivity);
     }
 
-    public ProfessionalUser(String names, String lastNames, Date birthd, String mail, TypeUser tipeUs, Direction nueva, String college, String especialidad, String descripcion) throws IncorrectDataException, NullArgumentException {
+    public ProfessionalUser(String names, String lastNames, Date birthd, String mail, TypeUser tipeUs, Direction nueva, String collegiate, String specialty, String description) throws IncorrectDataException, NullArgumentException {
         super(names, lastNames, birthd, mail, tipeUs, nueva);
         setCollegiate(collegiate);
         setSpecialty(specialty);
         setDescription(description);
     }
 
-    public ProfessionalUser(String names, String lastNames, String pass1, String mail, Direction nueva, String college, String especialidad, String descripcion) throws IncorrectDataException, NullArgumentException {
-        super(names, lastNames, pass1, mail, nueva);
+    public ProfessionalUser(String names, String lastNames, String pass1, String mail, Direction nueva,TypeUser typeUser, String collegiate, String specialty, String description) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+        super(names, lastNames, pass1, mail,typeUser, nueva);
         setCollegiate(collegiate);
         setSpecialty(specialty);
         setDescription(description);
     }
 
-    public ProfessionalUser(int idPerson, String names, String lastNames, String mail, Direction nueva, String collegiate, String specialty, String description) throws IncorrectDataException, NullArgumentException {
-        super(idPerson, names, lastNames, mail, nueva);
+    public ProfessionalUser(int idPerson, String names, String lastNames, String mail, Direction nueva,TypeUser typeUser, String collegiate, String specialty, String description) throws IncorrectDataException, NullArgumentException {
+        super(idPerson, names, lastNames, mail, nueva,typeUser);
         setCollegiate(collegiate);
         setSpecialty(specialty);
         setDescription(description);
