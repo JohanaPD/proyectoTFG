@@ -23,10 +23,13 @@ public class VerificatorSetter {
         return false;
     }
 
-    public static boolean stringVerificatorletterAndNumbers(String cadena, int lengt) {
+    public static boolean stringVerificatorletterAndNumbers(String cadena, int length) {
         if (cadena != null) {
-            if (cadena.length() >= 1 || cadena.length() < lengt) {
-                Pattern patron = Pattern.compile("^[a-zA-Z0-9\\s]+$");
+            if (cadena.length() >= 1 && cadena.length() <= length) {
+                // La expresión regular incluye letras, números, espacios, comas y caracteres con tilde
+                Pattern patron = Pattern.compile("^[a-zA-Z0-9\\s,áéíóúÁÉÍÓÚñÑ.\\-']+$");
+
+
                 Matcher matcher = patron.matcher(cadena);
                 if (matcher.matches()) {
                     return true;

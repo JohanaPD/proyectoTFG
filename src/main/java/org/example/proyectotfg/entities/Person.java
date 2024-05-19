@@ -120,18 +120,13 @@ public abstract class Person {
 
     }
 
-
     public String getLastNames() {
-
-
         return lastNames;
     }
-
 
     public Direction getDirection() {
         return direction;
     }
-
 
     public void setDirection(Direction direction) throws NullArgumentException, IncorrectDataException {
         if (direction != null) {
@@ -139,8 +134,6 @@ public abstract class Person {
         } else {
             throw new NullArgumentException("Has introducido datos nulos a la hora de crear la persona");
         }
-
-
     }
 
 
@@ -152,7 +145,6 @@ public abstract class Person {
     public void setPostTreeMap(TreeMap<Date, Post> postTreeMap) {
         this.postTreeMap = postTreeMap;
     }
-
 
     public void setLastNames(String lastNames) throws NullArgumentException {
         if (lastNames != null) {
@@ -166,11 +158,9 @@ public abstract class Person {
         }
     }
 
-
     public String getEmail() {
         return email;
     }
-
 
     public Direction getDireccion() {
         return direction;
@@ -180,8 +170,6 @@ public abstract class Person {
     public void setDireccion(Direction direction) throws NullArgumentException {
         if (direction != null) {
             this.direction = direction;
-
-
         } else {
             throw new NullArgumentException("Has introducido datos nulos a la hora de crear la persona");
         }
@@ -195,8 +183,6 @@ public abstract class Person {
             } else {
                 throw new IncorrectDataException("El correo introducido es erróneo");
             }
-
-
         } else {
             throw new NullArgumentException("Has introducido datos nulos a la hora de crear la persona");
         }

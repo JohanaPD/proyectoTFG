@@ -29,7 +29,9 @@ public class InfoProfesionalController  implements ViewController {
 
 
     public void initialize() {
+
         description.setEditable(false);
+        description.setWrapText(true);
     }
 
     @Override

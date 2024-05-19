@@ -64,7 +64,6 @@ public class ProfessionalUser extends Person {
         setCollegiate(collegiate);
         setSpecialty(specialty);
         setDescription(description);
-
     }
 
     public ProfessionalUser(String names, String lastNames, String mail, Direction nueva, String collegiate, String specialty, String description) throws IncorrectDataException, NullArgumentException {
@@ -74,7 +73,6 @@ public class ProfessionalUser extends Person {
         setDescription(description);
 
     }
-
 
     public String getCollegiate() {
         return collegiate;
@@ -101,7 +99,7 @@ public class ProfessionalUser extends Person {
 
     public void setSpecialty(String specialty) throws NullArgumentException, IncorrectDataException {
         if (specialty != null) {
-            if (VerificatorSetter.stringVerificator(specialty, specialty.length())) {
+            if (VerificatorSetter.stringVerificatorletterAndNumbers(specialty, specialty.length())) {
                 this.specialty = specialty;
             } else {
                 throw new IncorrectDataException("Verifica los datos introducidos, solo se aceptan letras");
@@ -119,7 +117,7 @@ public class ProfessionalUser extends Person {
 
     public void setDescription(String description) throws NullArgumentException, IncorrectDataException {
         if (description != null) {
-            if (VerificatorSetter.stringVerificator(description, description.length()))
+            if (VerificatorSetter.stringVerificatorletterAndNumbers(description, 7000))
                 this.description = description;
             else throw new IncorrectDataException("Verifica los datos introducidos, solo se aceptan letras");
 

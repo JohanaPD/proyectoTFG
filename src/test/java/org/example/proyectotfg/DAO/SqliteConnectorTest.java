@@ -82,13 +82,13 @@ class SqliteConnectorTest {
     void testRegisterProfessionalUser() throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, DuplicateKeyException {
         // Prueba de registro de un usuario profesional
         ProfessionalUser professionalUser = new ProfessionalUser();
-        professionalUser.setIdPerson(4);
-        professionalUser.setNames("John");
-        professionalUser.setLastNames("Doe");
+        professionalUser.setIdPerson(6);
+        professionalUser.setNames("Johny");
+        professionalUser.setLastNames("Doet");
         professionalUser.setPassScript("password");
         professionalUser.setBirthDate(new Date());
         professionalUser.setRegistrationDate(new Date());
-        professionalUser.setEmail("john@example.com");
+        professionalUser.setEmail("johny@example.com");
         professionalUser.setTypeUser(TypeUser.USUARIO_NORMAL);
         Direction direction = new Direction();
         direction.setIdDireccion(1);
@@ -98,7 +98,7 @@ class SqliteConnectorTest {
         professionalUser.setDirection(direction);
         professionalUser.setCollegiate("123456");
         professionalUser.setSpecialty("Psychiatry");
-        professionalUser.setDescription("Experienced psychiatrist");
+        professionalUser.setDescription(" Omar Pérez es un psicólogo altamente cualificado con más de 15 años de experiencia en el campo de la psicoterapia. Especialista en terapias cognitivo-conductuales, ha ayudado a numerosos pacientes a superar problemas de ansiedad, depresión y estrés. Su enfoque empático y personalizado le permite crear un ambiente seguro y de confianza, facilitando el crecimiento personal y el bienestar emocional. Además, Omar es conferencista y autor de varios artículos sobre salud mental, compartiendo sus conocimientos y contribuyendo al avance de la psicología. Su dedicación y profesionalismo lo destacan como un referente en el área de la psicoterapia. ");
 
         // Simulamos el registro de un usuario profesional
         try {
