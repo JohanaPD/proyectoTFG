@@ -7,7 +7,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import org.example.proyectotfg.entities.Person;
+import org.example.proyectotfg.entities.Post;
+import org.example.proyectotfg.exceptions.IncorrectDataException;
+import org.example.proyectotfg.exceptions.NullArgumentException;
 import org.example.proyectotfg.mediators.Mediator;
+import org.example.proyectotfg.mediators.MediatorPost;
 import org.example.proyectotfg.mediators.ViewController;
 
 public class PostGeneratorController implements ViewController {
@@ -22,18 +27,24 @@ public class PostGeneratorController implements ViewController {
 
     @FXML
     private ImageView patImage;
-
-    @FXML
-    private TextFlow textDescripton;
-
     @FXML
     private TextField titlePost;
+    MediatorPost mediator;
+    Person person;
     @Override
     public void setMediator(Mediator mediador) {
-
+       this.mediator=(MediatorPost)mediator;
     }
     @FXML
-    void generarPost(ActionEvent event) {
+    void generarPost(ActionEvent event) throws IncorrectDataException, NullArgumentException {
+
+        String title= titlePost.getText();
+        String presentacion= descriptionPost.getText();
+        String nameTit= nameTitular.getText();
+        String descrip=description.getText();
+        Post nuevo= new Post(person, title,descrip);
+        mediator.makePost(nuevo);
+
 
     }
 

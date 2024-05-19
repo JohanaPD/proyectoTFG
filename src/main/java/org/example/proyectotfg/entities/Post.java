@@ -19,6 +19,12 @@ public class Post {
         setUrlImg(urlImg);
     }
 
+    public Post(Person titular, String title, String content) throws NullArgumentException, IncorrectDataException {
+        setTitular(titular);
+        setTitle(title);
+        setContent(content);
+    }
+
     public int getIdPost() {
         return idPost;
     }

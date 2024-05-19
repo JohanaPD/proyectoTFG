@@ -16,6 +16,7 @@ import org.example.proyectotfg.DAO.SqliteConnector;
 import org.example.proyectotfg.MainApplication;
 import org.example.proyectotfg.entities.NormalUser;
 import org.example.proyectotfg.entities.Person;
+import org.example.proyectotfg.entities.Post;
 import org.example.proyectotfg.entities.ProfessionalUser;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
 import org.example.proyectotfg.exceptions.*;
@@ -31,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainController implements Mediator, MediatorAcceso, MediatorProfile, MediatorFirstScreen {
+public class MainController implements Mediator, MediatorAcceso, MediatorProfile, MediatorFirstScreen, MediatorPost {
     //mongo, sql, sqlite
     private Stage mainStage;
     private Mediator mediatorAplicado;
@@ -393,6 +394,19 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         }
     }
 
+  /*   ================================================================================================
+        ======================================Hacer Post =====================================================*/
+
+    @Override
+    public void makePost(Post nuevo) {
+            connect.makeNewPost(nuevo);
+    }
+
+    @Override
+    public void viewPost() {
+
+    }
+
     /*   ================================================================================================
         ======================================show errors =====================================================*/
 
@@ -413,6 +427,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         alerta.setContentText(menssage);
         alerta.showAndWait();
     }
+
 
 
 }

@@ -1,9 +1,6 @@
 package org.example.proyectotfg.DAO;
 
-import org.example.proyectotfg.entities.Direction;
-import org.example.proyectotfg.entities.Person;
-import org.example.proyectotfg.entities.ProfessionalUser;
-import org.example.proyectotfg.entities.NormalUser;
+import org.example.proyectotfg.entities.*;
 import org.example.proyectotfg.enumAndTypes.StatesUser;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
 import org.example.proyectotfg.exceptions.*;
@@ -649,19 +646,31 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         } catch (SQLException e) {
             connection.rollback();
         }
-
-
-
-
     }
 
+    public void makeNewPost(Post nuevo) {
+        String insert = "INSERT INTO post (title, content, date_post, id_person) VALUES (?, ?, date('now'), ?)";
 
+        try (PreparedStatement statement = connection.prepareStatement(insert)) {
+            statement.setString(1, nuevo.getTitle());
+            statement.setString(2, nuevo.getContent());
+            statement.setInt(2, nuevo.getTitular().getIdPerson());
+
+            statement.executeUpdate();
+            System.out.println("Datos insertados correctamente.");
+
+        } catch (SQLException   e) {
+
+        }
+
+    }
 
 
     @Override
     public void close() throws Exception {
         connection.close();
     }
+
 
 
 }
