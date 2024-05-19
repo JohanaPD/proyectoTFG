@@ -590,9 +590,10 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     public  void updateNormalUserWP(NormalUser nuevo) throws OperationsDBException, SQLException {
 
         String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, email = ?, id_direction = ? WHERE id_person = ?";
-
+        String updateDireccion= "UPDATE direction SET street= ? , city= ?, postal_code= ? WHERE id_direction= ?";
         try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL)) {
+             PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
+             PreparedStatement updateDireccionStmt = connection.prepareStatement(updateDireccion)) {
 
             connection.setAutoCommit(false);
 
@@ -603,8 +604,14 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             updatePersonStmt.setInt(4, nuevo.getDireccion().getIdDireccion());
             updatePersonStmt.setInt(5, nuevo.getIdPerson());
 
+            updateDireccionStmt.setString(1, nuevo.getDirection().getStreet());
+            updateDireccionStmt.setString(2, nuevo.getDirection().getCity());
+            updateDireccionStmt.setString(3, String.valueOf(nuevo.getDirection().getPostalCode()));
+            updateDireccionStmt.setInt(4, nuevo.getDireccion().getIdDireccion());
+
             updatePersonStmt.executeUpdate();
-            
+            updateDireccionStmt.executeUpdate();
+
             connection.commit();
         } catch (SQLException e) {
             connection.rollback();
