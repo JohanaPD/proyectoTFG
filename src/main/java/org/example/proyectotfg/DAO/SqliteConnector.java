@@ -617,11 +617,45 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             connection.rollback();
         }
     }
-
-
-
     public  void updateProfesionalUser(ProfessionalUser user) throws OperationsDBException {
     }
+
+    public  void updateDataPerson(NormalUser user) throws OperationsDBException, SQLException {
+        String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, pass_script = ? ,email = ?, id_direction = ? WHERE id_person = ?";
+        String updateDireccion= "UPDATE direction SET street= ? , city= ?, postal_code= ? WHERE id_direction= ?";
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
+             PreparedStatement updateDireccionStmt = connection.prepareStatement(updateDireccion)) {
+
+            connection.setAutoCommit(false);
+
+            // Actualizar en tabla `person`
+            updatePersonStmt.setString(1, user.getNames());
+            updatePersonStmt.setString(2, user.getLastNames());
+            updatePersonStmt.setString(2, user.getPassScript());
+            updatePersonStmt.setString(3, user.getEmail());
+            updatePersonStmt.setInt(4, user.getDireccion().getIdDireccion());
+            updatePersonStmt.setInt(5, user.getIdPerson());
+
+            updateDireccionStmt.setString(1, user.getDirection().getStreet());
+            updateDireccionStmt.setString(2, user.getDirection().getCity());
+            updateDireccionStmt.setString(3, String.valueOf(user.getDirection().getPostalCode()));
+            updateDireccionStmt.setInt(4, user.getDireccion().getIdDireccion());
+
+            updatePersonStmt.executeUpdate();
+            updateDireccionStmt.executeUpdate();
+
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+        }
+
+
+
+
+    }
+
+
 
 
     @Override

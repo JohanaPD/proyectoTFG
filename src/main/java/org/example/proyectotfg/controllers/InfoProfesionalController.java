@@ -27,10 +27,7 @@ public class InfoProfesionalController  implements ViewController {
     private Text description;
     private MediatorFirstScreen mediator;
 
-
     public void initialize() {
-
-
     }
 
     @Override
@@ -54,11 +51,8 @@ public class InfoProfesionalController  implements ViewController {
         name.setText(professionalUser.getNames());
         specialty.setText(professionalUser.getSpecialty());
         description.setText(professionalUser.getDescription());
-
     }
     public void volverHome(ActionEvent actionEvent) {
         mediator.regresar();
     }
-
-
 }

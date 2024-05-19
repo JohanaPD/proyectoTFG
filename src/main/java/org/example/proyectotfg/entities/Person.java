@@ -88,6 +88,14 @@ public abstract class Person {
         setEmail(mail);
         setDirection(direction);
     }
+    public Person(int idPerson, String names, String lastNames, String pass, String mail, Direction direction) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+        setIdPerson(idPerson);
+        setNames(names);
+        setLastNames(lastNames);
+        setPassScript(pass);
+        setEmail(mail);
+        setDirection(direction);
+    }
 
     public int getIdPerson() {
         return idPerson;

@@ -157,7 +157,7 @@ public class UpdatePersonController implements ViewController {
         }
         Direction nueva = null;
         try {
-            nueva = new Direction(calle, city, Integer.parseInt(codPostal));
+            nueva = new Direction(person.getDirection().getIdDireccion(), calle, city, Integer.parseInt(codPostal));
         } catch (NumberFormatException e) {
             correctDirection = false;
         }
@@ -196,9 +196,9 @@ public class UpdatePersonController implements ViewController {
                         if (!pass1.equals(pass2)) {
                             errores.append("Las contraseñas no coinciden.\n");
                         } else {
-                            // Actualizar con contraseña
+                            // Actualizar con contraseña///
                             if (tipeUser.equalsIgnoreCase(String.valueOf(TypeUser.USUARIO_NORMAL))) {
-                                NormalUser nuevoUser = new NormalUser(names, lastNames, pass1, mail, nueva);
+                                NormalUser nuevoUser = new NormalUser(person.getIdPerson(), names, lastNames, pass1, mail, nueva);
                                 mediator.updateAllDataPerson(nuevoUser);
                             } else {
                                 // ProfessionalUser

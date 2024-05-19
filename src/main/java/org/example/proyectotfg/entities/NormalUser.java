@@ -53,6 +53,10 @@ public class NormalUser extends Person {
         super(idPerson, names, lastNames, mail, nueva);
     }
 
+    public NormalUser(int idP, String names, String lastNames, String pass1, String mail, Direction nueva) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
+    super(idP,names,lastNames,pass1, mail, nueva);
+    }
+
 
     public Deque<ProfessionalUser> getSerchs() {
         return serchs;
