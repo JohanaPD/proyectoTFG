@@ -24,14 +24,13 @@ public class InfoProfesionalController  implements ViewController {
     private Text specialty;
     @FXML
     //TextFlow previamente
-    private TextArea description;
+    private Text description;
     private MediatorFirstScreen mediator;
 
 
     public void initialize() {
 
-        description.setEditable(false);
-        description.setWrapText(true);
+
     }
 
     @Override

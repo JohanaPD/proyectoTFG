@@ -2,8 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,8 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="700.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.InfoProfesionalController">
+<AnchorPane prefHeight="700.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.InfoProfesionalController">
     <children>
         <VBox prefHeight="700.0" prefWidth="360.0">
             <children>
@@ -34,41 +33,38 @@
                             <font>
                                 <Font size="36.0" />
                             </font>
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="-20.0" />
-                     </VBox.margin>
+                            <VBox.margin>
+                                <Insets bottom="10.0" top="-20.0" />
+                            </VBox.margin>
                         </Text>
-                  <Text fx:id="specialty" layoutX="10.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="especialidad" textAlignment="CENTER" wrappingWidth="358.13671875">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </Text>
-                  <ScrollPane prefHeight="335.0" prefWidth="359.0">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="331.0" prefWidth="358.0">
-                           <children>
-                                    <TextArea fx:id="description" prefHeight="349.0" prefWidth="360.0" />
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </ScrollPane>
+                        <Text fx:id="specialty" layoutX="10.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="especialidad" textAlignment="CENTER" wrappingWidth="358.13671875">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </Text>
+                        <TextFlow minHeight="0.0" minWidth="0.0" prefHeight="331.0" prefWidth="358.0" styleClass="text-flow" stylesheets="@styles.css">
+                            <children>
+                                <Text fx:id="description" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Text" />
+                            </children>
+                        </TextFlow>
+
                     </children>
                     <VBox.margin>
                         <Insets left="10.0" right="10.0" top="-20.0" />
                     </VBox.margin>
                 </VBox>
-      
-              <HBox alignment="CENTER" spacing="10">
-               <HBox prefHeight="100.0" prefWidth="200.0">
-                  <children>
-            
-                        <Button onAction="#volverHome" prefHeight="36.0" prefWidth="202.0" styleClass="buttonIntroRegistro" stylesheets="@styles.css" text="Volver" />
-                  </children>
-               </HBox>
-              </HBox>
+
+                <HBox alignment="CENTER" spacing="10">
+                    <HBox prefHeight="100.0" prefWidth="200.0">
+                        <children>
+
+                            <Button onAction="#volverHome" prefHeight="36.0" prefWidth="202.0" styleClass="buttonIntroRegistro" stylesheets="@styles.css" text="Volver" />
+                        </children>
+                    </HBox>
+                </HBox>
             </children>
         </VBox>
     </children>
