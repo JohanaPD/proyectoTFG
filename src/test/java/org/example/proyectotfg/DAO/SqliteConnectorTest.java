@@ -11,9 +11,12 @@ import org.example.proyectotfg.entities.*;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import static org.example.proyectotfg.DAO.SqliteConnector.connection;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SqliteConnectorTest {
@@ -148,7 +151,6 @@ class SqliteConnectorTest {
         } catch (OperationsDBException e) {
             e.getMessage();
         }
-
         // Prueba de registro de una persona
         // Crea una instancia de Person con datos de prueba
          /*   NormalUser normalUser = new NormalUser();
@@ -212,5 +214,39 @@ class SqliteConnectorTest {
         }*/
 
 
+    }
+
+    @Test
+    void testUpdateNormalUserWP() throws OperationsDBException, SQLException, IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+        // Insertar datos de prueba
+
+
+        // Crear un nuevo objeto NormalUser con los datos actualizados
+        NormalUser normalUser = new NormalUser();
+        normalUser.setIdPerson(1);
+        normalUser.setNames("Jane");
+        normalUser.setLastNames("Smith");
+        normalUser.setEmail("jane.smith@example.com");
+        Direction direction = new Direction();
+        direction.setIdDireccion(1); // Usar una dirección existente
+        normalUser.setDireccion(direction);
+
+        // Llamar al método a probar
+        SqliteConnector sqliteConnector = new SqliteConnector();
+        sqliteConnector.updateNormalUserWP(normalUser);
+
+        // Verificar que los datos en la base de datos se hayan actualizado correctamente
+        String selectSQL = "SELECT user_names, last_names, email FROM person WHERE id_person = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
+            pstmt.setInt(1, 1);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                assertEquals("Jane", rs.getString("user_names"));
+                assertEquals("Smith", rs.getString("last_names"));
+                assertEquals("jane.smith@example.com", rs.getString("email"));
+            } else {
+                fail("No se encontró la persona con id_person = 1");
+            }
+        }
     }
 }

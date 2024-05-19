@@ -99,6 +99,7 @@ public class InitialInterfaceController implements ViewController, Initializable
 
     public void adminSetting(ActionEvent actionEvent) throws OperationsDBException {
         mediator.updatePersonalData(user);
+
     }
 
     public void openCalendar(ActionEvent actionEvent) {
