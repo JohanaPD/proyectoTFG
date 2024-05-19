@@ -62,8 +62,8 @@ public class ControllerFragmentServicios{
     void cargarServicio(MouseEvent event) throws ThereIsNoView {
         serviciosArray.add("Medico");
         serviciosArray.add("Foros");
-        serviciosArray.add("Comunidad");
-        serviciosArray.add("Consultas");
+        serviciosArray.add("Publicar Post");
+        serviciosArray.add("Ver Post");
 
         String titulo = titleService.getText().trim().toString();
 

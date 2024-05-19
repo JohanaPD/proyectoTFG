@@ -86,10 +86,10 @@ public class InitialInterfaceController implements ViewController, Initializable
     }
     public HashMap<String, String> getServicio() {
         HashMap<String, String> servicios = new HashMap<>();
-        servicios.put("Medico", "/org/example/proyectotfg/img/psicologo.png");
         servicios.put("Foros", "/org/example/proyectotfg/img/factores.png");
-        servicios.put("Comunidad", "/org/example/proyectotfg/img/gestion.png");
-        servicios.put("Consultas", "/org/example/proyectotfg/img/consulta.png");
+        servicios.put("Publicar Post", "/org/example/proyectotfg/img/gestion.png");
+        servicios.put("Ver Post", "/org/example/proyectotfg/img/consulta.png");
+        servicios.put("Medico", "/org/example/proyectotfg/img/psicologo.png");
         return servicios;
     }
     public void openSearch(ActionEvent actionEvent) {
