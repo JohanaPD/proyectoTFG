@@ -49,8 +49,8 @@ public class NormalUser extends Person {
         super(names, lastNames, mail, type, nueva);
     }
 
-    public NormalUser(String names, String lastNames, String mail, Direction nueva) throws IncorrectDataException, NullArgumentException {
-        super(names, lastNames, mail, nueva);
+    public NormalUser(int idPerson, String names, String lastNames, String mail, Direction nueva) throws IncorrectDataException, NullArgumentException {
+        super(idPerson, names, lastNames, mail, nueva);
     }
 
 

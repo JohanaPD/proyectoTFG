@@ -81,7 +81,8 @@ public abstract class Person {
         setDirection(direction);
     }
 
-    public Person(String names, String lastNames, String mail, Direction direction) throws IncorrectDataException, NullArgumentException {
+    public Person(int idPerson, String names, String lastNames, String mail, Direction direction) throws IncorrectDataException, NullArgumentException {
+        setIdPerson(idPerson);
         setNames(names);
         setLastNames(lastNames);
         setEmail(mail);

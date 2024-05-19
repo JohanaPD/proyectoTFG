@@ -602,9 +602,9 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             updatePersonStmt.setString(3, nuevo.getEmail());
             updatePersonStmt.setInt(4, nuevo.getDireccion().getIdDireccion());
             updatePersonStmt.setInt(5, nuevo.getIdPerson());
+
             updatePersonStmt.executeUpdate();
-
-
+            
             connection.commit();
         } catch (SQLException e) {
             connection.rollback();
