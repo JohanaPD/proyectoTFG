@@ -194,5 +194,20 @@
 .centrarTexto {
     -fx-alignment: center;
     -fx-text-alignment: center;
+
+}
+.text-flow {
+    -fx-text-alignment: justify;
+    -fx-padding: 10;
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.text-flow .text {
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial";
+    -fx-fill: #333333;
 }
 
