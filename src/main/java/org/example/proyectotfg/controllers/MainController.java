@@ -311,6 +311,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void updateDataPerson(NormalUser user) {
         try {
             connect.updateNormalUserWP(user);
+            showInfo("Actualización correcta", "Se ha actualizado correctamente el usuario");
+            regresar();
         } catch (OperationsDBException|SQLException e) {
             showError("Error en la operaciones", e.getMessage());
         }
@@ -320,6 +322,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void updateDataPerson(ProfessionalUser user) {
         try {
             connect.updateProfesionalUser(user);
+            showInfo("Actualización correcta", "Se ha actualizado correctamente el usuario");
+            regresar();
         } catch (OperationsDBException e) {
             showError("Error en la operaciones", e.getMessage());
         }
@@ -329,6 +333,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void updateAllDataPerson(ProfessionalUser nuevo) {
         try {
             connect.updateProfesionalUserWP(nuevo);
+            showInfo("Actualización correcta", "Se ha actualizado correctamente el usuario");
+            regresar();
         } catch (OperationsDBException|SQLException e) {
             showError("Error en la operaciones", e.getMessage());
         }
@@ -338,6 +344,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void updateAllDataPerson(NormalUser nuevo) throws SQLException {
         try {
             connect.updateNormalUserWP(nuevo);
+            showInfo("Actualización correcta", "Se ha actualizado correctamente el usuario");
+            regresar();
         } catch (OperationsDBException e) {
             showError("Error en la operaciones", e.getMessage());
         }
