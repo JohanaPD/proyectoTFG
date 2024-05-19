@@ -40,4 +40,8 @@ public class RecoverPassworController  implements ViewController {
     public void setMainController(MainController mainController) {
 
     }
+
+    public void firtScreen(ActionEvent actionEvent) {
+        mediator.volverIncio();
+    }
 }
