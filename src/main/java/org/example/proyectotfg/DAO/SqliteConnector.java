@@ -466,8 +466,11 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     }
 
     @Override
-    public void registerProfessionalUser(ProfessionalUser professionalUser) throws OperationsDBException, DuplicateKeyException {
-        registerPerson(professionalUser);
+    public void registerProfessionalUser(ProfessionalUser professionalUser, boolean update) throws OperationsDBException, DuplicateKeyException {
+        if (!update) {
+            registerPerson(professionalUser);
+        }
+
         try {
             String textoConsulta = "insert into professional_user(id_person,collegiate,specialty,description) values (?,?,?,?);";
             try (PreparedStatement preparedStatement = connection.prepareStatement(textoConsulta)) {
@@ -479,7 +482,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
             }
         } catch (SQLException e) {
-            throw new OperationsDBException("Se ha producido un error al guardar el usuario profesional");
+            throw new OperationsDBException("Se ha producido un error al guardar el usuario profesional, comprueba que el colegiado no esté repetido y si continua el problema consulta con el soporte");
         }
     }
 
@@ -556,9 +559,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, email = ?, id_direction = ?, type_user=? WHERE id_person = ?";
         String updateProfessionalUserSQL = "UPDATE professional_user SET collegiate = ?, specialty = ?, description = ? WHERE id_person = ?";
         String updateDireccion = "UPDATE direction SET street= ? , city= ?, postal_code= ? WHERE id_direction= ?";
-        try{
-            registerProfessionalUser(nuevo);
-        }catch (DuplicateKeyException e) {}
+
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
              PreparedStatement updateDirectionStmt = connection.prepareStatement(updateDireccion);
@@ -586,10 +587,20 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
             updatePersonStmt.executeUpdate();
             updateDirectionStmt.executeUpdate();
-            updateProfessionalUserStmt.executeUpdate();
+            int isUpdated = updateProfessionalUserStmt.executeUpdate();
+            if (isUpdated == 0) {
+                try {
+                    connection.commit();
+                    connection.close();
+                    registerProfessionalUser(nuevo, true);
+                } catch (DuplicateKeyException e) {
+                }
+            } else {
+                connection.commit();
+
+            }
 
 
-            connection.commit();
         } catch (SQLException e) {
             connection.rollback();
             throw new OperationsDBException("Error al actualizar los datos del usuario profesional: " + e.getMessage());
@@ -660,8 +671,13 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
             updatePersonStmt.executeUpdate();
             updateDireccionStmt.executeUpdate();
-            updateProfessionalUserStmt.executeUpdate();
-
+            int isUpdate = updateProfessionalUserStmt.executeUpdate();
+            if (isUpdate == 0) {
+                try {
+                    registerProfessionalUser(user, true);
+                } catch (DuplicateKeyException e) {
+                }
+            }
             connection.commit();
         } catch (SQLException e) {
             connection.rollback();
@@ -702,6 +718,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
 
     }
+
     public void makeNewPost(Post nuevo) {
         String insert = "INSERT INTO post (title, content, date_post, id_person) VALUES (?, ?, date('now'), ?)";
 
@@ -713,7 +730,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             statement.executeUpdate();
             System.out.println("Datos insertados correctamente.");
 
-        } catch (SQLException   e) {
+        } catch (SQLException e) {
 
         }
 

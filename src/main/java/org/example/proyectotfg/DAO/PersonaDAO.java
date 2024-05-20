@@ -23,7 +23,7 @@ public interface PersonaDAO {
 
     ProfessionalUser buscarPsicologo(String nombre) throws OperationsDBException;
 
-    void registerProfessionalUser(ProfessionalUser professionalUser) throws OperationsDBException, DuplicateKeyException;
+    void registerProfessionalUser(ProfessionalUser professionalUser,boolean update) throws OperationsDBException, DuplicateKeyException;
 
     void registerNormalUser(NormalUser normalUser) throws OperationsDBException, DuplicateKeyException;
 

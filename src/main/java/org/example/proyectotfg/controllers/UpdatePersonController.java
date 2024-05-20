@@ -124,10 +124,11 @@ public class UpdatePersonController implements ViewController {
         textStreet.setText(dir.getStreet());
         textCity.setText(dir.getCity());
         PostalCode.setText(String.valueOf(dir.getPostalCode()));
+        comboTypeUser.setValue(person.getTypeUser());
         if (!person.getTypeUser().equals(TypeUser.USUARIO_NORMAL)) {
             ProfessionalUser profesionalPerson = SqliteConnector.chargeProfesionalUserById(person.getIdPerson());
             especialidadTextField.setText(profesionalPerson.getSpecialty());
-            colegiadoLabel.setText(profesionalPerson.getCollegiate());
+            colegiadoTextField.setText(profesionalPerson.getCollegiate());
             descripcionTextArea.setText(profesionalPerson.getDescription());
         }
         this.person = person;
