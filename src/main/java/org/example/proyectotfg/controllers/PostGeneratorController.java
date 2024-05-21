@@ -44,8 +44,8 @@ public class PostGeneratorController implements ViewController {
         String descrip=description.getText();
         Post nuevo= new Post(person, title,descrip);
         mediator.makePost(nuevo);
-
-
+    }
+    public void volverHome(ActionEvent actionEvent) {
     }
 
     @Override
