@@ -27,8 +27,8 @@ public class VerificatorSetter {
         if (cadena != null) {
             if (cadena.length() >= 1 && cadena.length() <= length) {
                 // La expresión regular incluye letras, números, espacios, comas y caracteres con tilde
-                Pattern patron = Pattern.compile("^[a-zA-Z0-9\\s,áéíóúÁÉÍÓÚñÑ.\\-']+$");
-
+               // Pattern patron = Pattern.compile("^[a-zA-Z0-9\\s,áéíóúÁÉÍÓÚñÑ.\\-']+$");
+                Pattern patron = Pattern.compile("^[a-zA-Z0-9\\s,áéíóúÁÉÍÓÚñÑ.\\-'\\r\\n]+$");
 
                 Matcher matcher = patron.matcher(cadena);
                 if (matcher.matches()) {

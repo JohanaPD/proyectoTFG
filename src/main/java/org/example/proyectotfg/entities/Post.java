@@ -25,6 +25,10 @@ public class Post {
         setContent(content);
     }
 
+    public Post() {
+
+    }
+
     public int getIdPost() {
         return idPost;
     }
@@ -56,7 +60,7 @@ public class Post {
 
     public void setTitle(String title) throws NullArgumentException, IncorrectDataException {
         if (title != null) {
-            if (VerificatorSetter.stringVerificator(title, title.length())) {
+            if (VerificatorSetter.stringVerificatorletterAndNumbers(title, title.length())) {
                 this.title = title;
             } else {
                 throw new IncorrectDataException("Verifica los datos introducidos, solo se aceptan letras");
@@ -72,7 +76,7 @@ public class Post {
 
     public void setContent(String content) throws NullArgumentException {
         if (content != null) {
-            if (VerificatorSetter.stringVerificator(content, content.length())) {
+            if (VerificatorSetter.stringVerificatorletterAndNumbers(content, content.length())) {
                 this.content = content;
             } else {
                 throw new IllegalArgumentException("Verifica los datos introducidos, solo se aceptan letras");
@@ -88,14 +92,7 @@ public class Post {
 
     public void setUrlImg(String urlImg) throws NullArgumentException {
         if (urlImg != null) {
-            if (VerificatorSetter.stringVerificator(urlImg, urlImg.length())) {
                 this.urlImg = urlImg;
-            } else {
-                throw new IllegalArgumentException("Verifica los datos introducidos, solo se aceptan letras");
-            }
-        } else {
-
-            throw new NullArgumentException("Has introducido valores nulos a la hora de crear el post");
         }
     }
 

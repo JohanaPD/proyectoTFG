@@ -61,17 +61,9 @@
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </TextField>
-                        <TextField fx:id="descriptionPost" alignment="CENTER" prefWidth="358.13671875" promptText="Detalle">
-                            <font>
-                                <Font size="24.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets bottom="10.0" />
-                            </VBox.margin>
-                        </TextField>
                         <TextFlow fx:id="textDescripton" minHeight="0.0" minWidth="0.0" prefHeight="349.0" prefWidth="334.0" styleClass="text-flow" stylesheets="@styles.css">
                             <children>
-                                <TextArea fx:id="description" prefHeight="293.0" prefWidth="316.0" promptText="Descripción" wrapText="true" />
+                                <TextArea fx:id="description" prefHeight="334.0" prefWidth="316.0" promptText="Descripción" wrapText="true" />
                             </children>
                         </TextFlow>
 

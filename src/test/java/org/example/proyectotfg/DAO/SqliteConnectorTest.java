@@ -11,9 +11,10 @@ import org.example.proyectotfg.entities.*;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 import static org.example.proyectotfg.DAO.SqliteConnector.connection;
@@ -105,12 +106,14 @@ class SqliteConnectorTest {
 
         // Simulamos el registro de un usuario profesional
         try {
-            sqliteConnector.registerProfessionalUser(professionalUser);
+            sqliteConnector.registerProfessionalUser(professionalUser, true);
             assertTrue(true);
         } catch (OperationsDBException e) {
             fail("Error registrando usuario profesional: " + e.getMessage());
         }
     }
+
+
 
     @Test
     void testRegisterNormalUser() throws IncorrectDataException, NullArgumentException, DuplicateKeyException, NoSuchAlgorithmException, InvalidKeySpecException {
@@ -218,10 +221,7 @@ class SqliteConnectorTest {
 
     @Test
     void testUpdateNormalUserWP() throws OperationsDBException, SQLException, IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
-        // Insertar datos de prueba
 
-
-        // Crear un nuevo objeto NormalUser con los datos actualizados
         NormalUser normalUser = new NormalUser();
         normalUser.setIdPerson(1);
         normalUser.setNames("Jane");
@@ -231,7 +231,6 @@ class SqliteConnectorTest {
         direction.setIdDireccion(1); // Usar una dirección existente
         normalUser.setDireccion(direction);
 
-        // Llamar al método a probar
         SqliteConnector sqliteConnector = new SqliteConnector();
         sqliteConnector.updateNormalUserWP(normalUser);
 
@@ -248,5 +247,35 @@ class SqliteConnectorTest {
                 fail("No se encontró la persona con id_person = 1");
             }
         }
+    }
+
+    @Test
+    public void makeNewPost() throws SQLException, IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+        // Arrange
+        SqliteConnector conn = new SqliteConnector();
+        Person titular = new ProfessionalUser();
+        Post nuevo = new Post();
+        nuevo.setIdPost(1);
+        nuevo.setTitle("La lectura y sus positivos efectos para la salud mental");
+        nuevo.setContent("Algo tan sencillo como un libro puede transformarse en un muy buen aliado si buscas prevenir el estrés y cuidar tu salud mental." +
+                "Es probable que desde la infancia hayas escuchado a tus padres o abuelos hablar sobre la importancia de la lectura para la vida. Demás está decir que leer es sinónimo de aprender y entretenerse , y a esto debemos sumar los muchos beneficios que un libro puede tener para la salud mental.\n" +
+                "El doctor Alejandro Koppmann, psiquiatra de Clínica Alemana, explica que los efectos positivos de un libro varían según cada lector: “Además del placer de disfrutar una buena historia, muchos recuerdan, por ejemplo, haber encontrado en la lectura un refugio o un lugar de descanso frente a situaciones adversas ocurridas durante su infancia. Otras personas, en cambio, leen como estrategia de prevención contra el estrés”. Y es que la lectura, efectivamente, tal como mantener algún hobby o practicar actividad física, puede contribuir a evitar o a equilibrar la precipitación de un síndrome de sobrecarga o cuadro de estrés ”.");
+
+        String insert = "INSERT INTO post (title, content, date_post, id_person) VALUES (?, ?, date('now'), ?)";
+
+        conn.makeNewPost(nuevo);
+
+        Statement stmt = connection.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM post WHERE title = 'Test Title'");
+
+        assertTrue(rs.next());
+        assertEquals("Test Title", rs.getString("La lectura y sus positivos efectos para la salud mental\n"));
+        assertEquals("Test Content", rs.getString("content"));
+
+        LocalDate localDate2 = Instant.now().atZone(ZoneId.systemDefault()).toLocalDate();
+        Date sqlDate2 = java.sql.Date.valueOf(localDate2);
+
+        assertEquals(sqlDate2, rs.getDate("date_post"));
+        assertEquals(1, rs.getInt("id_person"));
     }
 }

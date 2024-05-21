@@ -9,6 +9,9 @@ import org.example.proyectotfg.functions.FunctionsApp;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -721,11 +724,13 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
     public void makeNewPost(Post nuevo) {
         String insert = "INSERT INTO post (title, content, date_post, id_person) VALUES (?, ?, date('now'), ?)";
-
+        LocalDate localDate = Instant.now().atZone(ZoneId.systemDefault()).toLocalDate();
+        Date sqlDate = Date.valueOf(localDate);
         try (PreparedStatement statement = connection.prepareStatement(insert)) {
             statement.setString(1, nuevo.getTitle());
             statement.setString(2, nuevo.getContent());
-            statement.setInt(2, nuevo.getTitular().getIdPerson());
+            statement.setDate(3, sqlDate);
+            statement.setInt(4, nuevo.getTitular().getIdPerson());
 
             statement.executeUpdate();
             System.out.println("Datos insertados correctamente.");
