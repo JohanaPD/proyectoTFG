@@ -232,6 +232,25 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 Parent fragment = fxmlLoader.load();
                 ControllerFragmentServicios controller = fxmlLoader.getController();
                 controller.setData(String.valueOf(map.getKey()), String.valueOf(map.getValue()));
+                controller.setCallback(new Callback() {
+                    @Override
+                    public void doAction() {
+                        try {
+                            switch (map.getKey()) {
+                                case "Ver Post":
+                                    loadView("/org/example/proyectotfg/post-view.fxml");
+                                    break;
+                                case "Publicar Post":
+                                    loadView("/org/example/proyectotfg/post-generator-view.fxml");
+                                    break;
+                                default:
+                                    loadView("/org/example/proyectotfg/enContruccion-view.fxml");
+                            }
+                        }catch (ThereIsNoView e){
+                            showError("Error", e.getMessage());
+                        }
+                    }
+                });
                 contenedorHBox.getChildren().add(fragment);
             }
             AnchorPane.setTopAnchor(contenedorHBox, 0.0);
@@ -263,9 +282,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
 
                     controller.setData(String.valueOf(us.getNames()), String.valueOf(imagePath));
                     int finalImageIndex = imageIndex;
-                    controller.setCallback(() -> {
-                        openProfessionalUser(us, finalImageIndex);
-                    });
+                    controller.setCallback(() -> MainController.this.openProfessionalUser(us, finalImageIndex));
                     imageIndex = (imageIndex % totalImages) + 1;
                     contenedorHBox2.getChildren().add(fragment);
                 }

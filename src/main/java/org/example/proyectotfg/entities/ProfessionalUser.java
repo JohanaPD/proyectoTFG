@@ -59,15 +59,15 @@ public class ProfessionalUser extends Person {
         setDescription(description);
     }
 
-    public ProfessionalUser(String names, String lastNames, String pass1, String mail, Direction nueva,TypeUser typeUser, String collegiate, String specialty, String description) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
-        super(names, lastNames, pass1, mail,typeUser, nueva);
+    public ProfessionalUser(int id, String names, String lastNames, String pass1, String mail, Direction nueva, TypeUser typeUser, String collegiate, String specialty, String description) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+        super(id, names, lastNames, pass1, mail, typeUser, nueva);
         setCollegiate(collegiate);
         setSpecialty(specialty);
         setDescription(description);
     }
 
-    public ProfessionalUser(int idPerson, String names, String lastNames, String mail, Direction nueva,TypeUser typeUser, String collegiate, String specialty, String description) throws IncorrectDataException, NullArgumentException {
-        super(idPerson, names, lastNames, mail, nueva,typeUser);
+    public ProfessionalUser(int idPerson, String names, String lastNames, String mail, Direction nueva, TypeUser typeUser, String collegiate, String specialty, String description) throws IncorrectDataException, NullArgumentException {
+        super(idPerson, names, lastNames, mail, nueva, typeUser);
         setCollegiate(collegiate);
         setSpecialty(specialty);
         setDescription(description);

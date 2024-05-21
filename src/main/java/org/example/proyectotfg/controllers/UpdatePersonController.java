@@ -219,7 +219,7 @@ public class UpdatePersonController implements ViewController {
                                     descripcion= replace.getCollegiate();
                                 }
                                 if (!college.equalsIgnoreCase("") || !especialidad.equalsIgnoreCase("") || !descripcion.equalsIgnoreCase("")) {
-                                    ProfessionalUser prof = new ProfessionalUser(names, lastNames, pass1, mail, newDirection, typeUser,college, especialidad, descripcion);
+                                    ProfessionalUser prof = new ProfessionalUser(person.getIdPerson(), names, lastNames, pass1, mail, newDirection, typeUser, college, especialidad, descripcion);
                                     mediator.updateAllDataPerson(prof);
                                 } else {
                                     errores.append("Datos profesionales incorrectos.\n");
@@ -229,7 +229,7 @@ public class UpdatePersonController implements ViewController {
                     } else {
                         // Actualizar sin contraseña
                         if (tipeUser.equalsIgnoreCase(String.valueOf(TypeUser.USUARIO_NORMAL))) {
-                            NormalUser nuevoUser = new NormalUser(person.getIdPerson(), names, lastNames, mail, newDirection);
+                            NormalUser nuevoUser = new NormalUser(person.getIdPerson(), names, lastNames, mail, newDirection, typeUser);
                             mediator.updateDataPerson(nuevoUser);
                         } else {
                             // ProfessionalUser
