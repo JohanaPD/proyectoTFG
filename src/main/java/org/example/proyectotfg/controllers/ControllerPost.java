@@ -1,5 +1,6 @@
 package org.example.proyectotfg.controllers;
 
+import javafx.event.ActionEvent;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorPost;
 import org.example.proyectotfg.mediators.ViewController;
@@ -19,5 +20,9 @@ public class ControllerPost implements ViewController {
     @Override
     public void setMainController(MainController mainController) {
 
+    }
+
+    public void volverIncio(ActionEvent actionEvent) {
+        mediator.returnHome();
     }
 }

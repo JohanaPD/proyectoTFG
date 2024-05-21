@@ -6,4 +6,5 @@ public interface MediatorPost {
 
     void makePost(Post nuevo);
     void viewPost();
+    void returnHome();
 }

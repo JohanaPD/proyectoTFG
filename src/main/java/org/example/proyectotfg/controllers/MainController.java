@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainController implements Mediator, MediatorAcceso, MediatorProfile, MediatorFirstScreen, MediatorPost {
+public class MainController implements Mediator, MediatorAcceso, MediatorProfile, MediatorFirstScreen, MediatorPost,MediatorConstruction {
     //mongo, sql, sqlite
     private Stage mainStage;
     private Mediator mediatorAplicado;
@@ -390,6 +390,11 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     }
 
     @Override
+    public void returnHome() {
+        regresar();
+    }
+
+    @Override
     public void openSearch(String busqueda) {
         try {
             List<ProfessionalUser> professionalUsers = connect.searchProfessionalsUsers(busqueda);
@@ -450,5 +455,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     }
 
 
-
+    @Override
+    public void backToHome() {
+        regresar();
+    }
 }

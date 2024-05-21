@@ -31,21 +31,25 @@ public class PostGeneratorController implements ViewController {
     private TextField titlePost;
     MediatorPost mediator;
     Person person;
+
     @Override
     public void setMediator(Mediator mediador) {
-       this.mediator=(MediatorPost)mediator;
+        this.mediator = (MediatorPost) mediador;
     }
+
     @FXML
     void generarPost(ActionEvent event) throws IncorrectDataException, NullArgumentException {
 
-        String title= titlePost.getText();
-        String presentacion= descriptionPost.getText();
-        String nameTit= nameTitular.getText();
-        String descrip=description.getText();
-        Post nuevo= new Post(person, title,descrip);
+        String title = titlePost.getText();
+        String presentacion = descriptionPost.getText();
+        String nameTit = nameTitular.getText();
+        String descrip = description.getText();
+        Post nuevo = new Post(person, title, descrip);
         mediator.makePost(nuevo);
     }
+
     public void volverHome(ActionEvent actionEvent) {
+        mediator.returnHome();
     }
 
     @Override
