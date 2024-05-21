@@ -53,8 +53,12 @@ public class NormalUser extends Person {
         super(idPerson, names, lastNames, mail, nueva);
     }
 
+    public NormalUser(int idPerson, String names, String lastNames, String mail, Direction nueva, TypeUser typeUser) throws IncorrectDataException, NullArgumentException {
+        super(idPerson, names, lastNames, mail, nueva, typeUser);
+    }
+
     public NormalUser(int idP, String names, String lastNames, String pass1, String mail, Direction nueva, TypeUser type) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
-    super(idP,names,lastNames,pass1, mail, nueva,type);
+        super(idP, names, lastNames, pass1, mail, nueva, type);
     }
 
 

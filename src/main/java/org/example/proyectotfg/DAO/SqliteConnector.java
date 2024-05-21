@@ -485,7 +485,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
             }
         } catch (SQLException e) {
-            throw new OperationsDBException("Se ha producido un error al guardar el usuario profesional, comprueba que el colegiado no esté repetido y si continua el problema consulta con el soporte");
+            throw new OperationsDBException("Se ha producido un error al guardar el usuario profesional,\ncomprueba que el colegiado no esté repetido y si continua el problema consulta con el soporte");
         }
     }
 
@@ -591,7 +591,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             updatePersonStmt.executeUpdate();
             updateDirectionStmt.executeUpdate();
             int isUpdated = updateProfessionalUserStmt.executeUpdate();
-            if (isUpdated == 0) {
+            if (isUpdated == 0&&chargeProfesionalUserById(nuevo.getIdPerson())==null) {
                 try {
                     connection.commit();
                     connection.close();
@@ -611,37 +611,6 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
     }
 
-    public void updateNormalUserWP(NormalUser nuevo) throws OperationsDBException, SQLException {
-
-        String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, email = ?, id_direction = ?, type_user=? WHERE id_person = ?";
-        String updateDirection = "UPDATE direction SET street= ? , city= ?, postal_code= ? WHERE id_direction= ?";
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
-             PreparedStatement updateDirectionStmt = connection.prepareStatement(updateDirection)) {
-
-            connection.setAutoCommit(false);
-
-            // Actualizar en tabla `person`
-            updatePersonStmt.setString(1, nuevo.getNames());
-            updatePersonStmt.setString(2, nuevo.getLastNames());
-            updatePersonStmt.setString(3, nuevo.getEmail());
-            updatePersonStmt.setInt(4, nuevo.getDireccion().getIdDireccion());
-            updatePersonStmt.setString(5, String.valueOf(nuevo.getTypeUser()));
-            updatePersonStmt.setInt(6, nuevo.getIdPerson());
-
-            updateDirectionStmt.setString(1, nuevo.getDirection().getStreet());
-            updateDirectionStmt.setString(2, nuevo.getDirection().getCity());
-            updateDirectionStmt.setString(3, String.valueOf(nuevo.getDirection().getPostalCode()));
-            updateDirectionStmt.setInt(4, nuevo.getDireccion().getIdDireccion());
-
-            updatePersonStmt.executeUpdate();
-            updateDirectionStmt.executeUpdate();
-
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-        }
-    }
 
     public void updateProfesionalUser(ProfessionalUser user) throws OperationsDBException, SQLException {
         String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, pass_script = ? ,email = ?, id_direction = ?, type_user=? WHERE id_person = ?";
@@ -675,13 +644,16 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             updatePersonStmt.executeUpdate();
             updateDireccionStmt.executeUpdate();
             int isUpdate = updateProfessionalUserStmt.executeUpdate();
-            if (isUpdate == 0) {
+            if (isUpdate == 0 && chargeProfesionalUserById(user.getIdPerson()) == null) {
                 try {
+                    connection.commit();
+                    connection.close();
                     registerProfessionalUser(user, true);
                 } catch (DuplicateKeyException e) {
                 }
+            } else {
+                connection.commit();
             }
-            connection.commit();
         } catch (SQLException e) {
             connection.rollback();
         }
@@ -718,9 +690,61 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         } catch (SQLException e) {
             connection.rollback();
         }
-
-
+        if (user.getTypeUser() == TypeUser.USUARIO_NORMAL && chargeProfesionalUserById(user.getIdPerson()) != null) {
+            deleteProfessionalUser(user.getIdPerson());
+        }
     }
+
+    public void updateNormalUserWP(NormalUser nuevo) throws OperationsDBException, SQLException {
+        String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, email = ?, id_direction = ?, type_user=? WHERE id_person = ?";
+        String updateDirection = "UPDATE direction SET street= ? , city= ?, postal_code= ? WHERE id_direction= ?";
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
+             PreparedStatement updateDirectionStmt = connection.prepareStatement(updateDirection)) {
+
+            connection.setAutoCommit(false);
+
+            // Actualizar en tabla `person`
+            updatePersonStmt.setString(1, nuevo.getNames());
+            updatePersonStmt.setString(2, nuevo.getLastNames());
+            updatePersonStmt.setString(3, nuevo.getEmail());
+            updatePersonStmt.setInt(4, nuevo.getDireccion().getIdDireccion());
+            updatePersonStmt.setString(5, String.valueOf(nuevo.getTypeUser()));
+            updatePersonStmt.setInt(6, nuevo.getIdPerson());
+
+            updateDirectionStmt.setString(1, nuevo.getDirection().getStreet());
+            updateDirectionStmt.setString(2, nuevo.getDirection().getCity());
+            updateDirectionStmt.setString(3, String.valueOf(nuevo.getDirection().getPostalCode()));
+            updateDirectionStmt.setInt(4, nuevo.getDireccion().getIdDireccion());
+
+            updatePersonStmt.executeUpdate();
+            updateDirectionStmt.executeUpdate();
+
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+        }
+        if (nuevo.getTypeUser() == TypeUser.USUARIO_NORMAL && chargeProfesionalUserById(nuevo.getIdPerson()) != null) {
+            deleteProfessionalUser(nuevo.getIdPerson());
+        }
+    }
+
+    private void deleteProfessionalUser(int idPerson) throws OperationsDBException {
+        String deleteProfessionalUser = "DELETE FROM professional_user WHERE id_person = ?";
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement deleteProfessionalUserStatement = connection.prepareStatement(deleteProfessionalUser)) {
+
+            connection.setAutoCommit(false);
+            deleteProfessionalUserStatement.setInt(1, idPerson);
+
+            deleteProfessionalUserStatement.executeUpdate();
+            connection.commit();
+
+        } catch (SQLException e) {
+            throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
+        }
+    }
+
 
     public void makeNewPost(Post nuevo) {
         String insert = "INSERT INTO post (title, content, date_post, id_person) VALUES (?, ?, date('now'), ?)";
