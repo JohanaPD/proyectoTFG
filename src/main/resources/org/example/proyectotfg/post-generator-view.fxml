@@ -87,6 +87,9 @@
                         </padding></Button>
 
                         </children>
+                  <padding>
+                     <Insets bottom="30.0" />
+                  </padding>
                     </HBox>
                <VBox.margin>
                   <Insets top="50.0" />

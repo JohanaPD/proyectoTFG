@@ -430,6 +430,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void makePost(Post nuevo) {
         try {
             connect.makeNewPost(nuevo);
+            loadInterfazInicial();
         } catch (OperationsDBException e) {
             throw new RuntimeException(e);
         }

@@ -76,7 +76,7 @@ public class Post {
 
     public void setContent(String content) throws NullArgumentException {
         if (content != null) {
-            if (VerificatorSetter.stringVerificatorletterAndNumbers(content, content.length())) {
+            if (VerificatorSetter.stringVerificatorletterAndNumbers(content, 6000)) {
                 this.content = content;
             } else {
                 throw new IllegalArgumentException("Verifica los datos introducidos, solo se aceptan letras");
