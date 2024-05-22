@@ -784,6 +784,25 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         return  existe;
     }
 
+    public List<Post> serchPostByPerson(int idPerson) {
+        List<Post> listaPost= new ArrayList<>();
+        String consulta = "SELECT * FROM post WHERE id_person = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
+            preparetStmt.setInt(1, idPerson);
+            try(ResultSet resultSet = preparetStmt.executeQuery() ){
+                while(resultSet.next()) {
+
+                }
+            }
+        } catch ( SQLException e) {
+            //Todo: mete exception
+
+        }
+        return  listaPost;
+    }
+
     @Override
     public void close() throws Exception {
         connection.close();

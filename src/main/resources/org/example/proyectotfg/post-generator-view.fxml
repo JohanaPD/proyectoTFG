@@ -80,11 +80,17 @@
                                 <Button onAction="#generarPost" prefHeight="36.0" prefWidth="84.0" styleClass="buttonIntroRegistro" stylesheets="@styles.css" text="Aceptar">
                         <padding>
                            <Insets right="10.0" />
-                        </padding></Button>
+                        </padding>
+                        <HBox.margin>
+                           <Insets right="10.0" />
+                        </HBox.margin></Button>
                                 <Button onAction="#volverHome" prefHeight="36.0" prefWidth="88.0" styleClass="buttonIntroRegistro" stylesheets="@styles.css" text="Cerrar" textAlignment="RIGHT">
                         <padding>
                            <Insets left="10.0" />
-                        </padding></Button>
+                        </padding>
+                        <HBox.margin>
+                           <Insets left="10.0" />
+                        </HBox.margin></Button>
 
                         </children>
                   <padding>
