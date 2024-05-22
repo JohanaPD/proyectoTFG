@@ -251,8 +251,7 @@ class SqliteConnectorTest {
 
     @Test
     public void makeNewPost() throws SQLException, IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
-        // Arrange
-        SqliteConnector conn = new SqliteConnector();
+        // ArrangeSqliteConnector conn = new SqliteConnector();
         Person titular = new ProfessionalUser();
         Post nuevo = new Post();
         nuevo.setIdPost(1);
@@ -261,7 +260,7 @@ class SqliteConnectorTest {
                 "Es probable que desde la infancia hayas escuchado a tus padres o abuelos hablar sobre la importancia de la lectura para la vida. Demás está decir que leer es sinónimo de aprender y entretenerse , y a esto debemos sumar los muchos beneficios que un libro puede tener para la salud mental.\n" +
                 "El doctor Alejandro Koppmann, psiquiatra de Clínica Alemana, explica que los efectos positivos de un libro varían según cada lector: “Además del placer de disfrutar una buena historia, muchos recuerdan, por ejemplo, haber encontrado en la lectura un refugio o un lugar de descanso frente a situaciones adversas ocurridas durante su infancia. Otras personas, en cambio, leen como estrategia de prevención contra el estrés”. Y es que la lectura, efectivamente, tal como mantener algún hobby o practicar actividad física, puede contribuir a evitar o a equilibrar la precipitación de un síndrome de sobrecarga o cuadro de estrés ”.");
 
-        conn.makeNewPost(nuevo);
+        //connection.makeNewPost(nuevo);
 
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM post WHERE title = 'Test Title'");

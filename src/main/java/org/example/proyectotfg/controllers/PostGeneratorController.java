@@ -20,13 +20,14 @@ public class PostGeneratorController implements ViewController {
     private TextArea description;
 
     @FXML
-    private TextField descriptionPost;
-
-    @FXML
     private Text nameTitular;
 
     @FXML
     private ImageView patImage;
+
+    @FXML
+    private TextFlow textDescripton;
+
     @FXML
     private TextField titlePost;
     MediatorPost mediator;
@@ -37,11 +38,22 @@ public class PostGeneratorController implements ViewController {
         this.mediator = (MediatorPost) mediador;
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public void setTitlePost(String titlePost) {
+        this.nameTitular.setText(titlePost);
+    }
+
     @FXML
     void generarPost(ActionEvent event) throws IncorrectDataException, NullArgumentException {
 
         String title = titlePost.getText();
-        String presentacion = descriptionPost.getText();
         String nameTit = nameTitular.getText();
         String descrip = description.getText();
         Post nuevo = new Post(person, title, descrip);

@@ -242,6 +242,9 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                                     break;
                                 case "Publicar Post":
                                     loadView("/org/example/proyectotfg/post-generator-view.fxml");
+                                    PostGeneratorController postGeneratorController=(PostGeneratorController) actualController;
+                                    postGeneratorController.setPerson(person);
+                                    postGeneratorController.setTitlePost(person.getNames());
                                     break;
                                 default:
                                     loadView("/org/example/proyectotfg/enContruccion-view.fxml");

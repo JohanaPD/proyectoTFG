@@ -591,7 +591,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             updatePersonStmt.executeUpdate();
             updateDirectionStmt.executeUpdate();
             int isUpdated = updateProfessionalUserStmt.executeUpdate();
-            if (isUpdated == 0&&chargeProfesionalUserById(nuevo.getIdPerson())==null) {
+            if (isUpdated == 0 && chargeProfesionalUserById(nuevo.getIdPerson()) == null) {
                 try {
                     connection.commit();
                     connection.close();
@@ -747,14 +747,13 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
 
     public void makeNewPost(Post nuevo) {
-        String insert = "INSERT INTO post (title, content, date_post, id_person) VALUES (?, ?, date('now'), ?)";
+        String insert = "INSERT INTO post (title, content, url_image ,date_post, id_person) VALUES (?, ?, 'src/main/resources/org/example/proyectotfg/imgPost/meditacion.jpg', date('now'), ?)";
         LocalDate localDate = Instant.now().atZone(ZoneId.systemDefault()).toLocalDate();
         Date sqlDate = Date.valueOf(localDate);
         try (PreparedStatement statement = connection.prepareStatement(insert)) {
             statement.setString(1, nuevo.getTitle());
             statement.setString(2, nuevo.getContent());
-            statement.setDate(3, sqlDate);
-            statement.setInt(4, nuevo.getTitular().getIdPerson());
+            statement.setInt(3, nuevo.getTitular().getIdPerson());
 
             statement.executeUpdate();
             System.out.println("Datos insertados correctamente.");
@@ -765,11 +764,30 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
     }
 
+    public boolean serchPostByname(String titulo) {
+        boolean existe= false;
+        String consulta = "SELECT * FROM post WHERE title LIKE ?";
+
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
+            preparetStmt.setString(1, titulo);
+            try(ResultSet resultSet = preparetStmt.executeQuery() ){
+                while(resultSet.next()) {
+                    existe= true;
+                }
+            }
+        } catch ( SQLException e) {
+           //Todo: mete exception
+                existe=false;
+        }
+        return  existe;
+    }
 
     @Override
     public void close() throws Exception {
         connection.close();
     }
-
-
 }
+
+
+
