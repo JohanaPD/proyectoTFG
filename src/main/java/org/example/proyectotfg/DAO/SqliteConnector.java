@@ -817,10 +817,8 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
 
     public void makeNewPost(Post nuevo) throws OperationsDBException {
-        if (!serchPostByname(nuevo.getTitle())) {
-            LocalDate localDate = Instant.now().atZone(ZoneId.systemDefault()).toLocalDate();
-            Date sqlDate = Date.valueOf(localDate);
-            String insert = "INSERT INTO post (title, content, url_image ,date_post, id_person) VALUES (?, ?, 'src/main/resources/org/example/proyectotfg/imgPost/meditacion.jpg', sqlDate, ?)";
+        if(!serchPostByname(nuevo.getTitle())) {
+            String insert = "INSERT INTO post (title, content, url_image ,date_post, id_person) VALUES (?, ?, 'src/main/resources/org/example/proyectotfg/imgPost/meditacion.jpg', date('now'), ?)";
             try (PreparedStatement statement = connection.prepareStatement(insert)) {
                 statement.setString(1, nuevo.getTitle());
                 statement.setString(2, nuevo.getContent());
@@ -837,23 +835,23 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     }
 
     public boolean serchPostByname(String titulo) {
-        boolean existe = false;
+        boolean existe= false;
         String consulta = "SELECT * FROM post WHERE title LIKE ?";
 
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setString(1, titulo);
-            try (ResultSet resultSet = preparetStmt.executeQuery()) {
-                while (resultSet.next()) {
-                    existe = true;
+            try(ResultSet resultSet = preparetStmt.executeQuery() ){
+                while(resultSet.next()) {
+                    existe= true;
                     break;
                 }
             }
-        } catch (SQLException e) {
+        } catch ( SQLException e) {
             //Todo: mete exception
-            existe = false;
+            existe=false;
         }
-        return existe;
+        return  existe;
     }
 
     public List<Post> serchPostByPerson(int idPerson) {
@@ -874,6 +872,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return  listaPost;
     }
+
 
     @Override
     public void close() throws Exception {
