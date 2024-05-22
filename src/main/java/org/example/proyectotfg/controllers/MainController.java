@@ -428,7 +428,11 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
 
     @Override
     public void makePost(Post nuevo) {
+        try {
             connect.makeNewPost(nuevo);
+        } catch (OperationsDBException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

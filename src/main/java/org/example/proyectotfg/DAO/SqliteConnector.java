@@ -746,41 +746,44 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     }
 
 
-    public void makeNewPost(Post nuevo) {
-        String insert = "INSERT INTO post (title, content, url_image ,date_post, id_person) VALUES (?, ?, 'src/main/resources/org/example/proyectotfg/imgPost/meditacion.jpg', date('now'), ?)";
-        LocalDate localDate = Instant.now().atZone(ZoneId.systemDefault()).toLocalDate();
-        Date sqlDate = Date.valueOf(localDate);
-        try (PreparedStatement statement = connection.prepareStatement(insert)) {
-            statement.setString(1, nuevo.getTitle());
-            statement.setString(2, nuevo.getContent());
-            statement.setInt(3, nuevo.getTitular().getIdPerson());
+    public void makeNewPost(Post nuevo) throws OperationsDBException {
+        if (!serchPostByname(nuevo.getTitle())) {
+            LocalDate localDate = Instant.now().atZone(ZoneId.systemDefault()).toLocalDate();
+            Date sqlDate = Date.valueOf(localDate);
+            String insert = "INSERT INTO post (title, content, url_image ,date_post, id_person) VALUES (?, ?, 'src/main/resources/org/example/proyectotfg/imgPost/meditacion.jpg', sqlDate, ?)";
+            try (PreparedStatement statement = connection.prepareStatement(insert)) {
+                statement.setString(1, nuevo.getTitle());
+                statement.setString(2, nuevo.getContent());
+                statement.setInt(3, nuevo.getTitular().getIdPerson());
 
-            statement.executeUpdate();
-            System.out.println("Datos insertados correctamente.");
+                statement.executeUpdate();
+                System.out.println("Datos insertados correctamente.");
 
-        } catch (SQLException e) {
-
+            } catch (SQLException e) {
+                throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
+            }
         }
 
     }
 
     public boolean serchPostByname(String titulo) {
-        boolean existe= false;
+        boolean existe = false;
         String consulta = "SELECT * FROM post WHERE title LIKE ?";
 
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setString(1, titulo);
-            try(ResultSet resultSet = preparetStmt.executeQuery() ){
-                while(resultSet.next()) {
-                    existe= true;
+            try (ResultSet resultSet = preparetStmt.executeQuery()) {
+                while (resultSet.next()) {
+                    existe = true;
+                    break;
                 }
             }
-        } catch ( SQLException e) {
-           //Todo: mete exception
-                existe=false;
+        } catch (SQLException e) {
+            //Todo: mete exception
+            existe = false;
         }
-        return  existe;
+        return existe;
     }
 
     @Override
