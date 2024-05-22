@@ -261,8 +261,6 @@ class SqliteConnectorTest {
                 "Es probable que desde la infancia hayas escuchado a tus padres o abuelos hablar sobre la importancia de la lectura para la vida. Demás está decir que leer es sinónimo de aprender y entretenerse , y a esto debemos sumar los muchos beneficios que un libro puede tener para la salud mental.\n" +
                 "El doctor Alejandro Koppmann, psiquiatra de Clínica Alemana, explica que los efectos positivos de un libro varían según cada lector: “Además del placer de disfrutar una buena historia, muchos recuerdan, por ejemplo, haber encontrado en la lectura un refugio o un lugar de descanso frente a situaciones adversas ocurridas durante su infancia. Otras personas, en cambio, leen como estrategia de prevención contra el estrés”. Y es que la lectura, efectivamente, tal como mantener algún hobby o practicar actividad física, puede contribuir a evitar o a equilibrar la precipitación de un síndrome de sobrecarga o cuadro de estrés ”.");
 
-        String insert = "INSERT INTO post (title, content, date_post, id_person) VALUES (?, ?, date('now'), ?)";
-
         conn.makeNewPost(nuevo);
 
         Statement stmt = connection.createStatement();

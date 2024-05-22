@@ -24,6 +24,10 @@ public class EnContruccionController implements ViewController {
     }
 
     public void volverAInicio(ActionEvent actionEvent) {
+<<<<<<< Updated upstream
         mediatorConstruction.backToHome();
+=======
+        
+>>>>>>> Stashed changes
     }
 }
