@@ -61,6 +61,12 @@ public class NormalUser extends Person {
         super(idP, names, lastNames, pass1, mail, nueva, type);
     }
 
+    public NormalUser(String nickname, String inTherapySession) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
+        super();
+        setNickname(nickname);
+        setInTherapySession(Boolean.parseBoolean(inTherapySession));
+    }
+
 
     public Deque<ProfessionalUser> getSerchs() {
         return serchs;
@@ -71,11 +77,16 @@ public class NormalUser extends Person {
     }
 
     public void setNickname(String nickname) throws NullArgumentException {
-        if (VerificatorSetter.stringVerificator(nickname, 100)) {
-            this.nickname = nickname;
+        if (nickname != null) {
+            if (VerificatorSetter.stringVerificator(nickname, 100)) {
+                this.nickname = nickname;
+            } else {
+                throw new NullArgumentException("Has introducido uno o más argumentos nulo a la hora de crear el usuario");
+            }
         } else {
-            throw new NullArgumentException("Has introducido uno o más argumentos nulo a la hora de crear el usuario");
+            this.nickname = "null";
         }
+
     }
 
     public void setSerchs(Deque<ProfessionalUser> serchs) {

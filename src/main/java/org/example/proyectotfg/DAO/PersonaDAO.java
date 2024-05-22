@@ -25,7 +25,7 @@ public interface PersonaDAO {
 
     void registerProfessionalUser(ProfessionalUser professionalUser,boolean update) throws OperationsDBException, DuplicateKeyException;
 
-    void registerNormalUser(NormalUser normalUser) throws OperationsDBException, DuplicateKeyException;
+    void registerNormalUser(NormalUser normalUser,boolean update) throws OperationsDBException, DuplicateKeyException;
 
     Direction registerDirection(Direction direction) throws OperationsDBException;
 

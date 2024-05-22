@@ -172,7 +172,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         SenderReaderMail sender = new SenderReaderMail();
         enviarEmail(sender, user.getEmail(), mensaje);
         try {
-            connect.registerNormalUser(user);
+            connect.registerNormalUser(user,false);
             showInfo("Registro correcto", "Se ha registrado correctamente el usuario");
             openLogin();
         } catch (DuplicateKeyException | OperationsDBException e) {

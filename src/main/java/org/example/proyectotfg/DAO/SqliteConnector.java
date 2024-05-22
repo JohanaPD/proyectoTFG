@@ -349,6 +349,27 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         return professionalUser;
     }
 
+    public static NormalUser chargeNormalUserById(int id) throws OperationsDBException {
+        NormalUser normalUser = null;
+        String consulta = "SELECT * FROM professional_user WHERE id_person=?;";
+
+        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String nickname = resultSet.getString("nickname");
+                String inTherapySession = resultSet.getString("in_therapy_session");
+                normalUser = new NormalUser(nickname, inTherapySession);
+            }
+
+        } catch (SQLException | NullArgumentException | IncorrectDataException | NoSuchAlgorithmException |
+                 InvalidKeySpecException e) {
+            throw new OperationsDBException("Error al encontrar la dirección");
+        }
+        return normalUser;
+    }
+
     public static Direction chargeDirection(int idDirection) throws OperationsDBException {
         Direction direction = null;
         String consulta = "SELECT * FROM direction WHERE id_direction=?;";
@@ -490,8 +511,11 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     }
 
     @Override
-    public void registerNormalUser(NormalUser normalUser) throws OperationsDBException, DuplicateKeyException {
-        normalUser = (NormalUser) registerPerson(normalUser);
+    public void registerNormalUser(NormalUser normalUser,boolean update) throws OperationsDBException, DuplicateKeyException {
+        if (!update) {
+            normalUser = (NormalUser) registerPerson(normalUser);
+
+        }
         try {
             String textoConsulta = "insert into normal_user(id_person,nickname,in_therapy_session) values (?,?,?);";
             try (PreparedStatement preparedStatement = connection.prepareStatement(textoConsulta)) {
@@ -608,6 +632,9 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             connection.rollback();
             throw new OperationsDBException("Error al actualizar los datos del usuario profesional: " + e.getMessage());
         }
+        if (chargeNormalUserById(nuevo.getIdPerson()) != null) {
+            deleteNormalUser(nuevo.getIdPerson());
+        }
 
     }
 
@@ -626,11 +653,11 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             // Actualizar en tabla `person`
             updatePersonStmt.setString(1, user.getNames());
             updatePersonStmt.setString(2, user.getLastNames());
-            updatePersonStmt.setString(2, user.getPassScript());
-            updatePersonStmt.setString(3, user.getEmail());
-            updatePersonStmt.setInt(4, user.getDireccion().getIdDireccion());
-            updatePersonStmt.setString(5, String.valueOf(user.getTypeUser()));
-            updatePersonStmt.setInt(6, user.getIdPerson());
+            updatePersonStmt.setString(3, user.getPassScript());
+            updatePersonStmt.setString(4, user.getEmail());
+            updatePersonStmt.setInt(5, user.getDireccion().getIdDireccion());
+            updatePersonStmt.setString(6, String.valueOf(user.getTypeUser()));
+            updatePersonStmt.setInt(7, user.getIdPerson());
 
             updateDireccionStmt.setString(1, user.getDirection().getStreet());
             updateDireccionStmt.setString(2, user.getDirection().getCity());
@@ -657,31 +684,48 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         } catch (SQLException e) {
             connection.rollback();
         }
+        if (chargeNormalUserById(user.getIdPerson()) != null) {
+            deleteNormalUser(user.getIdPerson());
+        }
     }
 
     public void updateDataPerson(NormalUser user) throws OperationsDBException, SQLException {
         String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, pass_script = ? ,email = ?, id_direction = ?, type_user=? WHERE id_person = ?";
         String updateDireccion = "UPDATE direction SET street= ? , city= ?, postal_code= ? WHERE id_direction= ?";
+        String updateNormalUser = "UPDATE normal_user SET nickname=?, in in_therapy_session=? where id_person = ?";
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
-             PreparedStatement updateDireccionStmt = connection.prepareStatement(updateDireccion)) {
+             PreparedStatement updateDireccionStmt = connection.prepareStatement(updateDireccion);
+             PreparedStatement updateNormalUserStmt = connection.prepareStatement(updateNormalUser)) {
 
             connection.setAutoCommit(false);
 
             // Actualizar en tabla `person`
             updatePersonStmt.setString(1, user.getNames());
             updatePersonStmt.setString(2, user.getLastNames());
-            updatePersonStmt.setString(2, user.getPassScript());
-            updatePersonStmt.setString(3, user.getEmail());
-            updatePersonStmt.setString(4, String.valueOf(user.getTypeUser()));
-            updatePersonStmt.setInt(5, user.getDireccion().getIdDireccion());
-
-            updatePersonStmt.setInt(6, user.getIdPerson());
+            updatePersonStmt.setString(3, user.getPassScript());
+            updatePersonStmt.setString(4, user.getEmail());
+            updatePersonStmt.setString(5, String.valueOf(user.getTypeUser()));
+            updatePersonStmt.setInt(6, user.getDireccion().getIdDireccion());
+            updatePersonStmt.setInt(7, user.getIdPerson());
 
             updateDireccionStmt.setString(1, user.getDirection().getStreet());
             updateDireccionStmt.setString(2, user.getDirection().getCity());
             updateDireccionStmt.setString(3, String.valueOf(user.getDirection().getPostalCode()));
             updateDireccionStmt.setInt(4, user.getDireccion().getIdDireccion());
+            if (chargeNormalUserById(user.getIdPerson()) != null) {
+                updateNormalUserStmt.setString(1, user.getNickname());
+                updateNormalUserStmt.setBoolean(2, user.isInTherapySession());
+                updateNormalUserStmt.setInt(3, user.getIdPerson());
+                updateNormalUserStmt.executeUpdate();
+            } else {
+                try {
+                    registerNormalUser(user, true);
+                } catch (DuplicateKeyException e) {
+
+                }
+            }
+
 
             updatePersonStmt.executeUpdate();
             updateDireccionStmt.executeUpdate();
@@ -698,9 +742,11 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     public void updateNormalUserWP(NormalUser nuevo) throws OperationsDBException, SQLException {
         String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, email = ?, id_direction = ?, type_user=? WHERE id_person = ?";
         String updateDirection = "UPDATE direction SET street= ? , city= ?, postal_code= ? WHERE id_direction= ?";
+        String updateNormalUser = "UPDATE normal_user SET nickname=?, in in_therapy_session=? where id_person = ?";
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
-             PreparedStatement updateDirectionStmt = connection.prepareStatement(updateDirection)) {
+             PreparedStatement updateDirectionStmt = connection.prepareStatement(updateDirection);
+             PreparedStatement updateNormalUserStmt = connection.prepareStatement(updateNormalUser)) {
 
             connection.setAutoCommit(false);
 
@@ -719,10 +765,18 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
             updatePersonStmt.executeUpdate();
             updateDirectionStmt.executeUpdate();
-
+            if (chargeNormalUserById(nuevo.getIdPerson()) != null) {
+                updateNormalUserStmt.setString(1, nuevo.getNickname());
+                updateNormalUserStmt.setBoolean(2, nuevo.isInTherapySession());
+                updateNormalUserStmt.setInt(3, nuevo.getIdPerson());
+                updateNormalUserStmt.executeUpdate();
+            } else {
+                registerNormalUser(nuevo, true);
+            }
             connection.commit();
-        } catch (SQLException e) {
+        } catch (SQLException |DuplicateKeyException e) {
             connection.rollback();
+            throw new OperationsDBException()
         }
         if (nuevo.getTypeUser() == TypeUser.USUARIO_NORMAL && chargeProfesionalUserById(nuevo.getIdPerson()) != null) {
             deleteProfessionalUser(nuevo.getIdPerson());
@@ -745,11 +799,29 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
     }
 
+    private void deleteNormalUser(int idPerson) throws OperationsDBException {
+        String deleteNormalUser = "DELETE FROM normal_user WHERE id_person = ?";
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement deleteProfessionalUserStatement = connection.prepareStatement(deleteNormalUser)) {
+
+            connection.setAutoCommit(false);
+            deleteProfessionalUserStatement.setInt(1, idPerson);
+
+            deleteProfessionalUserStatement.executeUpdate();
+            connection.commit();
+
+        } catch (SQLException e) {
+            throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
+        }
+    }
+
 
     public void makeNewPost(Post nuevo) throws OperationsDBException {
-        if(!serchPostByname(nuevo.getTitle())) {
-            String insert = "INSERT INTO post (title, content, url_image ,date_post, id_person) VALUES (?, ?, 'src/main/resources/org/example/proyectotfg/imgPost/meditacion.jpg', date('now'), ?)";
-                       try (PreparedStatement statement = connection.prepareStatement(insert)) {
+        if (!serchPostByname(nuevo.getTitle())) {
+            LocalDate localDate = Instant.now().atZone(ZoneId.systemDefault()).toLocalDate();
+            Date sqlDate = Date.valueOf(localDate);
+            String insert = "INSERT INTO post (title, content, url_image ,date_post, id_person) VALUES (?, ?, 'src/main/resources/org/example/proyectotfg/imgPost/meditacion.jpg', sqlDate, ?)";
+            try (PreparedStatement statement = connection.prepareStatement(insert)) {
                 statement.setString(1, nuevo.getTitle());
                 statement.setString(2, nuevo.getContent());
                 statement.setInt(3, nuevo.getTitular().getIdPerson());
@@ -758,30 +830,30 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                 System.out.println("Datos insertados correctamente.");
 
             } catch (SQLException e) {
-                           throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
+                throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
             }
         }
 
     }
 
     public boolean serchPostByname(String titulo) {
-        boolean existe= false;
+        boolean existe = false;
         String consulta = "SELECT * FROM post WHERE title LIKE ?";
 
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setString(1, titulo);
-            try(ResultSet resultSet = preparetStmt.executeQuery() ){
-                while(resultSet.next()) {
-                    existe= true;
+            try (ResultSet resultSet = preparetStmt.executeQuery()) {
+                while (resultSet.next()) {
+                    existe = true;
                     break;
                 }
             }
-        } catch ( SQLException e) {
-           //Todo: mete exception
-                existe=false;
+        } catch (SQLException e) {
+            //Todo: mete exception
+            existe = false;
         }
-        return  existe;
+        return existe;
     }
 
     public List<Post> serchPostByPerson(int idPerson) {
