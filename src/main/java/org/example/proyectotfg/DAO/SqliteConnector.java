@@ -351,7 +351,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
     public static NormalUser chargeNormalUserById(int id) throws OperationsDBException {
         NormalUser normalUser = null;
-        String consulta = "SELECT * FROM professional_user WHERE id_person=?;";
+        String consulta = "SELECT * FROM normal_user WHERE id_person=?;";
 
         try (PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setInt(1, id);
@@ -511,7 +511,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     }
 
     @Override
-    public void registerNormalUser(NormalUser normalUser,boolean update) throws OperationsDBException, DuplicateKeyException {
+    public void registerNormalUser(NormalUser normalUser, boolean update) throws OperationsDBException, DuplicateKeyException {
         if (!update) {
             normalUser = (NormalUser) registerPerson(normalUser);
 
@@ -520,7 +520,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             String textoConsulta = "insert into normal_user(id_person,nickname,in_therapy_session) values (?,?,?);";
             try (PreparedStatement preparedStatement = connection.prepareStatement(textoConsulta)) {
                 preparedStatement.setInt(1, normalUser.getIdPerson());
-                preparedStatement.setString(2, normalUser.getNames()/*getNickname()*/);
+                preparedStatement.setString(2, normalUser.getNames()+" "+normalUser.getLastNames()/*getNickname()*/);
                 preparedStatement.setInt(3, normalUser.isInTherapySession() ? 1 : 0);
                 preparedStatement.executeUpdate();
 
@@ -692,7 +692,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     public void updateDataPerson(NormalUser user) throws OperationsDBException, SQLException {
         String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, pass_script = ? ,email = ?, id_direction = ?, type_user=? WHERE id_person = ?";
         String updateDireccion = "UPDATE direction SET street= ? , city= ?, postal_code= ? WHERE id_direction= ?";
-        String updateNormalUser = "UPDATE normal_user SET nickname=?, in in_therapy_session=? where id_person = ?";
+        String updateNormalUser = "UPDATE normal_user SET nickname=?, in_therapy_session=? where id_person = ?";
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
              PreparedStatement updateDireccionStmt = connection.prepareStatement(updateDireccion);
@@ -718,12 +718,11 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                 updateNormalUserStmt.setBoolean(2, user.isInTherapySession());
                 updateNormalUserStmt.setInt(3, user.getIdPerson());
                 updateNormalUserStmt.executeUpdate();
+                connection.commit();
             } else {
-                try {
-                    registerNormalUser(user, true);
-                } catch (DuplicateKeyException e) {
-
-                }
+                connection.commit();
+                connection.close();
+                registerNormalUser(user, true);
             }
 
 
@@ -731,8 +730,9 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             updateDireccionStmt.executeUpdate();
 
             connection.commit();
-        } catch (SQLException e) {
+        } catch (SQLException | DuplicateKeyException e) {
             connection.rollback();
+            throw new OperationsDBException("La cuenta ya existe en la base de datos");
         }
         if (user.getTypeUser() == TypeUser.USUARIO_NORMAL && chargeProfesionalUserById(user.getIdPerson()) != null) {
             deleteProfessionalUser(user.getIdPerson());
@@ -742,7 +742,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     public void updateNormalUserWP(NormalUser nuevo) throws OperationsDBException, SQLException {
         String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, email = ?, id_direction = ?, type_user=? WHERE id_person = ?";
         String updateDirection = "UPDATE direction SET street= ? , city= ?, postal_code= ? WHERE id_direction= ?";
-        String updateNormalUser = "UPDATE normal_user SET nickname=?, in in_therapy_session=? where id_person = ?";
+        String updateNormalUser = "UPDATE normal_user SET nickname=?, in_therapy_session=? where id_person = ?";
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
              PreparedStatement updateDirectionStmt = connection.prepareStatement(updateDirection);
@@ -770,13 +770,16 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                 updateNormalUserStmt.setBoolean(2, nuevo.isInTherapySession());
                 updateNormalUserStmt.setInt(3, nuevo.getIdPerson());
                 updateNormalUserStmt.executeUpdate();
+                connection.commit();
             } else {
+                connection.commit();
+                connection.close();
                 registerNormalUser(nuevo, true);
             }
-            connection.commit();
-        } catch (SQLException |DuplicateKeyException e) {
+
+        } catch (SQLException | DuplicateKeyException e) {
             connection.rollback();
-            throw new OperationsDBException()
+            throw new OperationsDBException("La cuenta ya existe");
         }
         if (nuevo.getTypeUser() == TypeUser.USUARIO_NORMAL && chargeProfesionalUserById(nuevo.getIdPerson()) != null) {
             deleteProfessionalUser(nuevo.getIdPerson());
@@ -817,7 +820,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
 
     public void makeNewPost(Post nuevo) throws OperationsDBException {
-        if(!serchPostByname(nuevo.getTitle())) {
+        if (!serchPostByname(nuevo.getTitle())) {
             String insert = "INSERT INTO post (title, content, url_image ,date_post, id_person) VALUES (?, ?, 'src/main/resources/org/example/proyectotfg/imgPost/meditacion.jpg', date('now'), ?)";
             try (PreparedStatement statement = connection.prepareStatement(insert)) {
                 statement.setString(1, nuevo.getTitle());
@@ -835,42 +838,42 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     }
 
     public boolean serchPostByname(String titulo) {
-        boolean existe= false;
+        boolean existe = false;
         String consulta = "SELECT * FROM post WHERE title LIKE ?";
 
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setString(1, titulo);
-            try(ResultSet resultSet = preparetStmt.executeQuery() ){
-                while(resultSet.next()) {
-                    existe= true;
+            try (ResultSet resultSet = preparetStmt.executeQuery()) {
+                while (resultSet.next()) {
+                    existe = true;
                     break;
                 }
             }
-        } catch ( SQLException e) {
+        } catch (SQLException e) {
             //Todo: mete exception
-            existe=false;
+            existe = false;
         }
-        return  existe;
+        return existe;
     }
 
     public List<Post> serchPostByPerson(int idPerson) {
-        List<Post> listaPost= new ArrayList<>();
+        List<Post> listaPost = new ArrayList<>();
         String consulta = "SELECT * FROM post WHERE id_person = ?";
 
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setInt(1, idPerson);
-            try(ResultSet resultSet = preparetStmt.executeQuery() ){
-                while(resultSet.next()) {
+            try (ResultSet resultSet = preparetStmt.executeQuery()) {
+                while (resultSet.next()) {
 
                 }
             }
-        } catch ( SQLException e) {
+        } catch (SQLException e) {
             //Todo: mete exception
 
         }
-        return  listaPost;
+        return listaPost;
     }
 
 

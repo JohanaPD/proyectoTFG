@@ -138,7 +138,7 @@ class SqliteConnectorTest {
 
         // Simulamos el registro de un usuario normal
         try {
-            sqliteConnector.registerNormalUser(normalUser);
+            sqliteConnector.registerNormalUser(normalUser, false);
             assertTrue(true);
         } catch (OperationsDBException e) {
             fail("Error registrando usuario normal: " + e.getMessage());
