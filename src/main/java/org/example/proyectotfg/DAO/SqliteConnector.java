@@ -704,8 +704,8 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             updatePersonStmt.setString(2, user.getLastNames());
             updatePersonStmt.setString(3, user.getPassScript());
             updatePersonStmt.setString(4, user.getEmail());
-            updatePersonStmt.setString(5, String.valueOf(user.getTypeUser()));
-            updatePersonStmt.setInt(6, user.getDireccion().getIdDireccion());
+            updatePersonStmt.setInt(5, user.getDirection().getIdDireccion());
+            updatePersonStmt.setString(6, String.valueOf(user.getTypeUser()));
             updatePersonStmt.setInt(7, user.getIdPerson());
 
             updateDireccionStmt.setString(1, user.getDirection().getStreet());
@@ -713,7 +713,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             updateDireccionStmt.setString(3, String.valueOf(user.getDirection().getPostalCode()));
             updateDireccionStmt.setInt(4, user.getDireccion().getIdDireccion());
             if (chargeNormalUserById(user.getIdPerson()) != null) {
-                updateNormalUserStmt.setString(1, user.getNickname());
+                updateNormalUserStmt.setString(1, user.getNames() + " " + user.getLastNames());
                 updateNormalUserStmt.setBoolean(2, user.isInTherapySession());
                 updateNormalUserStmt.setInt(3, user.getIdPerson());
                 updateNormalUserStmt.executeUpdate();
