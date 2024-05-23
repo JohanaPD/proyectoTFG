@@ -779,11 +779,9 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
         } catch (SQLException | DuplicateKeyException e) {
             connection.rollback();
-<<<<<<< Updated upstream
+
             throw new OperationsDBException("La cuenta ya existe");
-=======
-            throw new OperationsDBException();
->>>>>>> Stashed changes
+
         }
         if (nuevo.getTypeUser() == TypeUser.USUARIO_NORMAL && chargeProfesionalUserById(nuevo.getIdPerson()) != null) {
             deleteProfessionalUser(nuevo.getIdPerson());
