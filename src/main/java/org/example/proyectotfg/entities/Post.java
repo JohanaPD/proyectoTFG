@@ -76,11 +76,8 @@ public class Post {
 
     public void setContent(String content) throws NullArgumentException {
         if (content != null) {
-            if (VerificatorSetter.stringVerificatorletterAndNumbers(content, 6000)) {
-                this.content = content;
-            } else {
-                throw new IllegalArgumentException("Verifica los datos introducidos, solo se aceptan letras");
-            }
+             this.content = content;
+
         } else {
             throw new NullArgumentException("Has introducido valores nulos a la hora de crear el post");
         }

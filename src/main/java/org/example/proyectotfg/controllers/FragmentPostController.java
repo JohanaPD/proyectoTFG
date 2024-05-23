@@ -43,7 +43,7 @@ public class FragmentPostController implements ViewController {
         nombre.setText(name);
         titulo.setText(tit);
         descripcion.setText(cont);
-        
+
     }
 
 
