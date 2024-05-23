@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -239,6 +240,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                             switch (map.getKey()) {
                                 case "Ver Post":
                                     loadView("/org/example/proyectotfg/post-view.fxml");
+                                    ControllerPost controllerPost=(ControllerPost) actualController;
+                                    controllerPost.setPerson(person);
                                     break;
                                 case "Publicar Post":
                                     loadView("/org/example/proyectotfg/post-generator-view.fxml");
@@ -437,8 +440,21 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     }
 
     @Override
-    public void viewPost() {
+    public Parent viewPost(List<Post> posts) {
+        Parent parent = new VBox();
+        try {
+            for (Post post : posts) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-post_view.fxml"));
+                Node fragment = fxmlLoader.load();
+                FragmentPostController controller = fxmlLoader.getController();
+                controller.setData(String.valueOf(post.getTitle()), String.valueOf(post.getTitular().getNames()), String.valueOf(post.getContent()), "/org/example/proyectotfg/imgUsuario/meditacion.jpg");
+                ((VBox) parent).getChildren().add(fragment);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(new ThereIsNoView("Error a la hora de cargar el fragmento: " + e.getMessage()));
+        }
 
+        return parent;
     }
 
     /*   ================================================================================================

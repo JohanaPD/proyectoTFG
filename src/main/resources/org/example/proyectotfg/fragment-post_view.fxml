@@ -22,12 +22,12 @@
                                         <Image url="@img/psicologo.png" />
                                     </image>
                                 </ImageView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
+                        <Text fx:id="nombre" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
                             </children>
                         </VBox>
                         <VBox prefHeight="150.0" prefWidth="269.0">
                             <children>
-                                <Text id="nombreMedico" fx:id="nombreMedico" strokeType="OUTSIDE" strokeWidth="0.0" text="titulo" textAlignment="CENTER" wrappingWidth="274.373046875">
+                                <Text id="nombreMedico" fx:id="titulo" strokeType="OUTSIDE" strokeWidth="0.0" text="titulo" textAlignment="CENTER" wrappingWidth="274.373046875">
                                     <VBox.margin>
                                         <Insets top="50.0" />
                                     </VBox.margin>
@@ -35,7 +35,7 @@
                                         <Font size="18.0" />
                                     </font>
                                 </Text>
-                                <Text id="nombreMedico" fx:id="especialidad" strokeType="OUTSIDE" strokeWidth="0.0" text="descripcion" textAlignment="CENTER" wrappingWidth="271.9730224609375">
+                                <Text id="nombreMedico" fx:id="descripcion" strokeType="OUTSIDE" strokeWidth="0.0" text="descripcion" textAlignment="CENTER" wrappingWidth="271.9730224609375">
                                     <VBox.margin>
                                         <Insets top="20.0" />
                                     </VBox.margin>

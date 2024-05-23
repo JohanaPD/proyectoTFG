@@ -28,7 +28,6 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
     }
 
-
     @Override
     public void createTables() {
         String consultaDireccion = "CREATE TABLE IF NOT EXISTS  direction(" +
@@ -520,7 +519,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             String textoConsulta = "insert into normal_user(id_person,nickname,in_therapy_session) values (?,?,?);";
             try (PreparedStatement preparedStatement = connection.prepareStatement(textoConsulta)) {
                 preparedStatement.setInt(1, normalUser.getIdPerson());
-                preparedStatement.setString(2, normalUser.getNames()+" "+normalUser.getLastNames()/*getNickname()*/);
+                preparedStatement.setString(2, normalUser.getNames() + " " + normalUser.getLastNames()/*getNickname()*/);
                 preparedStatement.setInt(3, normalUser.isInTherapySession() ? 1 : 0);
                 preparedStatement.executeUpdate();
 
@@ -776,12 +775,9 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                 connection.close();
                 registerNormalUser(nuevo, true);
             }
-
         } catch (SQLException | DuplicateKeyException e) {
             connection.rollback();
-
             throw new OperationsDBException("La cuenta ya existe");
-
         }
         if (nuevo.getTypeUser() == TypeUser.USUARIO_NORMAL && chargeProfesionalUserById(nuevo.getIdPerson()) != null) {
             deleteProfessionalUser(nuevo.getIdPerson());
@@ -859,22 +855,25 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         return existe;
     }
 
-    public List<Post> serchPostByPerson(int idPerson) {
+    public static List<Post> serchPostByPerson(Person person) throws IncorrectDataException, NullArgumentException, OperationsDBException {
         List<Post> listaPost = new ArrayList<>();
         String consulta = "SELECT * FROM post WHERE id_person = ?";
 
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
-            preparetStmt.setInt(1, idPerson);
+            preparetStmt.setInt(1, person.getIdPerson());
             try (ResultSet resultSet = preparetStmt.executeQuery()) {
                 while (resultSet.next()) {
-
+                    int idPost = resultSet.getInt("id_post");
+                    String title = resultSet.getString("title");
+                    String content = resultSet.getString("content");
+                    String url_image = resultSet.getString("url_image");
+                    Post nuevo = new Post(idPost, person, title, content, url_image);
+                    listaPost.add(nuevo);
                 }
             }
         } catch (SQLException e) {
-            //Todo: mete exception
-
-        }
+            throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());        }
         return listaPost;
     }
 
