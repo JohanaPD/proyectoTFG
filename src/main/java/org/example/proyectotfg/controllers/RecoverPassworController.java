@@ -8,7 +8,7 @@ import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorProfile;
 import org.example.proyectotfg.mediators.ViewController;
 
-public class RecoverPassworController  implements ViewController {
+public class RecoverPassworController implements ViewController {
 
     private MediatorProfile mediator;
 
@@ -19,7 +19,6 @@ public class RecoverPassworController  implements ViewController {
     private TextField recivepass2;
 
 
-
     @FXML
     void recoveryPassw(ActionEvent event) {
 
@@ -28,7 +27,7 @@ public class RecoverPassworController  implements ViewController {
     @Override
     public void setMediator(Mediator mediador) {
 
-        mediator=(MediatorProfile)mediador;
+        mediator = (MediatorProfile) mediador;
     }
 
     @Override

@@ -143,42 +143,34 @@ public class AddEventDialogController implements ViewController {
         optionalEventButton.setOnAction(e -> {
             cleanSelection();
             eventType = CalendarEvent.OPTIONAL;
-            optionalEventButton.setStyle(
-                    "-fx-background-color : #4C95CE; -fx-background-radius:15;");
+            optionalEventButton.setStyle("-fx-background-color : #4C95CE; -fx-background-radius:15;");
         });
 
         standardEventButton.setOnAction(e -> {
             cleanSelection();
             eventType = CalendarEvent.STANDARD;
-            standardEventButton.setStyle(
-                    "-fx-background-color : #81C457; -fx-background-radius:15;");
+            standardEventButton.setStyle("-fx-background-color : #81C457; -fx-background-radius:15;");
         });
 
         importantEventButton.setOnAction(e -> {
             cleanSelection();
             eventType = CalendarEvent.IMPORTANT;
-            importantEventButton.setStyle(
-                    "-fx-background-color : #F8D500; -fx-background-radius:15;");
+            importantEventButton.setStyle("-fx-background-color : #F8D500; -fx-background-radius:15;");
         });
 
         criticalEventButton.setOnAction(e -> {
             cleanSelection();
             eventType = CalendarEvent.URGENT;
-            criticalEventButton.setStyle(
-                    "-fx-background-color : #E85569; -fx-background-radius:15;");
+            criticalEventButton.setStyle("-fx-background-color : #E85569; -fx-background-radius:15;");
         });
     }
 
     private void cleanSelection() {
         eventType = -1;
-        optionalEventButton
-                .setStyle("-fx-background-color : #BDC6CC ; -fx-background-radius:15; ");
-        standardEventButton
-                .setStyle("-fx-background-color : #BDC6CC ; -fx-background-radius:15;");
-        importantEventButton
-                .setStyle("-fx-background-color : #BDC6CC ; -fx-background-radius:15;");
-        criticalEventButton
-                .setStyle("-fx-background-color : #BDC6CC ; -fx-background-radius:15;");
+        optionalEventButton.setStyle("-fx-background-color : #BDC6CC ; -fx-background-radius:15; ");
+        standardEventButton.setStyle("-fx-background-color : #BDC6CC ; -fx-background-radius:15;");
+        importantEventButton.setStyle("-fx-background-color : #BDC6CC ; -fx-background-radius:15;");
+        criticalEventButton.setStyle("-fx-background-color : #BDC6CC ; -fx-background-radius:15;");
     }
 
     public int getEventType() {
@@ -275,9 +267,7 @@ public class AddEventDialogController implements ViewController {
     }
 
     private boolean hasDaysSelected() {
-        return mondayCB.isSelected() || tuesdayCB.isSelected() || wednesdayCB.isSelected()
-                || thursdayCB.isSelected() || fridayCB.isSelected()
-                || saturdayCB.isSelected() || sundayCB.isSelected();
+        return mondayCB.isSelected() || tuesdayCB.isSelected() || wednesdayCB.isSelected() || thursdayCB.isSelected() || fridayCB.isSelected() || saturdayCB.isSelected() || sundayCB.isSelected();
     }
 
     @Override

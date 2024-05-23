@@ -58,10 +58,12 @@ public class LoginController implements ViewController {
     void userRegister(ActionEvent event) throws IOException, ThereIsNoView {
         mediator.userRegister();
     }
+
     @FXML
     void recovLink(ActionEvent event) throws IOException, ThereIsNoView {
         mediator.recoverPassword();
     }
+
     @Override
     public void setMediator(Mediator mediador) {
         this.mediator = (MediatorProfile) mediador;

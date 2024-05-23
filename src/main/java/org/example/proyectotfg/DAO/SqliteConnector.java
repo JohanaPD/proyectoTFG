@@ -30,75 +30,25 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
     @Override
     public void createTables() {
-        String consultaDireccion = "CREATE TABLE IF NOT EXISTS  direction(" +
-                "id_direction INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                "street VARCHAR(150) NOT NULL," +
-                "city VARCHAR(100) NOT NULL," +
-                "postal_code INTEGER" +
-                ");";
-        String createPerson = "CREATE TABLE IF NOT EXISTS  person(" +
-                "id_person INTEGER PRIMARY KEY  AUTOINCREMENT," +
-                "user_names VARCHAR(100) NOT NULL," +
-                "last_names VARCHAR(150) NOT NULL," +
-                "pass_script TEXT NOT NULL," +
-                "date_birth DATE NOT NULL," +
-                "registration_date DATE NOT NULL," +
-                "email VARCHAR(150) NOT NULL," +
-                "type_user VARCHAR(50) NOT NULL," + //-- 0 para false, 1 para true
-                "user_state VARCHAR(20) NOT NULL," +
-                "last_activity DATE NOT NULL," +
-                "id_direction INTEGER NOT NULL," +
-                "foreign key (id_direction) references direction(id_direction)" +
-                ");";
-        String queryPsychologist = "CREATE TABLE IF NOT EXISTS  professional_user(" +
-                "id_person INTEGER PRIMARY KEY," +
-                "collegiate VARCHAR(200) UNIQUE NOT NULL," +
-                "specialty VARCHAR(150) NOT NULL," +
-                "description VARCHAR(10000) NOT NULL," +
+        String consultaDireccion = "CREATE TABLE IF NOT EXISTS  direction(" + "id_direction INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "street VARCHAR(150) NOT NULL," + "city VARCHAR(100) NOT NULL," + "postal_code INTEGER" + ");";
+        String createPerson = "CREATE TABLE IF NOT EXISTS  person(" + "id_person INTEGER PRIMARY KEY  AUTOINCREMENT," + "user_names VARCHAR(100) NOT NULL," + "last_names VARCHAR(150) NOT NULL," + "pass_script TEXT NOT NULL," + "date_birth DATE NOT NULL," + "registration_date DATE NOT NULL," + "email VARCHAR(150) NOT NULL," + "type_user VARCHAR(50) NOT NULL," + //-- 0 para false, 1 para true
+                "user_state VARCHAR(20) NOT NULL," + "last_activity DATE NOT NULL," + "id_direction INTEGER NOT NULL," + "foreign key (id_direction) references direction(id_direction)" + ");";
+        String queryPsychologist = "CREATE TABLE IF NOT EXISTS  professional_user(" + "id_person INTEGER PRIMARY KEY," + "collegiate VARCHAR(200) UNIQUE NOT NULL," + "specialty VARCHAR(150) NOT NULL," + "description VARCHAR(10000) NOT NULL," + "FOREIGN KEY(id_person) REFERENCES person(id_person) );";
+
+
+        String consultaUsuarioNormal = "CREATE TABLE IF NOT EXISTS  normal_user(" + "id_person INTEGER PRIMARY KEY," + "nickname VARCHAR(40) UNIQUE NOT NULL," + "in_therapy_session INTEGER NOT NULL," + //-- 0 para false, 1 para true
                 "FOREIGN KEY(id_person) REFERENCES person(id_person) );";
 
+        String consultaPost = "CREATE TABLE IF NOT EXISTS post(" + "id_post INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "title VARCHAR(250) NOT NULL," + "content TEXT NOT NULL," + "url_image VARCHAR(500) NOT NULL," + "date_post DATE NOT NULL, " + "id_person INTEGER NOT NULL," + "FOREIGN KEY(id_person) REFERENCES person(id_person) ON DELETE CASCADE);";
 
-        String consultaUsuarioNormal = "CREATE TABLE IF NOT EXISTS  normal_user(" +
-                "id_person INTEGER PRIMARY KEY," +
-                "nickname VARCHAR(40) UNIQUE NOT NULL," +
-                "in_therapy_session INTEGER NOT NULL," + //-- 0 para false, 1 para true
-                "FOREIGN KEY(id_person) REFERENCES person(id_person) );";
-
-        String consultaPost = "CREATE TABLE IF NOT EXISTS post(" +
-                "id_post INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                "title VARCHAR(250) NOT NULL," +
-                "content TEXT NOT NULL," +
-                "url_image VARCHAR(500) NOT NULL," +
-                "date_post DATE NOT NULL, " +
-                "id_person INTEGER NOT NULL," +
-                "FOREIGN KEY(id_person) REFERENCES person(id_person) ON DELETE CASCADE);";
-
-        String consultaHistorial = "CREATE TABLE IF NOT EXISTS history(" +
-                "id_history INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                "id_user INTEGER NOT NULL," +
-                "FOREIGN KEY(id_user) REFERENCES person(id_user) ON DELETE CASCADE);";
+        String consultaHistorial = "CREATE TABLE IF NOT EXISTS history(" + "id_history INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "id_user INTEGER NOT NULL," + "FOREIGN KEY(id_user) REFERENCES person(id_user) ON DELETE CASCADE);";
 
 
-        String consultaDiagnostico = "CREATE TABLE IF NOT EXISTS diagnose(" +
-                "id_diagnose INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                "id_title TEXT NOT NULL," +
-                "id_content TEXT NOT NULL);";
+        String consultaDiagnostico = "CREATE TABLE IF NOT EXISTS diagnose(" + "id_diagnose INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "id_title TEXT NOT NULL," + "id_content TEXT NOT NULL);";
 
-        String consultaDiagnosticosHistorial = "CREATE TABLE IF NOT EXISTS diagnoses_history(" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                "id_diagnose INTEGER NOT NULL," +
-                "id_history INTEGER NOT NULL," +
-                "FOREIGN KEY(id_diagnose) REFERENCES diagnose(id_diagnose) ON DELETE CASCADE," +
-                "FOREIGN KEY(id_history) REFERENCES history(id_history) ON DELETE CASCADE);";
+        String consultaDiagnosticosHistorial = "CREATE TABLE IF NOT EXISTS diagnoses_history(" + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "id_diagnose INTEGER NOT NULL," + "id_history INTEGER NOT NULL," + "FOREIGN KEY(id_diagnose) REFERENCES diagnose(id_diagnose) ON DELETE CASCADE," + "FOREIGN KEY(id_history) REFERENCES history(id_history) ON DELETE CASCADE);";
 
-        String consultaCitas = "CREATE TABLE IF NOT EXISTS medical_appointment (" +
-                "id_appointment INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                "id_professional TEXT NOT NULL," +
-                "id_normal_user TEXT NOT NULL," +
-                "visit_date TEXT NOT NULL," +
-                "notification TEXT NOT NULL," +
-                "FOREIGN KEY(id_normal_user) REFERENCES normal_user(id_person) ON DELETE CASCADE," +
-                "FOREIGN KEY(id_professional) REFERENCES professional_user(id_person) ON DELETE CASCADE);";
+        String consultaCitas = "CREATE TABLE IF NOT EXISTS medical_appointment (" + "id_appointment INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "id_professional TEXT NOT NULL," + "id_normal_user TEXT NOT NULL," + "visit_date TEXT NOT NULL," + "notification TEXT NOT NULL," + "FOREIGN KEY(id_normal_user) REFERENCES normal_user(id_person) ON DELETE CASCADE," + "FOREIGN KEY(id_professional) REFERENCES professional_user(id_person) ON DELETE CASCADE);";
 
         try (Statement stmt = connection.createStatement()) {
             // Ejecutar cada sentencia de creación
@@ -302,8 +252,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         return nickname;
     }
 
-    private static ProfessionalUser chargeProfesionalUser(int id, String nombres, String apellidos, String scripp_pass,
-                                                          Date birrth, Date registration, String email, TypeUser type, StatesUser state, Direction direction, Date last_activity) throws OperationsDBException {
+    private static ProfessionalUser chargeProfesionalUser(int id, String nombres, String apellidos, String scripp_pass, Date birrth, Date registration, String email, TypeUser type, StatesUser state, Direction direction, Date last_activity) throws OperationsDBException {
         ProfessionalUser professionalUser = null;
         String consulta = "SELECT * FROM professional_user WHERE id_person=?;";
 
@@ -315,8 +264,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                 String collegiate = resultSet.getString("collegiate");
                 String specialty = resultSet.getString("specialty");
                 String description = resultSet.getString("description");
-                professionalUser = new ProfessionalUser(id, nombres, apellidos, scripp_pass, birrth, registration,
-                        email, type, state, direction, last_activity, collegiate, specialty, description);
+                professionalUser = new ProfessionalUser(id, nombres, apellidos, scripp_pass, birrth, registration, email, type, state, direction, last_activity, collegiate, specialty, description);
             }
 
         } catch (SQLException | NullArgumentException | IncorrectDataException | NoSuchAlgorithmException |
@@ -416,8 +364,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     public static List<ProfessionalUser> getProfesionales() throws SQLException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, OperationsDBException, NonexistingUser {
         List<ProfessionalUser> usuarios = new ArrayList<>();
         String query2 = "SELECT * FROM person WHERE id_person between 0 and 6";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query2)) {
+        try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(query2)) {
             while (resultSet.next()) {
                 ProfessionalUser user = new ProfessionalUser();
                 int id = resultSet.getInt("id_person");
@@ -534,8 +481,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         List<ProfessionalUser> usuariosEs = new ArrayList<>();
         String query2 = "SELECT * FROM person";
 
-        try (Statement stmt = connection.createStatement();
-             ResultSet resultSet = stmt.executeQuery(query2)) {
+        try (Statement stmt = connection.createStatement(); ResultSet resultSet = stmt.executeQuery(query2)) {
             while (resultSet.next()) {
                 ProfessionalUser person = null;
                 int id = resultSet.getInt("id_person");
@@ -586,10 +532,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         String updateProfessionalUserSQL = "UPDATE professional_user SET collegiate = ?, specialty = ?, description = ? WHERE id_person = ?";
         String updateDireccion = "UPDATE direction SET street= ? , city= ?, postal_code= ? WHERE id_direction= ?";
 
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
-             PreparedStatement updateDirectionStmt = connection.prepareStatement(updateDireccion);
-             PreparedStatement updateProfessionalUserStmt = connection.prepareStatement(updateProfessionalUserSQL)) {
+        try (Connection connection = DriverManager.getConnection(URL); PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL); PreparedStatement updateDirectionStmt = connection.prepareStatement(updateDireccion); PreparedStatement updateProfessionalUserStmt = connection.prepareStatement(updateProfessionalUserSQL)) {
 
 
             connection.setAutoCommit(false);
@@ -642,10 +585,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, pass_script = ? ,email = ?, id_direction = ?, type_user=? WHERE id_person = ?";
         String updateDireccion = "UPDATE direction SET street= ? , city= ?, postal_code= ? WHERE id_direction= ?";
         String updateProfessionalUser = "UPDATE professional_user SET collegiate=?, specialty=?, description = ? WHERE id_person = ?";
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
-             PreparedStatement updateDireccionStmt = connection.prepareStatement(updateDireccion);
-             PreparedStatement updateProfessionalUserStmt = connection.prepareStatement(updateProfessionalUser)) {
+        try (Connection connection = DriverManager.getConnection(URL); PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL); PreparedStatement updateDireccionStmt = connection.prepareStatement(updateDireccion); PreparedStatement updateProfessionalUserStmt = connection.prepareStatement(updateProfessionalUser)) {
 
             connection.setAutoCommit(false);
 
@@ -692,10 +632,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, pass_script = ? ,email = ?, id_direction = ?, type_user=? WHERE id_person = ?";
         String updateDireccion = "UPDATE direction SET street= ? , city= ?, postal_code= ? WHERE id_direction= ?";
         String updateNormalUser = "UPDATE normal_user SET nickname=?, in_therapy_session=? where id_person = ?";
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
-             PreparedStatement updateDireccionStmt = connection.prepareStatement(updateDireccion);
-             PreparedStatement updateNormalUserStmt = connection.prepareStatement(updateNormalUser)) {
+        try (Connection connection = DriverManager.getConnection(URL); PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL); PreparedStatement updateDireccionStmt = connection.prepareStatement(updateDireccion); PreparedStatement updateNormalUserStmt = connection.prepareStatement(updateNormalUser)) {
 
             connection.setAutoCommit(false);
 
@@ -742,10 +679,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, email = ?, id_direction = ?, type_user=? WHERE id_person = ?";
         String updateDirection = "UPDATE direction SET street= ? , city= ?, postal_code= ? WHERE id_direction= ?";
         String updateNormalUser = "UPDATE normal_user SET nickname=?, in_therapy_session=? where id_person = ?";
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL);
-             PreparedStatement updateDirectionStmt = connection.prepareStatement(updateDirection);
-             PreparedStatement updateNormalUserStmt = connection.prepareStatement(updateNormalUser)) {
+        try (Connection connection = DriverManager.getConnection(URL); PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL); PreparedStatement updateDirectionStmt = connection.prepareStatement(updateDirection); PreparedStatement updateNormalUserStmt = connection.prepareStatement(updateNormalUser)) {
 
             connection.setAutoCommit(false);
 
@@ -786,8 +720,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
     private void deleteProfessionalUser(int idPerson) throws OperationsDBException {
         String deleteProfessionalUser = "DELETE FROM professional_user WHERE id_person = ?";
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement deleteProfessionalUserStatement = connection.prepareStatement(deleteProfessionalUser)) {
+        try (Connection connection = DriverManager.getConnection(URL); PreparedStatement deleteProfessionalUserStatement = connection.prepareStatement(deleteProfessionalUser)) {
 
             connection.setAutoCommit(false);
             deleteProfessionalUserStatement.setInt(1, idPerson);
@@ -802,8 +735,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
     private void deleteNormalUser(int idPerson) throws OperationsDBException {
         String deleteNormalUser = "DELETE FROM normal_user WHERE id_person = ?";
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement deleteProfessionalUserStatement = connection.prepareStatement(deleteNormalUser)) {
+        try (Connection connection = DriverManager.getConnection(URL); PreparedStatement deleteProfessionalUserStatement = connection.prepareStatement(deleteNormalUser)) {
 
             connection.setAutoCommit(false);
             deleteProfessionalUserStatement.setInt(1, idPerson);
@@ -839,8 +771,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         boolean existe = false;
         String consulta = "SELECT * FROM post WHERE title LIKE ?";
 
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
+        try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setString(1, titulo);
             try (ResultSet resultSet = preparetStmt.executeQuery()) {
                 while (resultSet.next()) {
@@ -859,8 +790,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         List<Post> listaPost = new ArrayList<>();
         String consulta = "SELECT * FROM post WHERE id_person = ?";
 
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
+        try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setInt(1, person.getIdPerson());
             try (ResultSet resultSet = preparetStmt.executeQuery()) {
                 while (resultSet.next()) {
@@ -873,7 +803,8 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                 }
             }
         } catch (SQLException e) {
-            throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());        }
+            throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
+        }
         return listaPost;
     }
 

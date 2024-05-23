@@ -18,15 +18,24 @@ import java.util.ResourceBundle;
 public class JFXCalendarController implements ViewController, Initializable {
     @FXML
     private Button menuButton;
-    @FXML private Button todayButton;
-    @FXML private Label calendarLabel;
-    @FXML private Label dateLabel;
-    @FXML private VBox leftPane;
-    @FXML private CheckBox optionalCheckBox;
-    @FXML private CheckBox standardCheckBox;
-    @FXML private CheckBox importantCheckBox;
-    @FXML private CheckBox criticalCheckBox;
-    @FXML private CheckBox completedCheckBox;
+    @FXML
+    private Button todayButton;
+    @FXML
+    private Label calendarLabel;
+    @FXML
+    private Label dateLabel;
+    @FXML
+    private VBox leftPane;
+    @FXML
+    private CheckBox optionalCheckBox;
+    @FXML
+    private CheckBox standardCheckBox;
+    @FXML
+    private CheckBox importantCheckBox;
+    @FXML
+    private CheckBox criticalCheckBox;
+    @FXML
+    private CheckBox completedCheckBox;
 
     private LocalDate selectedDate;
     private CalendarEventManager eventManager;
@@ -50,6 +59,7 @@ public class JFXCalendarController implements ViewController, Initializable {
     public void setMainController(MainController mainController) {
 
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         todayButton.setOnAction(e -> selectToday());

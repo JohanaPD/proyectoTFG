@@ -107,53 +107,14 @@ public class FunctionsApp {
             e.printStackTrace();
             System.exit(1);
         }
-        System.out.println("Contraseña encriptada y hash generados. Guardando en la base de datos..." +
-                "contraseña encriptada" + hashedData + "  "
-        );
+        System.out.println("Contraseña encriptada y hash generados. Guardando en la base de datos..." + "contraseña encriptada" + hashedData + "  ");
         return hashedData;
     }
 
     public static String devolverStringMail(Person person) {
-        String mensajeHtml1 = "<!DOCTYPE html>\n"
-                + "<html>\n"
-                + "<head>\n"
-                + "<style>\n"
-                + "    body { font-family: Arial, sans-serif; }\n"
-                + "    input, button { margin-top: 10px; }\n"
-                + "</style>\n"
-                + "</head>\n"
-                + "<body>\n"
-                + "    <h1>¡Gracias por registrarte!</h1>\n"
-                + "    <p>Para mantener la seguridad de tu privacidad, por favor, genera un nickname que usarás en nuestra plataforma.</p>\n"
-                + "    <form action=\"https://https://edu-meetpshyc1.odoo/usuario/establecer-nickname\" method=\"POST\">\n"
-                + "        <input type=\"text\" name=\"nickname\" placeholder=\"Escribe tu nickname aquí\" required>\n"
-                + "        <button type=\"submit\">Enviar Nickname</button>\n"
-                + "    </form>\n"
-                + "    <p>Además, necesitamos que verifiques tu dirección de correo electrónico para completar el proceso de registro.</p>\n"
-                + "    <p><a href=\"https://edu-meetpshyc1.odoo/usuario/verificar-email?email=email_del_destinatario\">Haz clic aquí para verificar tu correo electrónico</a></p>\n"
-                + "</body>\n"
-                + "</html>";
+        String mensajeHtml1 = "<!DOCTYPE html>\n" + "<html>\n" + "<head>\n" + "<style>\n" + "    body { font-family: Arial, sans-serif; }\n" + "    input, button { margin-top: 10px; }\n" + "</style>\n" + "</head>\n" + "<body>\n" + "    <h1>¡Gracias por registrarte!</h1>\n" + "    <p>Para mantener la seguridad de tu privacidad, por favor, genera un nickname que usarás en nuestra plataforma.</p>\n" + "    <form action=\"https://https://edu-meetpshyc1.odoo/usuario/establecer-nickname\" method=\"POST\">\n" + "        <input type=\"text\" name=\"nickname\" placeholder=\"Escribe tu nickname aquí\" required>\n" + "        <button type=\"submit\">Enviar Nickname</button>\n" + "    </form>\n" + "    <p>Además, necesitamos que verifiques tu dirección de correo electrónico para completar el proceso de registro.</p>\n" + "    <p><a href=\"https://edu-meetpshyc1.odoo/usuario/verificar-email?email=email_del_destinatario\">Haz clic aquí para verificar tu correo electrónico</a></p>\n" + "</body>\n" + "</html>";
 
-        String mensajeHtml2 = "<!DOCTYPE html>\n"
-                + "<html>\n"
-                + "<head>\n"
-                + "<style>\n"
-                + "    body { font-family: Arial, sans-serif; }\n"
-                + "    input, button { margin-top: 10px; }\n"
-                + "</style>\n"
-                + "</head>\n"
-                + "<body>\n"
-                + "    <h1>¡Gracias por registrarte, [Nombre del Usuario]!</h1>\n"
-                + "    <p>Estamos emocionados de tenerte a bordo. Para poder comenzar a prestar tus servicios, es necesario que acredites tu especialidad.</p>\n"
-                + "    <p>Por favor, adjunta tus certificaciones y número de colegiado respondiendo a este correo con los documentos necesarios.</p>\n"
-                + "    <form action=\"https://edu-meetpshyc1.odoo/usuario/acreditar-especialidad\" method=\"POST\" enctype=\"multipart/form-data\">\n"
-                + "        <input type=\"hidden\" name=\"email\" value=\"email_del_usuario\">\n"
-                + "        <input type=\"file\" name=\"certificaciones\" required>\n"
-                + "        <input type=\"text\" name=\"numero_colegiado\" placeholder=\"Número de Colegiado\" required>\n"
-                + "        <button type=\"submit\">Enviar Documentación</button>\n"
-                + "    </form>\n"
-                + "</body>\n"
-                + "</html>";
+        String mensajeHtml2 = "<!DOCTYPE html>\n" + "<html>\n" + "<head>\n" + "<style>\n" + "    body { font-family: Arial, sans-serif; }\n" + "    input, button { margin-top: 10px; }\n" + "</style>\n" + "</head>\n" + "<body>\n" + "    <h1>¡Gracias por registrarte, [Nombre del Usuario]!</h1>\n" + "    <p>Estamos emocionados de tenerte a bordo. Para poder comenzar a prestar tus servicios, es necesario que acredites tu especialidad.</p>\n" + "    <p>Por favor, adjunta tus certificaciones y número de colegiado respondiendo a este correo con los documentos necesarios.</p>\n" + "    <form action=\"https://edu-meetpshyc1.odoo/usuario/acreditar-especialidad\" method=\"POST\" enctype=\"multipart/form-data\">\n" + "        <input type=\"hidden\" name=\"email\" value=\"email_del_usuario\">\n" + "        <input type=\"file\" name=\"certificaciones\" required>\n" + "        <input type=\"text\" name=\"numero_colegiado\" placeholder=\"Número de Colegiado\" required>\n" + "        <button type=\"submit\">Enviar Documentación</button>\n" + "    </form>\n" + "</body>\n" + "</html>";
 
         if (person.getTypeUser().equals(TypeUser.USUARIO_NORMAL)) {
             return mensajeHtml1;

@@ -26,7 +26,7 @@ public class FragmentPostController implements ViewController {
 
     @Override
     public void setMediator(Mediator mediador) {
-            this.mediator=(MediatorPost)mediador;
+        this.mediator = (MediatorPost) mediador;
     }
 
     public MediatorPost getMediador() {

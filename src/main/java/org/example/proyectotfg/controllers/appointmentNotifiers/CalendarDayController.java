@@ -13,23 +13,24 @@ import java.time.LocalDate;
 
 public class CalendarDayController implements ViewController {
 
-    @FXML private ScrollPane scrollPane;
-    @FXML private VBox eventPane;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private VBox eventPane;
     @FXML
     private Label dayName;
-    @FXML private Label dayCount;
+    @FXML
+    private Label dayCount;
 
     private CalendarEventManager eventManager;
 
     public LocalDate currectDate;
 
 
-
     @Override
     public void setMediator(Mediator mediador) {
 
     }
-
 
 
     @Override

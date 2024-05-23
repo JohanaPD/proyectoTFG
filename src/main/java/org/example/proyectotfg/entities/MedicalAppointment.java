@@ -8,7 +8,6 @@ public class MedicalAppointment {
     // que notificaciones vamos a enviar... serán enum? son unas para usuario profesional y otras para profesional
 
 
-
     private int idCita;
     private ProfessionalUser psicologo; // Suponiendo que hay una clase llamada PsychologistUser
     private NormalUser usuario; // Suponiendo que hay una clase llamada NormalUser

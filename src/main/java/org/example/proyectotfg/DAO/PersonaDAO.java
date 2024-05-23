@@ -23,9 +23,9 @@ public interface PersonaDAO {
 
     ProfessionalUser buscarPsicologo(String nombre) throws OperationsDBException;
 
-    void registerProfessionalUser(ProfessionalUser professionalUser,boolean update) throws OperationsDBException, DuplicateKeyException;
+    void registerProfessionalUser(ProfessionalUser professionalUser, boolean update) throws OperationsDBException, DuplicateKeyException;
 
-    void registerNormalUser(NormalUser normalUser,boolean update) throws OperationsDBException, DuplicateKeyException;
+    void registerNormalUser(NormalUser normalUser, boolean update) throws OperationsDBException, DuplicateKeyException;
 
     Direction registerDirection(Direction direction) throws OperationsDBException;
 
@@ -36,8 +36,6 @@ public interface PersonaDAO {
     Person registerPerson(Person person) throws OperationsDBException, DuplicateKeyException;
 
     List<ProfessionalUser> searchProfessionalsUsers(String nameUser) throws NonexistingUser, DataAccessException, OperationsDBException;
-
-
 
 
 }

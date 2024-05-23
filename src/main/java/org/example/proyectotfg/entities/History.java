@@ -23,7 +23,7 @@ public class History {
     }
 
     public void setIdHistory(int idHistory) throws IncorrectDataException {
-        if (VerificatorSetter.numberVerificator(idHistory, 1000000000)&&idHistory>=0) {
+        if (VerificatorSetter.numberVerificator(idHistory, 1000000000) && idHistory >= 0) {
             this.idHistory = idHistory;
         } else {
             throw new IncorrectDataException("El id del historial tiene que ser un número");
@@ -41,18 +41,17 @@ public class History {
             throw new NullArgumentException("Has pasado un usuario nulo a la hora de crear el historial");
         }
     }
+
     public void addpsychologist(ProfessionalUser psychologist) {
         psychologists.add(psychologist);
     }
+
     public void addDiagnose(String diagnose) {
         diagnoses.add(diagnose);
     }
 
     @Override
     public String toString() {
-        return "Historial{" +
-                "id_historial=" + idHistory +
-                ", paciente=" + user +
-                '}';
+        return "Historial{" + "id_historial=" + idHistory + ", paciente=" + user + '}';
     }
 }

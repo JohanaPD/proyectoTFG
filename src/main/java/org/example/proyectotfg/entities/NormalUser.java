@@ -35,9 +35,7 @@ public class NormalUser extends Person {
     }
 
     //constructor for test
-    public NormalUser(int idPerson, String names, String lastNames, String passScript, Date birthDate,
-                      Date registrationDate, String email, TypeUser typeUser, StatesUser state,
-                      Direction direction, Date lastActivityDate) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public NormalUser(int idPerson, String names, String lastNames, String passScript, Date birthDate, Date registrationDate, String email, TypeUser typeUser, StatesUser state, Direction direction, Date lastActivityDate) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         super(idPerson, names, lastNames, passScript, birthDate, registrationDate, email, typeUser, state, direction, lastActivityDate);
     }
 
@@ -119,11 +117,6 @@ public class NormalUser extends Person {
 
     @Override
     public String toString() {
-        return "NormalUser{" +
-                "nickname='" + nickname + '\'' +
-                ", serchs=" + serchs +
-                ", psychologists=" + psychologists +
-                ", inTherapySession=" + inTherapySession +
-                '}';
+        return "NormalUser{" + "nickname='" + nickname + '\'' + ", serchs=" + serchs + ", psychologists=" + psychologists + ", inTherapySession=" + inTherapySession + '}';
     }
 }

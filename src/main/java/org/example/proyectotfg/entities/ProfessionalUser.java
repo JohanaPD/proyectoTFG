@@ -117,8 +117,7 @@ public class ProfessionalUser extends Person {
 
     public void setDescription(String description) throws NullArgumentException, IncorrectDataException {
         if (description != null) {
-            if (VerificatorSetter.stringVerificatorletterAndNumbers(description, 7000))
-                this.description = description;
+            if (VerificatorSetter.stringVerificatorletterAndNumbers(description, 7000)) this.description = description;
             else throw new IncorrectDataException("Verifica los datos introducidos, solo se aceptan letras");
 
 
@@ -140,12 +139,7 @@ public class ProfessionalUser extends Person {
 
     @Override
     public String toString() {
-        return "ProfessionalUser{" +
-                "collegiate='" + collegiate + '\'' +
-                ", speciality='" + specialty + '\'' +
-                ", description='" + description + '\'' +
-                ", patients=" + patients +
-                '}';
+        return "ProfessionalUser{" + "collegiate='" + collegiate + '\'' + ", speciality='" + specialty + '\'' + ", description='" + description + '\'' + ", patients=" + patients + '}';
     }
 }
 

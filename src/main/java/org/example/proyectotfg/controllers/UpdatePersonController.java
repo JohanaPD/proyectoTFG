@@ -199,24 +199,24 @@ public class UpdatePersonController implements ViewController {
                         } else {
                             // Actualizar con contraseña///
 
-                            if (typeUser==TypeUser.USUARIO_NORMAL) {
-                                NormalUser nuevoUser = new NormalUser(person.getIdPerson(), names, lastNames, pass1, mail, newDirection,TypeUser.USUARIO_NORMAL);
+                            if (typeUser == TypeUser.USUARIO_NORMAL) {
+                                NormalUser nuevoUser = new NormalUser(person.getIdPerson(), names, lastNames, pass1, mail, newDirection, TypeUser.USUARIO_NORMAL);
                                 mediator.updateAllDataPerson(nuevoUser);
                             } else {
                                 // ProfessionalUser
-                                ProfessionalUser replace=SqliteConnector.chargeProfesionalUserById(person.getIdPerson());
+                                ProfessionalUser replace = SqliteConnector.chargeProfesionalUserById(person.getIdPerson());
 
                                 String college = colegiadoTextField.getText();
                                 if (college.equalsIgnoreCase("")) {
-                                    college= replace.getCollegiate();
+                                    college = replace.getCollegiate();
                                 }
                                 String especialidad = especialidadTextField.getText();
                                 if (especialidad.equalsIgnoreCase("")) {
-                                    especialidad= replace.getCollegiate();
+                                    especialidad = replace.getCollegiate();
                                 }
                                 String descripcion = descripcionTextArea.getText();
                                 if (descripcion.equalsIgnoreCase("")) {
-                                    descripcion= replace.getCollegiate();
+                                    descripcion = replace.getCollegiate();
                                 }
                                 if (!college.equalsIgnoreCase("") || !especialidad.equalsIgnoreCase("") || !descripcion.equalsIgnoreCase("")) {
                                     ProfessionalUser prof = new ProfessionalUser(person.getIdPerson(), names, lastNames, pass1, mail, newDirection, typeUser, college, especialidad, descripcion);
@@ -233,23 +233,23 @@ public class UpdatePersonController implements ViewController {
                             mediator.updateDataPerson(nuevoUser);
                         } else {
                             // ProfessionalUser
-                            ProfessionalUser replace=SqliteConnector.chargeProfesionalUserById(person.getIdPerson());
+                            ProfessionalUser replace = SqliteConnector.chargeProfesionalUserById(person.getIdPerson());
 
                             String college = colegiadoTextField.getText();
                             if (college.equalsIgnoreCase("")) {
-                                college= replace.getCollegiate();
+                                college = replace.getCollegiate();
                             }
                             String especialidad = especialidadTextField.getText();
                             if (especialidad.equalsIgnoreCase("")) {
-                                especialidad= replace.getCollegiate();
+                                especialidad = replace.getCollegiate();
                             }
                             String descripcion = descripcionTextArea.getText();
                             if (descripcion.equalsIgnoreCase("")) {
-                                descripcion= replace.getCollegiate();
+                                descripcion = replace.getCollegiate();
                             }
 
                             if (!college.equalsIgnoreCase("") || !especialidad.equalsIgnoreCase("") || !descripcion.equalsIgnoreCase("")) {
-                                ProfessionalUser prof = new ProfessionalUser(person.getIdPerson(), names, lastNames, mail, newDirection,typeUser, college, especialidad, descripcion);
+                                ProfessionalUser prof = new ProfessionalUser(person.getIdPerson(), names, lastNames, mail, newDirection, typeUser, college, especialidad, descripcion);
                                 mediator.updateDataPerson(prof);
                             } else {
                                 errores.append("Datos profesionales incorrectos.\n");

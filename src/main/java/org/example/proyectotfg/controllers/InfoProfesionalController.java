@@ -14,7 +14,7 @@ import org.example.proyectotfg.mediators.MediatorFirstScreen;
 import org.example.proyectotfg.mediators.MediatorProfile;
 import org.example.proyectotfg.mediators.ViewController;
 
-public class InfoProfesionalController  implements ViewController {
+public class InfoProfesionalController implements ViewController {
 
     @FXML
     private ImageView image;
@@ -44,6 +44,7 @@ public class InfoProfesionalController  implements ViewController {
     public void setMainController(MainController mainController) {
 
     }
+
     public void setElementsPerson(ProfessionalUser professionalUser, int index) {
         String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", index);
         Image imageProfessional = new Image(getClass().getResourceAsStream(imagePath));
@@ -52,6 +53,7 @@ public class InfoProfesionalController  implements ViewController {
         specialty.setText(professionalUser.getSpecialty());
         description.setText(professionalUser.getDescription());
     }
+
     public void volverHome(ActionEvent actionEvent) {
         mediator.regresar();
     }

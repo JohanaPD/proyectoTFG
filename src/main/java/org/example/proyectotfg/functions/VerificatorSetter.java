@@ -27,7 +27,7 @@ public class VerificatorSetter {
         if (cadena != null) {
             if (cadena.length() >= 1 && cadena.length() <= length) {
                 // La expresión regular incluye letras, números, espacios, comas y caracteres con tilde
-               // Pattern patron = Pattern.compile("^[a-zA-Z0-9\\s,áéíóúÁÉÍÓÚñÑ.\\-']+$");
+                // Pattern patron = Pattern.compile("^[a-zA-Z0-9\\s,áéíóúÁÉÍÓÚñÑ.\\-']+$");
                 //Pattern patron = Pattern.compile("^[a-zA-Z0-9\\s,áéíóúÁÉÍÓÚñÑ.\\-'\\r\\n]+$");
                 Pattern patron = Pattern.compile("^[a-zA-Z0-9\\s,áéíóúÁÉÍÓÚñÑ.\\-:'\\r\\n]+$");
 
@@ -70,6 +70,7 @@ public class VerificatorSetter {
             return false;
         }
     }
+
     public static boolean formatoFechaValido(String fecha) {
         String pattern = "\\d{2}/\\d{2}/\\d{4}";
         return Pattern.matches(pattern, fecha);

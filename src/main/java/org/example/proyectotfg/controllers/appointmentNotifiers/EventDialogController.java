@@ -17,7 +17,7 @@ import com.jfoenix.controls.JFXDialogLayout;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EventDialogController extends JFXDialog  implements ViewController, Initializable {
+public class EventDialogController extends JFXDialog implements ViewController, Initializable {
 
     @FXML
     private BorderPane mainContainer;
@@ -27,7 +27,8 @@ public class EventDialogController extends JFXDialog  implements ViewController,
     private Button cancelButton;
     @FXML
     private Button addButton;
-    CalendarEventManager manager= new CalendarEventManager();
+    CalendarEventManager manager = new CalendarEventManager();
+
     @Override
     public void setMediator(Mediator mediador) {
 
@@ -47,7 +48,7 @@ public class EventDialogController extends JFXDialog  implements ViewController,
         }
 
         cancelButton.setOnAction(event -> closeDialog());
-       // addButton.setOnAction(event -> addEvent(manager));
+        // addButton.setOnAction(event -> addEvent(manager));
     }
 
     private void closeDialog() {
@@ -57,6 +58,7 @@ public class EventDialogController extends JFXDialog  implements ViewController,
     private void addEvent(CalendarEvent event) {
         manager.addEvent(event);
     }
+
     public void clear() {
 
     }

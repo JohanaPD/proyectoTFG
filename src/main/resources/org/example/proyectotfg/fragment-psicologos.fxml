@@ -9,37 +9,43 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="164.0" prefWidth="380.0" styleClass="fondosearch" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.FragmentInfoProfesionalController">
+<AnchorPane prefHeight="164.0" prefWidth="380.0" styleClass="fondosearch" stylesheets="@styles.css"
+            xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.proyectotfg.controllers.FragmentInfoProfesionalController">
     <children>
         <VBox prefHeight="177.0" prefWidth="380.0">
             <children>
-                <HBox id="fragmentSearch" mouseTransparent="true" prefHeight="161.0" prefWidth="380.0" stylesheets="@styles.css">
+                <HBox id="fragmentSearch" mouseTransparent="true" prefHeight="161.0" prefWidth="380.0"
+                      stylesheets="@styles.css">
                     <children>
                         <VBox alignment="CENTER" prefHeight="212.0" prefWidth="100.0">
                             <children>
-                                <ImageView fx:id="idImagen" fitHeight="104.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="idImagen" fitHeight="104.0" fitWidth="80.0" pickOnBounds="true"
+                                           preserveRatio="true">
                                     <image>
-                                        <Image url="@img/psicologo.png" />
+                                        <Image url="@img/psicologo.png"/>
                                     </image>
                                 </ImageView>
                             </children>
                         </VBox>
                         <VBox prefHeight="174.0" prefWidth="179.0">
                             <children>
-                                <Text id="nombreMedico" fx:id="nombreMedico" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="188.77301025390625">
+                                <Text id="nombreMedico" fx:id="nombreMedico" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Text" textAlignment="CENTER" wrappingWidth="188.77301025390625">
                                     <VBox.margin>
-                                        <Insets top="50.0" />
+                                        <Insets top="50.0"/>
                                     </VBox.margin>
                                     <font>
-                                        <Font size="18.0" />
+                                        <Font size="18.0"/>
                                     </font>
                                 </Text>
-                                <Text id="nombreMedico" fx:id="especialidad" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="188.77301025390625">
+                                <Text id="nombreMedico" fx:id="especialidad" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Text" textAlignment="CENTER" wrappingWidth="188.77301025390625">
                                     <VBox.margin>
-                                        <Insets top="20.0" />
+                                        <Insets top="20.0"/>
                                     </VBox.margin>
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font size="16.0"/>
                                     </font>
                                 </Text>
                             </children>
@@ -48,25 +54,26 @@
                             <children>
                                 <ImageView fitHeight="59.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@img/paciente.png" />
+                                        <Image url="@img/paciente.png"/>
                                     </image>
                                     <VBox.margin>
-                                        <Insets left="20.0" top="40.0" />
+                                        <Insets left="20.0" top="40.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <Text id="nombreMedico" fx:id="valoraciones" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="98.37298583984375">
+                                <Text id="nombreMedico" fx:id="valoraciones" strokeType="OUTSIDE" strokeWidth="0.0"
+                                      text="Text" textAlignment="CENTER" wrappingWidth="98.37298583984375">
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font size="16.0"/>
                                     </font>
                                     <VBox.margin>
-                                        <Insets />
+                                        <Insets/>
                                     </VBox.margin>
                                 </Text>
                             </children>
                         </VBox>
                     </children>
                     <padding>
-                        <Insets top="20.0" />
+                        <Insets top="20.0"/>
                     </padding>
                 </HBox>
             </children>

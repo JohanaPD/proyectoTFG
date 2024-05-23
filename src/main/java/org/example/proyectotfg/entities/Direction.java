@@ -9,11 +9,13 @@ public class Direction {
     private String street;
     private String city;
     private int postalCode;
-    public Direction( String street, String city, int postalCode) throws NullArgumentException, IncorrectDataException {
+
+    public Direction(String street, String city, int postalCode) throws NullArgumentException, IncorrectDataException {
         setStreet(street);
         setCity(city);
         setPostalCode(postalCode);
     }
+
     public Direction(int idDireccion, String street, String city, int postalCode) throws NullArgumentException, IncorrectDataException {
         setIdDireccion(idDireccion);
         setStreet(street);
@@ -30,7 +32,7 @@ public class Direction {
     }
 
     public void setIdDireccion(int idDireccion) throws IncorrectDataException {
-        if (VerificatorSetter.numberVerificator(idDireccion, 1000000000)&&idDireccion>=0) {
+        if (VerificatorSetter.numberVerificator(idDireccion, 1000000000) && idDireccion >= 0) {
             this.idDireccion = idDireccion;
         } else {
             throw new IncorrectDataException("Verifica el id de persona, solo se aceptan números");
@@ -84,11 +86,6 @@ public class Direction {
 
     @Override
     public String toString() {
-        return "Direction{" +
-                "idDireccion=" + idDireccion +
-                ", street='" + street + '\'' +
-                ", city='" + city + '\'' +
-                ", postalCode=" + postalCode +
-                '}';
+        return "Direction{" + "idDireccion=" + idDireccion + ", street='" + street + '\'' + ", city='" + city + '\'' + ", postalCode=" + postalCode + '}';
     }
 }

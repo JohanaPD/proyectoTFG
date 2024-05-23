@@ -80,7 +80,8 @@ public abstract class Person {
         setTypeUser(type);
         setDirection(nueva);
     }
-    public Person(String names, String lastNames,String passScript, String mail, TypeUser type, Direction nueva) throws NullArgumentException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException {
+
+    public Person(String names, String lastNames, String passScript, String mail, TypeUser type, Direction nueva) throws NullArgumentException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException {
         setNames(names);
         setLastNames(lastNames);
         setPassScript(passScript);
@@ -88,7 +89,8 @@ public abstract class Person {
         setTypeUser(type);
         setDirection(nueva);
     }
-    public Person(int id, String names, String lastNames,String passScript, String mail, TypeUser type, Direction nueva) throws NullArgumentException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException {
+
+    public Person(int id, String names, String lastNames, String passScript, String mail, TypeUser type, Direction nueva) throws NullArgumentException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException {
         setIdPerson(id);
         setNames(names);
         setLastNames(lastNames);
@@ -105,7 +107,8 @@ public abstract class Person {
         setEmail(mail);
         setDirection(direction);
     }
-    public Person(int idPerson, String names, String lastNames, String mail, Direction direction,TypeUser typeUser) throws IncorrectDataException, NullArgumentException {
+
+    public Person(int idPerson, String names, String lastNames, String mail, Direction direction, TypeUser typeUser) throws IncorrectDataException, NullArgumentException {
         setIdPerson(idPerson);
         setNames(names);
         setLastNames(lastNames);
@@ -113,6 +116,7 @@ public abstract class Person {
         setDirection(direction);
         setTypeUser(typeUser);
     }
+
     public Person(int idPerson, String names, String lastNames, String pass, String mail, Direction direction) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         setIdPerson(idPerson);
         setNames(names);
@@ -121,7 +125,8 @@ public abstract class Person {
         setEmail(mail);
         setDirection(direction);
     }
-    public Person(int idPerson, String names, String lastNames, String pass, String mail, Direction direction,TypeUser type) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+
+    public Person(int idPerson, String names, String lastNames, String pass, String mail, Direction direction, TypeUser type) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         setIdPerson(idPerson);
         setNames(names);
         setLastNames(lastNames);
@@ -344,20 +349,7 @@ public abstract class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "idPerson=" + idPerson +
-                ", names='" + names + '\'' +
-                ", lastNames='" + lastNames + '\'' +
-                ", direction=" + direction +
-                ", email='" + email + '\'' +
-                ", birthday=" + birthDate +
-                ", registrationDate=" + registrationDate +
-                ", passScript='" + passScript + '\'' +
-                ", typeUser=" + typeUser +
-                ", stateUser=" + state +
-                ", postTreeMap=" + postTreeMap +
-                ", lastActivityDate=" + lastActivityDate +
-                '}';
+        return "Person{" + "idPerson=" + idPerson + ", names='" + names + '\'' + ", lastNames='" + lastNames + '\'' + ", direction=" + direction + ", email='" + email + '\'' + ", birthday=" + birthDate + ", registrationDate=" + registrationDate + ", passScript='" + passScript + '\'' + ", typeUser=" + typeUser + ", stateUser=" + state + ", postTreeMap=" + postTreeMap + ", lastActivityDate=" + lastActivityDate + '}';
     }
 }
 

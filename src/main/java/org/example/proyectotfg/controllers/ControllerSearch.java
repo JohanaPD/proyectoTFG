@@ -60,7 +60,7 @@ public class ControllerSearch implements ViewController {
     }
 
     public void setStringSearch(String search) {
-        detalleBusqueda.setText("Resultados de busqueda ["+search+"]");
+        detalleBusqueda.setText("Resultados de busqueda [" + search + "]");
     }
 
     public void volverIncio(ActionEvent actionEvent) {

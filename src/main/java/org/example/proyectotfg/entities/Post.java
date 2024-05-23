@@ -34,7 +34,7 @@ public class Post {
     }
 
     public void setIdPost(int idPost) throws IncorrectDataException {
-        if (VerificatorSetter.numberVerificator(idPost, 1000000000)&&idPost>=0) {
+        if (VerificatorSetter.numberVerificator(idPost, 1000000000) && idPost >= 0) {
             this.idPost = idPost;
         } else {
             throw new IncorrectDataException("El valor del id del post tiene que ser un número");
@@ -76,7 +76,7 @@ public class Post {
 
     public void setContent(String content) throws NullArgumentException {
         if (content != null) {
-             this.content = content;
+            this.content = content;
 
         } else {
             throw new NullArgumentException("Has introducido valores nulos a la hora de crear el post");
@@ -89,18 +89,12 @@ public class Post {
 
     public void setUrlImg(String urlImg) throws NullArgumentException {
         if (urlImg != null) {
-                this.urlImg = urlImg;
+            this.urlImg = urlImg;
         }
     }
 
     @Override
     public String toString() {
-        return "Post{" +
-                "id_post=" + idPost +
-                ", creador=" + titular.getIdPerson() +
-                ", titulo='" + title + '\'' +
-                ", contenido='" + content + '\'' +
-                ", url_img='" + urlImg + '\'' +
-                '}';
+        return "Post{" + "id_post=" + idPost + ", creador=" + titular.getIdPerson() + ", titulo='" + title + '\'' + ", contenido='" + content + '\'' + ", url_img='" + urlImg + '\'' + '}';
     }
 }

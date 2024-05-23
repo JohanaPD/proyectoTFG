@@ -14,7 +14,7 @@ public class Controller {
     private List<Stage> cargaStage;
     private EntryController entryController;
     private LoginController loginContrller;
-    private Map<Scene, ViewController> controllers= new HashMap<>();
+    private Map<Scene, ViewController> controllers = new HashMap<>();
 
     public Map<Scene, ViewController> getControllers() {
         return controllers;
@@ -39,7 +39,7 @@ public class Controller {
         } catch (IOException E) {
 
         }
-        }
+    }
 
     public void setControllers(FXMLLoader fxmlLoader, ViewController controller) {
         this.controllers = controllers;
@@ -56,7 +56,7 @@ public class Controller {
 
     //metodo que retorne scene del controller
     public Stage returnStage(ViewController controller) {
-        Stage view= (Stage) controllers.get(controller);
+        Stage view = (Stage) controllers.get(controller);
         return view;
     }
 
@@ -64,7 +64,7 @@ public class Controller {
     //metodo que devuelva el controller
 
     public ViewController returnStage(Stage stage) {
-        ViewController controller= (ViewController) controllers.get(stage);
+        ViewController controller = (ViewController) controllers.get(stage);
         return controller;
     }
 

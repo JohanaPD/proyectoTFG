@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class AccountVerificationService{
+public class AccountVerificationService {
 
     private Map<String, String> verificationCodes; // Almacena el código de verificación por correo electrónico
 

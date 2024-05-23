@@ -3,8 +3,9 @@ package org.example.proyectotfg.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import org.example.proyectotfg.DAO.SqliteConnector;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.Post;
 import org.example.proyectotfg.exceptions.IncorrectDataException;
@@ -20,14 +21,15 @@ import java.util.List;
 public class ControllerPost implements ViewController {
 
     @FXML
-    private VBox mainContainer;
+    private ScrollPane mainContainer;
 
     private MediatorPost mediator;
     Person person;
-    List<Post> post= new ArrayList<>();
+    List<Post> posts = new ArrayList<>();
+
     @Override
     public void setMediator(Mediator mediador) {
-        this.mediator=(MediatorPost)mediador;
+        this.mediator = (MediatorPost) mediador;
     }
 
     public void setPerson(Person person) {
@@ -35,12 +37,11 @@ public class ControllerPost implements ViewController {
     }
 
     public void initialize() throws IncorrectDataException, NullArgumentException, OperationsDBException {
-            post= SqliteConnector.serchPostByPerson(person);
     }
 
-    public void loadPost(List<Post> posts) {
-        Parent listaServicios = mediator.viewPost(posts);
-        mainContainer.getChildren().add(listaServicios);
+    public void loadPosts() {
+        mainContainer.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        mainContainer.setContent(mediator.viewPost(posts));
     }
 
     @Override
@@ -55,5 +56,9 @@ public class ControllerPost implements ViewController {
 
     public void volverIncio(ActionEvent actionEvent) {
         mediator.returnHome();
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }

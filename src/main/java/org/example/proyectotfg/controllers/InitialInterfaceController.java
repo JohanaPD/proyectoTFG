@@ -84,6 +84,7 @@ public class InitialInterfaceController implements ViewController, Initializable
             //todo:  Manejar la excepción adecuadamente
         }
     }
+
     public HashMap<String, String> getServicio() {
         HashMap<String, String> servicios = new HashMap<>();
         servicios.put("Foros", "/org/example/proyectotfg/img/factores.png");
@@ -92,6 +93,7 @@ public class InitialInterfaceController implements ViewController, Initializable
         servicios.put("Medico", "/org/example/proyectotfg/img/psicologo.png");
         return servicios;
     }
+
     public void openSearch(ActionEvent actionEvent) {
         String textoBusqueda = serchBuscar.getText();
         mediator.openSearch(textoBusqueda);

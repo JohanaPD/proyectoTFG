@@ -13,47 +13,53 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="700.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.InfoProfesionalController">
+<AnchorPane prefHeight="700.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.proyectotfg.controllers.InfoProfesionalController">
     <children>
         <VBox prefHeight="700.0" prefWidth="360.0">
             <children>
                 <BorderPane prefHeight="200.0" prefWidth="200.0">
                     <center>
-                        <ImageView fx:id="image" fitHeight="134.0" fitWidth="116.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                        <ImageView fx:id="image" fitHeight="134.0" fitWidth="116.0" pickOnBounds="true"
+                                   preserveRatio="true" BorderPane.alignment="CENTER">
                             <image>
-                                <Image url="@imgUsuario/doctor1.png" />
+                                <Image url="@imgUsuario/doctor1.png"/>
                             </image>
                         </ImageView>
                     </center>
                 </BorderPane>
                 <VBox prefHeight="470.0" prefWidth="359.0">
                     <children>
-                        <Pane prefHeight="32.0" prefWidth="360.0" />
-                        <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor" textAlignment="CENTER" wrappingWidth="358.13671875">
+                        <Pane prefHeight="32.0" prefWidth="360.0"/>
+                        <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" text="Doctor" textAlignment="CENTER"
+                              wrappingWidth="358.13671875">
                             <font>
-                                <Font size="36.0" />
+                                <Font size="36.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="10.0" top="-20.0" />
+                                <Insets bottom="10.0" top="-20.0"/>
                             </VBox.margin>
                         </Text>
-                        <Text fx:id="specialty" layoutX="10.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="especialidad" textAlignment="CENTER" wrappingWidth="358.13671875">
+                        <Text fx:id="specialty" layoutX="10.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="especialidad" textAlignment="CENTER" wrappingWidth="358.13671875">
                             <font>
-                                <Font size="24.0" />
+                                <Font size="24.0"/>
                             </font>
                             <VBox.margin>
-                                <Insets bottom="10.0" />
+                                <Insets bottom="10.0"/>
                             </VBox.margin>
                         </Text>
-                        <TextFlow minHeight="0.0" minWidth="0.0" prefHeight="331.0" prefWidth="358.0" styleClass="text-flow" stylesheets="@styles.css">
+                        <TextFlow minHeight="0.0" minWidth="0.0" prefHeight="331.0" prefWidth="358.0"
+                                  styleClass="text-flow" stylesheets="@styles.css">
                             <children>
-                                <Text fx:id="description" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Text" />
+                                <Text fx:id="description" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text"
+                                      text="Text"/>
                             </children>
                         </TextFlow>
 
                     </children>
                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" top="-20.0" />
+                        <Insets left="10.0" right="10.0" top="-20.0"/>
                     </VBox.margin>
                 </VBox>
 
@@ -61,7 +67,8 @@
                     <HBox prefHeight="100.0" prefWidth="200.0">
                         <children>
 
-                            <Button onAction="#volverHome" prefHeight="36.0" prefWidth="202.0" styleClass="buttonIntroRegistro" stylesheets="@styles.css" text="Volver" />
+                            <Button onAction="#volverHome" prefHeight="36.0" prefWidth="202.0"
+                                    styleClass="buttonIntroRegistro" stylesheets="@styles.css" text="Volver"/>
                         </children>
                     </HBox>
                 </HBox>

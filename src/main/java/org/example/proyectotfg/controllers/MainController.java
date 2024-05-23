@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainController implements Mediator, MediatorAcceso, MediatorProfile, MediatorFirstScreen, MediatorPost,MediatorConstruction {
+public class MainController implements Mediator, MediatorAcceso, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction {
     //mongo, sql, sqlite
     private Stage mainStage;
     private Mediator mediatorAplicado;
@@ -151,6 +151,19 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         }
     }
 
+    public void loadPostView() {
+        try {
+            loadView("/org/example/proyectotfg/post-view.fxml");
+            ControllerPost controllerPost = (ControllerPost) actualController;
+            controllerPost.setPerson(person);
+            controllerPost.setPosts(SqliteConnector.serchPostByPerson(person));
+            controllerPost.loadPosts();
+        } catch (ThereIsNoView | IncorrectDataException | NullArgumentException | OperationsDBException e) {
+            showError("Error", e.getMessage());
+        }
+
+    }
+
     @Override
     public void makeRecordRegister(ProfessionalUser user) {
         String mensaje = FunctionsApp.devolverStringMail(user);
@@ -173,7 +186,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         SenderReaderMail sender = new SenderReaderMail();
         enviarEmail(sender, user.getEmail(), mensaje);
         try {
-            connect.registerNormalUser(user,false);
+            connect.registerNormalUser(user, false);
             showInfo("Registro correcto", "Se ha registrado correctamente el usuario");
             openLogin();
         } catch (DuplicateKeyException | OperationsDBException e) {
@@ -239,20 +252,15 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                         try {
                             switch (map.getKey()) {
                                 case "Ver Post":
-                                    loadView("/org/example/proyectotfg/post-view.fxml");
-                                    ControllerPost controllerPost=(ControllerPost) actualController;
-                                    controllerPost.setPerson(person);
+                                    loadPostView();
                                     break;
                                 case "Publicar Post":
-                                    loadView("/org/example/proyectotfg/post-generator-view.fxml");
-                                    PostGeneratorController postGeneratorController=(PostGeneratorController) actualController;
-                                    postGeneratorController.setPerson(person);
-                                    postGeneratorController.setTitlePost(person.getNames());
+                                    loadPublicPostView();
                                     break;
                                 default:
                                     loadView("/org/example/proyectotfg/enContruccion-view.fxml");
                             }
-                        }catch (ThereIsNoView e){
+                        } catch (ThereIsNoView e) {
                             showError("Error", e.getMessage());
                         }
                     }
@@ -267,6 +275,13 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             ie.printStackTrace();
         }
         return contenedorHBox;
+    }
+
+    private void loadPublicPostView() throws ThereIsNoView {
+        loadView("/org/example/proyectotfg/post-generator-view.fxml");
+        PostGeneratorController postGeneratorController = (PostGeneratorController) actualController;
+        postGeneratorController.setPerson(person);
+        postGeneratorController.setTitlePost(person.getNames());
     }
 
     @Override
@@ -338,7 +353,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             showInfo("Actualización correcta", "Se ha actualizado correctamente el usuario");
             person = user;
             regresar();
-        } catch (OperationsDBException|SQLException e) {
+        } catch (OperationsDBException | SQLException e) {
             showError("Error en la operaciones", e.getMessage());
         }
     }
@@ -372,7 +387,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         try {
             connect.updateDataPerson(user);
             showInfo("Actualización correcta", "Se ha actualizado correctamente el usuario");
-            person=user;
+            person = user;
             regresar();
         } catch (OperationsDBException e) {
             showError("Error en la operaciones", e.getMessage());
@@ -447,7 +462,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-post_view.fxml"));
                 Node fragment = fxmlLoader.load();
                 FragmentPostController controller = fxmlLoader.getController();
-                controller.setData(String.valueOf(post.getTitle()), String.valueOf(post.getTitular().getNames()), String.valueOf(post.getContent()), "/org/example/proyectotfg/imgUsuario/meditacion.jpg");
+                controller.setData(String.valueOf(post.getTitle()), String.valueOf(post.getTitular().getNames()), String.valueOf(post.getContent()), "/org/example/proyectotfg/imgPost/meditacion.jpg");
                 ((VBox) parent).getChildren().add(fragment);
             }
         } catch (IOException e) {
@@ -472,7 +487,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         showMessage(titleWindow, menssage, alerta);
     }
 
-    private  void showMessage(String titleWindow, String menssage, Alert alerta) {
+    private void showMessage(String titleWindow, String menssage, Alert alerta) {
         alerta.setHeaderText(titleWindow);
         alerta.setContentText(menssage);
         alerta.showAndWait();

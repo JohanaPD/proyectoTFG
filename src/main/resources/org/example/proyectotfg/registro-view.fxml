@@ -19,95 +19,99 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.RecordUserController">
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.proyectotfg.controllers.RecordUserController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
     <HBox alignment="CENTER" prefHeight="119.0" prefWidth="320.0">
         <children>
-            <ImageView id="imagRecord" fitHeight="154.0" fitWidth="172.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="imagRecord" fitHeight="154.0" fitWidth="172.0" nodeOrientation="INHERIT" pickOnBounds="true"
+                       preserveRatio="true">
                 <image>
-                    <Image url="@imgUsuario/doctor4.png" />
+                    <Image url="@imgUsuario/doctor4.png"/>
                 </image>
             </ImageView>
         </children>
     </HBox>
     <Label alignment="CENTER" prefHeight="18.0" prefWidth="341.0" text="Registro de Usuario/a:" textAlignment="CENTER">
         <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="13.0"/>
         </font>
         <padding>
-            <Insets top="-50.0" />
+            <Insets top="-50.0"/>
         </padding>
     </Label>
 
     <GridPane hgap="10" vgap="10">
         <padding>
-            <Insets bottom="20" left="20" right="20" top="20" />
+            <Insets bottom="20" left="20" right="20" top="20"/>
         </padding>
         <!-- Nombre y Apellido -->
-        <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <TextField fx:id="textNombre" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-        <Label text="Apellido:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-        <TextField fx:id="textApellidos" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+        <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="textNombre" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <Label text="Apellido:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+        <TextField fx:id="textApellidos" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
         <!-- Email y Confirmar Email -->
-        <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <Label text="Confirmar Email:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-        <TextField fx:id="confirmarMail" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+        <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label text="Confirmar Email:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <TextField fx:id="confirmarMail" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
         <!-- Dirección -->
-        <Label text="Calle:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <TextField fx:id="textCalle" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-        <Label text="Ciudad:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-        <TextField fx:id="textCity" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-        <Label text="Código Postal:" GridPane.rowIndex="3" />
-        <TextField fx:id="textCodPostal" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Label text="Calle:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <TextField fx:id="textCalle" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <Label text="Ciudad:" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+        <TextField fx:id="textCity" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+        <Label text="Código Postal:" GridPane.rowIndex="3"/>
+        <TextField fx:id="textCodPostal" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
         <!-- Password y Repetir Password -->
-        <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-        <PasswordField fx:id="textPassword" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-        <Label text="Repetir Password:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-        <PasswordField fx:id="textPassword2" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+        <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+        <PasswordField fx:id="textPassword" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+        <Label text="Repetir Password:" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+        <PasswordField fx:id="textPassword2" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
         <!-- Fecha de Nacimiento y Perfil Profesional -->
-        <Label text="Fecha de Nacimiento:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-        <DatePicker fx:id="dateNacimiento" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-        <Label text="Perfil Profesional:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-        <ComboBox fx:id="comboTypeUser" prefHeight="26.0" prefWidth="149.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+        <Label text="Fecha de Nacimiento:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+        <DatePicker fx:id="dateNacimiento" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+        <Label text="Perfil Profesional:" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+        <ComboBox fx:id="comboTypeUser" prefHeight="26.0" prefWidth="149.0" GridPane.columnIndex="3"
+                  GridPane.rowIndex="5">
             <items>
                 <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="USUARIO_NORMAL" />
-                    <String fx:value="Profesional" />
+                    <String fx:value="USUARIO_NORMAL"/>
+                    <String fx:value="Profesional"/>
                 </FXCollections>
             </items>
         </ComboBox>
         <!-- Campos condicionales -->
-        <Label fx:id="colegiadoLabel" text="Colegiado:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-        <TextField fx:id="colegiadoTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-        <Label fx:id="especialidadLabel" text="Especialidad:" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-        <TextField fx:id="especialidadTextField" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-        <Label fx:id="descripcionLabel" text="Descripción:" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="7" />
-        <TextArea fx:id="descripcionTextArea" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7" />
+        <Label fx:id="colegiadoLabel" text="Colegiado:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+        <TextField fx:id="colegiadoTextField" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+        <Label fx:id="especialidadLabel" text="Especialidad:" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
+        <TextField fx:id="especialidadTextField" GridPane.columnIndex="3" GridPane.rowIndex="6"/>
+        <Label fx:id="descripcionLabel" text="Descripción:" GridPane.columnIndex="0" GridPane.columnSpan="4"
+               GridPane.rowIndex="7"/>
+        <TextArea fx:id="descripcionTextArea" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7"/>
 
         <columnConstraints>
-         <ColumnConstraints />
-         <ColumnConstraints />
-         <ColumnConstraints />
-         <ColumnConstraints />
-         <ColumnConstraints />
-         <ColumnConstraints />
-      </columnConstraints>
-      <rowConstraints>
-         <RowConstraints />
-         <RowConstraints />
-         <RowConstraints />
-         <RowConstraints minHeight="10.0" prefHeight="30.0" />
-         <RowConstraints />
-         <RowConstraints />
-         <RowConstraints />
-         <RowConstraints />
-      </rowConstraints>
+            <ColumnConstraints/>
+            <ColumnConstraints/>
+            <ColumnConstraints/>
+            <ColumnConstraints/>
+            <ColumnConstraints/>
+            <ColumnConstraints/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints/>
+            <RowConstraints/>
+            <RowConstraints/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+            <RowConstraints/>
+            <RowConstraints/>
+            <RowConstraints/>
+            <RowConstraints/>
+        </rowConstraints>
     </GridPane>
     <HBox alignment="CENTER" spacing="10">
-        <Button onAction="#makeRegister" styleClass="buttonIntroRegistro" stylesheets="@styles.css" text="Aceptar" />
-        <Button onAction="#volverHome" styleClass="buttonIntroRegistro" stylesheets="@styles.css" text="Cerrar" />
+        <Button onAction="#makeRegister" styleClass="buttonIntroRegistro" stylesheets="@styles.css" text="Aceptar"/>
+        <Button onAction="#volverHome" styleClass="buttonIntroRegistro" stylesheets="@styles.css" text="Cerrar"/>
     </HBox>
 </VBox>

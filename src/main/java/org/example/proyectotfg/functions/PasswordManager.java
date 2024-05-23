@@ -17,8 +17,7 @@ public class PasswordManager {
 
     public static void saveUserPassword(String username, String password) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException {
         String passwordHash = generateStrongPasswordHash(password);
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO users (username, password_hash) VALUES (?, ?)")) {
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement("INSERT INTO users (username, password_hash) VALUES (?, ?)")) {
             stmt.setString(1, username);
             stmt.setString(2, passwordHash);
             stmt.executeUpdate();
@@ -27,8 +26,7 @@ public class PasswordManager {
 
     public static boolean validateUserPassword(String username, String enteredPassword) throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException {
         String storedPasswordHash;
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT password_hash FROM users WHERE username = ?")) {
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement("SELECT password_hash FROM users WHERE username = ?")) {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             if (!rs.next()) {

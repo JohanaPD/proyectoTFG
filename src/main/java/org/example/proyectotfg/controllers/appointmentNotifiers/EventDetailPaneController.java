@@ -9,7 +9,7 @@ import org.example.proyectotfg.mediators.ViewController;
 
 import java.awt.event.ActionListener;
 
-public class EventDetailPaneController implements ViewController{
+public class EventDetailPaneController implements ViewController {
 
     @FXML
     private Button closeDialogButton;
@@ -118,31 +118,23 @@ public class EventDetailPaneController implements ViewController{
     }
 
     private void clearPriorityOptions() {
-        optionalEventButton
-                .setStyle("-fx-background-color: #BDC6CC; -fx-background-radius:15px; ");
-        standardEventButton
-                .setStyle("-fx-background-color: #BDC6CC; -fx-background-radius:15px; ");
-        importantEventButton
-                .setStyle("-fx-background-color: #BDC6CC; -fx-background-radius:15px; ");
-        criticalEventButton
-                .setStyle("-fx-background-color: #BDC6CC; -fx-background-radius:15px; ");
+        optionalEventButton.setStyle("-fx-background-color: #BDC6CC; -fx-background-radius:15px; ");
+        standardEventButton.setStyle("-fx-background-color: #BDC6CC; -fx-background-radius:15px; ");
+        importantEventButton.setStyle("-fx-background-color: #BDC6CC; -fx-background-radius:15px; ");
+        criticalEventButton.setStyle("-fx-background-color: #BDC6CC; -fx-background-radius:15px; ");
     }
 
     private void selectPriority(int priority) {
         clearPriorityOptions();
 
         if (priority == 1) {
-            optionalEventButton.setStyle(
-                    "-fx-background-color: #4C95CE; -fx-background-radius:15px; ");
+            optionalEventButton.setStyle("-fx-background-color: #4C95CE; -fx-background-radius:15px; ");
         } else if (priority == 2) {
-            standardEventButton.setStyle(
-                    "-fx-background-color: #81C457; -fx-background-radius:15px; ");
+            standardEventButton.setStyle("-fx-background-color: #81C457; -fx-background-radius:15px; ");
         } else if (priority == 3) {
-            importantEventButton.setStyle(
-                    "-fx-background-color: #F7C531; -fx-background-radius:15px; ");
+            importantEventButton.setStyle("-fx-background-color: #F7C531; -fx-background-radius:15px; ");
         } else {
-            criticalEventButton.setStyle(
-                    "-fx-background-color: #E85569; -fx-background-radius:15px; ");
+            criticalEventButton.setStyle("-fx-background-color: #E85569; -fx-background-radius:15px; ");
         }
         this.selectedPriority = priority;
     }

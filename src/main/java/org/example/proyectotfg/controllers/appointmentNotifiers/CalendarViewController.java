@@ -49,8 +49,8 @@ public class CalendarViewController implements ViewController {
         addEventDialog.clear();
         addEventDialog.show();
         addEventDialog.setOnDialogClosed(evt -> {
-          //ojito
-           rootParentPane.clone();
+            //ojito
+            rootParentPane.clone();
         });
     }
 

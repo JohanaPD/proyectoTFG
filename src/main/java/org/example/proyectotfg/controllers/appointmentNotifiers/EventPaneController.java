@@ -21,13 +21,20 @@ public class EventPaneController implements ViewController {
 
     @FXML
     private Label fromLabel;
-    @FXML private Label titleLabel;
-    @FXML private Label messageLabel;
-    @FXML private VBox priorityBox;
-    @FXML private CheckBox completedCheckButton;
-    @FXML private Button editButton;
-    @FXML private Button removeButton;
-    @FXML private StackPane eventStackPane;
+    @FXML
+    private Label titleLabel;
+    @FXML
+    private Label messageLabel;
+    @FXML
+    private VBox priorityBox;
+    @FXML
+    private CheckBox completedCheckButton;
+    @FXML
+    private Button editButton;
+    @FXML
+    private Button removeButton;
+    @FXML
+    private StackPane eventStackPane;
 
     private CalendarEventManager eventManager;
     private CalendarEvent event;
@@ -75,7 +82,7 @@ public class EventPaneController implements ViewController {
     }
 
     private Collection<Object> getChildrenUnmodifiable() {
-    return  null;
+        return null;
     }
 
     public void setEvent(CalendarEvent event) {

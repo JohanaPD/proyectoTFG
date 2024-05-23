@@ -7,5 +7,6 @@ public interface MediatorAcceso {
 
     //Entrada primer view
     void openLogin();
+
     void haciaAtras();
 }

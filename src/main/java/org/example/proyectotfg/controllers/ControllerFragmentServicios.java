@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControllerFragmentServicios{
+public class ControllerFragmentServicios {
 
     @FXML
     private ImageView imgService;
@@ -21,7 +21,6 @@ public class ControllerFragmentServicios{
     private Callback callback;
 
     List<String> serviciosArray = new ArrayList<>();
-
 
 
     public void setCallback(Callback callback) {

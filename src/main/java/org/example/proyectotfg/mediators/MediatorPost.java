@@ -8,6 +8,8 @@ import java.util.List;
 public interface MediatorPost {
 
     void makePost(Post nuevo);
+
     Parent viewPost(List<Post> posts);
+
     void returnHome();
 }

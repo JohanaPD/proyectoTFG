@@ -113,7 +113,7 @@ public class RecordUserController implements ViewController {
             String calle = textCalle.getText();
             String city = textCity.getText();
             String codPostal = textCodPostal.getText();
-             Direction nueva = null;
+            Direction nueva = null;
             System.out.println(VerificatorSetter.stringVerificatorletterAndNumbers("Pepito tiene gripe, hola", 100));
             try {
                 nueva = new Direction(calle, city, Integer.parseInt(codPostal));
@@ -174,7 +174,7 @@ public class RecordUserController implements ViewController {
                     } else {
                         TypeUser tipeUs = comboTypeUser.getValue();
                         String tipeUser = tipeUs.toString();
-               //entra         System.out.println(tipeUser);
+                        //entra         System.out.println(tipeUser);
                         if (!tipeUser.equalsIgnoreCase(String.valueOf(TypeUser.USUARIO_NORMAL))) {
                             String college = colegiadoTextField.getText();
                             String especialidad = especialidadTextField.getText();

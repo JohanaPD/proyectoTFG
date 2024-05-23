@@ -22,10 +22,12 @@ public class FragmentInfoSerchController implements ViewController {
     private Text valoraciones;
 
     private MediatorSearch mediatorSearch;
+
     @Override
     public void setMediator(Mediator mediador) {
         this.mediatorSearch = (MediatorSearch) mediador;
     }
+
     @Override
     public MainController getMainController() {
         return null;
@@ -73,7 +75,6 @@ public class FragmentInfoSerchController implements ViewController {
     }
 
 
-
     public void setData(String nombreMed, String espec, String imagePath, int val) {
         Image image = new Image(getClass().getResourceAsStream(imagePath));
         if (image != null) {
@@ -86,8 +87,6 @@ public class FragmentInfoSerchController implements ViewController {
         valoraciones.setText(String.valueOf(10));
 
     }
-
-
 
 
 }

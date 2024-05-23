@@ -16,13 +16,17 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class NavigationCalendarController  implements ViewController, Initializable {
+public class NavigationCalendarController implements ViewController, Initializable {
     @FXML
     private VBox mainContainer;
-    @FXML private Label dateLabel;
-    @FXML private Button prevMonthButton;
-    @FXML private Button nextMonthButton;
-    @FXML private TilePane navigationCalendarGrid;
+    @FXML
+    private Label dateLabel;
+    @FXML
+    private Button prevMonthButton;
+    @FXML
+    private Button nextMonthButton;
+    @FXML
+    private TilePane navigationCalendarGrid;
 
     private LocalDate selectedDate;
 

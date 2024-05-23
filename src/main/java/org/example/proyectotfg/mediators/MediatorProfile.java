@@ -25,7 +25,6 @@ public interface MediatorProfile {
     void makeRecordRegister(NormalUser user);
 
 
-
     void volverIncio();
 
 

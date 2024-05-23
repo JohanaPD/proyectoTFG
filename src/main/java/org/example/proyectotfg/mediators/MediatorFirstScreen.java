@@ -32,8 +32,12 @@ public interface MediatorFirstScreen {
     void openCalendarView();
 
     void updatePersonalData(Person user) throws OperationsDBException;
+
     void updateDataPerson(ProfessionalUser user);
+
     void updateDataPerson(NormalUser user) throws SQLException;
+
     void updateAllDataPerson(ProfessionalUser nuevo);
+
     void updateAllDataPerson(NormalUser nuevo) throws SQLException;
 }

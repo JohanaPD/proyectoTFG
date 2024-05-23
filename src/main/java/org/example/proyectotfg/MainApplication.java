@@ -9,7 +9,7 @@ import java.io.IOException;
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        MainController mainController=new MainController(stage);
+        MainController mainController = new MainController(stage);
     }
 
     public static void main(String[] args) {
