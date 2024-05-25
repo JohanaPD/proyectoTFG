@@ -9,10 +9,10 @@ public class MedicalAppointment {
 
 
     private int idCita;
-    private ProfessionalUser psicologo; // Suponiendo que hay una clase llamada PsychologistUser
-    private NormalUser usuario; // Suponiendo que hay una clase llamada NormalUser
+    private ProfessionalUser psicologo;
+    private NormalUser usuario;
     private Date visitDate;
-    private Notificators notificator; // Suponiendo que Notificators es un enum definido
+    private Notificators notificator;
 
     // Constructor
     public MedicalAppointment(int idCita, ProfessionalUser psicologo, NormalUser usuario, Date visitDate, Notificators notificator) {
