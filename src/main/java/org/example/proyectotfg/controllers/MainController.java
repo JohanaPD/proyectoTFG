@@ -465,7 +465,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 Node fragment = fxmlLoader.load();
                 FragmentPostController controller = fxmlLoader.getController();
                 controller.setData(String.valueOf(post.getTitle()), String.valueOf(post.getTitular().getNames()), String.valueOf(post.getContent()), "/org/example/proyectotfg/imgPost/meditacion.jpg");
-
                 ((VBox) parent).getChildren().add(fragment);
             }
         } catch (IOException e) {
