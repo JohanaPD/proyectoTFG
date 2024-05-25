@@ -38,5 +38,5 @@ public interface PersonaDAO {
     List<ProfessionalUser> searchProfessionalsUsers(String nameUser) throws NonexistingUser, DataAccessException, OperationsDBException;
 
 
-    void addProfesionalUserInFavorites(ProfessionalUser professionalUser);
+    boolean addProfesionalUserInFavorites(ProfessionalUser professionalUser, Person person) throws OperationsDBException, NonexistingUser, DuplicateKeyException;
 }

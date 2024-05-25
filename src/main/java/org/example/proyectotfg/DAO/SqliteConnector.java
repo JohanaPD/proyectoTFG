@@ -9,9 +9,6 @@ import org.example.proyectotfg.functions.FunctionsApp;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +50,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                 "id_normal_user INTEGER  NOT NULL," +
                 "id_profesional_user INTEGER," +
                 "PRIMARY KEY(id_normal_user, id_profesional_user)," +
-                "FOREIGN KEY(id_profesional_user) REFERENCES normal_user(id_person)," +
+                "FOREIGN KEY(id_profesional_user) REFERENCES professional_user(id_person)," +
                 "FOREIGN KEY(id_normal_user) REFERENCES normal_user(id_person) ON DELETE CASCADE);";
         try (Statement stmt = connection.createStatement()) {
             // Ejecutar cada sentencia de creación
@@ -817,8 +814,17 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     }
 
     @Override
-    public void addProfesionalUserInFavorites(ProfessionalUser professionalUser) {
-        String consulta= "INSERT INTO profesional_user (id_person) VALUES (?)";
+    public boolean addProfesionalUserInFavorites(ProfessionalUser professionalUser, Person person) throws OperationsDBException {
+        String consulta= "INSERT INTO favorites_professionals (id_normal_user , id_profesional_user) VALUES (?, ?)";
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
+            preparetStmt.setInt(1, person.getIdPerson());
+            preparetStmt.setInt(1, professionalUser.getIdPerson());
+            int affectedRows = preparetStmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
+        }
     }
 
 

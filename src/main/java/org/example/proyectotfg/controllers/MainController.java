@@ -279,8 +279,11 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     }
 
     @Override
-    public void addToFavorites(ProfessionalUser professionalUser) {
-            connect.addProfesionalUserInFavorites(professionalUser);
+    public void addToFavorites(ProfessionalUser professionalUser, Person person) throws OperationsDBException {
+         boolean addto=connect.addProfesionalUserInFavorites(professionalUser, person);
+         if(!addto){
+            //TODO: Que mostrar??
+         }
     }
 
     //
@@ -450,6 +453,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             if (!professionalUsers.isEmpty()) {
                 loadView("/org/example/proyectotfg/search-view.fxml");
                 ControllerSearch controllerSearch = (ControllerSearch) actualController;
+                controllerSearch.setPerson(person);
                 controllerSearch.setStringSearch(busqueda);
                 controllerSearch.loadSearchs(professionalUsers);
             }

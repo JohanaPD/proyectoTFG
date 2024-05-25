@@ -4,13 +4,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
+import org.example.proyectotfg.exceptions.OperationsDBException;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorSearch;
 import org.example.proyectotfg.mediators.ViewController;
-import javafx.scene.text.Text;
+
+
 
 
 public class FragmentInfoSerchController implements ViewController {
@@ -27,12 +29,16 @@ public class FragmentInfoSerchController implements ViewController {
     private Text valoraciones1;
 
     private MediatorSearch mediatorSearch;
+    private Person person;
+    private ProfessionalUser professionalUser;
 
     public void setProfessionalUser(ProfessionalUser professionalUser) {
         this.professionalUser = professionalUser;
     }
 
-    private ProfessionalUser professionalUser;
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 
     @Override
     public void setMediator(Mediator mediador) {
@@ -100,8 +106,8 @@ public class FragmentInfoSerchController implements ViewController {
     }
 
     @FXML
-    void addToFavorites(ActionEvent event) {
-            mediatorSearch.addToFavorites(professionalUser);
+    void addToFavorites(ActionEvent event) throws OperationsDBException {
+           mediatorSearch.addToFavorites(professionalUser, person);
     }
 
 
