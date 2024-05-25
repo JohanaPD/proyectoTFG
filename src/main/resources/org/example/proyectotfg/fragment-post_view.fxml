@@ -27,9 +27,9 @@
                         </VBox>
                         <VBox prefHeight="95.0" prefWidth="307.0">
                             <children>
-                                <Text id="nombreMedico" fx:id="titulo" strokeType="OUTSIDE" strokeWidth="0.0" text="titulo" textAlignment="CENTER" wrappingWidth="274.373046875">
+                                <Text id="nombreMedico" fx:id="titulo" strokeType="OUTSIDE" strokeWidth="0.0" text="titulo" textAlignment="CENTER" wrappingWidth="296.7730712890625">
                                     <font>
-                                        <Font size="18.0" />
+                                        <Font size="23.0" />
                                     </font>
                                 </Text>
                             </children>
@@ -58,4 +58,7 @@
             </children>
         </VBox>
     </children>
+   <padding>
+      <Insets left="5.0" right="5.0" />
+   </padding>
 </AnchorPane>
