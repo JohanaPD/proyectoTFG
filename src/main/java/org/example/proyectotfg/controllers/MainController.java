@@ -457,12 +457,15 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     @Override
     public Parent viewPost(List<Post> posts) {
         Parent parent = new VBox();
+        ((VBox) parent).setPrefWidth(360);
+        ((VBox) parent).setStyle("-fx-padding: 5;");
         try {
             for (Post post : posts) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-post_view.fxml"));
                 Node fragment = fxmlLoader.load();
                 FragmentPostController controller = fxmlLoader.getController();
                 controller.setData(String.valueOf(post.getTitle()), String.valueOf(post.getTitular().getNames()), String.valueOf(post.getContent()), "/org/example/proyectotfg/imgPost/meditacion.jpg");
+
                 ((VBox) parent).getChildren().add(fragment);
             }
         } catch (IOException e) {

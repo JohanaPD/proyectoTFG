@@ -210,4 +210,7 @@
     -fx-font-family: "Arial";
     -fx-fill: #333333;
 }
+.fragment {
+    -fx-pref-width: 360px;
+}
 
