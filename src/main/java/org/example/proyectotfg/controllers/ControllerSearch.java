@@ -50,6 +50,7 @@ public class ControllerSearch implements ViewController {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-infoSearch_view.fxml"));
                 Node fragment = fxmlLoader.load();
                 FragmentInfoSerchController controller = fxmlLoader.getController();
+                controller.setProfessionalUser(us);
                 controller.setData(String.valueOf(us.getNames()), String.valueOf(us.getSpecialty()), "/org/example/proyectotfg/imgUsuario/doctor3.png", 5);
                 listaResultados.getChildren().add(fragment);
             }

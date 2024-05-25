@@ -1,12 +1,17 @@
 package org.example.proyectotfg.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import org.example.proyectotfg.entities.ProfessionalUser;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorSearch;
 import org.example.proyectotfg.mediators.ViewController;
+import javafx.scene.text.Text;
+
 
 public class FragmentInfoSerchController implements ViewController {
     @FXML
@@ -19,9 +24,15 @@ public class FragmentInfoSerchController implements ViewController {
     private Text nombreMedico;
 
     @FXML
-    private Text valoraciones;
+    private Text valoraciones1;
 
     private MediatorSearch mediatorSearch;
+
+    public void setProfessionalUser(ProfessionalUser professionalUser) {
+        this.professionalUser = professionalUser;
+    }
+
+    private ProfessionalUser professionalUser;
 
     @Override
     public void setMediator(Mediator mediador) {
@@ -63,11 +74,11 @@ public class FragmentInfoSerchController implements ViewController {
     }
 
     public Text getValoraciones() {
-        return valoraciones;
+        return valoraciones1;
     }
 
     public void setValoraciones(Text valoraciones) {
-        this.valoraciones = valoraciones;
+        this.valoraciones1 = valoraciones;
     }
 
     public MediatorSearch getMediador() {
@@ -84,83 +95,14 @@ public class FragmentInfoSerchController implements ViewController {
         }
         nombreMedico.setText(nombreMed);
         especialidad.setText(espec);
-        valoraciones.setText(String.valueOf(10));
+        valoraciones1.setText(String.valueOf(10));
 
+    }
+
+    @FXML
+    void addToFavorites(ActionEvent event) {
+            mediatorSearch.addToFavorites(professionalUser);
     }
 
 
 }
-
-/*
-*  @FXML
-    private Text especialidad;
-
-    @FXML
-    private ImageView idImagen;
-
-    @FXML
-    private Text nombreMedico;
-
-    @FXML
-    private Text valoraciones;
-    MediadorPrimerPantallaContrller mediador;
-    @Override
-    public void setMediator(Mediator mediador) {
-        this.mediador = (MediadorPrimerPantallaContrller) mediador;
-    }
-
-    public Text getEspecialidad() {
-        return especialidad;
-    }
-
-    public void setEspecialidad(Text especialidad) {
-        this.especialidad = especialidad;
-    }
-
-    public ImageView getIdImagen() {
-        return idImagen;
-    }
-
-    public void setIdImagen(ImageView idImagen) {
-        this.idImagen = idImagen;
-    }
-
-    public Text getNombreMedico() {
-        return nombreMedico;
-    }
-
-    public void setNombreMedico(Text nombreMedico) {
-        this.nombreMedico = nombreMedico;
-    }
-
-    public Text getValoraciones() {
-        return valoraciones;
-    }
-
-    public void setValoraciones(Text valoraciones) {
-        this.valoraciones = valoraciones;
-    }
-
-    public MediadorPrimerPantallaContrller getMediador() {
-        return mediador;
-    }
-
-    public void setMediador(MediadorPrimerPantallaContrller mediador) {
-        this.mediador = mediador;
-    }
-
-    public void setData(String nombreMed, String espec, String imagePath, int val) {
-        Image image = new Image(getClass().getResourceAsStream(imagePath));
-        if (image != null) {
-            idImagen.setImage(image);
-        } else {
-            System.err.println("No se pudo cargar la imagen. Ruta incorrecta o recurso no encontrado.");
-        }
-        nombreMedico.setText(nombreMed);
-        especialidad.setText(espec);
-        valoraciones.setText(String.valueOf(10));
-
-    }
-
-*
-* */

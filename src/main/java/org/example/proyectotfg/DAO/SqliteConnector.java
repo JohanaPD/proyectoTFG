@@ -49,7 +49,12 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         String consultaDiagnosticosHistorial = "CREATE TABLE IF NOT EXISTS diagnoses_history(" + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "id_diagnose INTEGER NOT NULL," + "id_history INTEGER NOT NULL," + "FOREIGN KEY(id_diagnose) REFERENCES diagnose(id_diagnose) ON DELETE CASCADE," + "FOREIGN KEY(id_history) REFERENCES history(id_history) ON DELETE CASCADE);";
 
         String consultaCitas = "CREATE TABLE IF NOT EXISTS medical_appointment (" + "id_appointment INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "id_professional TEXT NOT NULL," + "id_normal_user TEXT NOT NULL," + "visit_date TEXT NOT NULL," + "notification TEXT NOT NULL," + "FOREIGN KEY(id_normal_user) REFERENCES normal_user(id_person) ON DELETE CASCADE," + "FOREIGN KEY(id_professional) REFERENCES professional_user(id_person) ON DELETE CASCADE);";
-
+        String favoritesProfesional = "CREATE TABLE IF NOT EXISTS favorites_professionals (" +
+                "id_normal_user INTEGER  NOT NULL," +
+                "id_profesional_user INTEGER," +
+                "PRIMARY KEY(id_normal_user, id_profesional_user)," +
+                "FOREIGN KEY(id_profesional_user) REFERENCES normal_user(id_person)," +
+                "FOREIGN KEY(id_normal_user) REFERENCES normal_user(id_person) ON DELETE CASCADE);";
         try (Statement stmt = connection.createStatement()) {
             // Ejecutar cada sentencia de creación
             stmt.executeUpdate(consultaDireccion);
@@ -61,6 +66,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             stmt.executeUpdate(consultaDiagnostico);
             stmt.executeUpdate(consultaDiagnosticosHistorial);
             stmt.executeUpdate(consultaCitas);
+            stmt.executeUpdate(favoritesProfesional);
             System.out.println("Tabla creada correctamente");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -119,6 +125,8 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
         return professionalUsers;
     }
+
+
 
 
     @Override
@@ -806,6 +814,11 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
         }
         return listaPost;
+    }
+
+    @Override
+    public void addProfesionalUserInFavorites(ProfessionalUser professionalUser) {
+        String consulta= "INSERT INTO profesional_user (id_person) VALUES (?)";
     }
 
 

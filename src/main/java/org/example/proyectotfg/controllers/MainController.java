@@ -15,10 +15,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.example.proyectotfg.DAO.SqliteConnector;
 import org.example.proyectotfg.MainApplication;
-import org.example.proyectotfg.entities.NormalUser;
-import org.example.proyectotfg.entities.Person;
-import org.example.proyectotfg.entities.Post;
-import org.example.proyectotfg.entities.ProfessionalUser;
+import org.example.proyectotfg.entities.*;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
 import org.example.proyectotfg.exceptions.*;
 import org.example.proyectotfg.functions.FunctionsApp;
@@ -33,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainController implements Mediator, MediatorAcceso, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction {
+public class MainController implements Mediator, MediatorAcceso, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorSearch, MediatorConstruction, MediatorNotifiers {
     //mongo, sql, sqlite
     private Stage mainStage;
     private Mediator mediatorAplicado;
@@ -64,7 +61,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         try {
             // FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("entradaView.fxml"));
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("entradaView.fxml"));
-            System.out.println("Desde el main  " + fxmlLoader.getLocation());
             Scene scene = new Scene(fxmlLoader.load());
             actualController = fxmlLoader.getController();
             actualController.setMainController(this);
@@ -72,8 +68,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             controller.setMediator(this);
             mainStage.setTitle("MeetPshyc!");
             mainStage.setScene(scene);
-            //controllerPrincipal.setControllers(fxmlLoader, controller);
-
             mainStage.show();
 
         } catch (IOException e) {
@@ -99,14 +93,13 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     private void loadView(String s) throws ThereIsNoView {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(s));
-            System.out.println("Desde el maincontroller " + loader.getLocation());
             Parent root = loader.load();
             actualController = loader.getController();
             actualController.setMediator(this);
             mainStage.setScene(new Scene(root));
             mainStage.show();
         } catch (Exception e) {
-            e.printStackTrace(); // Esto imprimirá el error específico en la consola
+            e.printStackTrace();
             throw new ThereIsNoView("La vista no existe o no se pudo cargar: " + e.getMessage());
         }
     }
@@ -277,12 +270,22 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         return contenedorHBox;
     }
 
-    private void loadPublicPostView() throws ThereIsNoView {
-        loadView("/org/example/proyectotfg/post-generator-view.fxml");
-        PostGeneratorController postGeneratorController = (PostGeneratorController) actualController;
-        postGeneratorController.setPerson(person);
-        postGeneratorController.setTitlePost(person.getNames());
+  /*   ================================================================================================
+        ======================================Search View=====================================================*/
+
+    @Override
+    public void callback() {
+
     }
+
+    @Override
+    public void addToFavorites(ProfessionalUser professionalUser) {
+            connect.addProfesionalUserInFavorites(professionalUser);
+    }
+
+    //
+
+
 
     @Override
     public Parent initializeProfessionals(List<ProfessionalUser> professionalUsers) throws NonexistingUser {
@@ -321,14 +324,39 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         return contenedorHBox2;
     }
 
+    /*   ================================================================================================
+       ======================================Appointment manager=====================================================*/
     @Override
     public void openCalendarView() {
         try {
             mainStage.setTitle("Te esperamos pronto!!");
             loadView("/org/example/proyectotfg/appointmentManegementView.fxml");
+            AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
+            appointmentManegemenController.setPerson(person);
+            appointmentManegemenController.setTitlePost(person.getNames());
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
+    }
+
+    @Override
+    public void volver() {
+        regresar();
+    }
+
+    @Override
+    public void deleteAppointment(MedicalAppointment medicalAppointment) {
+
+    }
+
+    @Override
+    public void addAppointment(MedicalAppointment medicalAppointment) {
+
+    }
+
+    @Override
+    public void editAppointment(MedicalAppointment medicalAppointment) {
+
     }
 
     /*   ================================================================================================
@@ -473,6 +501,13 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
 
         return parent;
     }
+    private void loadPublicPostView() throws ThereIsNoView {
+        loadView("/org/example/proyectotfg/post-generator-view.fxml");
+        PostGeneratorController postGeneratorController = (PostGeneratorController) actualController;
+        postGeneratorController.setPerson(person);
+        postGeneratorController.setTitlePost(person.getNames());
+    }
+
 
     /*   ================================================================================================
         ======================================show errors =====================================================*/
@@ -500,4 +535,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void backToHome() {
         regresar();
     }
+
+
+
 }
