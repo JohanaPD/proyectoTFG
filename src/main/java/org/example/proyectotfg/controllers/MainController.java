@@ -325,7 +325,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void openCalendarView() {
         try {
             mainStage.setTitle("Te esperamos pronto!!");
-            loadView("/org/example/proyectotfg/appointmentNotifiers/jfx-calendar-view.fxml");
+            loadView("/org/example/proyectotfg/appointmentManegementView.fxml");
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
