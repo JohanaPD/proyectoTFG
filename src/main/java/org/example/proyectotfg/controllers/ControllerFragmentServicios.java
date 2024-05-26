@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import org.example.proyectotfg.exceptions.OperationsDBException;
 import org.example.proyectotfg.exceptions.ThereIsNoView;
 import org.example.proyectotfg.mediators.Callback;
 import javafx.scene.input.MouseEvent;
@@ -24,7 +25,6 @@ public class ControllerFragmentServicios {
 
 
     public void setCallback(Callback callback) {
-
         this.callback = (Callback) callback;
 
     }
@@ -75,7 +75,7 @@ public class ControllerFragmentServicios {
         }
     }
 
-    public void openFragmentInDetail(MouseEvent mouseEvent) {
+    public void openFragmentInDetail(MouseEvent mouseEvent)  {
         callback.doAction();
     }
 }

@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainController implements Mediator, MediatorAcceso, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorSearch, MediatorConstruction, MediatorNotifiers {
+public class MainController implements Mediator, MediatorAcceso, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction, MediatorNotifiers {
     //mongo, sql, sqlite
     private Stage mainStage;
     private Mediator mediatorAplicado;
@@ -273,19 +273,14 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
   /*   ================================================================================================
         ======================================Search View=====================================================*/
 
-    @Override
-    public void callback() {
-
-    }
 
     @Override
     public void addToFavorites(ProfessionalUser professionalUser, Person person) throws OperationsDBException {
-         boolean addto=connect.addProfesionalUserInFavorites(professionalUser, person);
-         if(!addto){
+        boolean addto = connect.addProfesionalUserInFavorites(professionalUser, person);
+        if (!addto) {
             //TODO: Que mostrar??
-         }
+        }
     }
-
 
 
     @Override
@@ -503,6 +498,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
 
         return parent;
     }
+
     private void loadPublicPostView() throws ThereIsNoView {
         loadView("/org/example/proyectotfg/post-generator-view.fxml");
         PostGeneratorController postGeneratorController = (PostGeneratorController) actualController;
@@ -537,7 +533,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void backToHome() {
         regresar();
     }
-
 
 
 }

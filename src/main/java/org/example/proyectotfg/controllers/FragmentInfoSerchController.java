@@ -8,14 +8,10 @@ import javafx.scene.text.Text;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
 import org.example.proyectotfg.exceptions.OperationsDBException;
-import org.example.proyectotfg.mediators.Mediator;
-import org.example.proyectotfg.mediators.MediatorSearch;
-import org.example.proyectotfg.mediators.ViewController;
+import org.example.proyectotfg.mediators.Callback;
 
 
-
-
-public class FragmentInfoSerchController implements ViewController {
+public class FragmentInfoSerchController {
     @FXML
     private Text especialidad;
 
@@ -27,8 +23,9 @@ public class FragmentInfoSerchController implements ViewController {
 
     @FXML
     private Text valoraciones1;
+    private Callback callback;
 
-    private MediatorSearch mediatorSearch;
+
     private Person person;
     private ProfessionalUser professionalUser;
 
@@ -40,20 +37,6 @@ public class FragmentInfoSerchController implements ViewController {
         this.person = person;
     }
 
-    @Override
-    public void setMediator(Mediator mediador) {
-        this.mediatorSearch = (MediatorSearch) mediador;
-    }
-
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
-
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 
     public Text getEspecialidad() {
         return especialidad;
@@ -87,8 +70,8 @@ public class FragmentInfoSerchController implements ViewController {
         this.valoraciones1 = valoraciones;
     }
 
-    public MediatorSearch getMediador() {
-        return mediatorSearch;
+    public void setCallback(Callback callback) {
+        this.callback = (Callback) callback;
     }
 
 
@@ -107,7 +90,10 @@ public class FragmentInfoSerchController implements ViewController {
 
     @FXML
     void addToFavorites(ActionEvent event) throws OperationsDBException {
+        callback.doAction();
+/*
            mediatorSearch.addToFavorites(professionalUser, person);
+*/
     }
 
 
