@@ -6,7 +6,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorPost;
-import org.example.proyectotfg.mediators.MediatorSearch;
 import org.example.proyectotfg.mediators.ViewController;
 
 public class FragmentPostController implements ViewController {

@@ -9,7 +9,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
+import org.example.proyectotfg.exceptions.OperationsDBException;
 import org.example.proyectotfg.exceptions.ThereIsNoView;
+import org.example.proyectotfg.mediators.Callback;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorFirstScreen;
 import org.example.proyectotfg.mediators.ViewController;
@@ -26,6 +28,7 @@ public class ControllerSearch implements ViewController {
     @FXML
     private VBox listaResultados;
     private Person person;
+
 
     public void initialize() {
 
@@ -60,6 +63,16 @@ public class ControllerSearch implements ViewController {
                 controller.setPerson(person);
                 controller.setData(String.valueOf(us.getNames()), String.valueOf(us.getSpecialty()), "/org/example/proyectotfg/imgUsuario/doctor3.png", 5);
                 fragment.resize(340, 180);
+                controller.setCallback(new Callback() {
+                    @Override
+                    public void doAction() {
+                        try {
+                            mediator.addToFavorites(us, person);
+                        } catch (OperationsDBException e) {
+                            ((MainController) mediator).showError("Error", "Error a la hora de añadirlo a favoritos");
+                        }
+                    }
+                });
                 listaResultados.getChildren().add(fragment);
             }
 

@@ -29,6 +29,8 @@ public interface MediatorFirstScreen {
 
     Parent initializeProfessionals(List<ProfessionalUser> professionalUsers) throws NonexistingUser;
 
+    void addToFavorites(ProfessionalUser professionalUser, Person person) throws OperationsDBException;
+
     void openCalendarView();
 
     void updatePersonalData(Person user) throws OperationsDBException;
