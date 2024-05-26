@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -274,6 +275,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
           ======================================Search View=====================================================*/
     @Override
     public Parent loadSearchs(List<ProfessionalUser> professionalUsers) {
+        StackPane stackPane= new StackPane();
+        stackPane.getChildren().clear();
         VBox contenedorHBox = new VBox(4);
         contenedorHBox.setAlignment(Pos.CENTER);
         contenedorHBox.setMaxWidth(80);
@@ -289,6 +292,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 fragment.resize(340, 180);
                 controller.setCallback(() -> {
                     try {
+                        System.out.println("esto es el fragment Botón 'Añadir a Favoritos' pulsado");
                        addToFavorites(us, person);
                     } catch (OperationsDBException e) {
                        showError("Error", "Error a la hora de añadirlo a favoritos");
@@ -296,10 +300,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 });
                 contenedorHBox.getChildren().add(fragment);
             }
-            AnchorPane.setTopAnchor(contenedorHBox, 0.0);
-            AnchorPane.setRightAnchor(contenedorHBox, 0.0);
-            AnchorPane.setBottomAnchor(contenedorHBox, 0.0);
-            AnchorPane.setLeftAnchor(contenedorHBox, 0.0);
+            stackPane.getChildren().add(contenedorHBox);
+            contenedorHBox.toFront();
         } catch (IOException e) {
             showError("Error","Error a la hora de cargar el fragmento: " + e.getMessage());
         }

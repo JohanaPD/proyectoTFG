@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -28,7 +29,7 @@ public class ControllerSearch implements ViewController {
     @FXML
     private Label detalleBusqueda;
     @FXML
-    private AnchorPane listaResultados;
+    private VBox listaResultados;
     private Person person;
 
 
@@ -43,6 +44,10 @@ public class ControllerSearch implements ViewController {
     @Override
     public void setMediator(Mediator mediador) {
         mediator = (MediatorFirstScreen) mediador;
+    }
+
+    public void setDetalleBusqueda(Label detalleBusqueda) {
+       detalleBusqueda.setText(person.getNames());
     }
 
     @Override

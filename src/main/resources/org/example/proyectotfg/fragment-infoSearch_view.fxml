@@ -14,7 +14,7 @@
     <children>
         <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="347.0">
             <children>
-                <HBox id="fragmentSearch" maxWidth="-Infinity" minWidth="-Infinity" mouseTransparent="true" prefHeight="178.0" prefWidth="345.0" stylesheets="@styles.css">
+                <HBox id="fragmentSearch" maxWidth="-Infinity" minWidth="-Infinity" mouseTransparent="true" onDragDetected="#addToFavorites" onMouseClicked="#addToFavorites" prefHeight="178.0" prefWidth="345.0" stylesheets="@styles.css">
                     <children>
                         <VBox alignment="CENTER" prefHeight="212.0" prefWidth="100.0">
                             <children>

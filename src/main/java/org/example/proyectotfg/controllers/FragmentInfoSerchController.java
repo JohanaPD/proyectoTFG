@@ -71,7 +71,9 @@ public class FragmentInfoSerchController {
     }
 
     public void setCallback(Callback callback) {
+
         this.callback = (Callback) callback;
+
     }
 
 
@@ -90,10 +92,9 @@ public class FragmentInfoSerchController {
 
     @FXML
     void addToFavorites(ActionEvent event) throws OperationsDBException {
+        System.out.println("callback 'Añadir a Favoritos' pulsado");
         callback.doAction();
-/*
-           mediatorSearch.addToFavorites(professionalUser, person);
-*/
+
     }
 
 
