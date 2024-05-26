@@ -34,7 +34,7 @@ public class ControllerSearch implements ViewController {
 
 
     public void initialize() {
-
+        System.out.println("Inicializando el Controller search");
     }
 
     public void setPerson(Person person) {
