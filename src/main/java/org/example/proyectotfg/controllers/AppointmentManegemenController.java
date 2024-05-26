@@ -15,7 +15,7 @@ import org.example.proyectotfg.mediators.ViewController;
 public class AppointmentManegemenController implements ViewController {
 
     @FXML
-    private Label nameUser;
+    private Label username;
 
     @FXML
     private AnchorPane appointmentsList;
@@ -40,7 +40,7 @@ public class AppointmentManegemenController implements ViewController {
     }
 
     public void setTitlePost(String names) {
-        nameUser.setText(names);
+        username.setText(names);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class AppointmentManegemenController implements ViewController {
 
     @FXML
     void goToHome(ActionEvent event) {
-
+mediatorNotifiers.volver();
     }
 
     @Override

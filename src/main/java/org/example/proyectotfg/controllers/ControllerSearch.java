@@ -59,6 +59,7 @@ public class ControllerSearch implements ViewController {
                 controller.setProfessionalUser(us);
                 controller.setPerson(person);
                 controller.setData(String.valueOf(us.getNames()), String.valueOf(us.getSpecialty()), "/org/example/proyectotfg/imgUsuario/doctor3.png", 5);
+                fragment.resize(340, 180);
                 listaResultados.getChildren().add(fragment);
             }
 

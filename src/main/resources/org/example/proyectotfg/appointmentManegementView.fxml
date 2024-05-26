@@ -14,7 +14,7 @@
     </padding>
     <children>
         <!-- Contenedor con saludo y info del usuario -->
-        <AnchorPane fx:id="nameUser" prefHeight="100.0" prefWidth="360.0" stylesheets="@styles.css">
+        <AnchorPane  prefHeight="100.0" prefWidth="360.0" stylesheets="@styles.css">
             <children>
                 <Label fx:id="username" layoutX="14.0" layoutY="14.0" styleClass="userGreeting" text="Hola, [Nombre del Usuario]" />
                 <Label layoutX="214.0" layoutY="33.0" styleClass="userInfo" text="Información del usuario" />
