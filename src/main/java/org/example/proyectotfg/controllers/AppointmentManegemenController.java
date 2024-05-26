@@ -45,8 +45,9 @@ public class AppointmentManegemenController implements ViewController {
 
     @Override
     public void setMediator(Mediator mediador) {
-        this.mediatorNotifiers=(MediatorNotifiers)mediador;
+        this.mediatorNotifiers = (MediatorNotifiers) mediador;
     }
+
     @FXML
     void deleteAppoinment(ActionEvent event) {
     }
@@ -58,7 +59,7 @@ public class AppointmentManegemenController implements ViewController {
 
     @FXML
     void goToHome(ActionEvent event) {
-mediatorNotifiers.volver();
+        mediatorNotifiers.volver();
     }
 
     @Override
