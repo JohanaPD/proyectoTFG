@@ -23,8 +23,7 @@ public class InfoProfesionalController implements ViewController {
     @FXML
     private Text specialty;
     @FXML
-    //TextFlow previamente
-    private Text description;
+     private Text description;
     private MediatorFirstScreen mediator;
 
     public void initialize() {

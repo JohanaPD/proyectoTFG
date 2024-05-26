@@ -23,13 +23,9 @@ public class ControllerFragmentServicios {
 
     List<String> serviciosArray = new ArrayList<>();
 
-
     public void setCallback(Callback callback) {
         this.callback = (Callback) callback;
-
     }
-
-
     public ImageView getImgService() {
         return imgService;
     }
