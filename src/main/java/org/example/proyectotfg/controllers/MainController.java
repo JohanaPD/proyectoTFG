@@ -270,9 +270,41 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         return contenedorHBox;
     }
 
-  /*   ================================================================================================
-        ======================================Search View=====================================================*/
-
+    /*   ================================================================================================
+          ======================================Search View=====================================================*/
+    @Override
+    public Parent loadSearchs(List<ProfessionalUser> professionalUsers) {
+        VBox contenedorHBox = new VBox(4);
+        contenedorHBox.setAlignment(Pos.CENTER);
+        contenedorHBox.setMaxWidth(80);
+        contenedorHBox.setMaxHeight(90);
+        try {
+            for (ProfessionalUser us : professionalUsers) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-infoSearch_view.fxml"));
+                Parent fragment = fxmlLoader.load();
+                FragmentInfoSerchController controller = fxmlLoader.getController();
+                controller.setProfessionalUser(us);
+                controller.setPerson(person);
+                controller.setData(String.valueOf(us.getNames()), String.valueOf(us.getSpecialty()), "/org/example/proyectotfg/imgUsuario/doctor3.png", 5);
+                fragment.resize(340, 180);
+                controller.setCallback(() -> {
+                    try {
+                       addToFavorites(us, person);
+                    } catch (OperationsDBException e) {
+                       showError("Error", "Error a la hora de añadirlo a favoritos");
+                    }
+                });
+                contenedorHBox.getChildren().add(fragment);
+            }
+            AnchorPane.setTopAnchor(contenedorHBox, 0.0);
+            AnchorPane.setRightAnchor(contenedorHBox, 0.0);
+            AnchorPane.setBottomAnchor(contenedorHBox, 0.0);
+            AnchorPane.setLeftAnchor(contenedorHBox, 0.0);
+        } catch (IOException e) {
+            showError("Error","Error a la hora de cargar el fragmento: " + e.getMessage());
+        }
+        return contenedorHBox;
+    }
 
     @Override
     public void addToFavorites(ProfessionalUser professionalUser, Person person) throws OperationsDBException {

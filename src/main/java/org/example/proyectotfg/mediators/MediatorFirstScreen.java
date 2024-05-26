@@ -9,6 +9,7 @@ import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
 import org.example.proyectotfg.exceptions.NonexistingUser;
 import org.example.proyectotfg.exceptions.OperationsDBException;
+import org.example.proyectotfg.exceptions.ThereIsNoView;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -42,4 +43,5 @@ public interface MediatorFirstScreen {
     void updateAllDataPerson(ProfessionalUser nuevo);
 
     void updateAllDataPerson(NormalUser nuevo) throws SQLException;
+    public Parent loadSearchs(List<ProfessionalUser> professionalUsers);
 }

@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -55,31 +56,8 @@ public class ControllerSearch implements ViewController {
     }
 
     public void loadSearchs(List<ProfessionalUser> professionalUsers) throws ThereIsNoView {
-        try {
-            for (ProfessionalUser us : professionalUsers) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-infoSearch_view.fxml"));
-                Node fragment = fxmlLoader.load();
-                FragmentInfoSerchController controller = fxmlLoader.getController();
-                controller.setProfessionalUser(us);
-                controller.setPerson(person);
-                controller.setData(String.valueOf(us.getNames()), String.valueOf(us.getSpecialty()), "/org/example/proyectotfg/imgUsuario/doctor3.png", 5);
-                fragment.resize(340, 180);
-                controller.setCallback(new Callback() {
-                    @Override
-                    public void doAction() {
-                        try {
-                            mediator.addToFavorites(us, person);
-                        } catch (OperationsDBException e) {
-                            ((MainController) mediator).showError("Error", "Error a la hora de añadirlo a favoritos");
-                        }
-                    }
-                });
-                listaResultados.getChildren().add(fragment);
-            }
-
-        } catch (IOException e) {
-            throw new ThereIsNoView("Error a la hora de cargar el fragmento: " + e.getMessage());
-        }
+        Parent listResults = mediator.loadSearchs(professionalUsers);
+        listaResultados.getChildren().add(listResults);
     }
 
     public void setStringSearch(String search) {
