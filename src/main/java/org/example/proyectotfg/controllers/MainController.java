@@ -151,9 +151,14 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             Person person = connect.chargePersonWithNewPassword(mail, pass);
             String messageHTML = FunctionsApp.returnPasswordRecoverString(person);
             SenderReaderMail sender = new SenderReaderMail();
+            if (person.getTypeUser() == TypeUser.USUARIO_NORMAL) {
+                updateAllDataPerson((NormalUser) person);
+            } else {
+                updateAllDataPerson((ProfessionalUser) person);
+            }
             enviarEmail(sender, person.getEmail(), messageHTML);
         } catch (InvalidKeySpecException | NonexistingUser | IncorrectLoginEception | DataAccessException |
-                 OperationsDBException e) {
+                 OperationsDBException|SQLException e) {
            showError("Error", e.getMessage());
         }
 
@@ -458,7 +463,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void updateAllDataPerson(NormalUser user) throws SQLException {
         try {
             connect.updateDataPerson(user);
-            showInfo("Actualización correcta", "Se ha actualizado correctamente el usuario");
+            showInfo("Actualización correcta", "Se ha actualizado correctamente");
             person = user;
             regresar();
         } catch (OperationsDBException e) {

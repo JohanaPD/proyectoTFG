@@ -3,6 +3,7 @@ package org.example.proyectotfg.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.apache.tools.ant.Main;
 import org.example.proyectotfg.mediators.Mediator;
@@ -15,10 +16,10 @@ public class RecoverPassworController implements ViewController {
     @FXML
     private TextField mail;
     @FXML
-    private TextField pass;
+    private PasswordField pass;
 
     @FXML
-    private TextField pass2;
+    private PasswordField pass2;
 
 
     @FXML
