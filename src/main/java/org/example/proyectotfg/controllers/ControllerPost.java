@@ -40,7 +40,7 @@ public class ControllerPost implements ViewController {
     }
 
     public void loadPosts() {
-        mainContainer.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            mainContainer.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         mainContainer.setContent(mediator.viewPost(posts));
     }
 
