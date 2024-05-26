@@ -46,12 +46,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         String consultaDiagnosticosHistorial = "CREATE TABLE IF NOT EXISTS diagnoses_history(" + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "id_diagnose INTEGER NOT NULL," + "id_history INTEGER NOT NULL," + "FOREIGN KEY(id_diagnose) REFERENCES diagnose(id_diagnose) ON DELETE CASCADE," + "FOREIGN KEY(id_history) REFERENCES history(id_history) ON DELETE CASCADE);";
 
         String consultaCitas = "CREATE TABLE IF NOT EXISTS medical_appointment (" + "id_appointment INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "id_professional TEXT NOT NULL," + "id_normal_user TEXT NOT NULL," + "visit_date TEXT NOT NULL," + "notification TEXT NOT NULL," + "FOREIGN KEY(id_normal_user) REFERENCES normal_user(id_person) ON DELETE CASCADE," + "FOREIGN KEY(id_professional) REFERENCES professional_user(id_person) ON DELETE CASCADE);";
-        String favoritesProfesional = "CREATE TABLE IF NOT EXISTS favorites_professionals (" +
-                "id_normal_user INTEGER  NOT NULL," +
-                "id_profesional_user INTEGER," +
-                "PRIMARY KEY(id_normal_user, id_profesional_user)," +
-                "FOREIGN KEY(id_profesional_user) REFERENCES professional_user(id_person)," +
-                "FOREIGN KEY(id_normal_user) REFERENCES normal_user(id_person) ON DELETE CASCADE);";
+        String favoritesProfesional = "CREATE TABLE IF NOT EXISTS favorites_professionals (" + "id_normal_user INTEGER  NOT NULL," + "id_profesional_user INTEGER," + "PRIMARY KEY(id_normal_user, id_profesional_user)," + "FOREIGN KEY(id_profesional_user) REFERENCES professional_user(id_person)," + "FOREIGN KEY(id_normal_user) REFERENCES normal_user(id_person) ON DELETE CASCADE);";
         try (Statement stmt = connection.createStatement()) {
             // Ejecutar cada sentencia de creación
             stmt.executeUpdate(consultaDireccion);
@@ -122,8 +117,6 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
         return professionalUsers;
     }
-
-
 
 
     @Override
@@ -222,6 +215,57 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                             } else {
                                 throw new IncorrectLoginEception("La contraseña es incorrecta");
                             }
+                        } else {
+                            throw new NonexistingUser("No existe el usuario o no es el tipo correcto");
+                        }
+
+                    } catch (SQLException | OperationsDBException | IncorrectDataException | NullArgumentException e) {
+                        throw new OperationsDBException("Error al realizar las operaciones" + e.getMessage());
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (SQLException e) {
+                System.out.println("Ups!!! la conexión está fallando!!");
+                throw new DataAccessException("Conexión no establecida");
+            }
+        }
+        return person;
+    }
+
+    public Person chargePersonWithNewPassword(String email, String newPassword) throws IncorrectLoginEception, InvalidKeySpecException, NonexistingUser, OperationsDBException, DataAccessException {
+        Person person = null;
+        if (email != null) {
+            try (Connection connection = DriverManager.getConnection(URL)) {
+                int idDirection = 0;
+                String sql = "SELECT * FROM PERSON WHERE email = ?";
+                try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    statement.setString(1, email);
+                    try (ResultSet resultSet = statement.executeQuery()) {
+                        if (resultSet.next()) {
+                            int id = resultSet.getInt("id_person");
+                            String nombres = resultSet.getString("user_names");
+                            String apellidos = resultSet.getString("last_names");
+                            //la contraseña que incluye el usuario
+                            Date birrth = resultSet.getDate("date_birth");
+                            Date registration = resultSet.getDate("registration_date");//ok
+                            TypeUser type = TypeUser.valueOf(resultSet.getString("type_user"));
+                            StatesUser state = StatesUser.valueOf(resultSet.getString("user_state"));
+                            Date last_activity = resultSet.getDate("last_activity");
+                            idDirection = resultSet.getInt("id_direction");
+                            Direction direction = chargeDirection(idDirection);//ok
+                            if (type.equals(TypeUser.USUARIO_NORMAL)) {
+
+                                String nickname = chargeNickname(id);
+                                person = new NormalUser(id, nombres, apellidos, newPassword, birrth, registration, email, type, state, direction, last_activity, nickname);
+
+                            } else {
+                                // Person nueva= new Person(id, nombres,apellidos, birrth,registration,type,direction);
+                                person = chargeProfesionalUser(id, nombres, apellidos, newPassword, birrth, registration, email, type, state, direction, last_activity);
+
+                            }
+
+
                         } else {
                             throw new NonexistingUser("No existe el usuario o no es el tipo correcto");
                         }
@@ -815,9 +859,8 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
     @Override
     public boolean addProfesionalUserInFavorites(ProfessionalUser professionalUser, Person person) throws OperationsDBException {
-        String consulta= "INSERT INTO favorites_professionals (id_normal_user , id_profesional_user) VALUES (?, ?)";
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
+        String consulta = "INSERT INTO favorites_professionals (id_normal_user , id_profesional_user) VALUES (?, ?)";
+        try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setInt(1, person.getIdPerson());
             preparetStmt.setInt(1, professionalUser.getIdPerson());
             int affectedRows = preparetStmt.executeUpdate();
@@ -832,6 +875,37 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     public void close() throws Exception {
         connection.close();
     }
+
+    /*public void changeNotVerificated(int idPerson) {
+        String updatePersonSQL = "UPDATE person SET user_state=\"\" WHERE id_person = ?";
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement updatePersonStmt = connection.prepareStatement(updatePersonSQL)) {
+
+            if (chargeNormalUserById(idPerson) != null) {
+                updatePersonStmt.setString(1, String.valueOf(StatesUser.NOT_VERIFIED));
+                updateNormalUserStmt.setBoolean(2, user.isInTherapySession());
+                updateNormalUserStmt.setInt(3, user.getIdPerson());
+                updateNormalUserStmt.executeUpdate();
+                connection.commit();
+            } else {
+                connection.commit();
+                connection.close();
+                registerNormalUser(user, true);
+            }
+
+
+            updatePersonStmt.executeUpdate();
+            updateDireccionStmt.executeUpdate();
+
+            connection.commit();
+        } catch (SQLException | DuplicateKeyException | OperationsDBException e) {
+            connection.rollback();
+            throw new OperationsDBException("La cuenta ya existe en la base de datos");
+        }
+        if (user.getTypeUser() == TypeUser.USUARIO_NORMAL && chargeProfesionalUserById(user.getIdPerson()) != null) {
+            deleteProfessionalUser(user.getIdPerson());
+        }
+    }*/
 }
 
 

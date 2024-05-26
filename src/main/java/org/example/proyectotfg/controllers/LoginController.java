@@ -9,17 +9,12 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
-import org.example.proyectotfg.exceptions.DataAccessException;
-import org.example.proyectotfg.exceptions.NonexistingUser;
-import org.example.proyectotfg.exceptions.OperationsDBException;
 import org.example.proyectotfg.exceptions.ThereIsNoView;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorProfile;
 import org.example.proyectotfg.mediators.ViewController;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -61,7 +56,7 @@ public class LoginController implements ViewController {
 
     @FXML
     void recovLink(ActionEvent event) throws IOException, ThereIsNoView {
-        mediator.recoverPassword();
+        mediator.loadRecoverPassword();
     }
 
     @Override

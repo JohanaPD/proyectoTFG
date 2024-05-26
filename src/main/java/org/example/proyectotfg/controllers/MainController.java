@@ -136,13 +136,27 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
      * ==========================================Recuperar Contraseña =============================================*/
 
     @Override
-    public void recoverPassword() {
+    public void loadRecoverPassword() {
         try {
             mainStage.setTitle("Recupere su contraseña!!");
             loadView("/org/example/proyectotfg/recover-password.fxml");
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
+    }
+
+    @Override
+    public void recoverPassword(String mail,String pass) {
+        try {
+            Person person = connect.chargePersonWithNewPassword(mail, pass);
+            String messageHTML = FunctionsApp.returnPasswordRecoverString(person);
+            SenderReaderMail sender = new SenderReaderMail();
+            enviarEmail(sender, person.getEmail(), messageHTML);
+        } catch (InvalidKeySpecException | NonexistingUser | IncorrectLoginEception | DataAccessException |
+                 OperationsDBException e) {
+           showError("Error", e.getMessage());
+        }
+
     }
 
     public void loadPostView() {

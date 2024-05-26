@@ -124,4 +124,9 @@ public class FunctionsApp {
 
     }
 
+    public static String returnPasswordRecoverString(Person person) {
+        String htmlPasswordRecoverString = "";
+        return htmlPasswordRecoverString;
+    }
+
 }

@@ -8,6 +8,7 @@ module org.example.proyectotfg {
     //requires imap;
     requires java.desktop;
     requires com.jfoenix;
+    requires ant;
     // requires javax.mail.api;
 
 
