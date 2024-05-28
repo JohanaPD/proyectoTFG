@@ -1,4 +1,4 @@
 package org.example.proyectotfg.mediators;
 
-public class MediatorCalendar {
+public interface MediatorCalendar {
 }

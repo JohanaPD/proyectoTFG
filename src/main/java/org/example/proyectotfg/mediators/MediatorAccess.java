@@ -1,9 +1,7 @@
 package org.example.proyectotfg.mediators;
 
 
-import org.example.proyectotfg.exceptions.ThereIsNoView;
-
-public interface MediatorAcceso {
+public interface MediatorAccess {
 
     //Entrada primer view
     void openLogin();

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MediatorPost {
 
-    void makePost(Post nuevo);
+    void makePost(Post newPost);
 
     Parent viewPost(List<Post> posts);
 
