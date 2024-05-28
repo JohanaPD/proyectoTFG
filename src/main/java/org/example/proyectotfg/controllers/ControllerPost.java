@@ -36,8 +36,7 @@ public class ControllerPost implements ViewController {
         this.person = person;
     }
 
-    public void initialize() throws IncorrectDataException, NullArgumentException, OperationsDBException {
-    }
+
 
     public void loadPosts() {
             mainContainer.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);

@@ -38,14 +38,14 @@
         </padding>
         <!-- Nombre y Apellido -->
         <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <TextField fx:id="textNombre" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <TextField fx:id="textName" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
         <Label text="Apellido:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-        <TextField fx:id="textApellidos" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+        <TextField fx:id="textLastNames" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
         <!-- Email y Confirmar Email -->
         <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
         <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
         <Label text="Confirmar Email:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-        <TextField fx:id="confirmarMail" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+        <TextField fx:id="confirmEmail" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
         <!-- Dirección -->
         <Label text="Calle:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
         <TextField fx:id="textStreet" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
@@ -69,13 +69,13 @@
             </items>
         </ComboBox>
         <!-- Campos condicionales -->
-        <Label fx:id="colegiadoLabel" text="Colegiado:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
-        <TextField fx:id="colegiadoTextField" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-        <Label fx:id="especialidadLabel" text="Especialidad:" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
-        <TextField fx:id="especialidadTextField" GridPane.columnIndex="3" GridPane.rowIndex="6"/>
-        <Label fx:id="descripcionLabel" text="Descripción:" GridPane.columnIndex="0" GridPane.columnSpan="4"
+        <Label fx:id="collegiateLabel" text="Colegiado:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+        <TextField fx:id="collegiateTextField" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+        <Label fx:id="specialtyLabel" text="Especialidad:" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
+        <TextField fx:id="specialtyTextField" GridPane.columnIndex="3" GridPane.rowIndex="6"/>
+        <Label fx:id="descriptionLabel" text="Descripción:" GridPane.columnIndex="0" GridPane.columnSpan="4"
                GridPane.rowIndex="7"/>
-        <TextArea fx:id="descripcionTextArea" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7"/>
+        <TextArea fx:id="descriptionTextArea" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7"/>
 
         <columnConstraints>
             <ColumnConstraints/>
@@ -98,6 +98,6 @@
     </GridPane>
     <HBox alignment="CENTER" spacing="10">
         <Button onAction="#updateData" styleClass="buttonIntroRegistro" stylesheets="@styles.css" text="Aceptar"/>
-        <Button onAction="#volverHome" styleClass="buttonIntroRegistro" stylesheets="@styles.css" text="Cerrar"/>
+        <Button onAction="#returnHome" styleClass="buttonIntroRegistro" stylesheets="@styles.css" text="Cerrar"/>
     </HBox>
 </VBox>

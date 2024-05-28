@@ -748,7 +748,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             updatePersonStmt.executeUpdate();
             updateDirectionStmt.executeUpdate();
             if (chargeNormalUserById(nuevo.getIdPerson()) != null) {
-                updateNormalUserStmt.setString(1, nuevo.getNickname());
+                updateNormalUserStmt.setString(1, nuevo.getNames()+" "+nuevo.getLastNames());
                 updateNormalUserStmt.setBoolean(2, nuevo.isInTherapySession());
                 updateNormalUserStmt.setInt(3, nuevo.getIdPerson());
                 updateNormalUserStmt.executeUpdate();
