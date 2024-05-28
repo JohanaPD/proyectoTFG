@@ -225,13 +225,13 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     /*   ================================================================================================
         ======================================Firs screen =====================================================*/
     @Override
-    public Parent initializeServices(HashMap<String, String> servicios) {
+    public Parent initializeServices(HashMap<String, String> services) {
         HBox contenedorHBox = new HBox(4);
         contenedorHBox.setAlignment(Pos.CENTER);
         contenedorHBox.setMaxWidth(80);
         contenedorHBox.setMaxHeight(90);
         try {
-            for (Map.Entry<String, String> map : servicios.entrySet()) {
+            for (Map.Entry<String, String> map : services.entrySet()) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-services-view.fxml"));
                 Parent fragment = fxmlLoader.load();
                 ControllerFragmentServicios controller = fxmlLoader.getController();
@@ -361,7 +361,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     }
 
     @Override
-    public void volver() {
+    public void backFromNotifiersToHome() {
         fromFirstScreenToHome();
     }
 

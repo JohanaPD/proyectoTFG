@@ -176,7 +176,7 @@ public class UpdatePersonController implements ViewController {
             errors.append("El apellido no puede contener números ni caracteres especiales.\n");
         }
         if (!mail.isEmpty() && !confirMail.isEmpty()) {
-            if (VerificatorSetter.validarCorreoElectronico(mail) && VerificatorSetter.validarCorreoElectronico(confirMail)) {
+            if (VerificatorSetter.validateEmailAddress(mail) && VerificatorSetter.validateEmailAddress(confirMail)) {
                 if (mail.equalsIgnoreCase(confirMail)) {
                     TypeUser tipeUs = comboTypeUser.getValue();
                     String tipeUser = tipeUs.toString();

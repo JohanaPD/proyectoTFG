@@ -8,11 +8,11 @@ import java.util.regex.Pattern;
 public class VerificatorSetter {
 
 
-    public static boolean stringVerificator(String cadena, int lengt) {
-        if (cadena != null) {
-            if (cadena.length() >= 1 || cadena.length() < lengt) {
+    public static boolean stringVerificator(String string, int length) {
+        if (string != null) {
+            if (string.length() >= 1 || string.length() < length) {
                 Pattern patron = Pattern.compile("^[a-zA-ZñÑ\\s]+$");
-                Matcher matcher = patron.matcher(cadena);
+                Matcher matcher = patron.matcher(string);
                 if (matcher.matches()) {
                     return true;
                 } else {
@@ -23,15 +23,15 @@ public class VerificatorSetter {
         return false;
     }
 
-    public static boolean stringVerificatorletterAndNumbers(String cadena, int length) {
-        if (cadena != null) {
-            if (cadena.length() >= 1 && cadena.length() <= length) {
+    public static boolean stringVerificatorletterAndNumbers(String string, int length) {
+        if (string != null) {
+            if (string.length() >= 1 && string.length() <= length) {
                 // La expresión regular incluye letras, números, espacios, comas y caracteres con tilde
                 // Pattern patron = Pattern.compile("^[a-zA-Z0-9\\s,áéíóúÁÉÍÓÚñÑ.\\-']+$");
                 //Pattern patron = Pattern.compile("^[a-zA-Z0-9\\s,áéíóúÁÉÍÓÚñÑ.\\-'\\r\\n]+$");
                 Pattern patron = Pattern.compile("^[a-zA-Z0-9\\s,áéíóúÁÉÍÓÚñÑ.\\-:'\\r\\n]+$");
 
-                Matcher matcher = patron.matcher(cadena);
+                Matcher matcher = patron.matcher(string);
                 if (matcher.matches()) {
                     return true;
                 } else {
@@ -43,19 +43,19 @@ public class VerificatorSetter {
     }
 
 
-    public static boolean numberVerificator(int number, int leng) {
+    public static boolean numberVerificator(int number, int length) {
         if (number > 0) {
-            if (String.valueOf(number).length() <= leng) {
+            if (String.valueOf(number).length() <= length) {
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean validarCorreoElectronico(String correo) {
+    public static boolean validateEmailAddress(String mail) {
         // Patrón de expresión regular para validar correo electrónico
         String pattern = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        return Pattern.matches(pattern, correo);
+        return Pattern.matches(pattern, mail);
     }
 
     public static boolean esMayorDeEdad(int edad) {

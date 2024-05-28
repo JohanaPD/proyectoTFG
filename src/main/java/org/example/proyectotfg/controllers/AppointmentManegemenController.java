@@ -2,10 +2,8 @@ package org.example.proyectotfg.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.mediators.Mediator;
@@ -59,7 +57,7 @@ public class AppointmentManegemenController implements ViewController {
 
     @FXML
     void goToHome(ActionEvent event) {
-        mediatorNotifiers.volver();
+        mediatorNotifiers.backFromNotifiersToHome();
     }
 
 

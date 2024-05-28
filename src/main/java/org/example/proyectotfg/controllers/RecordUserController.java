@@ -157,7 +157,7 @@ public class RecordUserController implements ViewController {
         } else if (!VerificatorSetter.stringVerificator(lastNames, 100)) {
             errores.append("El apellido no puede contener números ni caracteres especiales");
         }
-        if (VerificatorSetter.validarCorreoElectronico(mail) && VerificatorSetter.validarCorreoElectronico(confirMail)) {
+        if (VerificatorSetter.validateEmailAddress(mail) && VerificatorSetter.validateEmailAddress(confirMail)) {
             if (mail.equalsIgnoreCase(confirMail)) {
                 int calculatorAge = FunctionsApp.calculateAge(registrationDate, birthd);
                 if (calculatorAge >= 18 && calculatorAge <= 100) {

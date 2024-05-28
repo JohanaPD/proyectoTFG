@@ -226,7 +226,7 @@ public abstract class Person {
 
     public void setEmail(String email) throws NullArgumentException, IncorrectDataException {
         if (email != null) {
-            if (VerificatorSetter.validarCorreoElectronico(email)) {
+            if (VerificatorSetter.validateEmailAddress(email)) {
                 this.email = email;
             } else {
                 throw new IncorrectDataException("El correo introducido es erróneo");
