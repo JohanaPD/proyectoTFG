@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface PersonaDAO {
-//void crear bbdd si no existe
 
     void createTables();
 
@@ -36,7 +35,6 @@ public interface PersonaDAO {
     Person registerPerson(Person person) throws OperationsDBException, DuplicateKeyException;
 
     List<ProfessionalUser> searchProfessionalsUsers(String nameUser) throws NonexistingUser, DataAccessException, OperationsDBException;
-
 
     boolean addProfesionalUserInFavorites(ProfessionalUser professionalUser, Person person) throws OperationsDBException, NonexistingUser, DuplicateKeyException;
 }

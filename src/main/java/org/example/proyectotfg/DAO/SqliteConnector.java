@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqliteConnector implements AutoCloseable, PersonaDAO {
-    static final String URL = "jdbc:sqlite:src/main/resources/sqliteBBDD/MeetPsych.db";
 
+    static final String URL = "jdbc:sqlite:src/main/resources/sqliteBBDD/MeetPsych.db";
     static Connection connection;
 
     public SqliteConnector() throws SQLException {
@@ -27,11 +27,13 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
     @Override
     public void createTables() {
+
         String consultaDireccion = "CREATE TABLE IF NOT EXISTS  direction(" + "id_direction INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "street VARCHAR(150) NOT NULL," + "city VARCHAR(100) NOT NULL," + "postal_code INTEGER" + ");";
+
         String createPerson = "CREATE TABLE IF NOT EXISTS  person(" + "id_person INTEGER PRIMARY KEY  AUTOINCREMENT," + "user_names VARCHAR(100) NOT NULL," + "last_names VARCHAR(150) NOT NULL," + "pass_script TEXT NOT NULL," + "date_birth DATE NOT NULL," + "registration_date DATE NOT NULL," + "email VARCHAR(150) NOT NULL," + "type_user VARCHAR(50) NOT NULL," + //-- 0 para false, 1 para true
                 "user_state VARCHAR(20) NOT NULL," + "last_activity DATE NOT NULL," + "id_direction INTEGER NOT NULL," + "foreign key (id_direction) references direction(id_direction)" + ");";
-        String queryPsychologist = "CREATE TABLE IF NOT EXISTS  professional_user(" + "id_person INTEGER PRIMARY KEY," + "collegiate VARCHAR(200) UNIQUE NOT NULL," + "specialty VARCHAR(150) NOT NULL," + "description VARCHAR(10000) NOT NULL," + "FOREIGN KEY(id_person) REFERENCES person(id_person) );";
 
+        String queryPsychologist = "CREATE TABLE IF NOT EXISTS  professional_user(" + "id_person INTEGER PRIMARY KEY," + "collegiate VARCHAR(200) UNIQUE NOT NULL," + "specialty VARCHAR(150) NOT NULL," + "description VARCHAR(10000) NOT NULL," + "FOREIGN KEY(id_person) REFERENCES person(id_person) );";
 
         String consultaUsuarioNormal = "CREATE TABLE IF NOT EXISTS  normal_user(" + "id_person INTEGER PRIMARY KEY," + "nickname VARCHAR(40) UNIQUE NOT NULL," + "in_therapy_session INTEGER NOT NULL," + //-- 0 para false, 1 para true
                 "FOREIGN KEY(id_person) REFERENCES person(id_person) );";
@@ -40,15 +42,16 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
         String consultaHistorial = "CREATE TABLE IF NOT EXISTS history(" + "id_history INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "id_user INTEGER NOT NULL," + "FOREIGN KEY(id_user) REFERENCES person(id_user) ON DELETE CASCADE);";
 
-
         String consultaDiagnostico = "CREATE TABLE IF NOT EXISTS diagnose(" + "id_diagnose INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "id_title TEXT NOT NULL," + "id_content TEXT NOT NULL);";
 
         String consultaDiagnosticosHistorial = "CREATE TABLE IF NOT EXISTS diagnoses_history(" + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "id_diagnose INTEGER NOT NULL," + "id_history INTEGER NOT NULL," + "FOREIGN KEY(id_diagnose) REFERENCES diagnose(id_diagnose) ON DELETE CASCADE," + "FOREIGN KEY(id_history) REFERENCES history(id_history) ON DELETE CASCADE);";
 
         String consultaCitas = "CREATE TABLE IF NOT EXISTS medical_appointment (" + "id_appointment INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + "id_professional TEXT NOT NULL," + "id_normal_user TEXT NOT NULL," + "visit_date TEXT NOT NULL," + "notification TEXT NOT NULL," + "FOREIGN KEY(id_normal_user) REFERENCES normal_user(id_person) ON DELETE CASCADE," + "FOREIGN KEY(id_professional) REFERENCES professional_user(id_person) ON DELETE CASCADE);";
+
         String favoritesProfesional = "CREATE TABLE IF NOT EXISTS favorites_professionals (" + "id_normal_user INTEGER  NOT NULL," + "id_profesional_user INTEGER," + "PRIMARY KEY(id_normal_user, id_profesional_user)," + "FOREIGN KEY(id_profesional_user) REFERENCES professional_user(id_person)," + "FOREIGN KEY(id_normal_user) REFERENCES normal_user(id_person) ON DELETE CASCADE);";
+
         try (Statement stmt = connection.createStatement()) {
-            // Ejecutar cada sentencia de creación
+
             stmt.executeUpdate(consultaDireccion);
             stmt.executeUpdate(createPerson);
             stmt.executeUpdate(queryPsychologist);
@@ -59,7 +62,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             stmt.executeUpdate(consultaDiagnosticosHistorial);
             stmt.executeUpdate(consultaCitas);
             stmt.executeUpdate(favoritesProfesional);
-            System.out.println("Tabla creada correctamente");
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

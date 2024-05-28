@@ -52,12 +52,19 @@ public class PostGeneratorController implements ViewController {
 
     @FXML
     void generarPost(ActionEvent event) throws IncorrectDataException, NullArgumentException {
-
         String title = titlePost.getText();
+        if(title.isEmpty()){
+            ((MainController)mediator).showInfo("Rellena todos los datos", "El titulo no puede estar vacio");
+        }
         String nameTit = nameTitular.getText();
         String descrip = description.getText();
-        Post nuevo = new Post(person, title, descrip);
-        mediator.makePost(nuevo);
+        if(descrip.isEmpty()){
+            ((MainController)mediator).showInfo("Rellena todos los datos", "El contenido no puede estar vacio");
+        }
+        if(!title.isEmpty() && !descrip.isEmpty()) {
+            Post nuevo = new Post(person, title, descrip);
+            mediator.makePost(nuevo);
+        }
     }
 
     public void volverHome(ActionEvent actionEvent) {

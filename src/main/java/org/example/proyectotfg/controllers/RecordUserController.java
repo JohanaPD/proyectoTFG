@@ -26,6 +26,7 @@ import java.util.Date;
 public class RecordUserController implements ViewController {
 
     private MediatorProfile mediator;
+
     private MainController mainController;
 
     @FXML
@@ -78,13 +79,11 @@ public class RecordUserController implements ViewController {
     @FXML
     private Label descripcionLabel;
 
-   /* ProfessionalUser psycologist;
-    NormalUser normalUser;*/
 
     public void initialize() {
         comboTypeUser.setItems(FXCollections.observableArrayList(TypeUser.values()));
         comboTypeUser.getSelectionModel().select(TypeUser.USUARIO_NORMAL);
-        setConditionalVisibility(comboTypeUser.getValue());  // Set initial visibility based on default selection
+        setConditionalVisibility(comboTypeUser.getValue());
         comboTypeUser.valueProperty().addListener((obs, oldVal, newVal) -> {
             setConditionalVisibility(newVal);
         });
@@ -101,7 +100,6 @@ public class RecordUserController implements ViewController {
         descripcionTextArea.setText("");
         descripcionLabel.setVisible(visible);
         descripcionTextArea.setVisible(visible);
-        /*dateNacimiento.setEditable(false);*/
     }
 
     @FXML
@@ -114,7 +112,6 @@ public class RecordUserController implements ViewController {
             String city = textCity.getText();
             String codPostal = textCodPostal.getText();
             Direction nueva = null;
-            System.out.println(VerificatorSetter.stringVerificatorletterAndNumbers("Pepito tiene gripe, hola", 100));
             try {
                 nueva = new Direction(calle, city, Integer.parseInt(codPostal));
             } catch (NumberFormatException e) {
@@ -125,7 +122,6 @@ public class RecordUserController implements ViewController {
                 String confirMail = confirmarMail.getText();
                 String pass1 = textPassword.getText().trim();
                 String pass2 = textPassword2.getText().trim();
-
                 LocalDate birthDate = dateNacimiento.getValue();
                 Date birthd = null;
                 if (birthDate != null) {
@@ -147,7 +143,6 @@ public class RecordUserController implements ViewController {
                  IncompleteDataInRecord | IOException | DataAccessException | OperationsDBException | ThereIsNoView e) {
             ((MainController) mediator).showError("Error", e.getMessage());
         }
-
     }
 
     private String verificatorData(String names, String lastNames, String mail, String confirMail, Date registrationDate, Date birthd, String pass1, String pass2, Direction nueva) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, IncompleteDataInRecord, IOException, DataAccessException, OperationsDBException, ThereIsNoView {
@@ -158,7 +153,6 @@ public class RecordUserController implements ViewController {
             errores.append("El nombre no puede contener números ni caracteres especiales");
         }
         if (lastNames.isEmpty()) {
-            /*textNombre.setText("El nombre es requerido.\n");*/
             errores.append("El apellido es requerido.\n");
         } else if (!VerificatorSetter.stringVerificator(lastNames, 100)) {
             errores.append("El apellido no puede contener números ni caracteres especiales");
@@ -174,7 +168,6 @@ public class RecordUserController implements ViewController {
                     } else {
                         TypeUser tipeUs = comboTypeUser.getValue();
                         String tipeUser = tipeUs.toString();
-                        //entra         System.out.println(tipeUser);
                         if (!tipeUser.equalsIgnoreCase(String.valueOf(TypeUser.USUARIO_NORMAL))) {
                             String college = colegiadoTextField.getText();
                             String especialidad = especialidadTextField.getText();
@@ -203,8 +196,6 @@ public class RecordUserController implements ViewController {
         } else {
             ((MainController) mediator).showError("Error", "No has introducido o no tiene el formato correcto el correo");
         }
-
-
         return errores.toString();
     }
 
