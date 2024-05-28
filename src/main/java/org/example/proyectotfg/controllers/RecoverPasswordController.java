@@ -2,15 +2,13 @@ package org.example.proyectotfg.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import org.apache.tools.ant.Main;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorProfile;
 import org.example.proyectotfg.mediators.ViewController;
 
-public class RecoverPassworController implements ViewController {
+public class RecoverPasswordController implements ViewController {
 
     private MediatorProfile mediator;
     @FXML
