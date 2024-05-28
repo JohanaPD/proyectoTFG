@@ -21,6 +21,7 @@ import org.example.proyectotfg.mediators.*;
 
 //import javax.mail.MessagingException;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -40,7 +41,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
             connect = new SqliteConnector();
             this.mainStage = mainStage;
             loadFirstView();
-        } catch (SQLException e) {
+        } catch (SQLException | OperationsDBException e) {
             showError("Error", e.getMessage());
         }
     }
@@ -216,7 +217,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 actualController.setMediator(this);
             }
         } catch (InvalidKeySpecException | NonexistingUser | IncorrectLoginEception | DataAccessException |
-                 OperationsDBException e) {
+                 OperationsDBException | NoSuchAlgorithmException e) {
             showError("Error", e.getMessage());
         }
     }

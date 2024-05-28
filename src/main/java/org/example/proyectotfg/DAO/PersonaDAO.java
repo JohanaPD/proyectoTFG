@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface PersonaDAO {
 
-    void createTables();
+    void createTables() throws OperationsDBException;
 
     void buscarPorNombreoEspecialidad(String tabla, String busqueda);
 
