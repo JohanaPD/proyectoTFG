@@ -20,7 +20,7 @@ public interface MediatorFirstScreen {
 
     void openProfessionalUser(ProfessionalUser professionalUser, int index);
 
-    Parent initializeServices(HashMap<String, String> servicios);
+    Parent initializeServices(HashMap<String, String> services);
 
     Parent initializeProfessionals(List<ProfessionalUser> professionalUsers) throws NonexistingUser;
 
@@ -34,8 +34,8 @@ public interface MediatorFirstScreen {
 
     void updateDataPerson(NormalUser user) throws SQLException;
 
-    void updateAllDataPerson(ProfessionalUser nuevo);
+    void updateAllDataPerson(ProfessionalUser user);
 
-    void updateAllDataPerson(NormalUser nuevo) throws SQLException;
+    void updateAllDataPerson(NormalUser user) throws SQLException;
     public Parent loadSearchs(List<ProfessionalUser> professionalUsers);
 }

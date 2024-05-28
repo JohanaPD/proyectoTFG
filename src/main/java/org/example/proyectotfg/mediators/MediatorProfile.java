@@ -7,7 +7,7 @@ import org.example.proyectotfg.enumAndTypes.TypeUser;
 
 public interface MediatorProfile {
 
-    void loginUser(String usuario, String pass, TypeUser typeUser);
+    void loginUser(String user, String pass, TypeUser typeUser);
 
     void userRegister();
 
