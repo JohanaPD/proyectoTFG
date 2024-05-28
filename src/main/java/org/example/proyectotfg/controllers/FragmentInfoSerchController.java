@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
+import org.example.proyectotfg.exceptions.NotFoundImage;
 import org.example.proyectotfg.exceptions.OperationsDBException;
 import org.example.proyectotfg.mediators.Callback;
 
@@ -25,7 +26,6 @@ public class FragmentInfoSerchController {
     private Text valoraciones1;
     private Callback callback;
 
-
     private Person person;
     private ProfessionalUser professionalUser;
 
@@ -36,7 +36,6 @@ public class FragmentInfoSerchController {
     public void setPerson(Person person) {
         this.person = person;
     }
-
 
     public Text getEspecialidad() {
         return especialidad;
@@ -76,26 +75,21 @@ public class FragmentInfoSerchController {
 
     }
 
-
-    public void setData(String nombreMed, String espec, String imagePath, int val) {
+    public void setData(String nombreMed, String espec, String imagePath, int val) throws NotFoundImage {
         Image image = new Image(getClass().getResourceAsStream(imagePath));
         if (image != null) {
             idImagen.setImage(image);
         } else {
-            System.err.println("No se pudo cargar la imagen. Ruta incorrecta o recurso no encontrado.");
+            throw new NotFoundImage("No se pudo cargar la imagen. Ruta incorrecta o recurso no encontrado.");
         }
         nombreMedico.setText(nombreMed);
         especialidad.setText(espec);
         valoraciones1.setText(String.valueOf(10));
-
     }
 
     @FXML
     void addToFavorites(ActionEvent event) throws OperationsDBException {
         System.out.println("callback 'Añadir a Favoritos' pulsado");
         callback.doAction();
-
     }
-
-
 }

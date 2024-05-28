@@ -14,10 +14,7 @@ import javafx.scene.text.Text;
 import org.example.proyectotfg.DAO.SqliteConnector;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
-import org.example.proyectotfg.exceptions.IncorrectDataException;
-import org.example.proyectotfg.exceptions.NonexistingUser;
-import org.example.proyectotfg.exceptions.NullArgumentException;
-import org.example.proyectotfg.exceptions.OperationsDBException;
+import org.example.proyectotfg.exceptions.*;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorFirstScreen;
 import org.example.proyectotfg.mediators.ViewController;
@@ -66,7 +63,7 @@ public class InitialInterfaceController implements ViewController, Initializable
             usuariosEspecificos = SqliteConnector.getProfesionales();
         } catch (SQLException | IncorrectDataException | NonexistingUser | OperationsDBException |
                  NoSuchAlgorithmException | InvalidKeySpecException | NullArgumentException e) {
-            //todo: meter cambios
+            ((MainController) mediator).showError("Error", e.getMessage());
         }
     }
 
@@ -81,7 +78,7 @@ public class InitialInterfaceController implements ViewController, Initializable
             Parent professionalUserBox = mediator.initializeProfessionals(usuariosEspecificos);
             contenedorListaPersonas.setContent(professionalUserBox);
         } catch (NonexistingUser e) {
-            //todo:  Manejar la excepción adecuadamente
+            ((MainController) mediator).showError("Error", e.getMessage());
         }
     }
 
@@ -101,7 +98,6 @@ public class InitialInterfaceController implements ViewController, Initializable
 
     public void adminSetting(ActionEvent actionEvent) throws OperationsDBException {
         mediator.updatePersonalData(user);
-
     }
 
     public void openCalendar(ActionEvent actionEvent) {

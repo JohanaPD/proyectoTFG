@@ -15,7 +15,6 @@ import org.example.proyectotfg.mediators.MediatorProfile;
 import org.example.proyectotfg.mediators.ViewController;
 
 public class InfoProfesionalController implements ViewController {
-
     @FXML
     private ImageView image;
     @FXML
@@ -23,7 +22,7 @@ public class InfoProfesionalController implements ViewController {
     @FXML
     private Text specialty;
     @FXML
-     private Text description;
+    private Text description;
     private MediatorFirstScreen mediator;
 
     public void initialize() {

@@ -32,9 +32,8 @@ import java.util.List;
 import java.util.Map;
 
 public class MainController implements Mediator, MediatorAcceso, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction, MediatorNotifiers {
-    //mongo, sql, sqlite
+
     private Stage mainStage;
-    private Mediator mediatorAplicado;
     SqliteConnector connect;
     ViewController actualController;
     Person person;
@@ -44,15 +43,10 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         try {
             connect = new SqliteConnector();
             this.mainStage = mainStage;
-            setMediator(this);
             loadFirstView();
         } catch (SQLException e) {
             showError("Error", e.getMessage());
         }
-    }
-
-    public void setMediator(Mediator mediator) {
-        this.mediatorAplicado = mediator;
     }
 
     /*   ================================================================================================
@@ -60,7 +54,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
 
     public void loadFirstView() {
         try {
-            // FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("entradaView.fxml"));
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("entradaView.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             actualController = fxmlLoader.getController();
@@ -70,7 +63,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             mainStage.setTitle("MeetPshyc!");
             mainStage.setScene(scene);
             mainStage.show();
-
         } catch (IOException e) {
             showError("Error", "Error al cargar la aplicación");
         }
@@ -109,16 +101,12 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void openLogin() {
         try {
             mainStage.setTitle("Bienvenidos!!");
-            //loadView("entradaView.fxml");
             loadView("/org/example/proyectotfg/login-general.fxml");
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
     }
 
-    @Override
-    public void haciaAtras() {
-    }
     /*=======================================================================================================
      * ==========================================HACER REGISTRO =============================================*/
 
@@ -130,7 +118,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
-
     }
     /*=======================================================================================================
      * ==========================================Recuperar Contraseña =============================================*/
@@ -167,6 +154,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void loadPostView() {
         try {
             loadView("/org/example/proyectotfg/post-view.fxml");
+            mainStage.setTitle("¡Estos son los posts que has compartido!");
             ControllerPost controllerPost = (ControllerPost) actualController;
             controllerPost.setPerson(person);
             controllerPost.setPosts(SqliteConnector.serchPostByPerson(person));
@@ -190,7 +178,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             showError("Error", e.getMessage());
         }
         person = user;
-
     }
 
     @Override
@@ -272,6 +259,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                                     break;
                                 default:
                                     loadView("/org/example/proyectotfg/enContruccion-view.fxml");
+                                    mainStage.setTitle("¡Estamos construyendo nuevos espacios para ti!");
                             }
                         } catch (ThereIsNoView e) {
                             showError("Error", e.getMessage());
@@ -284,8 +272,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             AnchorPane.setRightAnchor(contenedorHBox, 0.0);
             AnchorPane.setBottomAnchor(contenedorHBox, 0.0);
             AnchorPane.setLeftAnchor(contenedorHBox, 0.0);
-        } catch (IOException ie) {
-            ie.printStackTrace();
+        } catch (IOException | NotFoundImage ie) {
+           showError("Error", ie.getMessage());
         }
         return contenedorHBox;
     }
@@ -311,7 +299,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 fragment.resize(340, 180);
                 controller.setCallback(() -> {
                     try {
-                        System.out.println("esto es el fragment Botón 'Añadir a Favoritos' pulsado");
                        addToFavorites(us, person);
                     } catch (OperationsDBException e) {
                        showError("Error", "Error a la hora de añadirlo a favoritos");
@@ -321,7 +308,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             }
             stackPane.getChildren().add(contenedorHBox);
             contenedorHBox.toFront();
-        } catch (IOException e) {
+        } catch (IOException | NotFoundImage e) {
             showError("Error","Error a la hora de cargar el fragmento: " + e.getMessage());
         }
         return contenedorHBox;
@@ -364,8 +351,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 AnchorPane.setBottomAnchor(contenedorHBox2, 0.0);
                 AnchorPane.setLeftAnchor(contenedorHBox2, 0.0);
                 return contenedorHBox2;
-            } catch (IOException ioe) {
-                throw new RuntimeException("Error cargando el fragmento de servicio", ioe);
+            } catch (IOException | NotFoundImage ioe) {
+                showError("Error ", ioe.getMessage());
             }
         }
 
@@ -545,15 +532,16 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 controller.setData(String.valueOf(post.getTitle()), String.valueOf(post.getTitular().getNames()), String.valueOf(post.getContent()), "/org/example/proyectotfg/imgPost/meditacion.jpg");
                 ((VBox) parent).getChildren().add(fragment);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(new ThereIsNoView("Error a la hora de cargar el fragmento: " + e.getMessage()));
+        } catch (IOException | NotFoundImage e) {
+            showError("Error " , e.getMessage());
         }
-
         return parent;
     }
 
     private void loadPublicPostView() throws ThereIsNoView {
+       mainStage.setTitle("¡Estamos construyendo nuevos espacios para ti!");
         loadView("/org/example/proyectotfg/post-generator-view.fxml");
+
         PostGeneratorController postGeneratorController = (PostGeneratorController) actualController;
         postGeneratorController.setPerson(person);
         postGeneratorController.setTitlePost(person.getNames());

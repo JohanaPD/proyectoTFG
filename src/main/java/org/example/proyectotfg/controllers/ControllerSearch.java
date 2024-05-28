@@ -25,13 +25,12 @@ import java.io.IOException;
 import java.util.List;
 
 public class ControllerSearch implements ViewController {
-    MediatorFirstScreen mediator;
     @FXML
     private Label detalleBusqueda;
     @FXML
     private VBox listaResultados;
+    MediatorFirstScreen mediator;
     private Person person;
-
 
     public void initialize() {
         System.out.println("Inicializando el Controller search");
@@ -47,7 +46,7 @@ public class ControllerSearch implements ViewController {
     }
 
     public void setDetalleBusqueda(Label detalleBusqueda) {
-       detalleBusqueda.setText(person.getNames());
+        detalleBusqueda.setText(person.getNames());
     }
 
     @Override
@@ -57,7 +56,6 @@ public class ControllerSearch implements ViewController {
 
     @Override
     public void setMainController(MainController mainController) {
-
     }
 
     public void loadSearchs(List<ProfessionalUser> professionalUsers) throws ThereIsNoView {

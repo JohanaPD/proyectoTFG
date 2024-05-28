@@ -19,10 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ControllerPost implements ViewController {
-
     @FXML
     private ScrollPane mainContainer;
-
     private MediatorPost mediator;
     Person person;
     List<Post> posts = new ArrayList<>();
@@ -39,7 +37,7 @@ public class ControllerPost implements ViewController {
 
 
     public void loadPosts() {
-            mainContainer.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        mainContainer.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         mainContainer.setContent(mediator.viewPost(posts));
     }
 
@@ -50,7 +48,6 @@ public class ControllerPost implements ViewController {
 
     @Override
     public void setMainController(MainController mainController) {
-
     }
 
     public void volverIncio(ActionEvent actionEvent) {
