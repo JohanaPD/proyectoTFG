@@ -3,13 +3,10 @@ package org.example.proyectotfg.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import org.example.proyectotfg.DAO.SqliteConnector;
 import org.example.proyectotfg.entities.Person;
@@ -72,7 +69,7 @@ public class InitialInterfaceController implements ViewController, Initializable
     }
 
     public void loadServices() {
-        Parent listaServicios = mediator.initializeServicios(servicios);
+        Parent listaServicios = mediator.initializeServices(servicios);
         contenedorListaServicios.getChildren().add(listaServicios);
         try {
             Parent professionalUserBox = mediator.initializeProfessionals(usuariosEspecificos);

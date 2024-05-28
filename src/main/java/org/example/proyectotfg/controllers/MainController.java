@@ -6,13 +6,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.example.proyectotfg.DAO.SqliteConnector;
 import org.example.proyectotfg.entities.*;
@@ -30,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainController implements Mediator, MediatorAcceso, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction, MediatorNotifiers {
+public class MainController implements Mediator, MediatorAccess, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction, MediatorNotifiers {
 
     private Stage mainStage;
     SqliteConnector connect;
@@ -227,7 +224,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     /*   ================================================================================================
         ======================================Firs screen =====================================================*/
     @Override
-    public Parent initializeServicios(HashMap<String, String> servicios) {
+    public Parent initializeServices(HashMap<String, String> servicios) {
         HBox contenedorHBox = new HBox(4);
         contenedorHBox.setAlignment(Pos.CENTER);
         contenedorHBox.setMaxWidth(80);
@@ -364,7 +361,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
 
     @Override
     public void volver() {
-        regresar();
+        fromFirstScreenToHome();
     }
 
     @Override
@@ -402,7 +399,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             connect.updateNormalUserWP(user);
             showInfo("Actualización correcta", "Se ha actualizado correctamente el usuario");
             person = user;
-            regresar();
+            fromFirstScreenToHome();
         } catch (OperationsDBException | SQLException e) {
             showError("Error en la operaciones", e.getMessage());
         }
@@ -414,7 +411,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             connect.updateProfesionalUserWP(user);
             showInfo("Actualización correcta", "Se ha actualizado correctamente el usuario");
             person = user;
-            regresar();
+            fromFirstScreenToHome();
         } catch (OperationsDBException | SQLException e) {
             showError("Error en la operaciones", e.getMessage());
         }
@@ -426,7 +423,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             connect.updateProfesionalUser(user);
             showInfo("Actualización correcta", "Se ha actualizado correctamente el usuario");
             person = user;
-            regresar();
+            fromFirstScreenToHome();
         } catch (OperationsDBException | SQLException e) {
             showError("Error en la operaciones", e.getMessage());
         }
@@ -438,19 +435,14 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             connect.updateDataPerson(user);
             showInfo("Actualización correcta", "Se ha actualizado correctamente");
             person = user;
-            regresar();
+            fromFirstScreenToHome();
         } catch (OperationsDBException e) {
             showError("Error en la operaciones", e.getMessage());
         }
     }
 
     @Override
-    public void datosPerfilPsico(TextFlow descripcionCurriculum, Text nombreDoctor, ImageView imgmed, ProfessionalUser usuarioPerfilesCarga) {
-
-    }
-
-    @Override
-    public void regresar() {
+    public void fromFirstScreenToHome() {
         try {
             loadView("/org/example/proyectotfg/interfaz-inicial-view.fxml");
             mainStage.setTitle("MeetPsych!!");
@@ -463,7 +455,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
 
     @Override
     public void returnHome() {
-        regresar();
+        fromFirstScreenToHome();
     }
 
     @Override
@@ -499,9 +491,9 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         ======================================Hacer Post =====================================================*/
 
     @Override
-    public void makePost(Post nuevo) {
+    public void makePost(Post newPost) {
         try {
-            connect.makeNewPost(nuevo);
+            connect.makeNewPost(newPost);
             loadInterfazInicial();
         } catch (OperationsDBException e) {
             throw new RuntimeException(e);
@@ -561,6 +553,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
 
     @Override
     public void backToHome() {
-        regresar();
+        fromFirstScreenToHome();
     }
 }

@@ -2,26 +2,16 @@ package org.example.proyectotfg.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
-import org.example.proyectotfg.exceptions.OperationsDBException;
 import org.example.proyectotfg.exceptions.ThereIsNoView;
-import org.example.proyectotfg.mediators.Callback;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorFirstScreen;
 import org.example.proyectotfg.mediators.ViewController;
 
-import javax.swing.text.View;
-import java.awt.*;
-import java.io.IOException;
 import java.util.List;
 
 public class ControllerSearch implements ViewController {
@@ -60,6 +50,6 @@ public class ControllerSearch implements ViewController {
     }
 
     public void volverIncio(ActionEvent actionEvent) {
-        mediator.regresar();
+        mediator.fromFirstScreenToHome();
     }
 }

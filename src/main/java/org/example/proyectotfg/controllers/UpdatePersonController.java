@@ -253,7 +253,7 @@ public class UpdatePersonController implements ViewController {
 
 
     public void returnHome(ActionEvent actionEvent) {
-        mediator.regresar();
+        mediator.fromFirstScreenToHome();
     }
 
 

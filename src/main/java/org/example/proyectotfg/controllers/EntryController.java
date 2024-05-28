@@ -4,11 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import org.example.proyectotfg.exceptions.ThereIsNoView;
 import org.example.proyectotfg.mediators.Mediator;
-import org.example.proyectotfg.mediators.MediatorAcceso;
+import org.example.proyectotfg.mediators.MediatorAccess;
 import org.example.proyectotfg.mediators.ViewController;
 
 public class EntryController implements ViewController {
-    private MediatorAcceso mediador;
+    private MediatorAccess mediador;
 
     @FXML
     void introFirstView(ActionEvent event) throws ThereIsNoView {
@@ -17,7 +17,7 @@ public class EntryController implements ViewController {
 
     @Override
     public void setMediator(Mediator mediador) {
-        this.mediador = (MediatorAcceso) mediador;
+        this.mediador = (MediatorAccess) mediador;
     }
 
 

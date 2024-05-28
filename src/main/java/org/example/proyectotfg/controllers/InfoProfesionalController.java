@@ -2,16 +2,12 @@ package org.example.proyectotfg.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import org.example.proyectotfg.entities.ProfessionalUser;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorFirstScreen;
-import org.example.proyectotfg.mediators.MediatorProfile;
 import org.example.proyectotfg.mediators.ViewController;
 
 public class InfoProfesionalController implements ViewController {
@@ -44,6 +40,6 @@ public class InfoProfesionalController implements ViewController {
     }
 
     public void volverHome(ActionEvent actionEvent) {
-        mediator.regresar();
+        mediator.fromFirstScreenToHome();
     }
 }
