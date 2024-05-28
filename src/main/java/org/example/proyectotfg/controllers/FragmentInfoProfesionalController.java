@@ -9,13 +9,5 @@ public class FragmentInfoProfesionalController implements ViewController {
     @Override
     public void setMediator(Mediator mediador) {
     }
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
 
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 }

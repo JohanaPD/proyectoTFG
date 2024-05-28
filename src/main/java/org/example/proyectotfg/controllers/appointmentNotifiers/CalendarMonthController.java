@@ -46,16 +46,6 @@ public class CalendarMonthController implements ViewController, Initializable {
         this.mediator = (MediatorCalendar) mediador;
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
-
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
-
 
     private CalendarEventManager eventManager;
 

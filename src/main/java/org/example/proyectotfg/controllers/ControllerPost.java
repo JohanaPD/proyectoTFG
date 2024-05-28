@@ -35,20 +35,11 @@ public class ControllerPost implements ViewController {
     }
 
 
-
     public void loadPosts() {
         mainContainer.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         mainContainer.setContent(mediator.viewPost(posts));
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
-
-    @Override
-    public void setMainController(MainController mainController) {
-    }
 
     public void volverIncio(ActionEvent actionEvent) {
         mediator.returnHome();

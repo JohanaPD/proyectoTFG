@@ -20,13 +20,5 @@ public class EntryController implements ViewController {
         this.mediador = (MediatorAcceso) mediador;
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
 
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 }

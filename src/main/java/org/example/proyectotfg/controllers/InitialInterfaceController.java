@@ -104,12 +104,5 @@ public class InitialInterfaceController implements ViewController, Initializable
         mediator.openCalendarView();
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
 
-    @Override
-    public void setMainController(MainController mainController) {
-    }
 }

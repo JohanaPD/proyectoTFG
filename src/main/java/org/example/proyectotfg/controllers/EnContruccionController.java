@@ -13,15 +13,6 @@ public class EnContruccionController implements ViewController {
         this.mediatorConstruction = (MediatorConstruction) mediador;
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
-
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 
     public void volverAInicio(ActionEvent actionEvent) {
         mediatorConstruction.backToHome();

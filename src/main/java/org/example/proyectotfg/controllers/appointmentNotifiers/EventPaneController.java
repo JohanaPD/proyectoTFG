@@ -99,13 +99,5 @@ public class EventPaneController implements ViewController {
 
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
 
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 }

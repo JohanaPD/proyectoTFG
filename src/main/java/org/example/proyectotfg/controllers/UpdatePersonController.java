@@ -256,13 +256,5 @@ public class UpdatePersonController implements ViewController {
         mediator.regresar();
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
 
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 }

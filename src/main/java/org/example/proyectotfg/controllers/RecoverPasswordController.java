@@ -41,15 +41,6 @@ public class RecoverPasswordController implements ViewController {
         mediator = (MediatorProfile) mediador;
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
-
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 
     public void firtScreen(ActionEvent actionEvent) {
         mediator.volverIncio();

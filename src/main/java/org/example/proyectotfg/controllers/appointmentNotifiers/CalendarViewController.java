@@ -58,13 +58,5 @@ public class CalendarViewController implements ViewController {
         this.rootParentPane = parentPane;
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
 
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 }

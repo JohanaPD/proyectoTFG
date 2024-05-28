@@ -65,13 +65,5 @@ public class NavigationCalendarController implements ViewController, Initializab
         // Logic to populate the calendar grid goes here
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
 
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 }

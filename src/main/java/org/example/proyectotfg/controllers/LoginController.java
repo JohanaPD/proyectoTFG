@@ -59,12 +59,5 @@ public class LoginController implements ViewController {
         this.mediator = (MediatorProfile) mediador;
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
 
-    @Override
-    public void setMainController(MainController mainController) {
-    }
 }

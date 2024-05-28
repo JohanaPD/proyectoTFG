@@ -33,15 +33,6 @@ public class InfoProfesionalController implements ViewController {
         this.mediator = (MediatorFirstScreen) mediador;
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
-
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 
     public void setElementsPerson(ProfessionalUser professionalUser, int index) {
         String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", index);

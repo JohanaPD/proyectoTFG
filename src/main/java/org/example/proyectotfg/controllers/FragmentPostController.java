@@ -23,6 +23,7 @@ public class FragmentPostController implements ViewController {
     private Text titulo;
 
     private MediatorPost mediator;
+
     @Override
     public void setMediator(Mediator mediador) {
         this.mediator = (MediatorPost) mediador;
@@ -37,19 +38,12 @@ public class FragmentPostController implements ViewController {
         if (image != null) {
             idImagen.setImage(image);
         } else {
-           throw  new NotFoundImage("No se pudo cargar la imagen. Ruta incorrecta o recurso no encontrado.");
+            throw new NotFoundImage("No se pudo cargar la imagen. Ruta incorrecta o recurso no encontrado.");
         }
         nombre.setText(name);
         titulo.setText(tit);
         descripcion.setText(cont);
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
 
-    @Override
-    public void setMainController(MainController mainController) {
-    }
 }

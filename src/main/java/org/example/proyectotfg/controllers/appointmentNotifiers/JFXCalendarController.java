@@ -50,15 +50,6 @@ public class JFXCalendarController implements ViewController, Initializable {
 
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
-
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

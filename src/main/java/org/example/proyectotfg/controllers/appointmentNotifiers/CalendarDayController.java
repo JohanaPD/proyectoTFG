@@ -33,13 +33,4 @@ public class CalendarDayController implements ViewController {
     }
 
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
-
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 }

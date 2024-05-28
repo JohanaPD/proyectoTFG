@@ -54,16 +54,9 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
 
     public void loadFirstView() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("entradaView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            actualController = fxmlLoader.getController();
-            actualController.setMainController(this);
-            ViewController controller = fxmlLoader.getController();
-            controller.setMediator(this);
+            loadView("/org/example/proyectotfg/entry-view.fxml");
             mainStage.setTitle("MeetPshyc!");
-            mainStage.setScene(scene);
-            mainStage.show();
-        } catch (IOException e) {
+        } catch (ThereIsNoView e) {
             showError("Error", "Error al cargar la aplicación");
         }
     }

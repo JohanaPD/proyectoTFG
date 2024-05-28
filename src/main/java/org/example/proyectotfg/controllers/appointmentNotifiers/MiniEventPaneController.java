@@ -25,13 +25,4 @@ public class MiniEventPaneController implements ViewController {
     }
 
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
-
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 }

@@ -90,15 +90,5 @@ public class CalendarWeekController extends CalendarViewController implements Vi
         this.eventManager = eventManager;
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
-
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
-
 
 }

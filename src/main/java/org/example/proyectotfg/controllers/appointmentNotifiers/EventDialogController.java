@@ -67,13 +67,5 @@ public class EventDialogController extends JFXDialog implements ViewController, 
         this.manager = manager;
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
 
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 }

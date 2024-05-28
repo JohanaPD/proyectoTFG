@@ -71,13 +71,5 @@ public class PostGeneratorController implements ViewController {
         mediator.returnHome();
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
 
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
 }

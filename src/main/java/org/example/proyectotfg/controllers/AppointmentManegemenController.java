@@ -62,14 +62,7 @@ public class AppointmentManegemenController implements ViewController {
         mediatorNotifiers.volver();
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
 
-    public void setMainController(MainController mainController) {
-
-    }
 }
 
 

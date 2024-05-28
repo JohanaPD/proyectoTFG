@@ -49,14 +49,6 @@ public class ControllerSearch implements ViewController {
         detalleBusqueda.setText(person.getNames());
     }
 
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
-
-    @Override
-    public void setMainController(MainController mainController) {
-    }
 
     public void loadSearchs(List<ProfessionalUser> professionalUsers) throws ThereIsNoView {
         Parent listResults = mediator.loadSearchs(professionalUsers);
