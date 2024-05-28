@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="525.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/20.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.proyectotfg.controllers.EnContruccionController">
+            fx:controller="org.example.proyectotfg.controllers.InConstructionController">
     <children>
         <Text layoutX="51.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0"
               text="Gracias por contar con nosotros, nuestros servicios estarán proximamente disponible"

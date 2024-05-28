@@ -15,7 +15,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.example.proyectotfg.DAO.SqliteConnector;
-import org.example.proyectotfg.MainApplication;
 import org.example.proyectotfg.entities.*;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
 import org.example.proyectotfg.exceptions.*;
@@ -94,7 +93,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void openLogin() {
         try {
             mainStage.setTitle("Bienvenidos!!");
-            loadView("/org/example/proyectotfg/login-general.fxml");
+            loadView("/org/example/proyectotfg/general-login-view.fxml");
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
@@ -119,7 +118,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void loadRecoverPassword() {
         try {
             mainStage.setTitle("Recupere su contraseña!!");
-            loadView("/org/example/proyectotfg/recover-password.fxml");
+            loadView("/org/example/proyectotfg/recover-password-view.fxml");
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
@@ -200,7 +199,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void volverIncio() {
         try {
             mainStage.setTitle("Te esperamos pronto!!");
-            loadView("/org/example/proyectotfg/login-general.fxml");
+            loadView("/org/example/proyectotfg/general-login-view.fxml");
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
@@ -235,7 +234,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         contenedorHBox.setMaxHeight(90);
         try {
             for (Map.Entry<String, String> map : servicios.entrySet()) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-servicios.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-services-view.fxml"));
                 Parent fragment = fxmlLoader.load();
                 ControllerFragmentServicios controller = fxmlLoader.getController();
                 controller.setData(String.valueOf(map.getKey()), String.valueOf(map.getValue()));
@@ -251,7 +250,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                                     loadPublicPostView();
                                     break;
                                 default:
-                                    loadView("/org/example/proyectotfg/enContruccion-view.fxml");
+                                    loadView("/org/example/proyectotfg/in-construction-view.fxml");
                                     mainStage.setTitle("¡Estamos construyendo nuevos espacios para ti!");
                             }
                         } catch (ThereIsNoView e) {
@@ -283,7 +282,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         contenedorHBox.setMaxHeight(90);
         try {
             for (ProfessionalUser us : professionalUsers) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-infoSearch_view.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-info-search_view.fxml"));
                 Parent fragment = fxmlLoader.load();
                 FragmentInfoSerchController controller = fxmlLoader.getController();
                 controller.setProfessionalUser(us);
@@ -326,7 +325,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 int imageIndex = 1;
                 int totalImages = 6;
                 for (ProfessionalUser us : professionalUsers) {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-servicios.fxml"));
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-services-view.fxml"));
                     Node fragment = fxmlLoader.load();
                     ControllerFragmentServicios controller = fxmlLoader.getController();
                     String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", imageIndex);
@@ -354,7 +353,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void openCalendarView() {
         try {
             mainStage.setTitle("Te esperamos pronto!!");
-            loadView("/org/example/proyectotfg/appointmentManegementView.fxml");
+            loadView("/org/example/proyectotfg/appointment-manegement-view.fxml");
             AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
             appointmentManegemenController.setPerson(person);
             appointmentManegemenController.setTitlePost(person.getNames());
@@ -389,7 +388,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void updatePersonalData(Person user) throws OperationsDBException {
         try {
             mainStage.setTitle("Modifica tus datos en solo un minuto!!");
-            loadView("/org/example/proyectotfg/update-user.fxml");
+            loadView("/org/example/proyectotfg/update-user-view.fxml");
             UpdatePersonController updatePerson = (UpdatePersonController) actualController;
             updatePerson.chargePerson(person);
         } catch (ThereIsNoView e) {
@@ -487,7 +486,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     @Override
     public void openProfessionalUser(ProfessionalUser professionalUser, int index) {
         try {
-            loadView("/org/example/proyectotfg/view-info-profesionalUser.fxml");
+            loadView("/org/example/proyectotfg/info-profesional-user-view.fxml");
             mainStage.setTitle("¡Cuenta con la ayuda más profesional!");
             InfoProfesionalController infoProfesionalController = (InfoProfesionalController) actualController;
             infoProfesionalController.setElementsPerson(professionalUser, index);

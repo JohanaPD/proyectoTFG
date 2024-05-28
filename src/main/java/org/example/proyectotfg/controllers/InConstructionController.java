@@ -5,7 +5,7 @@ import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorConstruction;
 import org.example.proyectotfg.mediators.ViewController;
 
-public class EnContruccionController implements ViewController {
+public class InConstructionController implements ViewController {
     MediatorConstruction mediatorConstruction;
 
     @Override
