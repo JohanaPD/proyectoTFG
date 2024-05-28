@@ -133,7 +133,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     }
 
     @Override
-    public void recoverPassword(String mail,String pass) {
+    public void recoverPassword(String mail, String pass) {
         try {
             Person person = connect.chargePersonWithNewPassword(mail, pass);
             String messageHTML = FunctionsApp.returnPasswordRecoverString(person);
@@ -145,8 +145,8 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             }
             enviarEmail(sender, person.getEmail(), messageHTML);
         } catch (InvalidKeySpecException | NonexistingUser | IncorrectLoginEception | DataAccessException |
-                 OperationsDBException|SQLException e) {
-           showError("Error", e.getMessage());
+                 OperationsDBException | SQLException e) {
+            showError("Error", e.getMessage());
         }
 
     }
@@ -273,7 +273,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             AnchorPane.setBottomAnchor(contenedorHBox, 0.0);
             AnchorPane.setLeftAnchor(contenedorHBox, 0.0);
         } catch (IOException | NotFoundImage ie) {
-           showError("Error", ie.getMessage());
+            showError("Error", ie.getMessage());
         }
         return contenedorHBox;
     }
@@ -282,7 +282,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
           ======================================Search View=====================================================*/
     @Override
     public Parent loadSearchs(List<ProfessionalUser> professionalUsers) {
-        StackPane stackPane= new StackPane();
+        StackPane stackPane = new StackPane();
         stackPane.getChildren().clear();
         VBox contenedorHBox = new VBox(4);
         contenedorHBox.setAlignment(Pos.CENTER);
@@ -299,9 +299,9 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 fragment.resize(340, 180);
                 controller.setCallback(() -> {
                     try {
-                       addToFavorites(us, person);
+                        addToFavorites(us, person);
                     } catch (OperationsDBException e) {
-                       showError("Error", "Error a la hora de añadirlo a favoritos");
+                        showError("Error", "Error a la hora de añadirlo a favoritos");
                     }
                 });
                 contenedorHBox.getChildren().add(fragment);
@@ -309,7 +309,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             stackPane.getChildren().add(contenedorHBox);
             contenedorHBox.toFront();
         } catch (IOException | NotFoundImage e) {
-            showError("Error","Error a la hora de cargar el fragmento: " + e.getMessage());
+            showError("Error", "Error a la hora de cargar el fragmento: " + e.getMessage());
         }
         return contenedorHBox;
     }
@@ -322,7 +322,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
         }
     }
 
-
     @Override
     public Parent initializeProfessionals(List<ProfessionalUser> professionalUsers) throws NonexistingUser {
         HBox contenedorHBox2 = new HBox(6);
@@ -331,15 +330,13 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             contenedorHBox2.setMaxWidth(100);
             contenedorHBox2.setMaxHeight(130);
             try {
-                int imageIndex = 1; // Inicializa el índice de la imagen
-                int totalImages = 6; // Total de imágenes disponibles
+                int imageIndex = 1;
+                int totalImages = 6;
                 for (ProfessionalUser us : professionalUsers) {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-servicios.fxml"));
                     Node fragment = fxmlLoader.load();
                     ControllerFragmentServicios controller = fxmlLoader.getController();
-
                     String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", imageIndex);
-
                     controller.setData(String.valueOf(us.getNames()), String.valueOf(imagePath));
                     int finalImageIndex = imageIndex;
                     controller.setCallback(() -> MainController.this.openProfessionalUser(us, finalImageIndex));
@@ -355,8 +352,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 showError("Error ", ioe.getMessage());
             }
         }
-
-        // En caso de que professionalUsers sea null, devolver un contenedor vacío o manejar el caso adecuadamente
         return contenedorHBox2;
     }
 
@@ -404,7 +399,6 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             loadView("/org/example/proyectotfg/update-user.fxml");
             UpdatePersonController updatePerson = (UpdatePersonController) actualController;
             updatePerson.chargePerson(person);
-
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
@@ -467,6 +461,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void regresar() {
         try {
             loadView("/org/example/proyectotfg/interfaz-inicial-view.fxml");
+            mainStage.setTitle("MeetPsych!!");
             loadInterfazInicial();
             actualController.setMediator(this);
         } catch (ThereIsNoView e) {
@@ -485,6 +480,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             List<ProfessionalUser> professionalUsers = connect.searchProfessionalsUsers(busqueda);
             if (!professionalUsers.isEmpty()) {
                 loadView("/org/example/proyectotfg/search-view.fxml");
+                mainStage.setTitle("¡Encuentra a tu profesional favorito!");
                 ControllerSearch controllerSearch = (ControllerSearch) actualController;
                 controllerSearch.setPerson(person);
                 controllerSearch.setStringSearch(busqueda);
@@ -499,6 +495,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void openProfessionalUser(ProfessionalUser professionalUser, int index) {
         try {
             loadView("/org/example/proyectotfg/view-info-profesionalUser.fxml");
+            mainStage.setTitle("¡Cuenta con la ayuda más profesional!");
             InfoProfesionalController infoProfesionalController = (InfoProfesionalController) actualController;
             infoProfesionalController.setElementsPerson(professionalUser, index);
         } catch (ThereIsNoView e) {
@@ -533,13 +530,13 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
                 ((VBox) parent).getChildren().add(fragment);
             }
         } catch (IOException | NotFoundImage e) {
-            showError("Error " , e.getMessage());
+            showError("Error ", e.getMessage());
         }
         return parent;
     }
 
     private void loadPublicPostView() throws ThereIsNoView {
-       mainStage.setTitle("¡Estamos construyendo nuevos espacios para ti!");
+        mainStage.setTitle("¡Estamos construyendo nuevos espacios para ti!");
         loadView("/org/example/proyectotfg/post-generator-view.fxml");
 
         PostGeneratorController postGeneratorController = (PostGeneratorController) actualController;
@@ -574,6 +571,4 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
     public void backToHome() {
         regresar();
     }
-
-
 }
