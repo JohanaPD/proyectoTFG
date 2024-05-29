@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainController implements Mediator, MediatorAccess, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction, MediatorNotifiers {
+public class MainController implements Mediator, MediatorAccess, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction, MediatorNotifiers, MediatorCalendar {
 
     private Stage mainStage;
     SqliteConnector connect;
@@ -62,7 +62,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
        ====================================CARGAR TODOS LOS SCENE ==============================*/
     private void loadInterfazInicial() {
         try {
-            loadView("/org/example/proyectotfg/interfaz-inicial-view.fxml");
+            loadView("/org/example/proyectotfg/initial-interface-view.fxml");
             InitialInterfaceController initialInterfaceController = (InitialInterfaceController) actualController;
             initialInterfaceController.loadServices();
             initialInterfaceController.setTextWelcome(person.getNames());
@@ -361,6 +361,17 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     }
 
     @Override
+    public Parent loadProfessionalsInMediatorCalendar() {
+        try {
+            return initializeProfessionals(SqliteConnector.getProfesionales());
+        } catch (SQLException | IncorrectDataException | NonexistingUser | NoSuchAlgorithmException |
+                 InvalidKeySpecException | NullArgumentException | OperationsDBException e) {
+            showError("Error", e.getMessage());
+        }
+        return new HBox(6);
+    }
+
+    @Override
     public void backFromNotifiersToHome() {
         fromFirstScreenToHome();
     }
@@ -445,7 +456,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     @Override
     public void fromFirstScreenToHome() {
         try {
-            loadView("/org/example/proyectotfg/interfaz-inicial-view.fxml");
+            loadView("/org/example/proyectotfg/initial-interface-view.fxml");
             mainStage.setTitle("MeetPsych!!");
             loadInterfazInicial();
             actualController.setMediator(this);
@@ -556,4 +567,6 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     public void backToHome() {
         fromFirstScreenToHome();
     }
+
+
 }
