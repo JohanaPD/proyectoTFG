@@ -101,7 +101,7 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <AnchorPane id="fragmentServicios" fx:id="contenedorListaServicios" maxHeight="1.7976931348623157E308"
+        <AnchorPane id="fragmentServicios" fx:id="containerServicesList" maxHeight="1.7976931348623157E308"
                     maxWidth="378.0" prefHeight="100.0" prefWidth="378.0">
             <VBox.margin>
                 <Insets bottom="20.0" top="10.0"/>
@@ -109,7 +109,7 @@
         </AnchorPane>
         <AnchorPane id="fragmentPsicolo" prefHeight="200.0" prefWidth="360.0">
             <children>
-                <ScrollPane fx:id="contenedorListaPersonas" prefHeight="200.0" prefWidth="382.0"
+                <ScrollPane fx:id="containerProfessionalsList" prefHeight="200.0" prefWidth="382.0"
                             AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
                             AnchorPane.topAnchor="10.0">
                     <padding>

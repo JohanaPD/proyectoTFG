@@ -1,29 +1,22 @@
 package org.example.proyectotfg.controllers.appointmentNotifiers;
 
-import javafx.beans.binding.DoubleBinding;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import org.example.proyectotfg.controllers.MainController;
 import org.example.proyectotfg.controllers.appointmentNotifiers.model.CalendarEvent;
 import org.example.proyectotfg.controllers.appointmentNotifiers.model.CalendarEventManager;
 import org.example.proyectotfg.mediators.Mediator;
-import org.example.proyectotfg.mediators.MediatorCalendar;
+import org.example.proyectotfg.mediators.MediatorNotifiers;
 import org.example.proyectotfg.mediators.ViewController;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Calendar;
 import java.util.ResourceBundle;
 
 public class CalendarMonthController implements ViewController, Initializable {
@@ -38,12 +31,12 @@ public class CalendarMonthController implements ViewController, Initializable {
     @FXML
     private ScrollPane mainPane;
 
-    private MediatorCalendar mediator;
+    private MediatorNotifiers mediator;
     private LocalDate selectedDate;
 
     @Override
     public void setMediator(Mediator mediador) {
-        this.mediator = (MediatorCalendar) mediador;
+        this.mediator = (MediatorNotifiers) mediador;
     }
 
 

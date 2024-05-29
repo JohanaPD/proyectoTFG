@@ -29,9 +29,9 @@ public class InitialInterfaceController implements ViewController, Initializable
     @FXML
     private Text textSaludo;
     @FXML
-    private ScrollPane contenedorListaPersonas;
+    private ScrollPane containerProfessionalsList;
     @FXML
-    private AnchorPane contenedorListaServicios;
+    private AnchorPane containerServicesList;
     @FXML
     private TextArea serchBuscar;
 
@@ -70,10 +70,10 @@ public class InitialInterfaceController implements ViewController, Initializable
 
     public void loadServices() {
         Parent listaServicios = mediator.initializeServices(servicios);
-        contenedorListaServicios.getChildren().add(listaServicios);
+        containerServicesList.getChildren().add(listaServicios);
         try {
             Parent professionalUserBox = mediator.initializeProfessionals(usuariosEspecificos);
-            contenedorListaPersonas.setContent(professionalUserBox);
+            containerProfessionalsList.setContent(professionalUserBox);
         } catch (NonexistingUser e) {
             ((MainController) mediator).showError("Error", e.getMessage());
         }
@@ -98,7 +98,7 @@ public class InitialInterfaceController implements ViewController, Initializable
     }
 
     public void openCalendar(ActionEvent actionEvent) {
-        mediator.openCalendarView();
+        mediator.openAppointmentView();
     }
 
 

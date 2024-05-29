@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainController implements Mediator, MediatorAccess, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction, MediatorNotifiers, MediatorCalendar {
+public class MainController implements Mediator, MediatorAccess, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction, MediatorNotifiers {
 
     private Stage mainStage;
     SqliteConnector connect;
@@ -348,13 +348,14 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     /*   ================================================================================================
        ======================================Appointment manager=====================================================*/
     @Override
-    public void openCalendarView() {
+    public void openAppointmentView() {
         try {
             mainStage.setTitle("Te esperamos pronto!!");
             loadView("/org/example/proyectotfg/appointment-manegement-view.fxml");
             AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
             appointmentManegemenController.setPerson(person);
             appointmentManegemenController.setTitlePost(person.getNames());
+            appointmentManegemenController.loadProfessionals();
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
@@ -362,13 +363,35 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
     @Override
     public Parent loadProfessionalsInMediatorCalendar() {
+        HBox contenedorHBox2 = new HBox(6);
         try {
-            return initializeProfessionals(SqliteConnector.getProfesionales());
-        } catch (SQLException | IncorrectDataException | NonexistingUser | NoSuchAlgorithmException |
-                 InvalidKeySpecException | NullArgumentException | OperationsDBException e) {
-            showError("Error", e.getMessage());
+            List<ProfessionalUser> professionalUsers = SqliteConnector.getProfesionales();
+            contenedorHBox2.setAlignment(Pos.CENTER);
+            contenedorHBox2.setMaxWidth(100);
+            contenedorHBox2.setMaxHeight(130);
+            int imageIndex = 1;
+            int totalImages = 6;
+            for (ProfessionalUser us : professionalUsers) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-services-view.fxml"));
+                Node fragment = fxmlLoader.load();
+                ControllerFragmentServicios controller = fxmlLoader.getController();
+                String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", imageIndex);
+                controller.setData(String.valueOf(us.getNames()), String.valueOf(imagePath));
+                int finalImageIndex = imageIndex;
+                controller.setCallback(() -> MainController.this.openProfessionalUser(us, finalImageIndex));
+                imageIndex = (imageIndex % totalImages) + 1;
+                contenedorHBox2.getChildren().add(fragment);
+            }
+            AnchorPane.setTopAnchor(contenedorHBox2, 0.0);
+            AnchorPane.setRightAnchor(contenedorHBox2, 0.0);
+            AnchorPane.setBottomAnchor(contenedorHBox2, 0.0);
+            AnchorPane.setLeftAnchor(contenedorHBox2, 0.0);
+        } catch (IOException | NotFoundImage | SQLException | IncorrectDataException | NoSuchAlgorithmException |
+                 InvalidKeySpecException | NullArgumentException | OperationsDBException | NonexistingUser ioe) {
+            showError("Error ", ioe.getMessage());
         }
-        return new HBox(6);
+        return contenedorHBox2;
+
     }
 
     @Override

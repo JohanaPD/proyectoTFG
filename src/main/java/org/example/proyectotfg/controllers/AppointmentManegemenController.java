@@ -2,10 +2,13 @@ package org.example.proyectotfg.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import org.example.proyectotfg.entities.Person;
+import org.example.proyectotfg.exceptions.NonexistingUser;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorNotifiers;
 import org.example.proyectotfg.mediators.ViewController;
@@ -26,6 +29,10 @@ public class AppointmentManegemenController implements ViewController {
 
     @FXML
     private AnchorPane myAppointments;
+
+    @FXML
+    private ScrollPane professionalsList;
+
     private MediatorNotifiers mediatorNotifiers;
     private Person person;
 
@@ -39,6 +46,11 @@ public class AppointmentManegemenController implements ViewController {
 
     public void setTitlePost(String names) {
         username.setText(names);
+    }
+
+    public void loadProfessionals() {
+        Parent professionalUserBox = mediatorNotifiers.loadProfessionalsInMediatorCalendar();
+        professionalsList.setContent(professionalUserBox);
     }
 
     @Override

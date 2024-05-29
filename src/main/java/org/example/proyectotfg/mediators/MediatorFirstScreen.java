@@ -26,7 +26,7 @@ public interface MediatorFirstScreen {
 
     void addToFavorites(ProfessionalUser professionalUser, Person person) throws OperationsDBException;
 
-    void openCalendarView();
+    void openAppointmentView();
 
     void updatePersonalData(Person user) throws OperationsDBException;
 
