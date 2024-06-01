@@ -92,51 +92,13 @@ public class AppointmentManegemenController implements ViewController {
         Parent availableAppointments=mediatorNotifiers.loadAvailableAppointmentsInCalendar(medicalAppointments);
         availableAppointmentsList.getChildren().add(availableAppointments);
     }
-   /* private HBox loadProfessionalsInMediatorCalendar() {
-        HBox contenedorHBox2 = new HBox(6);
-        try {
-            List<ProfessionalUser> professionalUsers = SqliteConnector.getProfesionales();
-            contenedorHBox2.setAlignment(Pos.CENTER);
-            contenedorHBox2.setMaxWidth(100);
-            contenedorHBox2.setMaxHeight(130);
-            int imageIndex = 1;
-            int totalImages = 6;
-            for (ProfessionalUser us : professionalUsers) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-services-view.fxml"));
-                Node fragment = fxmlLoader.load();
-                ControllerFragmentServicios controller = fxmlLoader.getController();
-                String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", imageIndex);
-                controller.setData(String.valueOf(us.getNames()), String.valueOf(imagePath));
-                //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
-                controller.setCallback(() -> {
-                    LocalDate localDate = datePicker.getValue();
-                    if (localDate == null) {
-                        ((MainController) mediatorNotifiers).showError("Error", "Tienes que seleccionar una" +
-                                " fecha antes de continuar);");
-                    } else {
-                        Date date = Da.valueOf(localDate);
-                        mediatorNotifiers.searchAppointments(us.getIdPerson(), date);
-                    }
-                });
-                imageIndex = (imageIndex % totalImages) + 1;
-                contenedorHBox2.getChildren().add(fragment);
-            }
-            AnchorPane.setTopAnchor(contenedorHBox2, 0.0);
-            AnchorPane.setRightAnchor(contenedorHBox2, 0.0);
-            AnchorPane.setBottomAnchor(contenedorHBox2, 0.0);
-            AnchorPane.setLeftAnchor(contenedorHBox2, 0.0);
-        } catch (IOException | NotFoundImage | SQLException | IncorrectDataException | NoSuchAlgorithmException |
-                 InvalidKeySpecException | NullArgumentException | OperationsDBException | NonexistingUser ioe) {
-            ((MainController) mediatorNotifiers).showError("Error ", ioe.getMessage());
-        }
-        return contenedorHBox2;
-    }*/
+   //crear arraylist de citas disponibles
      void chargeInInterfazCites(List<MedicalAppointment> list){
-        if(list.size()>=6){
+        if(list.size()>=MedicalAppointment.MAX_APPOINTMENTS){
             ((MainController) mediatorNotifiers).showInfo("Error ", "No quedan citas disponibles para la fecha elegida");
         } else if (list.isEmpty()) {
             //todo: pinta todos los dias
-        } else if (list.size()>0 && list.size()<=5) {
+        } else if (list.size()>0 && list.size()<=MedicalAppointment.MAX_APPOINTMENTS-1) {
             for (int i = 0; i < list.size() ; i++) {
                 if(list.get(i)!=null){
                 SimpleDateFormat format= new SimpleDateFormat("HH:mm:ss");

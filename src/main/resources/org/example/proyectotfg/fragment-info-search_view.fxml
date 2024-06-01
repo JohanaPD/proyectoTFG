@@ -47,7 +47,7 @@
                         </VBox>
                   <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="55.0">
                      <children>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#addToFavorites" prefHeight="40.0" prefWidth="58.0">
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#addToFavorites" onMouseClicked="#addToFavorites" prefHeight="40.0" prefWidth="58.0">
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
