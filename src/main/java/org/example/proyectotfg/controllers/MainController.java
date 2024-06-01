@@ -233,8 +233,8 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     public Parent initializeServices(HashMap<String, String> services) {
         HBox contenedorHBox = new HBox(4);
         contenedorHBox.setAlignment(Pos.CENTER);
-        contenedorHBox.setMaxWidth(80);
-        contenedorHBox.setMaxHeight(90);
+        contenedorHBox.setMaxWidth(60);
+        contenedorHBox.setMaxHeight(80);
         try {
             for (Map.Entry<String, String> map : services.entrySet()) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-services-view.fxml"));
@@ -281,8 +281,8 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         stackPane.getChildren().clear();
         VBox contenedorHBox = new VBox(4);
         contenedorHBox.setAlignment(Pos.CENTER);
-        contenedorHBox.setMaxWidth(80);
-        contenedorHBox.setMaxHeight(90);
+        contenedorHBox.setMaxWidth(60);
+        contenedorHBox.setMaxHeight(70);
         try {
             for (ProfessionalUser us : professionalUsers) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-info-search_view.fxml"));
@@ -322,8 +322,8 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         HBox contenedorHBox2 = new HBox(6);
         if (professionalUsers != null) {
             contenedorHBox2.setAlignment(Pos.CENTER);
-            contenedorHBox2.setMaxWidth(100);
-            contenedorHBox2.setMaxHeight(130);
+            contenedorHBox2.setMaxWidth(50);
+            contenedorHBox2.setMaxHeight(80);
             try {
                 int imageIndex = 1;
                 int totalImages = 6;

@@ -111,6 +111,12 @@
     -fx-padding: 10;
 }
 
+.scrollpanePsico {
+    -fx-border: none;
+    -fx-border-radius: 10;
+
+}
+
 .buttonInterfaz{
     -fx-background-color: rgba(158, 34, 144, 0.7);
     -fx-border-radius: 5; /* Radio de esquinas para redondear el botón */
@@ -127,6 +133,16 @@
 .buttonInterfaz.iconIntro {
     -fx-font-size:1.5em; /* Tamaño del fuente del icono */
     -fx-padding: 0 5; /* Ajuste de espaciado interno del icono */
+}
+
+/*Fragment servicios*/
+.fragmentServices{
+    -fx-border-width: 0.5;
+    -fx-border-color: gray;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+
 }
 
 /*Interfaz de usuario medico, perfil */
