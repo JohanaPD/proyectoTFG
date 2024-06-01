@@ -25,12 +25,13 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static org.example.proyectotfg.entities.MedicalAppointment.TIMES;
 
 public class MainController implements Mediator, MediatorAccess, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction, MediatorNotifiers {
 
@@ -39,6 +40,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     ViewController actualController;
     Person person;
     String passWordApp = "j v g l r d n k f x kw m s b e";
+    MedicalAppointment actualappointment;
 
     public MainController(Stage mainStage) throws IOException {
         try {
@@ -418,7 +420,28 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
     @Override
     public Parent loadAvailableAppointmentsInCalendar(List<MedicalAppointment> medicalAppointments) {
-        return null;
+        HBox contenedorHBox2 = new HBox(6);
+        try {
+            for (MedicalAppointment medicalAppointment : medicalAppointments) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-appointment-hours-view.fxml"));
+                Node fragment = fxmlLoader.load();
+                ControllerFragmentApoinmentHours controller = fxmlLoader.getController();
+                //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
+                controller.setCallback(() -> {
+                    AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
+                    controllerAppointment.setTextConfirm("Hora de cita seleccionada: " + medicalAppointment.getVisitDate().toString());
+                });
+            }
+        } catch (IOException e) {
+            showError("Error ", e.getMessage());
+        }
+        return contenedorHBox2;
+    }
+
+    @Override
+    public Parent loadNotAvailableAppointmentsInCalendar(List<MedicalAppointment> medicalAppointments) {
+        HBox contenedorHBox2 = new HBox(6);
+        return contenedorHBox2;
     }
 
     public void loadAvailableAppointments(Person person, ProfessionalUser us, Date localDate) {
@@ -427,7 +450,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
 el metodo debe devolver la lista de citas de ese profesional ese día*/
         try {
-            List<MedicalAppointment> medicalAppointments=connect.searchMedicalAppointments(us.getIdPerson(), localDate);
+            List<MedicalAppointment> medicalAppointments = connect.searchMedicalAppointments(us.getIdPerson(), localDate);
         } catch (OperationsDBException e) {
             throw new RuntimeException(e);
         } catch (IncorrectDataException e) {
@@ -478,9 +501,10 @@ el metodo debe pintar con los fragment las citas disponibles*/
     @Override
     public void searchAppointments(int idPerson, Date date) {
         try {
-            List<MedicalAppointment> medicalAppointments = connect.searchMedicalAppointments(idPerson, date);
+            List<MedicalAppointment> notAvailableMedicalAppointments = connect.searchMedicalAppointments(idPerson, date);
+            List<MedicalAppointment> availableMedicalAppointments = loadNotAvailableAppointments(notAvailableMedicalAppointments);
             AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
-            appointmentManegemenController.loadAvailableAppointments(medicalAppointments);
+            appointmentManegemenController.loadAppointments(availableMedicalAppointments, notAvailableMedicalAppointments);
         } catch (OperationsDBException e) {
             showError("Error", e.getMessage());
         } catch (IncorrectDataException | NoSuchAlgorithmException |
@@ -489,6 +513,62 @@ el metodo debe pintar con los fragment las citas disponibles*/
         }
     }
 
+    //crear arraylist de citas disponibles
+    private List<MedicalAppointment> loadNotAvailableAppointments(List<MedicalAppointment> list) {
+        List<MedicalAppointment> notAvailableAppointments = new ArrayList<>();
+        if (list.size() >= MedicalAppointment.MAX_APPOINTMENTS) {
+            showInfo("Error ", "No quedan citas disponibles para la fecha elegida");
+        } else if (list.isEmpty()) {
+            //todo: pinta todos los dias
+        } else if (list.size() > 0 && list.size() <= MedicalAppointment.MAX_APPOINTMENTS - 1) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i) != null) {
+                    SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+                    String hora = format.format(list.get(i).getVisitDate().getTime());
+                    if (!hora.equals(TIMES)) {
+                        //todo: pinta las horas disponibles
+                    }
+                } else {
+                    //todo: revisa
+                }
+            }
+
+
+        }
+        return notAvailableAppointments;
+    }
+/*
+Código para el hilo
+timer = new Timer();
+
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    int segundosActualesPrevios = cancionActual.getSegundosActuales();
+                    int segundosActuales = controladorVistaCancion.recogerValorProgreso();
+                    if (segundosActualesPrevios != segundosActuales) {
+                        player.stop();
+                        player.setStartTime(Duration.seconds(segundosActuales));
+                        player.play();
+                    }
+                    cancionActual.setSegundosActuales(segundosActuales + 1);
+
+                    //RUN LATER!! para repintar la pantalla
+                    Platform.runLater(() -> {
+                        if (cancionActual != null) {
+                            controladorVistaCancion.establecerDuracion(cancionActual.getSegundosActuales(), cancionActual.getDuracion());
+                        }
+
+
+                    });
+                    if (cancionActual.getSegundosActuales() == cancionActual.getDuracion()) {
+                        timerTask.cancel();
+                        timer.cancel();
+                    }
+                }
+            };
+            timer.schedule(this.timerTask, 1000, 1000);
+ */
 
     /*   ================================================================================================
       ====================================== Update Data =====================================================*/
