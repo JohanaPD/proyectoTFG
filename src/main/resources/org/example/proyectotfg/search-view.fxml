@@ -10,13 +10,10 @@
 
 <?import javafx.scene.control.Label?>
 <VBox fx:id="mainContainer" alignment="TOP_CENTER" prefHeight="700.0" prefWidth="410.0" spacing="10" styleClass="main-vbox" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.ControllerSearch">
-    <children>
-        <!-- Detalle de la búsqueda -->
-        <Label fx:id="detalleBusqueda" styleClass="search-detail-label" text="Detalle de la búsqueda: [usuario_busqueda]" />
-    </children>
-   <ScrollPane prefHeight="630.0" prefWidth="370.0"  >
+
+   <ScrollPane prefHeight="630.0" prefWidth="370.0">
        <content>
-           <VBox fx:id="listaResultados" prefHeight="600.0" prefWidth="400.0">
+           <VBox fx:id="listaResultados" prefHeight="600.0" prefWidth="343.0">
                <!-- Los fragmentos se agregarán aquí -->
            </VBox>
        </content>

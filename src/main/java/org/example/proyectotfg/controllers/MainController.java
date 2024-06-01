@@ -571,7 +571,6 @@ el metodo debe pintar con los fragment las citas disponibles*/
                 mainStage.setTitle("¡Encuentra a tu profesional favorito!");
                 ControllerSearch controllerSearch = (ControllerSearch) actualController;
                 controllerSearch.setPerson(person);
-                controllerSearch.setStringSearch(busqueda);
                 controllerSearch.loadSearchs(professionalUsers);
             }
         } catch (ThereIsNoView | NonexistingUser | DataAccessException | OperationsDBException e) {
@@ -607,7 +606,7 @@ el metodo debe pintar con los fragment las citas disponibles*/
     @Override
     public Parent viewPost(List<Post> posts) {
         Parent parent = new VBox();
-        ((VBox) parent).setPrefWidth(360);
+        ((VBox) parent).setPrefWidth(335);
         ((VBox) parent).setStyle("-fx-padding: 5;");
         try {
             for (Post post : posts) {

@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ControllerPost implements ViewController {
     @FXML
-    private ScrollPane mainContainer;
+    private AnchorPane mainContainer;
     private MediatorPost mediator;
     Person person;
     List<Post> posts = new ArrayList<>();
@@ -36,8 +36,8 @@ public class ControllerPost implements ViewController {
 
 
     public void loadPosts() {
-        mainContainer.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        mainContainer.setContent(mediator.viewPost(posts));
+
+        mainContainer.getChildren().add(mediator.viewPost(posts));
     }
 
 

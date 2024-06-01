@@ -235,6 +235,6 @@
     -fx-fill: #333333;
 }
 .fragment {
-    -fx-pref-width: 360px;
+   -fx-background-color: #FFFF;
 }
 

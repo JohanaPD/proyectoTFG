@@ -10,11 +10,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="347.0" styleClass="fondosearch" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.FragmentInfoSerchController">
+<AnchorPane maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="178.0" prefWidth="347.0" styleClass="fondosearch" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.FragmentInfoSerchController">
     <children>
-        <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="347.0">
+        <VBox maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="178.0" prefWidth="347.0">
             <children>
-                <HBox id="fragmentSearch" maxWidth="-Infinity" minWidth="-Infinity" mouseTransparent="true" onMouseClicked="#addToFavorites" prefHeight="178.0" prefWidth="345.0" stylesheets="@styles.css">
+                <HBox id="fragmentSearch" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mouseTransparent="true" onMouseClicked="#addToFavorites" prefHeight="178.0" prefWidth="328.0" stylesheets="@styles.css">
                     <children>
                         <VBox alignment="CENTER" prefHeight="170.0" prefWidth="86.0">
                             <children>
@@ -25,9 +25,9 @@
                                 </ImageView>
                             </children>
                         </VBox>
-                        <VBox prefHeight="158.0" prefWidth="175.0">
+                        <VBox prefHeight="178.0" prefWidth="172.0">
                             <children>
-                                <Text id="nombreMedico" fx:id="nombreMedico" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="188.77301025390625">
+                                <Text id="nombreMedico" fx:id="nombreMedico" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="179.17303466796875">
                                     <VBox.margin>
                                         <Insets top="50.0" />
                                     </VBox.margin>
@@ -35,7 +35,7 @@
                                         <Font size="18.0" />
                                     </font>
                                 </Text>
-                                <Text id="nombreMedico" fx:id="especialidad" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="188.77301025390625">
+                                <Text id="nombreMedico" fx:id="especialidad" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="174.37298583984375">
                                     <VBox.margin>
                                         <Insets top="20.0" />
                                     </VBox.margin>
@@ -45,7 +45,7 @@
                                 </Text>
                             </children>
                         </VBox>
-                  <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="154.0" prefWidth="70.0">
+                  <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="55.0">
                      <children>
                         <Button alignment="CENTER" mnemonicParsing="false" onAction="#addToFavorites" prefHeight="40.0" prefWidth="58.0">
                            <graphic>
@@ -72,6 +72,9 @@
                     </children>
                 </HBox>
             </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
         </VBox>
     </children>
 </AnchorPane>
