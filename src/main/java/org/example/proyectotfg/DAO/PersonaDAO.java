@@ -1,15 +1,13 @@
 package org.example.proyectotfg.DAO;
 
-import org.example.proyectotfg.entities.Direction;
-import org.example.proyectotfg.entities.Person;
-import org.example.proyectotfg.entities.NormalUser;
-import org.example.proyectotfg.entities.ProfessionalUser;
+import org.example.proyectotfg.entities.*;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
 import org.example.proyectotfg.exceptions.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 public interface PersonaDAO {
@@ -37,4 +35,6 @@ public interface PersonaDAO {
     List<ProfessionalUser> searchProfessionalsUsers(String nameUser) throws NonexistingUser, DataAccessException, OperationsDBException;
 
     boolean addProfesionalUserInFavorites(ProfessionalUser professionalUser, Person person) throws OperationsDBException, NonexistingUser, DuplicateKeyException;
+
+    List<MedicalAppointment> searchMedicalAppointments(int id, Date date) throws OperationsDBException;
 }

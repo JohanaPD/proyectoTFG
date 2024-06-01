@@ -780,6 +780,12 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
         }
     }
+
+    @Override
+    public List<MedicalAppointment> searchMedicalAppointments(int id, java.util.Date date) throws OperationsDBException {
+        return new ArrayList<>();
+    }
+
     @Override
     public void close() throws Exception {
         connection.close();

@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -366,39 +367,6 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
-    @Override
-    public Parent loadProfessionalsInMediatorCalendar() {
-        HBox contenedorHBox2 = new HBox(6);
-        try {
-            List<ProfessionalUser> professionalUsers = SqliteConnector.getProfesionales();
-            contenedorHBox2.setAlignment(Pos.CENTER);
-            contenedorHBox2.setMaxWidth(100);
-            contenedorHBox2.setMaxHeight(130);
-            int imageIndex = 1;
-            int totalImages = 6;
-            for (ProfessionalUser us : professionalUsers) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-services-view.fxml"));
-                Node fragment = fxmlLoader.load();
-                ControllerFragmentServicios controller = fxmlLoader.getController();
-                String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", imageIndex);
-                controller.setData(String.valueOf(us.getNames()), String.valueOf(imagePath));
-                int finalImageIndex = imageIndex;
-                //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
-                controller.setCallback(() -> MainController.this.openProfessionalUser(us, finalImageIndex));
-                imageIndex = (imageIndex % totalImages) + 1;
-                contenedorHBox2.getChildren().add(fragment);
-            }
-            AnchorPane.setTopAnchor(contenedorHBox2, 0.0);
-            AnchorPane.setRightAnchor(contenedorHBox2, 0.0);
-            AnchorPane.setBottomAnchor(contenedorHBox2, 0.0);
-            AnchorPane.setLeftAnchor(contenedorHBox2, 0.0);
-        } catch (IOException | NotFoundImage | SQLException | IncorrectDataException | NoSuchAlgorithmException |
-                 InvalidKeySpecException | NullArgumentException | OperationsDBException | NonexistingUser ioe) {
-            showError("Error ", ioe.getMessage());
-        }
-        return contenedorHBox2;
-
-    }
 
     @Override
     public void backFromNotifiersToHome() {
@@ -418,6 +386,16 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     @Override
     public void editAppointment(MedicalAppointment medicalAppointment) {
 
+    }
+    @Override
+    public void searchAppointments(int idPerson, Date date) {
+        try {
+            List<MedicalAppointment> medicalAppointments = connect.searchMedicalAppointments(idPerson,date);
+            AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
+
+        } catch (OperationsDBException e) {
+            showError("Error", e.getMessage());
+        }
     }
 
     /*   ================================================================================================
@@ -481,6 +459,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
             showError("Error en la operaciones", e.getMessage());
         }
     }
+
 
     @Override
     public void fromFirstScreenToHome() {
