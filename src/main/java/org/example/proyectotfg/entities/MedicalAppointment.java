@@ -11,7 +11,7 @@ public class MedicalAppointment {
     private NormalUser usuario;
     private Date visitDate;
     private Notificators notificator;
-
+    public final static  int MAX_APPOINTMENTS = 6;
     public MedicalAppointment(int idCita, ProfessionalUser psicologo, NormalUser usuario, Date visitDate, Notificators notificator) {
         this.idCita = idCita;
         this.psicologo = psicologo;
