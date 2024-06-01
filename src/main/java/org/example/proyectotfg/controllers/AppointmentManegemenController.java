@@ -87,6 +87,11 @@ public class AppointmentManegemenController implements ViewController {
         Parent professionalUserBox = mediatorNotifiers.loadProfessionalsInMediatorCalendar();
         professionalsList.setContent(professionalUserBox);
     }
+
+    public void loadAvailableAppointments(List<MedicalAppointment> medicalAppointments) {
+        Parent availableAppointments=mediatorNotifiers.loadAvailableAppointmentsInCalendar(medicalAppointments);
+        availableAppointmentsList.getChildren().add(availableAppointments);
+    }
    /* private HBox loadProfessionalsInMediatorCalendar() {
         HBox contenedorHBox2 = new HBox(6);
         try {
@@ -109,7 +114,7 @@ public class AppointmentManegemenController implements ViewController {
                         ((MainController) mediatorNotifiers).showError("Error", "Tienes que seleccionar una" +
                                 " fecha antes de continuar);");
                     } else {
-                        Date date = Date.valueOf(localDate);
+                        Date date = Da.valueOf(localDate);
                         mediatorNotifiers.searchAppointments(us.getIdPerson(), date);
                     }
                 });
@@ -125,8 +130,7 @@ public class AppointmentManegemenController implements ViewController {
             ((MainController) mediatorNotifiers).showError("Error ", ioe.getMessage());
         }
         return contenedorHBox2;
-    }
-*/
+    }*/
      void chargeInInterfazCites(List<MedicalAppointment> list){
         if(list.size()>=6){
             ((MainController) mediatorNotifiers).showInfo("Error ", "No quedan citas disponibles para la fecha elegida");

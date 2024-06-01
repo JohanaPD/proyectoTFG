@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import org.example.proyectotfg.entities.MedicalAppointment;
 
 import java.util.Date;
+import java.util.List;
 
 public interface MediatorNotifiers {
 
@@ -16,4 +17,5 @@ public interface MediatorNotifiers {
     void searchAppointments(int idPerson, Date date);
 
     Parent loadProfessionalsInMediatorCalendar();
+    Parent loadAvailableAppointmentsInCalendar(List<MedicalAppointment> medicalAppointments);
 }

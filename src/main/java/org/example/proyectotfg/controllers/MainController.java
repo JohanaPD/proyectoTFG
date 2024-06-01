@@ -26,6 +26,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -384,16 +385,18 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 controller.setData(String.valueOf(us.getNames()), String.valueOf(imagePath));
                 //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
                 controller.setCallback(() -> {
+
                     //como lo puedo pasar al callback
                     AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
-
-                    Date localDate = null;
+                    LocalDate localDate = appointmentManegemenController.getDatePicker().getValue();
                     //llama al metodo que verifica las citas??
-                    searchAppointments(us.getIdPerson(), localDate);
                     if (localDate == null) {
                         showError("Error", "Tienes que seleccionar una" +
                                 " fecha antes de continuar);");
                     } else {
+                        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                        searchAppointments(us.getIdPerson(), date);
+
                         //Date date = Date.valueOf(Date);
                         //searchAppointments(us.getIdPerson(), date);
                     }
@@ -411,6 +414,11 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
         return contenedorHBox2;
 
+    }
+
+    @Override
+    public Parent loadAvailableAppointmentsInCalendar(List<MedicalAppointment> medicalAppointments) {
+        return null;
     }
 
     public void loadAvailableAppointments(Person person, ProfessionalUser us, Date localDate) {
@@ -472,7 +480,7 @@ el metodo debe pintar con los fragment las citas disponibles*/
         try {
             List<MedicalAppointment> medicalAppointments = connect.searchMedicalAppointments(idPerson, date);
             AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
-
+            appointmentManegemenController.loadAvailableAppointments(medicalAppointments);
         } catch (OperationsDBException e) {
             showError("Error", e.getMessage());
         } catch (IncorrectDataException | NoSuchAlgorithmException |
