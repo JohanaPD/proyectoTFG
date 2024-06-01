@@ -20,6 +20,10 @@ public class MedicalAppointment {
         this.notificator = notificator;
     }
 
+    public MedicalAppointment() {
+
+    }
+
     // Getters y Setters
     public int getIdCita() {
         return idCita;

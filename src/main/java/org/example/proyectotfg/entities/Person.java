@@ -35,7 +35,8 @@ public abstract class Person {
     }
 
     //Constructor para el registro
-    public Person(String names, String lastNames, String passScript, Date birthDate, Date registrationDate, String email, TypeUser typeUser, Direction direction) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public Person(String names, String lastNames, String passScript, Date birthDate,
+                  Date registrationDate, String email, TypeUser typeUser, Direction direction) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         setNames(names);
         setLastNames(lastNames);
         setPassScript(passScript);
@@ -49,7 +50,9 @@ public abstract class Person {
     }
 
     //entra aquí
-    public Person(int idPerson, String names, String lastNames, String passScript, Date birthDate, Date registrationDate, String email, TypeUser typeUser, StatesUser state, Direction direction, Date lastActivityDate) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public Person(int idPerson, String names, String lastNames, String passScript, Date birthDate,
+                  Date registrationDate, String email, TypeUser typeUser, StatesUser state,
+                  Direction direction, Date lastActivityDate) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         setIdPerson(idPerson);
         setNames(names);
         setLastNames(lastNames);
@@ -64,7 +67,8 @@ public abstract class Person {
         setState(StatesUser.NOT_VERIFIED);
     }
 
-    public Person(String names, String lastNames, Date birthd, String mail, TypeUser tipeUs, Direction nueva) throws IncorrectDataException, NullArgumentException {
+    public Person(String names, String lastNames, Date birthd, String mail, TypeUser tipeUs,
+                  Direction nueva) throws IncorrectDataException, NullArgumentException {
         setNames(names);
         setLastNames(lastNames);
         setBirthDate(birthDate);
@@ -81,7 +85,8 @@ public abstract class Person {
         setDirection(nueva);
     }
 
-    public Person(String names, String lastNames, String passScript, String mail, TypeUser type, Direction nueva) throws NullArgumentException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public Person(String names, String lastNames, String passScript, String mail, TypeUser type,
+                  Direction nueva) throws NullArgumentException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException {
         setNames(names);
         setLastNames(lastNames);
         setPassScript(passScript);
@@ -90,7 +95,8 @@ public abstract class Person {
         setDirection(nueva);
     }
 
-    public Person(int id, String names, String lastNames, String passScript, String mail, TypeUser type, Direction nueva) throws NullArgumentException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public Person(int id, String names, String lastNames, String passScript, String mail,
+                  TypeUser type, Direction nueva) throws NullArgumentException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException {
         setIdPerson(id);
         setNames(names);
         setLastNames(lastNames);
@@ -108,7 +114,8 @@ public abstract class Person {
         setDirection(direction);
     }
 
-    public Person(int idPerson, String names, String lastNames, String mail, Direction direction, TypeUser typeUser) throws IncorrectDataException, NullArgumentException {
+    public Person(int idPerson, String names, String lastNames, String mail, Direction direction,
+                  TypeUser typeUser) throws IncorrectDataException, NullArgumentException {
         setIdPerson(idPerson);
         setNames(names);
         setLastNames(lastNames);
@@ -117,7 +124,8 @@ public abstract class Person {
         setTypeUser(typeUser);
     }
 
-    public Person(int idPerson, String names, String lastNames, String pass, String mail, Direction direction) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public Person(int idPerson, String names, String lastNames, String pass, String mail,
+                  Direction direction) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         setIdPerson(idPerson);
         setNames(names);
         setLastNames(lastNames);
@@ -126,7 +134,8 @@ public abstract class Person {
         setDirection(direction);
     }
 
-    public Person(int idPerson, String names, String lastNames, String pass, String mail, Direction direction, TypeUser type) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public Person(int idPerson, String names, String lastNames, String pass, String mail,
+                  Direction direction, TypeUser type) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         setIdPerson(idPerson);
         setNames(names);
         setLastNames(lastNames);

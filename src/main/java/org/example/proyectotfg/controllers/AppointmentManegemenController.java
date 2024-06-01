@@ -12,10 +12,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import org.example.proyectotfg.DAO.SqliteConnector;
+import org.example.proyectotfg.entities.MedicalAppointment;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
 import org.example.proyectotfg.exceptions.*;
-import org.example.proyectotfg.mediators.Callback;
+import org.example.proyectotfg.functions.FunctionsApp;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorNotifiers;
 import org.example.proyectotfg.mediators.ViewController;
@@ -25,6 +26,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -50,6 +53,23 @@ public class AppointmentManegemenController implements ViewController {
 
     private MediatorNotifiers mediatorNotifiers;
     private Person person;
+    java.util.Date[] times;
+
+    {
+        try {
+            times = FunctionsApp.fillArray(6);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public DatePicker getDatePicker() {
+        return datePicker;
+    }
+
+    public void setDatePicker(DatePicker datePicker) {
+      //  this.datePicker = datePicker;
+    }
 
     public Person getPerson() {
         return person;
@@ -64,10 +84,10 @@ public class AppointmentManegemenController implements ViewController {
     }
 
     public void loadProfessionals() {
-        Parent professionalUserBox = loadProfessionalsInMediatorCalendar();
+        Parent professionalUserBox = mediatorNotifiers.loadProfessionalsInMediatorCalendar();
         professionalsList.setContent(professionalUserBox);
     }
-    private HBox loadProfessionalsInMediatorCalendar() {
+   /* private HBox loadProfessionalsInMediatorCalendar() {
         HBox contenedorHBox2 = new HBox(6);
         try {
             List<ProfessionalUser> professionalUsers = SqliteConnector.getProfesionales();
@@ -106,6 +126,30 @@ public class AppointmentManegemenController implements ViewController {
         }
         return contenedorHBox2;
     }
+*/
+     void chargeInInterfazCites(List<MedicalAppointment> list){
+        if(list.size()>=6){
+            ((MainController) mediatorNotifiers).showInfo("Error ", "No quedan citas disponibles para la fecha elegida");
+        } else if (list.isEmpty()) {
+            //todo: pinta todos los dias
+        } else if (list.size()>0 && list.size()<=5) {
+            for (int i = 0; i < list.size() ; i++) {
+                if(list.get(i)!=null){
+                SimpleDateFormat format= new SimpleDateFormat("HH:mm:ss");
+                String hora= format.format(list.get(i).getVisitDate().getTime());
+               if( !hora.equals(times)){
+                   //todo: pinta las horas disponibles
+               }
+                }else{
+                    //todo: revisa
+                }
+            }
+
+
+
+
+        }
+     };
 
     @Override
     public void setMediator(Mediator mediador) {

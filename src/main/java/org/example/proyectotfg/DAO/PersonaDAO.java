@@ -36,5 +36,7 @@ public interface PersonaDAO {
 
     boolean addProfesionalUserInFavorites(ProfessionalUser professionalUser, Person person) throws OperationsDBException, NonexistingUser, DuplicateKeyException;
 
-    List<MedicalAppointment> searchMedicalAppointments(int id, Date date) throws OperationsDBException;
+
+    List<MedicalAppointment> searchMedicalAppointments(int id, Date date) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException;
+    boolean insertMedicalAppointments(int id_professional, int id_normal_user, Date date, String notification) throws OperationsDBException;
 }

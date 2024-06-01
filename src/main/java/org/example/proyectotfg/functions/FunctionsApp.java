@@ -10,11 +10,15 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class FunctionsApp {
 
@@ -129,4 +133,25 @@ public class FunctionsApp {
         return htmlPasswordRecoverString;
     }
 
+    public static Date[] fillArray(int max_values) throws ParseException {
+        Date[] fillArray = new Date[max_values];
+
+        try {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+            List<Date> timesList = new ArrayList<>();
+            for (int hour = 10; hour <= 18; hour++) {
+                if (hour >= 14 && hour < 16) {
+                    continue; // Saltar horas de 14:00 a 16:00
+                }
+                String timeString = String.format("%02d:00:00", hour);
+                timesList.add(dateFormat.parse(timeString));
+            }
+            fillArray = timesList.toArray(new Date[0]);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return fillArray;
+    }
 }

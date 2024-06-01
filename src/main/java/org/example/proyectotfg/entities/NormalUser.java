@@ -17,25 +17,32 @@ public class NormalUser extends Person {
     private boolean inTherapySession;
 
     //entra aqui
-    public NormalUser(int id, String nombres, String apellidos, String scrippPass, java.sql.Date birrth, java.sql.Date registration, String email, TypeUser type, StatesUser state, Direction direction, java.sql.Date lastActivity, String nickname) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
+    public NormalUser(int id, String nombres, String apellidos, String scrippPass, Date birrth,
+                      Date registration, String email, TypeUser type, StatesUser state, Direction direction,
+                      Date lastActivity, String nickname) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
         super(id, nombres, apellidos, scrippPass, birrth, registration, email, type, state, direction, lastActivity);
         setNickname(nickname);
         setInTherapySession(false);
     }
 
-    public NormalUser(String names, String lastNames, String passScript, Date birthday, Date registrationDate, String email, TypeUser typeUser, Direction direction) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public NormalUser(String names, String lastNames, String passScript, Date birthday,
+                      Date registrationDate, String email, TypeUser typeUser, Direction direction) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         super(names, lastNames, passScript, birthday, registrationDate, email, typeUser, direction);
         this.inTherapySession = false;
     }
 
-    public NormalUser(int idPerson, String names, String lastNames, String passScript, Date birthday, Date registrationDate, String email, TypeUser typeUser, StatesUser state, Direction direction, Date lastActivityDate, String nickname, boolean inTherapySession) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public NormalUser(int idPerson, String names, String lastNames, String passScript, Date birthday, Date registrationDate,
+                      String email, TypeUser typeUser, StatesUser state, Direction direction,
+                      Date lastActivityDate, String nickname, boolean inTherapySession) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         super(idPerson, names, lastNames, passScript, birthday, registrationDate, email, typeUser, state, direction, lastActivityDate);
         setNickname(nickname);
         setInTherapySession(inTherapySession);
     }
 
     //constructor for test
-    public NormalUser(int idPerson, String names, String lastNames, String passScript, Date birthDate, Date registrationDate, String email, TypeUser typeUser, StatesUser state, Direction direction, Date lastActivityDate) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public NormalUser(int idPerson, String names, String lastNames, String passScript, Date birthDate,
+                      Date registrationDate, String email, TypeUser typeUser, StatesUser state,
+                      Direction direction, Date lastActivityDate) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
         super(idPerson, names, lastNames, passScript, birthDate, registrationDate, email, typeUser, state, direction, lastActivityDate);
     }
 

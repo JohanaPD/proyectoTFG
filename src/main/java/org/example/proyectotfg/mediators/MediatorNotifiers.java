@@ -14,4 +14,6 @@ public interface MediatorNotifiers {
     void editAppointment(MedicalAppointment medicalAppointment);
 
     void searchAppointments(int idPerson, Date date);
+
+    Parent loadProfessionalsInMediatorCalendar();
 }

@@ -1,13 +1,11 @@
 package org.example.proyectotfg.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -27,6 +25,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -367,6 +366,86 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
+    @Override
+    public Parent loadProfessionalsInMediatorCalendar() {
+        HBox contenedorHBox2 = new HBox(6);
+        try {
+            List<ProfessionalUser> professionalUsers = SqliteConnector.getProfesionales();
+            contenedorHBox2.setAlignment(Pos.CENTER);
+            contenedorHBox2.setMaxWidth(100);
+            contenedorHBox2.setMaxHeight(130);
+            int imageIndex = 1;
+            int totalImages = 6;
+            for (ProfessionalUser us : professionalUsers) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-services-view.fxml"));
+                Node fragment = fxmlLoader.load();
+                ControllerFragmentServicios controller = fxmlLoader.getController();
+                String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", imageIndex);
+                controller.setData(String.valueOf(us.getNames()), String.valueOf(imagePath));
+                //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
+                controller.setCallback(() -> {
+                    //como lo puedo pasar al callback
+                    AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
+
+                    Date localDate = null;
+                    //llama al metodo que verifica las citas??
+                    searchAppointments(us.getIdPerson(), localDate);
+                    if (localDate == null) {
+                        showError("Error", "Tienes que seleccionar una" +
+                                " fecha antes de continuar);");
+                    } else {
+                        //Date date = Date.valueOf(Date);
+                        //searchAppointments(us.getIdPerson(), date);
+                    }
+                });
+                imageIndex = (imageIndex % totalImages) + 1;
+                contenedorHBox2.getChildren().add(fragment);
+            }
+            AnchorPane.setTopAnchor(contenedorHBox2, 0.0);
+            AnchorPane.setRightAnchor(contenedorHBox2, 0.0);
+            AnchorPane.setBottomAnchor(contenedorHBox2, 0.0);
+            AnchorPane.setLeftAnchor(contenedorHBox2, 0.0);
+        } catch (IOException | NotFoundImage | SQLException | IncorrectDataException | NoSuchAlgorithmException |
+                 InvalidKeySpecException | NullArgumentException | OperationsDBException | NonexistingUser ioe) {
+            showError("Error ", ioe.getMessage());
+        }
+        return contenedorHBox2;
+
+    }
+
+    public void loadAvailableAppointments(Person person, ProfessionalUser us, Date localDate) {
+        /*
+        primero,  la consulta que llama a las citas  necesita los id del profesional y el usuario y la fecha
+
+el metodo debe devolver la lista de citas de ese profesional ese día*/
+        try {
+            List<MedicalAppointment> medicalAppointments=connect.searchMedicalAppointments(us.getIdPerson(), localDate);
+        } catch (OperationsDBException e) {
+            throw new RuntimeException(e);
+        } catch (IncorrectDataException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeySpecException e) {
+            throw new RuntimeException(e);
+        } catch (NullArgumentException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        /*
+
+el metodo en el main  debe llamar al metodo anterior y recibir la lista,
+si el count de elementos es igual a 6 debe devolver mensaje que no hay citas disponibles para ese dia,
+si es inferior a 6 pero mayor que 0, debe comparar las citas normales que ofrece un profesional en un día, los horarios habilitados,
+comparar con la lista y sacar otra list con los disponibles
+
+si el count de la lista es igual a 0, debe devolver todas las citas
+
+el metodo debe pintar con los fragment las citas disponibles*/
+
+
+    }
 
     @Override
     public void backFromNotifiersToHome() {
@@ -387,16 +466,21 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     public void editAppointment(MedicalAppointment medicalAppointment) {
 
     }
+
     @Override
     public void searchAppointments(int idPerson, Date date) {
         try {
-            List<MedicalAppointment> medicalAppointments = connect.searchMedicalAppointments(idPerson,date);
+            List<MedicalAppointment> medicalAppointments = connect.searchMedicalAppointments(idPerson, date);
             AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
 
         } catch (OperationsDBException e) {
             showError("Error", e.getMessage());
+        } catch (IncorrectDataException | NoSuchAlgorithmException |
+                 InvalidKeySpecException | NullArgumentException ex) {
+            showError("Error", ex.getMessage());
         }
     }
+
 
     /*   ================================================================================================
       ====================================== Update Data =====================================================*/

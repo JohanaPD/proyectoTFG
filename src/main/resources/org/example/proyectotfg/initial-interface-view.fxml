@@ -104,7 +104,7 @@
             <children>
                 <ScrollPane fx:id="containerProfessionalsList" layoutY="1.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="188.0" prefWidth="362.0" styleClass="scrollpanePsico" stylesheets="@styles.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                <padding>
-                  <Insets top="20.0" />
+                  <Insets top="5.0" />
                </padding>
                 </ScrollPane>
             </children>
