@@ -25,7 +25,7 @@ class SqliteConnectorTest {
     private SqliteConnector sqliteConnector;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws OperationsDBException {
         try {
             sqliteConnector = new SqliteConnector();
         } catch (SQLException e) {

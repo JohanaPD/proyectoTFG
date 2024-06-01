@@ -9,6 +9,8 @@ module org.example.proyectotfg {
     requires java.desktop;
     requires com.jfoenix;
     requires ant;
+    requires firebase.admin;
+    requires com.google.auth.oauth2;
     // requires javax.mail.api;
 
 

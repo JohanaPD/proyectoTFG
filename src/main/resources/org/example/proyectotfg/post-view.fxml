@@ -8,7 +8,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.Label?>
 <VBox alignment="TOP_CENTER" prefHeight="700.0" prefWidth="410.0" spacing="10" styleClass="main-vbox" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.ControllerPost">
     <children>
         <VBox fx:id="contenedorResultados" styleClass="results-container" VBox.vgrow="ALWAYS">
@@ -21,7 +20,7 @@
             </children>
         </VBox>
     </children>
-    <ScrollPane fx:id="mainContainer" prefHeight="574.0" prefWidth="370.0">
+    <ScrollPane fx:id="mainContainer" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="574.0" prefWidth="370.0">
       <padding>
          <Insets left="5.0" right="5.0" />
       </padding></ScrollPane>

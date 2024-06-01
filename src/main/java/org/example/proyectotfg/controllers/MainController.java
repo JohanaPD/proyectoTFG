@@ -1,11 +1,13 @@
 package org.example.proyectotfg.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -15,6 +17,7 @@ import org.example.proyectotfg.DAO.SqliteConnector;
 import org.example.proyectotfg.entities.*;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
 import org.example.proyectotfg.exceptions.*;
+//import org.example.proyectotfg.functions.FirebaseInitializer;
 import org.example.proyectotfg.functions.FunctionsApp;
 import org.example.proyectotfg.functions.SenderReaderMail;
 import org.example.proyectotfg.mediators.*;
@@ -36,7 +39,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     Person person;
     String passWordApp = "j v g l r d n k f x kw m s b e";
 
-    public MainController(Stage mainStage) {
+    public MainController(Stage mainStage) throws IOException {
         try {
             connect = new SqliteConnector();
             this.mainStage = mainStage;
@@ -45,6 +48,8 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
             showError("Error", e.getMessage());
         }
     }
+
+
 
     /*   ================================================================================================
         ======================================vistas principales =====================================================*/
@@ -378,6 +383,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", imageIndex);
                 controller.setData(String.valueOf(us.getNames()), String.valueOf(imagePath));
                 int finalImageIndex = imageIndex;
+                //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
                 controller.setCallback(() -> MainController.this.openProfessionalUser(us, finalImageIndex));
                 imageIndex = (imageIndex % totalImages) + 1;
                 contenedorHBox2.getChildren().add(fragment);

@@ -6,15 +6,12 @@ import java.util.Date;
 
 public class MedicalAppointment {
     // que notificaciones vamos a enviar... serán enum? son unas para usuario profesional y otras para profesional
-
-
     private int idCita;
     private ProfessionalUser psicologo;
     private NormalUser usuario;
     private Date visitDate;
     private Notificators notificator;
 
-    // Constructor
     public MedicalAppointment(int idCita, ProfessionalUser psicologo, NormalUser usuario, Date visitDate, Notificators notificator) {
         this.idCita = idCita;
         this.psicologo = psicologo;
@@ -63,7 +60,6 @@ public class MedicalAppointment {
     public void setNotificator(Notificators notificator) {
         this.notificator = notificator;
     }
-
 
 }
 

@@ -14,9 +14,9 @@
     <children>
         <VBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="347.0">
             <children>
-                <HBox id="fragmentSearch" maxWidth="-Infinity" minWidth="-Infinity" mouseTransparent="true" onDragDetected="#addToFavorites" onMouseClicked="#addToFavorites" prefHeight="178.0" prefWidth="345.0" stylesheets="@styles.css">
+                <HBox id="fragmentSearch" maxWidth="-Infinity" minWidth="-Infinity" mouseTransparent="true" onMouseClicked="#addToFavorites" prefHeight="178.0" prefWidth="345.0" stylesheets="@styles.css">
                     <children>
-                        <VBox alignment="CENTER" prefHeight="212.0" prefWidth="100.0">
+                        <VBox alignment="CENTER" prefHeight="170.0" prefWidth="86.0">
                             <children>
                                 <ImageView fx:id="idImagen" fitHeight="104.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -45,7 +45,7 @@
                                 </Text>
                             </children>
                         </VBox>
-                  <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="158.0" prefWidth="70.0">
+                  <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="154.0" prefWidth="70.0">
                      <children>
                         <Button alignment="CENTER" mnemonicParsing="false" onAction="#addToFavorites" prefHeight="40.0" prefWidth="58.0">
                            <graphic>
@@ -55,15 +55,10 @@
                                  </image>
                               </ImageView>
                            </graphic>
-                        </Button>
-                        <ImageView fitHeight="49.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@img/paciente.png" />
-                           </image>
                            <VBox.margin>
-                              <Insets bottom="10.0" top="10.0" />
+                              <Insets bottom="20.0" />
                            </VBox.margin>
-                        </ImageView>
+                        </Button>
                         <Text id="nombreMedico" fx:id="valoraciones1" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="98.37298583984375">
                            <font>
                               <Font size="16.0" />
@@ -75,9 +70,6 @@
                      </children>
                   </VBox>
                     </children>
-                    <padding>
-                        <Insets top="20.0" />
-                    </padding>
                 </HBox>
             </children>
         </VBox>

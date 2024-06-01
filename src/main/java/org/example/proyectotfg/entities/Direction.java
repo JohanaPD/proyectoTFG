@@ -45,7 +45,7 @@ public class Direction {
 
     public void setStreet(String street) throws NullArgumentException, IncorrectDataException {
         if (street != null) {
-            street = street.trim(); // Eliminar espacios en blanco al principio y al final
+            street = street.trim();
             if (VerificatorSetter.stringVerificatorletterAndNumbers(street, street.length())) {
                 this.street = street;
             } else {
