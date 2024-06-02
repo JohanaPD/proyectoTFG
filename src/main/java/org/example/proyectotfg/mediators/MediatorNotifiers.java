@@ -27,5 +27,5 @@ public interface MediatorNotifiers {
 
     Parent loadNotAvailableAppointmentsInCalendar(List<MedicalAppointment> medicalAppointments);
 
-    Parent myNextAppoinments(List<MedicalAppointment> medicalAppointments);
+    Parent myNextAppoinments();
 }

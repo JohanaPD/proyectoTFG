@@ -358,12 +358,14 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     @Override
     public void openAppointmentView() {
         try {
-            mainStage.setTitle("Te esperamos pronto!!");
+            mainStage.setTitle("Gestor de citas");
             loadView("/org/example/proyectotfg/appointment-manegement-view.fxml");
             AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
             appointmentManegemenController.setPerson(person);
             appointmentManegemenController.setTitlePost(person.getNames());
             appointmentManegemenController.loadProfessionals();
+            appointmentManegemenController.loadMyAppointments();
+
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
@@ -452,7 +454,42 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     }
 
     @Override
-    public Parent myNextAppoinments(List<MedicalAppointment> medicalAppointmentsAvailable) {
+    public Parent myNextAppoinments() {
+        HBox contenedorHBox2 = new HBox(6);
+
+        try {
+            List<MedicalAppointment> medicalAppointments = connect.searchMyAppointments(person);
+
+                for (MedicalAppointment medicalAppointment : medicalAppointments) {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-appointment-hours-view.fxml"));
+                    Node fragment = fxmlLoader.load();
+                    ControllerFragmentApoinmentHours controller = fxmlLoader.getController();
+                    //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(medicalAppointment.getVisitDate());
+                    int hours = calendar.get(Calendar.HOUR_OF_DAY); // Hora en formato 24 horas
+                    int minutes = calendar.get(Calendar.MINUTE);
+                    SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy");
+                    String date = simpleDateFormat.format(calendar.getTime());
+                    controller.setDataAppointment(date);
+                    String stringHours = String.valueOf(hours).length() == 1 ? hours + "0" : String.valueOf(hours);
+                    String stringMinutes = String.valueOf(minutes).length() == 1 ? minutes + "0" : String.valueOf(minutes);
+                    controller.setHourText(stringHours);
+                    controller.setMinuteText(stringMinutes);
+                    controller.setCallback(() -> {
+                        AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
+                        controllerAppointment.setAppointmentDate(medicalAppointment.getVisitDate());
+                        controllerAppointment.setTextConfirm("Hora de cita seleccionada: " + stringHours + ":" + stringMinutes);
+                    });
+                    contenedorHBox2.getChildren().add(fragment);
+                }
+
+
+        } catch (IncorrectDataException | NoSuchAlgorithmException | InvalidKeySpecException | NullArgumentException |
+                 OperationsDBException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        return contenedorHBox2;
         /*
         primero,  la consulta que llama a las citas  necesita los id del profesional y el usuario y la fecha
 
@@ -466,7 +503,6 @@ si el count de la lista es igual a 0, debe devolver todas las citas
 
 el metodo debe pintar con los fragment las citas disponibles*/
 
-        return null;
     }
 
     @Override

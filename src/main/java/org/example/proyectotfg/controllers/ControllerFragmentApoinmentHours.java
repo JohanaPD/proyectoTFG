@@ -38,6 +38,10 @@ public class ControllerFragmentApoinmentHours {
         this.minuteText.setText(minuteText);
     }
 
+    public void setDataAppointment(String date) {
+        dataAppointment.setText(date);
+    }
+
     public void confirmar(ActionEvent actionEvent) {
         callback.doAction();
     }
