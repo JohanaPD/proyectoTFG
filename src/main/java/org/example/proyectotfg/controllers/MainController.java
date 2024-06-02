@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.proyectotfg.DAO.SqliteConnector;
 import org.example.proyectotfg.entities.*;
+import org.example.proyectotfg.enumAndTypes.Notificators;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
 import org.example.proyectotfg.exceptions.*;
 //import org.example.proyectotfg.functions.FirebaseInitializer;
@@ -30,7 +31,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
-import static org.example.proyectotfg.entities.MedicalAppointment.MAX_APPOINTMENTS;
 import static org.example.proyectotfg.entities.MedicalAppointment.TIMES;
 
 public class MainController implements Mediator, MediatorAccess, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction, MediatorNotifiers {
@@ -385,10 +385,12 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 ControllerFragmentServicios controller = fxmlLoader.getController();
                 String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", imageIndex);
                 controller.setData(String.valueOf(us.getNames()), String.valueOf(imagePath));
+
                 //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
                 controller.setCallback(() -> {
                     //como lo puedo pasar al callback
                     AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
+                    appointmentManegemenController.setProfessionalUser(us);
                     LocalDate localDate = appointmentManegemenController.getDatePicker().getValue();
                     //llama al metodo que verifica las citas??
                     if (localDate == null) {
@@ -422,16 +424,17 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 Node fragment = fxmlLoader.load();
                 ControllerFragmentApoinmentHours controller = fxmlLoader.getController();
                 //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                int hours = calendar.get(Calendar.HOUR_OF_DAY); // Hora en formato 24 horas
+                int minutes = calendar.get(Calendar.MINUTE);
+                String stringHours = String.valueOf(hours).length() == 1 ? hours + "0" : String.valueOf(hours);
+                String stringMinutes = String.valueOf(minutes).length() == 1 ? minutes + "0" : String.valueOf(minutes);
+                controller.setHourText(stringHours);
+                controller.setMinuteText(stringMinutes);
                 controller.setCallback(() -> {
                     AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
-                    // Usar Calendar para obtener horas y minutos
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(date);
-
-                    int hours = calendar.get(Calendar.HOUR_OF_DAY); // Hora en formato 24 horas
-                    int minutes = calendar.get(Calendar.MINUTE);
-                    String stringHours = String.valueOf(hours).length() == 1 ? hours + "0" : String.valueOf(hours);
-                    String stringMinutes = String.valueOf(minutes).length() == 1 ? minutes + "0" : String.valueOf(minutes);
+                    controllerAppointment.setAppointmentDate(date);
                     controllerAppointment.setTextConfirm("Hora de cita seleccionada: " + stringHours + ":" + stringMinutes);
                 });
                 contenedorHBox2.getChildren().add(fragment);
@@ -477,8 +480,16 @@ el metodo debe pintar con los fragment las citas disponibles*/
     }
 
     @Override
-    public void addAppointment(MedicalAppointment medicalAppointment) throws OperationsDBException {
-        connect.insertMedicalAppointments(medicalAppointment.getPsicologo().getIdPerson(), person.getIdPerson(), medicalAppointment.getVisitDate(), String.valueOf(medicalAppointment.getNotificator()));
+    public void addAppointment(ProfessionalUser professionalUser, Date date) {
+       try {
+           MedicalAppointment medicalAppointment = new MedicalAppointment(professionalUser, (NormalUser) person, date, Notificators.CITACREADA);
+           boolean insert=connect.insertMedicalAppointments(medicalAppointment);
+           if (insert) {
+               showInfo("Cita creada", "Su cita ha sido creada correctamente");
+           }
+       } catch (OperationsDBException e) {
+           showError("Error", e.getMessage());
+       }
     }
 
     @Override

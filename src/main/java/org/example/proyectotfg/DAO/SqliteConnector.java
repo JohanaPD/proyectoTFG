@@ -849,26 +849,25 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
 
     @Override
-    public boolean insertMedicalAppointments(int id_professional, int id_normal_user, Date date, String notification) throws OperationsDBException {
+    public boolean insertMedicalAppointments(MedicalAppointment medicalAppointment) throws OperationsDBException {
         boolean existe = false;
-        boolean thereIsQuote = thereIsAQuote(id_professional, date);
+   /*     boolean thereIsQuote = thereIsAQuote(medicalAppointment.getIdCita(), medicalAppointment.getVisitDate());
         if(!thereIsQuote) {
             System.out.println("No existen datos");
-        }
+        }*/
         String consulta = "INSERT INTO medical_appointment(id_professional, id_normal_user, visit_date, notification) VALUES(?,?,?,?)  ";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
-            preparetStmt.setInt(1, id_professional);
-            preparetStmt.setInt(2, id_normal_user);
-            preparetStmt.setObject(3, new Date(date.getTime()));
-            preparetStmt.setString(4, notification);
-
+            preparetStmt.setInt(1, medicalAppointment.getPsicologo().getIdPerson());
+            preparetStmt.setInt(2, medicalAppointment.getUsuario().getIdPerson());
+            preparetStmt.setObject(3, new Date(medicalAppointment.getVisitDate().getTime()));
+            preparetStmt.setString(4, String.valueOf(medicalAppointment.getNotificator()));
             int affectedRows = preparetStmt.executeUpdate();
             if (affectedRows > 0) {
                 existe = true;
             }
         } catch (SQLException e) {
-            throw new OperationsDBException(e.getMessage());
+            throw new OperationsDBException("Error a la hora de crear una cita");
         }
         return existe;
     }
