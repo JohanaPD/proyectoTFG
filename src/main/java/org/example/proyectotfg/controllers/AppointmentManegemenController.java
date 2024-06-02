@@ -59,7 +59,6 @@ public class AppointmentManegemenController implements ViewController {
     }
 
 
-
     public void setTextConfirm(String text) {
         textConfirm.setText(text);
     }
@@ -89,6 +88,7 @@ public class AppointmentManegemenController implements ViewController {
     void editAppoinment(ActionEvent event) {
 
     }
+
     @FXML
     void saveAppoinment(ActionEvent event) {
 

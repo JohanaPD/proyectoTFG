@@ -73,7 +73,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             stmt.executeUpdate(favoritesProfesional);
 
         } catch (SQLException e) {
-            throw  new OperationsDBException("Error al generar la base de Datos");
+            throw new OperationsDBException("Error al generar la base de Datos");
         }
     }
 
@@ -413,6 +413,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return usuarios;
     }
+
     @Override
     public Person registerPerson(Person person) throws OperationsDBException, DuplicateKeyException {
         Direction direction = registerDirection(person.getDirection());
@@ -426,11 +427,11 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                     preparedStatement.setString(2, person.getLastNames());
                     preparedStatement.setString(3, person.getPassScript());
                     preparedStatement.setObject(4, new Date(person.getBirthDate().getTime()));
-                    preparedStatement.setObject(5,  new Date(person.getRegistrationDate().getTime()));
+                    preparedStatement.setObject(5, new Date(person.getRegistrationDate().getTime()));
                     preparedStatement.setString(6, person.getEmail());
                     preparedStatement.setString(7, String.valueOf(person.getTypeUser()));
                     preparedStatement.setString(8, String.valueOf(person.getState()));
-                    preparedStatement.setObject(9,  new Date(person.getLastActivityDate().getTime()));
+                    preparedStatement.setObject(9, new Date(person.getLastActivityDate().getTime()));
                     preparedStatement.setInt(10, person.getDireccion().getIdDireccion());
                     preparedStatement.executeUpdate();
                     ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -448,6 +449,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return person;
     }
+
     @Override
     public void registerProfessionalUser(ProfessionalUser professionalUser, boolean update) throws OperationsDBException, DuplicateKeyException {
         if (!update) {
@@ -484,6 +486,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             throw new OperationsDBException("Se ha producido un error al guardar el usuario normal");
         }
     }
+
     private List<ProfessionalUser> cargarHistorialesParaUsuarios() throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, SQLException, OperationsDBException {
         List<ProfessionalUser> usuariosEs = new ArrayList<>();
         String query2 = "SELECT * FROM person";
@@ -528,9 +531,9 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         return person;
     }
 
-    public  NormalUser searchNormalUserById(int person) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, OperationsDBException {
+    public NormalUser searchNormalUserById(int person) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, OperationsDBException {
         String consulta = "SELECT * FROM normal_user WHERE id_person=?;";
-        NormalUser newNormalUser= new NormalUser();
+        NormalUser newNormalUser = new NormalUser();
         try (PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setInt(1, person);
             ResultSet resultSet = statement.executeQuery();
@@ -540,9 +543,9 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                 int in_terapy = resultSet.getInt("in_therapy_session");
                 newNormalUser.setIdPerson(id_person);
                 newNormalUser.setNickname(nickname);
-                if(in_terapy==0) {
+                if (in_terapy == 0) {
                     newNormalUser.setInTherapySession(false);
-                }else{
+                } else {
                     newNormalUser.setInTherapySession(true);
                 }
             }
@@ -703,7 +706,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             updatePersonStmt.executeUpdate();
             updateDirectionStmt.executeUpdate();
             if (chargeNormalUserById(nuevo.getIdPerson()) != null) {
-                updateNormalUserStmt.setString(1, nuevo.getNames()+" "+nuevo.getLastNames());
+                updateNormalUserStmt.setString(1, nuevo.getNames() + " " + nuevo.getLastNames());
                 updateNormalUserStmt.setBoolean(2, nuevo.isInTherapySession());
                 updateNormalUserStmt.setInt(3, nuevo.getIdPerson());
                 updateNormalUserStmt.executeUpdate();
@@ -774,7 +777,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             }
         } catch (SQLException e) {
             existe = false;
-           throw new OperationsDBException("Error" + e.getMessage());
+            throw new OperationsDBException("Error" + e.getMessage());
         }
         return existe;
     }
@@ -815,32 +818,30 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
     @Override
     public List<MedicalAppointment> searchMedicalAppointments(int id, Date date) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
-        List<MedicalAppointment> listOfDates= new ArrayList<>();
+        List<MedicalAppointment> listOfDates = new ArrayList<>();
         String consulta = "SELECT * FROM medical_appointment WHERE id_professional = ?  and  visit_date=? ";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
-/*
-            preparetStmt.setObject(1,  date);
-*/
             preparetStmt.setInt(1, id);
-            try(ResultSet resultSet = preparetStmt.executeQuery()) {
+            preparetStmt.setObject(2, new java.sql.Date(date.getTime()));
+            try (ResultSet resultSet = preparetStmt.executeQuery()) {
                 while (resultSet.next()) {
                     int id_appointment = resultSet.getInt("id_appointment");
                     int id_medical = resultSet.getInt("id_professional");
                     int id_user = resultSet.getInt("id_normal_user");
-                    Date visit= resultSet.getDate("visit_date");
-                    String notification= resultSet.getString("notification");
-                    Notificators notificators= Notificators.valueOf(notification);
-                    ProfessionalUser profesionalUser=chargeProfesionalUserById(id_medical);
-                    NormalUser normalUser=searchNormalUserById(id_user);
-                    MedicalAppointment medicalAppointment= new MedicalAppointment(
-                            id_appointment, profesionalUser,normalUser, visit);
+                    Date visit = resultSet.getDate("visit_date");
+                    String notification = resultSet.getString("notification");
+                    Notificators notificators = Notificators.valueOf(notification);
+                    ProfessionalUser profesionalUser = chargeProfesionalUserById(id_medical);
+                    NormalUser normalUser = searchNormalUserById(id_user);
+                    MedicalAppointment medicalAppointment = new MedicalAppointment(
+                            id_appointment, profesionalUser, normalUser, visit);
 
                     listOfDates.add(medicalAppointment);
                 }
             }
         } catch (SQLException e) {
-          throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
+            throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
         }
 
         return listOfDates;
@@ -849,43 +850,68 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
     @Override
     public boolean insertMedicalAppointments(int id_professional, int id_normal_user, Date date, String notification) throws OperationsDBException {
-    boolean existe = false;
-    boolean thereIsQuote= thereIsAQuote( id_professional,  date);
+        boolean existe = false;
+        boolean thereIsQuote = thereIsAQuote(id_professional, date);
+        if(!thereIsQuote) {
+            System.out.println("No existen datos");
+        }
         String consulta = "INSERT INTO medical_appointment(id_professional, id_normal_user, visit_date, notification) VALUES(?,?,?,?)  ";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
-            preparetStmt.setInt(1,  id_professional);
+            preparetStmt.setInt(1, id_professional);
             preparetStmt.setInt(2, id_normal_user);
             preparetStmt.setObject(3, new Date(date.getTime()));
             preparetStmt.setString(4, notification);
 
             int affectedRows = preparetStmt.executeUpdate();
-            if(affectedRows > 0){
-                existe=true;
+            if (affectedRows > 0) {
+                existe = true;
             }
-            } catch (SQLException e) {
-            throw  new OperationsDBException(e.getMessage());
+        } catch (SQLException e) {
+            throw new OperationsDBException(e.getMessage());
         }
         return existe;
     }
 
     public static boolean thereIsAQuote(int idProfesional, Date date) throws OperationsDBException {
         boolean exist = false;
-        String consulta="SELECT * FROM medical_appointment WHERE id_professional = ? AND visit_date = ?";
+        String consulta = "SELECT * FROM medical_appointment WHERE id_professional = ? AND visit_date = ?";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
-            preparetStmt.setInt(1,  idProfesional);
+            preparetStmt.setInt(1, idProfesional);
 
             preparetStmt.setObject(2, new Date(date.getTime()));
 
             int affectedRows = preparetStmt.executeUpdate();
-            if(affectedRows > 0){
-                exist=true;
+            if (affectedRows > 0) {
+                exist = true;
             }
         } catch (SQLException e) {
-            throw  new OperationsDBException(e.getMessage());
+            throw new OperationsDBException(e.getMessage());
         }
         return exist;
+    }
+    @Override
+    public boolean updateMedicalAppointment(int id_appointment, int id_professional, int id_normal_user, Date date, String notification) throws OperationsDBException {
+        boolean updated = false;
+        String consulta = "UPDATE medical_appointment SET id_professional = ?, id_normal_user = ?, visit_date = ?, notification = ? WHERE id_appointment = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
+            preparetStmt.setInt(1, id_professional);
+            preparetStmt.setInt(2, id_normal_user);
+            preparetStmt.setDate(3, new java.sql.Date(date.getTime()));
+            preparetStmt.setString(4, notification);
+            preparetStmt.setInt(5, id_appointment);
+
+            int affectedRows = preparetStmt.executeUpdate();
+            if (affectedRows > 0) {
+                updated = true;
+            }
+        } catch (SQLException e) {
+            throw new OperationsDBException(e.getMessage());
+        }
+        return updated;
     }
 
     public boolean deleteMedicalAppointments(int id_appointment, int id_normal_user, Date date) throws OperationsDBException {
@@ -893,21 +919,21 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         String consulta = "DELETE * FROM medical_appointment WHERE id_appointment = ? AND id_normal_user = ? and visit_date = ? ";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
-            preparetStmt.setInt(1,  id_appointment);
+            preparetStmt.setInt(1, id_appointment);
             preparetStmt.setInt(2, id_normal_user);
             preparetStmt.setObject(3, date);
 
             int affectedRows = preparetStmt.executeUpdate();
-            if(affectedRows > 0){
-                delete=true;
+            if (affectedRows > 0) {
+                delete = true;
             }
         } catch (SQLException e) {
-            throw  new OperationsDBException(e.getMessage());
+            throw new OperationsDBException(e.getMessage());
         }
         return delete;
     }
 
-     @Override
+    @Override
     public void close() throws Exception {
         connection.close();
     }

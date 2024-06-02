@@ -392,8 +392,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                     LocalDate localDate = appointmentManegemenController.getDatePicker().getValue();
                     //llama al metodo que verifica las citas??
                     if (localDate == null) {
-                        showError("Error", "Tienes que seleccionar una" +
-                                " fecha antes de continuar);");
+                        showError("Error", "Tienes que seleccionar una" + " fecha antes de continuar);");
                     } else {
                         Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
                         searchAppointments(us.getIdPerson(), date);
@@ -427,6 +426,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                     AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
                     controllerAppointment.setTextConfirm("Hora de cita seleccionada: " + date);
                 });
+                contenedorHBox2.getChildren().add(fragment);
             }
         } catch (IOException e) {
             showError("Error ", e.getMessage());
@@ -439,7 +439,8 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         HBox contenedorHBox2 = new HBox(6);
         return contenedorHBox2;
     }
-@Override
+
+    @Override
     public Parent myNextAppoinments(List<MedicalAppointment> medicalAppointmentsAvailable) {
         /*
         primero,  la consulta que llama a las citas  necesita los id del profesional y el usuario y la fecha
@@ -454,7 +455,7 @@ si el count de la lista es igual a 0, debe devolver todas las citas
 
 el metodo debe pintar con los fragment las citas disponibles*/
 
-    return null;
+        return null;
     }
 
     @Override
@@ -464,12 +465,12 @@ el metodo debe pintar con los fragment las citas disponibles*/
 
     @Override
     public void deleteAppointment(MedicalAppointment medicalAppointment) throws OperationsDBException {
-            connect.deleteMedicalAppointments(medicalAppointment.getIdCita(), person.getIdPerson(), medicalAppointment.getVisitDate());
+        connect.deleteMedicalAppointments(medicalAppointment.getIdCita(), person.getIdPerson(), medicalAppointment.getVisitDate());
     }
 
     @Override
     public void addAppointment(MedicalAppointment medicalAppointment) throws OperationsDBException {
-            connect.insertMedicalAppointments(medicalAppointment.getPsicologo().getIdPerson(), person.getIdPerson(), medicalAppointment.getVisitDate(), String.valueOf(medicalAppointment.getNotificator()));
+        connect.insertMedicalAppointments(medicalAppointment.getPsicologo().getIdPerson(), person.getIdPerson(), medicalAppointment.getVisitDate(), String.valueOf(medicalAppointment.getNotificator()));
     }
 
     @Override
@@ -487,8 +488,8 @@ el metodo debe pintar con los fragment las citas disponibles*/
             appointmentManegemenController.loadAppointments(availableMedicalAppointments);
         } catch (OperationsDBException e) {
             showError("Error", e.getMessage());
-        } catch (IncorrectDataException | NoSuchAlgorithmException |
-                 InvalidKeySpecException | NullArgumentException ex) {
+        } catch (IncorrectDataException | NoSuchAlgorithmException | InvalidKeySpecException |
+                 NullArgumentException ex) {
             showError("Error", ex.getMessage());
         }
     }
