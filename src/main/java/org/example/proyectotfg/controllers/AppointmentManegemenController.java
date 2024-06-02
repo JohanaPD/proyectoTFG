@@ -36,6 +36,7 @@ public class AppointmentManegemenController implements ViewController {
 
     private MediatorNotifiers mediatorNotifiers;
     private Person person;
+    private Date appointmentDate;
 
 
     public DatePicker getDatePicker() {
@@ -91,7 +92,7 @@ public class AppointmentManegemenController implements ViewController {
 
     @FXML
     void saveAppoinment(ActionEvent event) {
-
+        
     }
 
     @FXML

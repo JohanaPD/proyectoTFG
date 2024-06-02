@@ -48,5 +48,6 @@ public class ControllerFragmentApoinmentHours {
     }
 
     public void confirmar(ActionEvent actionEvent) {
+        callback.doAction();
     }
 }

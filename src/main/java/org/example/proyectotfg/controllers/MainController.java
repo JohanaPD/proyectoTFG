@@ -424,7 +424,15 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
                 controller.setCallback(() -> {
                     AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
-                    controllerAppointment.setTextConfirm("Hora de cita seleccionada: " + date);
+                    // Usar Calendar para obtener horas y minutos
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(date);
+
+                    int hours = calendar.get(Calendar.HOUR_OF_DAY); // Hora en formato 24 horas
+                    int minutes = calendar.get(Calendar.MINUTE);
+                    String stringHours = String.valueOf(hours).length() == 1 ? hours + "0" : String.valueOf(hours);
+                    String stringMinutes = String.valueOf(minutes).length() == 1 ? minutes + "0" : String.valueOf(minutes);
+                    controllerAppointment.setTextConfirm("Hora de cita seleccionada: " + stringHours + ":" + stringMinutes);
                 });
                 contenedorHBox2.getChildren().add(fragment);
             }
