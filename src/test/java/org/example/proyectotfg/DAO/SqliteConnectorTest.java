@@ -240,23 +240,15 @@ class SqliteConnectorTest {
     @Test
     void testThereIsAQuoteDoesNotExist() throws OperationsDBException {
         // Test for a non-existing appointment
-        String dateString = "2024-06-03"; // Asegúrate de que esta cadena esté en el formato correcto
-        Date date=null;
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            date = dateFormat.parse(dateString);
-            System.out.println("Fecha analizada: " + date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        new Date();
 
-        boolean result = SqliteConnector.thereIsAQuote(4, date);
+        boolean result = SqliteConnector.thereIsAQuote(4, new Date(date.getTime()));
         assertFalse(result, "The appointment should not exist in the database.");
     }
 
     @Test
     void testUpdateNormalUserWP() throws OperationsDBException, SQLException, IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
-
+n
         NormalUser normalUser = new NormalUser();
         normalUser.setIdPerson(1);
         normalUser.setNames("Jane");

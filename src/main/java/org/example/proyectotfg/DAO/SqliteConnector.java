@@ -854,7 +854,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setInt(1,  id_professional);
             preparetStmt.setInt(2, id_normal_user);
-            preparetStmt.setObject(3, date);
+            preparetStmt.setObject(3, new Date(date.getTime()));
             preparetStmt.setString(4, notification);
 
             int affectedRows = preparetStmt.executeUpdate();
@@ -869,12 +869,12 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
     public static boolean thereIsAQuote(int idProfesional, Date date) throws OperationsDBException {
         boolean exist = false;
-        String consulta="SELECT *FROM medical_appointment WHERE id_professional = ? AND visit_date = ?";
+        String consulta="SELECT * FROM medical_appointment WHERE id_professional = ? AND visit_date = ?";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setInt(1,  idProfesional);
 
-            preparetStmt.setObject(2, date);
+            preparetStmt.setObject(2, new Date(date.getTime()));
 
             int affectedRows = preparetStmt.executeUpdate();
             if(affectedRows > 0){
