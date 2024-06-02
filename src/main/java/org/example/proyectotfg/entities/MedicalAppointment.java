@@ -38,10 +38,11 @@ public class MedicalAppointment {
         this.usuario = usuario;
         this.visitDate = visitDate;
     }
-    public MedicalAppointment( ProfessionalUser psicologo, NormalUser usuario, Date visitDate) {
+    public MedicalAppointment( ProfessionalUser psicologo, NormalUser usuario, Date visitDate,Notificators notificator) {
         this.psicologo = psicologo;
         this.usuario = usuario;
         this.visitDate = visitDate;
+        this.notificator = notificator;
     }
 
 

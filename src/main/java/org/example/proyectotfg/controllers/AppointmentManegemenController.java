@@ -7,8 +7,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import org.example.proyectotfg.entities.MedicalAppointment;
 import org.example.proyectotfg.entities.Person;
+import org.example.proyectotfg.entities.ProfessionalUser;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorNotifiers;
 import org.example.proyectotfg.mediators.ViewController;
@@ -36,6 +36,7 @@ public class AppointmentManegemenController implements ViewController {
 
     private MediatorNotifiers mediatorNotifiers;
     private Person person;
+    private ProfessionalUser professionalUser;
     private Date appointmentDate;
 
 
@@ -74,6 +75,21 @@ public class AppointmentManegemenController implements ViewController {
         availableAppointmentsList.getChildren().add(availableAppointments);
     }
 
+    public ProfessionalUser getProfessionalUser() {
+        return professionalUser;
+    }
+
+    public void setProfessionalUser(ProfessionalUser professionalUser) {
+        this.professionalUser = professionalUser;
+    }
+
+    public Date getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(Date appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
 
     @Override
     public void setMediator(Mediator mediador) {
@@ -92,7 +108,7 @@ public class AppointmentManegemenController implements ViewController {
 
     @FXML
     void saveAppoinment(ActionEvent event) {
-        
+        mediatorNotifiers.addAppointment(professionalUser, appointmentDate);
     }
 
     @FXML
