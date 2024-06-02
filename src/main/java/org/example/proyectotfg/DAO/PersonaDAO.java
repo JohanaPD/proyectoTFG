@@ -6,6 +6,7 @@ import org.example.proyectotfg.exceptions.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +38,9 @@ public interface PersonaDAO {
 
 
     List<MedicalAppointment> searchMedicalAppointments(int id, Date date) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException;
+
+    List<MedicalAppointment> searchMyAppointments(Person person) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException;
+
     boolean insertMedicalAppointments(MedicalAppointment medicalAppointment) throws OperationsDBException;
 
     boolean updateMedicalAppointment(int id_appointment, int id_professional, int id_normal_user, Date date, String notification) throws OperationsDBException;
