@@ -847,6 +847,36 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         return listOfDates;
     }
 
+    @Override
+    public List<MedicalAppointment> searchMyAppointments(Person person) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
+        List<MedicalAppointment> listOfDates = new ArrayList<>();
+        String consulta = "SELECT * FROM medical_appointment WHERE id_person = ? ";
+
+        try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
+            preparetStmt.setInt(1, person.getIdPerson());
+
+            try (ResultSet resultSet = preparetStmt.executeQuery()) {
+                while (resultSet.next()) {
+                    int id_appointment = resultSet.getInt("id_appointment");
+                    int id_medical = resultSet.getInt("id_professional");
+                    int id_user = resultSet.getInt("id_normal_user");
+                    Date visit = resultSet.getDate("visit_date");
+                    String notification = resultSet.getString("notification");
+                    Notificators notificators = Notificators.valueOf(notification);
+                    ProfessionalUser profesionalUser = chargeProfesionalUserById(id_medical);
+                    NormalUser normalUser = searchNormalUserById(id_user);
+                    MedicalAppointment medicalAppointment = new MedicalAppointment(
+                            id_appointment, profesionalUser, normalUser, visit);
+
+                    listOfDates.add(medicalAppointment);
+                }
+            }
+        } catch (SQLException e) {
+            throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
+        }
+
+        return listOfDates;
+    }
 
     @Override
     public boolean insertMedicalAppointments(MedicalAppointment medicalAppointment) throws OperationsDBException {
