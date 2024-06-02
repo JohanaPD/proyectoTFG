@@ -39,4 +39,6 @@ public interface PersonaDAO {
 
     List<MedicalAppointment> searchMedicalAppointments(int id, Date date) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException;
     boolean insertMedicalAppointments(int id_professional, int id_normal_user, Date date, String notification) throws OperationsDBException;
+
+    boolean updateMedicalAppointment(int id_appointment, int id_professional, int id_normal_user, Date date, String notification) throws OperationsDBException;
 }

@@ -240,7 +240,7 @@ class SqliteConnectorTest {
     @Test
     void testThereIsAQuoteDoesNotExist() throws OperationsDBException {
         // Test for a non-existing appointment
-        new Date();
+        Date date=new Date();
 
         boolean result = SqliteConnector.thereIsAQuote(4, new Date(date.getTime()));
         assertFalse(result, "The appointment should not exist in the database.");
@@ -248,7 +248,7 @@ class SqliteConnectorTest {
 
     @Test
     void testUpdateNormalUserWP() throws OperationsDBException, SQLException, IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
-n
+
         NormalUser normalUser = new NormalUser();
         normalUser.setIdPerson(1);
         normalUser.setNames("Jane");
