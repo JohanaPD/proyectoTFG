@@ -819,8 +819,9 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         String consulta = "SELECT * FROM medical_appointment WHERE id_professional = ?  and  visit_date=? ";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
-            preparetStmt.setObject(1,  date);
             preparetStmt.setInt(1, id);
+            preparetStmt.setObject(2,  new java.sql.Date(date.getTime()));
+
             try(ResultSet resultSet = preparetStmt.executeQuery()) {
                 while (resultSet.next()) {
                     int id_appointment = resultSet.getInt("id_appointment");
@@ -849,6 +850,9 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     public boolean insertMedicalAppointments(int id_professional, int id_normal_user, Date date, String notification) throws OperationsDBException {
     boolean existe = false;
     boolean thereIsQuote= thereIsAQuote( id_professional,  date);
+     if(!thereIsQuote) {
+         System.out.println("No existen datos");
+     }
         String consulta = "INSERT INTO medical_appointment(id_professional, id_normal_user, visit_date, notification) VALUES(?,?,?,?)  ";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
@@ -867,15 +871,36 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         return existe;
     }
 
+    @Override
+    public boolean updateMedicalAppointment(int id_appointment, int id_professional, int id_normal_user, Date date, String notification) throws OperationsDBException {
+        boolean updated = false;
+        String consulta = "UPDATE medical_appointment SET id_professional = ?, id_normal_user = ?, visit_date = ?, notification = ? WHERE id_appointment = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
+            preparetStmt.setInt(1, id_professional);
+            preparetStmt.setInt(2, id_normal_user);
+            preparetStmt.setDate(3, new java.sql.Date(date.getTime()));
+            preparetStmt.setString(4, notification);
+            preparetStmt.setInt(5, id_appointment);
+
+            int affectedRows = preparetStmt.executeUpdate();
+            if (affectedRows > 0) {
+                updated = true;
+            }
+        } catch (SQLException e) {
+            throw new OperationsDBException(e.getMessage());
+        }
+        return updated;
+    }
+
     public static boolean thereIsAQuote(int idProfesional, Date date) throws OperationsDBException {
         boolean exist = false;
         String consulta="SELECT * FROM medical_appointment WHERE id_professional = ? AND visit_date = ?";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setInt(1,  idProfesional);
-
             preparetStmt.setObject(2, new Date(date.getTime()));
-
             int affectedRows = preparetStmt.executeUpdate();
             if(affectedRows > 0){
                 exist=true;
@@ -888,13 +913,13 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
     public boolean deleteMedicalAppointments(int id_appointment, int id_normal_user, Date date) throws OperationsDBException {
         boolean delete = false;
-        String consulta = "DELETE * FROM medical_appointment WHERE id_appointment = ? AND id_normal_user = ? and visit_date = ? ";
 
+
+        String consulta = "DELETE * FROM medical_appointment WHERE id_appointment = ? AND id_normal_user = ? and visit_date = ? ";
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setInt(1,  id_appointment);
             preparetStmt.setInt(2, id_normal_user);
             preparetStmt.setObject(3, date);
-
             int affectedRows = preparetStmt.executeUpdate();
             if(affectedRows > 0){
                 delete=true;
