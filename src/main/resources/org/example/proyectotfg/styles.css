@@ -202,12 +202,29 @@
     -fx-alignment: center;
 }
 
+.botonCalendar2{
+    -fx-background-color: rgba(200, 200, 200, 0.5); /* Color de fondo suave */
+    -fx-text-fill: #9E228F; /* Color del texto */
+    -fx-font-size: 10px; /* Tamaño de fuente */
+     /* Relleno */
+    -fx-border-color: #9E228F; /* Color del borde */
+    -fx-border-width: 0.5px; /* Ancho del borde */
+    -fx-border-radius: 8px; /* Borde redondeado */
+    -fx-background-radius: 20px; /* Borde redondeado */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0); /* Sombra */
+    -fx-cursor: hand; /* Cursor al pasar el ratón */
+    -fx-alignment: center;
+}
 .botonCalendar:hover {
     -fx-background-color: rgba(158, 34, 144, 0.7); /* Cambio de color de fondo al pasar el ratón */
     -fx-border-color: rgb(255, 255, 255); /* Cambio de color del borde al pasar el ratón */
     -fx-border-color: rgb(255, 255, 255);
 }
-
+.botonCalendar2:hover {
+    -fx-background-color: rgba(158, 34, 144, 0.7); /* Cambio de color de fondo al pasar el ratón */
+    -fx-border-color: rgb(255, 255, 255); /* Cambio de color del borde al pasar el ratón */
+    -fx-border-color: rgb(255, 255, 255);
+}
 .hourBox{
     -fx-border-radius: 10;
     -fx-background-radius: 10;
