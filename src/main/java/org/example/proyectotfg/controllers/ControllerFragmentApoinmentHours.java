@@ -7,6 +7,8 @@ import org.example.proyectotfg.mediators.Callback;
 
 public class ControllerFragmentApoinmentHours {
     @FXML
+    private Text dataAppointment;
+    @FXML
     private Text hourText;
 
     @FXML

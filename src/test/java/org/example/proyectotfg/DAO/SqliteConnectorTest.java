@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -217,6 +219,39 @@ class SqliteConnectorTest {
         }*/
 
 
+    }
+
+    @Test
+    void testThereIsAQuoteExists() throws OperationsDBException {
+        // Test for an existing appointment
+        String dateString = "2023-06-01"; // Asegúrate de que esta cadena esté en el formato correcto
+        Date date=null;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+             date = dateFormat.parse(dateString);
+            System.out.println("Fecha analizada: " + date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        boolean result = SqliteConnector.thereIsAQuote(1, date);
+        assertTrue(result, "The appointment should exist in the database.");
+    }
+
+    @Test
+    void testThereIsAQuoteDoesNotExist() throws OperationsDBException {
+        // Test for a non-existing appointment
+        String dateString = "2024-06-03"; // Asegúrate de que esta cadena esté en el formato correcto
+        Date date=null;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            date = dateFormat.parse(dateString);
+            System.out.println("Fecha analizada: " + date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        boolean result = SqliteConnector.thereIsAQuote(4, date);
+        assertFalse(result, "The appointment should not exist in the database.");
     }
 
     @Test

@@ -816,7 +816,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     @Override
     public List<MedicalAppointment> searchMedicalAppointments(int id, Date date) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
         List<MedicalAppointment> listOfDates= new ArrayList<>();
-        String consulta = "SELECT * FROM medical_appointment WHERE id_professional = ?  /*and  visit_date=?*/ ";
+        String consulta = "SELECT * FROM medical_appointment WHERE id_professional = ?  and  visit_date=? ";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setObject(1,  date);
@@ -827,8 +827,8 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                     int id_medical = resultSet.getInt("id_professional");
                     int id_user = resultSet.getInt("id_normal_user");
                     Date visit= resultSet.getDate("visit_date");
-                    //String notification= resultSet.getString("notification");
-                    //Notificators notificators= Notificators.valueOf(notification);
+                    String notification= resultSet.getString("notification");
+                    Notificators notificators= Notificators.valueOf(notification);
                     ProfessionalUser profesionalUser=chargeProfesionalUserById(id_medical);
                     NormalUser normalUser=searchNormalUserById(id_user);
                     MedicalAppointment medicalAppointment= new MedicalAppointment(
@@ -841,13 +841,14 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
           throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
         }
 
-        return new ArrayList<>();
+        return listOfDates;
     }
 
 
     @Override
     public boolean insertMedicalAppointments(int id_professional, int id_normal_user, Date date, String notification) throws OperationsDBException {
     boolean existe = false;
+    boolean thereIsQuote= thereIsAQuote( id_professional,  date);
         String consulta = "INSERT INTO medical_appointment(id_professional, id_normal_user, visit_date, notification) VALUES(?,?,?,?)  ";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
@@ -864,6 +865,25 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             throw  new OperationsDBException(e.getMessage());
         }
         return existe;
+    }
+
+    public static boolean thereIsAQuote(int idProfesional, Date date) throws OperationsDBException {
+        boolean exist = false;
+        String consulta="SELECT *FROM medical_appointment WHERE id_professional = ? AND visit_date = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
+            preparetStmt.setInt(1,  idProfesional);
+
+            preparetStmt.setObject(2, date);
+
+            int affectedRows = preparetStmt.executeUpdate();
+            if(affectedRows > 0){
+                exist=true;
+            }
+        } catch (SQLException e) {
+            throw  new OperationsDBException(e.getMessage());
+        }
+        return exist;
     }
 
     public boolean deleteMedicalAppointments(int id_appointment, int id_normal_user, Date date) throws OperationsDBException {

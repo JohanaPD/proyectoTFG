@@ -94,6 +94,10 @@ public class AppointmentManegemenController implements ViewController {
     void editAppoinment(ActionEvent event) {
 
     }
+    @FXML
+    void saveAppoinment(ActionEvent event) {
+
+    }
 
     @FXML
     void goToHome(ActionEvent event) {
