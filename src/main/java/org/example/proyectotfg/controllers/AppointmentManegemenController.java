@@ -23,10 +23,6 @@ public class AppointmentManegemenController implements ViewController {
 
     @FXML
     private Label username;
-
-    @FXML
-    private AnchorPane appointmentsList;
-
     @FXML
     private AnchorPane availableAppointmentsList;
 
@@ -79,8 +75,8 @@ public class AppointmentManegemenController implements ViewController {
     public void loadAppointments(List<MedicalAppointment> medicalAppointmentsAvailable, List<MedicalAppointment> medicalAppointmentsNotAvailable) {
         Parent availableAppointments = mediatorNotifiers.loadAvailableAppointmentsInCalendar(medicalAppointmentsAvailable);
         availableAppointmentsList.getChildren().add(availableAppointments);
-        Parent notAvailableAppointments = mediatorNotifiers.loadNotAvailableAppointmentsInCalendar(medicalAppointmentsNotAvailable);
-        myAppointments.getChildren().add(notAvailableAppointments);
+        Parent myAppoinments = mediatorNotifiers.myNextAppoinments(medicalAppointmentsNotAvailable);
+        //myAppointments.getChildren().add(notAvailableAppointments);
     }
 
 
@@ -91,6 +87,7 @@ public class AppointmentManegemenController implements ViewController {
 
     @FXML
     void deleteAppoinment(ActionEvent event) {
+
     }
 
     @FXML

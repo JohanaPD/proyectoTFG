@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -387,7 +386,6 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 controller.setData(String.valueOf(us.getNames()), String.valueOf(imagePath));
                 //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
                 controller.setCallback(() -> {
-
                     //como lo puedo pasar al callback
                     AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
                     LocalDate localDate = appointmentManegemenController.getDatePicker().getValue();
@@ -398,9 +396,6 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                     } else {
                         Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
                         searchAppointments(us.getIdPerson(), date);
-
-                        //Date date = Date.valueOf(Date);
-                        //searchAppointments(us.getIdPerson(), date);
                     }
                 });
                 imageIndex = (imageIndex % totalImages) + 1;
@@ -443,29 +438,12 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         HBox contenedorHBox2 = new HBox(6);
         return contenedorHBox2;
     }
-
-    public void loadAvailableAppointments(Person person, ProfessionalUser us, Date localDate) {
+@Override
+    public Parent myNextAppoinments(List<MedicalAppointment> medicalAppointmentsAvailable) {
         /*
         primero,  la consulta que llama a las citas  necesita los id del profesional y el usuario y la fecha
 
-el metodo debe devolver la lista de citas de ese profesional ese día*/
-        try {
-            List<MedicalAppointment> medicalAppointments = connect.searchMedicalAppointments(us.getIdPerson(), localDate);
-        } catch (OperationsDBException e) {
-            throw new RuntimeException(e);
-        } catch (IncorrectDataException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidKeySpecException e) {
-            throw new RuntimeException(e);
-        } catch (NullArgumentException e) {
-            throw new RuntimeException(e);
-        }
-
-
-        /*
-
+el metodo debe devolver la lista de citas de ese profesional ese día
 el metodo en el main  debe llamar al metodo anterior y recibir la lista,
 si el count de elementos es igual a 6 debe devolver mensaje que no hay citas disponibles para ese dia,
 si es inferior a 6 pero mayor que 0, debe comparar las citas normales que ofrece un profesional en un día, los horarios habilitados,
@@ -474,8 +452,6 @@ comparar con la lista y sacar otra list con los disponibles
 si el count de la lista es igual a 0, debe devolver todas las citas
 
 el metodo debe pintar con los fragment las citas disponibles*/
-
-
     }
 
     @Override
@@ -484,13 +460,13 @@ el metodo debe pintar con los fragment las citas disponibles*/
     }
 
     @Override
-    public void deleteAppointment(MedicalAppointment medicalAppointment) {
-
+    public void deleteAppointment(MedicalAppointment medicalAppointment) throws OperationsDBException {
+            connect.deleteMedicalAppointments(medicalAppointment.getIdCita(), person.getIdPerson(), medicalAppointment.getVisitDate());
     }
 
     @Override
-    public void addAppointment(MedicalAppointment medicalAppointment) {
-
+    public void addAppointment(MedicalAppointment medicalAppointment) throws OperationsDBException {
+            connect.insertMedicalAppointments(medicalAppointment.getPsicologo().getIdPerson(), person.getIdPerson(), medicalAppointment.getVisitDate(), String.valueOf(medicalAppointment.getNotificator()));
     }
 
     @Override
@@ -502,7 +478,7 @@ el metodo debe pintar con los fragment las citas disponibles*/
     public void searchAppointments(int idPerson, Date date) {
         try {
             List<MedicalAppointment> notAvailableMedicalAppointments = connect.searchMedicalAppointments(idPerson, date);
-            List<MedicalAppointment> availableMedicalAppointments = loadNotAvailableAppointments(notAvailableMedicalAppointments);
+            List<MedicalAppointment> availableMedicalAppointments = loadNextAvailableAppointments(notAvailableMedicalAppointments);
             AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
             appointmentManegemenController.loadAppointments(availableMedicalAppointments, notAvailableMedicalAppointments);
         } catch (OperationsDBException e) {
@@ -514,26 +490,24 @@ el metodo debe pintar con los fragment las citas disponibles*/
     }
 
     //crear arraylist de citas disponibles
-    private List<MedicalAppointment> loadNotAvailableAppointments(List<MedicalAppointment> list) {
+    private List<MedicalAppointment> loadNextAvailableAppointments(List<MedicalAppointment> list) {
         List<MedicalAppointment> notAvailableAppointments = new ArrayList<>();
         if (list.size() >= MedicalAppointment.MAX_APPOINTMENTS) {
             showInfo("Error ", "No quedan citas disponibles para la fecha elegida");
         } else if (list.isEmpty()) {
-            //todo: pinta todos los dias
+            notAvailableAppointments=list;
         } else if (list.size() > 0 && list.size() <= MedicalAppointment.MAX_APPOINTMENTS - 1) {
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i) != null) {
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
                     String hora = format.format(list.get(i).getVisitDate().getTime());
                     if (!hora.equals(TIMES)) {
-                        //todo: pinta las horas disponibles
+                       notAvailableAppointments.add(list.get(i));
                     }
                 } else {
                     //todo: revisa
                 }
             }
-
-
         }
         return notAvailableAppointments;
     }

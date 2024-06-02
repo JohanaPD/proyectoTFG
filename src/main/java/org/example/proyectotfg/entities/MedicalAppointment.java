@@ -32,9 +32,25 @@ public class MedicalAppointment {
         this.notificator = notificator;
     }
 
+    public MedicalAppointment(int idCita, ProfessionalUser psicologo, NormalUser usuario, Date visitDate) {
+        this.idCita = idCita;
+        this.psicologo = psicologo;
+        this.usuario = usuario;
+        this.visitDate = visitDate;
+    }
+    public MedicalAppointment( ProfessionalUser psicologo, NormalUser usuario, Date visitDate) {
+        this.psicologo = psicologo;
+        this.usuario = usuario;
+        this.visitDate = visitDate;
+    }
+
+
+
     public MedicalAppointment() {
 
     }
+
+
 
     // Getters y Setters
     public int getIdCita() {

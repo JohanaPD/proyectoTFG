@@ -816,7 +816,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     @Override
     public List<MedicalAppointment> searchMedicalAppointments(int id, Date date) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
         List<MedicalAppointment> listOfDates= new ArrayList<>();
-        String consulta = "SELECT * FROM medical_appointment WHERE id_professional = ?  and  visit_date=? ";
+        String consulta = "SELECT * FROM medical_appointment WHERE id_professional = ?  /*and  visit_date=?*/ ";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setObject(1,  date);
@@ -827,12 +827,12 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                     int id_medical = resultSet.getInt("id_professional");
                     int id_user = resultSet.getInt("id_normal_user");
                     Date visit= resultSet.getDate("visit_date");
-                    String notification= resultSet.getString("notification");
-                    Notificators notificators= Notificators.valueOf(notification);
+                    //String notification= resultSet.getString("notification");
+                    //Notificators notificators= Notificators.valueOf(notification);
                     ProfessionalUser profesionalUser=chargeProfesionalUserById(id_medical);
                     NormalUser normalUser=searchNormalUserById(id_user);
                     MedicalAppointment medicalAppointment= new MedicalAppointment(
-                            id_appointment, profesionalUser,normalUser, visit, notificators);
+                            id_appointment, profesionalUser,normalUser, visit);
 
                     listOfDates.add(medicalAppointment);
                 }
@@ -866,7 +866,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         return existe;
     }
 
-    public boolean deleteMedicalAppointments(int id_appointment, int id_normal_user, Date date, String notification) throws OperationsDBException {
+    public boolean deleteMedicalAppointments(int id_appointment, int id_normal_user, Date date) throws OperationsDBException {
         boolean delete = false;
         String consulta = "DELETE * FROM medical_appointment WHERE id_appointment = ? AND id_normal_user = ? and visit_date = ? ";
 
