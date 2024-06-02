@@ -15,10 +15,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class FunctionsApp {
 
@@ -134,20 +131,37 @@ public class FunctionsApp {
     }
 
     public static Date[] fillArray(int max_values) throws ParseException {
-        Date[] fillArray = new Date[max_values];
+        Date[] fillArray= new Date[7];
 
         try {
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             List<Date> timesList = new ArrayList<>();
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, 2024);
+            calendar.set(Calendar.MONTH, Calendar.JUNE); // Cambia esto según el mes deseado
+            calendar.set(Calendar.DAY_OF_MONTH, 2); // Cambia esto según el día deseado
+
             for (int hour = 10; hour <= 18; hour++) {
                 if (hour >= 14 && hour < 16) {
                     continue; // Saltar horas de 14:00 a 16:00
                 }
                 String timeString = String.format("%02d:00:00", hour);
-                timesList.add(dateFormat.parse(timeString));
+                Date timeDate = timeFormat.parse(timeString);
+
+                calendar.set(Calendar.HOUR_OF_DAY, timeDate.getHours());
+                calendar.set(Calendar.MINUTE, timeDate.getMinutes());
+                calendar.set(Calendar.SECOND, timeDate.getSeconds());
+
+                timesList.add(calendar.getTime());
             }
+
             fillArray = timesList.toArray(new Date[0]);
+
+            // Imprimir las fechas en el formato deseado
+            for (Date date : fillArray) {
+                System.out.println(dateTimeFormat.format(date));
+            }
 
         } catch (ParseException e) {
             e.printStackTrace();
