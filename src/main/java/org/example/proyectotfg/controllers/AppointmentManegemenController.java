@@ -7,16 +7,13 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import org.example.proyectotfg.entities.MedicalAppointment;
 import org.example.proyectotfg.entities.Person;
-import org.example.proyectotfg.functions.FunctionsApp;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorNotifiers;
 import org.example.proyectotfg.mediators.ViewController;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class AppointmentManegemenController implements ViewController {
@@ -72,11 +69,9 @@ public class AppointmentManegemenController implements ViewController {
         professionalsList.setContent(professionalUserBox);
     }
 
-    public void loadAppointments(List<MedicalAppointment> medicalAppointmentsAvailable, List<MedicalAppointment> medicalAppointmentsNotAvailable) {
+    public void loadAppointments(List<Date> medicalAppointmentsAvailable) {
         Parent availableAppointments = mediatorNotifiers.loadAvailableAppointmentsInCalendar(medicalAppointmentsAvailable);
         availableAppointmentsList.getChildren().add(availableAppointments);
-        Parent myAppoinments = mediatorNotifiers.myNextAppoinments(medicalAppointmentsNotAvailable);
-        //myAppointments.getChildren().add(notAvailableAppointments);
     }
 
 

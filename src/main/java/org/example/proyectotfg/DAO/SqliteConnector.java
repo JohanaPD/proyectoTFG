@@ -819,7 +819,9 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         String consulta = "SELECT * FROM medical_appointment WHERE id_professional = ?  and  visit_date=? ";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
+/*
             preparetStmt.setObject(1,  date);
+*/
             preparetStmt.setInt(1, id);
             try(ResultSet resultSet = preparetStmt.executeQuery()) {
                 while (resultSet.next()) {

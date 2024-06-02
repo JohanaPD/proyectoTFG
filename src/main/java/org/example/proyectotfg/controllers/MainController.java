@@ -30,6 +30,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
+import static org.example.proyectotfg.entities.MedicalAppointment.MAX_APPOINTMENTS;
 import static org.example.proyectotfg.entities.MedicalAppointment.TIMES;
 
 public class MainController implements Mediator, MediatorAccess, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction, MediatorNotifiers {
@@ -414,17 +415,17 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     }
 
     @Override
-    public Parent loadAvailableAppointmentsInCalendar(List<MedicalAppointment> medicalAppointments) {
+    public Parent loadAvailableAppointmentsInCalendar(List<Date> medicalAppointments) {
         HBox contenedorHBox2 = new HBox(6);
         try {
-            for (MedicalAppointment medicalAppointment : medicalAppointments) {
+            for (Date date : medicalAppointments) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-appointment-hours-view.fxml"));
                 Node fragment = fxmlLoader.load();
                 ControllerFragmentApoinmentHours controller = fxmlLoader.getController();
                 //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
                 controller.setCallback(() -> {
                     AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
-                    controllerAppointment.setTextConfirm("Hora de cita seleccionada: " + medicalAppointment.getVisitDate().toString());
+                    controllerAppointment.setTextConfirm("Hora de cita seleccionada: " + date);
                 });
             }
         } catch (IOException e) {
@@ -480,9 +481,10 @@ el metodo debe pintar con los fragment las citas disponibles*/
     public void searchAppointments(int idPerson, Date date) {
         try {
             List<MedicalAppointment> notAvailableMedicalAppointments = connect.searchMedicalAppointments(idPerson, date);
-            List<MedicalAppointment> availableMedicalAppointments = loadNextAvailableAppointments(notAvailableMedicalAppointments);
+
+            List<Date> availableMedicalAppointments = loadNextAvailableAppointments(notAvailableMedicalAppointments);
             AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
-            appointmentManegemenController.loadAppointments(availableMedicalAppointments, notAvailableMedicalAppointments);
+            appointmentManegemenController.loadAppointments(availableMedicalAppointments);
         } catch (OperationsDBException e) {
             showError("Error", e.getMessage());
         } catch (IncorrectDataException | NoSuchAlgorithmException |
@@ -492,26 +494,28 @@ el metodo debe pintar con los fragment las citas disponibles*/
     }
 
     //crear arraylist de citas disponibles
-    private List<MedicalAppointment> loadNextAvailableAppointments(List<MedicalAppointment> list) {
-        List<MedicalAppointment> notAvailableAppointments = new ArrayList<>();
-        if (list.size() >= MedicalAppointment.MAX_APPOINTMENTS) {
+    private List<Date> loadNextAvailableAppointments(List<MedicalAppointment> listAppointments) {
+        List<Date> availableAppointments = new ArrayList<>();
+        if (listAppointments.size() >= MedicalAppointment.MAX_APPOINTMENTS) {
             showInfo("Error ", "No quedan citas disponibles para la fecha elegida");
-        } else if (list.isEmpty()) {
-            notAvailableAppointments=list;
-        } else if (list.size() > 0 && list.size() <= MedicalAppointment.MAX_APPOINTMENTS - 1) {
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i) != null) {
+        } else if (listAppointments.isEmpty()) {
+            for (int i = 0; i < TIMES.length; i++) {
+                availableAppointments.add(TIMES[i]);
+            }
+        } else if (listAppointments.size() > 0 && listAppointments.size() <= MedicalAppointment.MAX_APPOINTMENTS - 1) {
+            for (int i = 0; i < listAppointments.size(); i++) {
+                if (listAppointments.get(i) != null) {
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-                    String hora = format.format(list.get(i).getVisitDate().getTime());
+                    String hora = format.format(listAppointments.get(i).getVisitDate().getTime());
                     if (!hora.equals(TIMES)) {
-                       notAvailableAppointments.add(list.get(i));
+                        availableAppointments.add(listAppointments.get(i).getVisitDate());
                     }
                 } else {
                     //todo: revisa
                 }
             }
         }
-        return notAvailableAppointments;
+        return availableAppointments;
     }
 /*
 Código para el hilo
