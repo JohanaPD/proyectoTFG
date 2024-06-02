@@ -73,6 +73,7 @@ public class AppointmentManegemenController implements ViewController {
     public void loadAppointments(List<Date> medicalAppointmentsAvailable) {
         Parent availableAppointments = mediatorNotifiers.loadAvailableAppointmentsInCalendar(medicalAppointmentsAvailable);
         availableAppointmentsList.getChildren().add(availableAppointments);
+
     }
 
     public ProfessionalUser getProfessionalUser() {
