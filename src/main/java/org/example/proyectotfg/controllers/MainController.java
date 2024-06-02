@@ -452,6 +452,8 @@ comparar con la lista y sacar otra list con los disponibles
 si el count de la lista es igual a 0, debe devolver todas las citas
 
 el metodo debe pintar con los fragment las citas disponibles*/
+    Parent parent = new Parent();
+    return parent;
     }
 
     @Override
