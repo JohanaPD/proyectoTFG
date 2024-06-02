@@ -69,6 +69,10 @@ public class AppointmentManegemenController implements ViewController {
         Parent professionalUserBox = mediatorNotifiers.loadProfessionalsInMediatorCalendar();
         professionalsList.setContent(professionalUserBox);
     }
+    public void loadMyAppointments() {
+        Parent parent = mediatorNotifiers.myNextAppoinments();
+        myAppointments.getChildren().add(parent);
+    }
 
     public void loadAppointments(List<Date> medicalAppointmentsAvailable) {
         Parent availableAppointments = mediatorNotifiers.loadAvailableAppointmentsInCalendar(medicalAppointmentsAvailable);

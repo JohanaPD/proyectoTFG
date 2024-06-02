@@ -850,7 +850,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     @Override
     public List<MedicalAppointment> searchMyAppointments(Person person) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
         List<MedicalAppointment> listOfDates = new ArrayList<>();
-        String consulta = "SELECT * FROM medical_appointment WHERE id_person = ? ";
+        String consulta = "SELECT * FROM medical_appointment WHERE id_normal_user = ? ";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setInt(1, person.getIdPerson());
