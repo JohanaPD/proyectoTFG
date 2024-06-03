@@ -7,12 +7,17 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import org.example.proyectotfg.DAO.SqliteConnector;
+import org.example.proyectotfg.entities.MedicalAppointment;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
+import org.example.proyectotfg.exceptions.OperationsDBException;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorNotifiers;
 import org.example.proyectotfg.mediators.ViewController;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -28,12 +33,14 @@ public class AppointmentManegemenController implements ViewController {
 
     @FXML
     private AnchorPane myAppointments;
-
+    @FXML
+    private Label textAppointmentToSelect;
+    @FXML
+    private Label textAppointment;
     @FXML
     private ScrollPane professionalsList;
-    @FXML
-    private Label textConfirm;
 
+    private MedicalAppointment actualMediacalAppointment;
     private MediatorNotifiers mediatorNotifiers;
     private Person person;
     private ProfessionalUser professionalUser;
@@ -45,7 +52,6 @@ public class AppointmentManegemenController implements ViewController {
     }
 
     public void setDatePicker(DatePicker datePicker) {
-        //  this.datePicker = datePicker;
     }
 
     public Person getPerson() {
@@ -60,9 +66,20 @@ public class AppointmentManegemenController implements ViewController {
         username.setText(names);
     }
 
+    public MedicalAppointment getActualMediacalAppointment() {
+        return actualMediacalAppointment;
+    }
+
+    public void setActualMediacalAppointment(MedicalAppointment actualMediacalAppointment) {
+        this.actualMediacalAppointment = actualMediacalAppointment;
+    }
 
     public void setTextConfirm(String text) {
-        textConfirm.setText(text);
+        textAppointmentToSelect.setText(text);
+    }
+
+    public void setTextAppointment(String textAppointment) {
+        this.textAppointment.setText(textAppointment);
     }
 
     public void loadProfessionals() {
@@ -77,7 +94,6 @@ public class AppointmentManegemenController implements ViewController {
     public void loadAppointments(List<Date> medicalAppointmentsAvailable) {
         Parent availableAppointments = mediatorNotifiers.loadAvailableAppointmentsInCalendar(medicalAppointmentsAvailable);
         availableAppointmentsList.getChildren().add(availableAppointments);
-
     }
 
     public ProfessionalUser getProfessionalUser() {
@@ -102,15 +118,31 @@ public class AppointmentManegemenController implements ViewController {
     }
 
     @FXML
-    void deleteAppoinment(ActionEvent event) {
-
+    void deleteAppoinment(ActionEvent event) throws OperationsDBException {
+    mediatorNotifiers.deleteAppointment(actualMediacalAppointment);
     }
-
     @FXML
     void editAppoinment(ActionEvent event) {
+        //necesitamos tener el medical app, que ya estaría instanciado en el momento de hacer el callback
 
+        datePicker.setValue(null);
+        if(datePicker.getValue()==null){
+            ((MainController) mediatorNotifiers).showInfo("Error", "Necesita seleccionar una nueva fecha");
+        }
+        datePicker.setOnAction(e ->{
+
+            LocalDate localDate = datePicker.getValue();
+            Date nuevaFecha = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            ((MainController) mediatorNotifiers).searchAppointments(actualMediacalAppointment.getPsicologo().getIdPerson(), nuevaFecha);
+
+            try {
+                mediatorNotifiers.editAppointment(actualMediacalAppointment, appointmentDate);
+            } catch (OperationsDBException ex) {
+                ((MainController) mediatorNotifiers).showError("Error", ex.getMessage());
+            }
+
+        });
     }
-
     @FXML
     void saveAppoinment(ActionEvent event) {
         mediatorNotifiers.addAppointment(professionalUser, appointmentDate);
@@ -120,8 +152,6 @@ public class AppointmentManegemenController implements ViewController {
     void goToHome(ActionEvent event) {
         mediatorNotifiers.backFromNotifiersToHome();
     }
-
-
 }
 
 

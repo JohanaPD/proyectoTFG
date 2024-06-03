@@ -51,9 +51,6 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
             showError("Error", e.getMessage());
         }
     }
-
-
-
     /*   ================================================================================================
         ======================================vistas principales =====================================================*/
 
@@ -425,7 +422,6 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-appointment-hours-view.fxml"));
                 Node fragment = fxmlLoader.load();
                 ControllerFragmentApoinmentHours controller = fxmlLoader.getController();
-                //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(date);
                 int hours = calendar.get(Calendar.HOUR_OF_DAY); // Hora en formato 24 horas
@@ -437,7 +433,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 controller.setCallback(() -> {
                     AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
                     controllerAppointment.setAppointmentDate(date);
-                    controllerAppointment.setTextConfirm("Hora de cita seleccionada: " + stringHours + ":" + stringMinutes);
+                    controllerAppointment.setTextAppointment("Hora de cita seleccionada: " + stringHours + ":" + stringMinutes);
                 });
                 contenedorHBox2.getChildren().add(fragment);
             }
@@ -480,6 +476,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                         AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
                         controllerAppointment.setAppointmentDate(medicalAppointment.getVisitDate());
                         controllerAppointment.setTextConfirm("Hora de cita seleccionada: " + stringHours + ":" + stringMinutes);
+                        controllerAppointment.setActualMediacalAppointment(medicalAppointment);
                     });
                     contenedorHBox2.getChildren().add(fragment);
                 }
@@ -490,19 +487,6 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
             throw new RuntimeException(e);
         }
         return contenedorHBox2;
-        /*
-        primero,  la consulta que llama a las citas  necesita los id del profesional y el usuario y la fecha
-
-el metodo debe devolver la lista de citas de ese profesional ese día
-el metodo en el main  debe llamar al metodo anterior y recibir la lista,
-si el count de elementos es igual a 6 debe devolver mensaje que no hay citas disponibles para ese dia,
-si es inferior a 6 pero mayor que 0, debe comparar las citas normales que ofrece un profesional en un día, los horarios habilitados,
-comparar con la lista y sacar otra list con los disponibles
-
-si el count de la lista es igual a 0, debe devolver todas las citas
-
-el metodo debe pintar con los fragment las citas disponibles*/
-
     }
 
     @Override
@@ -529,15 +513,19 @@ el metodo debe pintar con los fragment las citas disponibles*/
     }
 
     @Override
-    public void editAppointment(MedicalAppointment medicalAppointment) {
-
+    public void editAppointment(MedicalAppointment medicalAppointment, Date dateNewAppointment) {
+        try {
+            connect.updateMedicalAppointment(medicalAppointment, dateNewAppointment);
+            showInfo("Cita actualizada", "Su cita ha sido creada correctamente para el día   "+ dateNewAppointment);
+        } catch (OperationsDBException e) {
+           showError("Error", e.getMessage());
+        }
     }
 
     @Override
     public void searchAppointments(int idPerson, Date date) {
         try {
             List<MedicalAppointment> notAvailableMedicalAppointments = connect.searchMedicalAppointments(idPerson, date);
-
             List<Date> availableMedicalAppointments = loadNextAvailableAppointments(notAvailableMedicalAppointments);
             AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
             appointmentManegemenController.loadAppointments(availableMedicalAppointments);

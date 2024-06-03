@@ -226,7 +226,8 @@
     -fx-border-color: rgb(255, 255, 255);
 }
 .hourBox{
-    -fx-border-radius: 10;
+    -fx-border-radius: 5;
+    -fx-padding: 2;
     -fx-background-radius: 10;
     -fx-background-color:  rgb(255, 255, 255)   ;
 }

@@ -43,5 +43,5 @@ public interface PersonaDAO {
 
     boolean insertMedicalAppointments(MedicalAppointment medicalAppointment) throws OperationsDBException;
 
-    boolean updateMedicalAppointment(int id_appointment, int id_professional, int id_normal_user, Date date, String notification) throws OperationsDBException;
+    boolean updateMedicalAppointment(MedicalAppointment medicalAppointment, Date dateAppointment) throws OperationsDBException;
 }

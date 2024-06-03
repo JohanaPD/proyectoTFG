@@ -17,7 +17,7 @@ public interface MediatorNotifiers {
 
     void addAppointment(ProfessionalUser professionalUser, Date date) ;
 
-    void editAppointment(MedicalAppointment medicalAppointment);
+    void editAppointment(MedicalAppointment medicalAppointment, Date appointmentDate) throws OperationsDBException;
 
     void searchAppointments(int idPerson, Date date);
 

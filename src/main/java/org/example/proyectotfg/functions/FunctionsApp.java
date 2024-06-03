@@ -158,7 +158,6 @@ public class FunctionsApp {
 
             fillArray = timesList.toArray(new Date[0]);
 
-            // Imprimir las fechas en el formato deseado
             for (Date date : fillArray) {
                 System.out.println(dateTimeFormat.format(date));
             }
