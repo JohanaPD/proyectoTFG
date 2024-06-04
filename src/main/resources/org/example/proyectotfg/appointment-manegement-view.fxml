@@ -41,7 +41,7 @@
                 <Label fx:id="textConfirm" layoutX="17.0" layoutY="11.0" styleClass="sectionTitle" text="Citas Disponibles" />
             <ScrollPane layoutX="19.0" layoutY="31.0" prefHeight="132.0" prefWidth="359.0">
                <content>
-                  <AnchorPane fx:id="availableAppointmentsList" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="102.0" prefWidth="362.0" />
+                  <AnchorPane fx:id="availableAppointmentsList" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="102.0" prefWidth="344.0" />
                </content>
                <padding>
                   <Insets bottom="5.0" top="10.0" />
@@ -60,7 +60,7 @@
             <Label fx:id="textAppointment" layoutX="24.0" layoutY="186.0" prefHeight="15.0" prefWidth="351.0" text="Fecha de cita seleccionada" />
             <ScrollPane layoutX="16.0" layoutY="33.0" prefHeight="132.0" prefWidth="382.0">
                <content>
-                  <AnchorPane fx:id="myAppointments" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="119.0" prefWidth="382.0" />
+                  <AnchorPane fx:id="myAppointments" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="110.0" prefWidth="354.0" />
                </content>
                <padding>
                   <Insets bottom="5.0" top="10.0" />
