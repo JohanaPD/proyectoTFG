@@ -396,7 +396,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                         showError("Error", "Tienes que seleccionar una" + " fecha antes de continuar);");
                     } else {
                         Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                        searchAppointments(us.getIdPerson(), date);
+                        searchAppointments(us.getIdPerson(), date, false);
                     }
                 });
                 imageIndex = (imageIndex % totalImages) + 1;
@@ -415,7 +415,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     }
 
     @Override
-    public Parent loadAvailableAppointmentsInCalendar(List<Date> medicalAppointments) {
+    public Parent loadAvailableAppointmentsInCalendar(List<Date> medicalAppointments, boolean updateAppointment) {
         HBox contenedorHBox2 = new HBox(6);
         try {
             for (Date date : medicalAppointments) {
@@ -432,8 +432,13 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 controller.setMinuteText(stringMinutes);
                 controller.setCallback(() -> {
                     AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
-                    controllerAppointment.setAppointmentDate(date);
-                    controllerAppointment.setTextAppointment("Hora de cita seleccionada: " + stringHours + ":" + stringMinutes);
+                    if (!updateAppointment) {
+                        controllerAppointment.setAppointmentDate(date);
+                        controllerAppointment.setTextAppointment("Hora de cita seleccionada: " + stringHours + ":" + stringMinutes);
+                    } else {
+                        MedicalAppointment oldAppointment = controllerAppointment.getActualMediacalAppointment();
+                        editAppointment(oldAppointment, date);
+                    }
                 });
                 contenedorHBox2.getChildren().add(fragment);
             }
@@ -456,30 +461,30 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         try {
             List<MedicalAppointment> medicalAppointments = connect.searchMyAppointments(person);
 
-                for (MedicalAppointment medicalAppointment : medicalAppointments) {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-appointment-hours-view.fxml"));
-                    Node fragment = fxmlLoader.load();
-                    ControllerFragmentApoinmentHours controller = fxmlLoader.getController();
-                    //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(medicalAppointment.getVisitDate());
-                    int hours = calendar.get(Calendar.HOUR_OF_DAY); // Hora en formato 24 horas
-                    int minutes = calendar.get(Calendar.MINUTE);
-                    SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy");
-                    String date = simpleDateFormat.format(calendar.getTime());
-                    controller.setDataAppointment(date);
-                    String stringHours = String.valueOf(hours).length() == 1 ? hours + "0" : String.valueOf(hours);
-                    String stringMinutes = String.valueOf(minutes).length() == 1 ? minutes + "0" : String.valueOf(minutes);
-                    controller.setHourText(stringHours);
-                    controller.setMinuteText(stringMinutes);
-                    controller.setCallback(() -> {
-                        AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
-                        controllerAppointment.setAppointmentDate(medicalAppointment.getVisitDate());
-                        controllerAppointment.setTextConfirm("Hora de cita seleccionada: " + stringHours + ":" + stringMinutes);
-                        controllerAppointment.setActualMediacalAppointment(medicalAppointment);
-                    });
-                    contenedorHBox2.getChildren().add(fragment);
-                }
+            for (MedicalAppointment medicalAppointment : medicalAppointments) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-appointment-hours-view.fxml"));
+                Node fragment = fxmlLoader.load();
+                ControllerFragmentApoinmentHours controller = fxmlLoader.getController();
+                //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(medicalAppointment.getVisitDate());
+                int hours = calendar.get(Calendar.HOUR_OF_DAY); // Hora en formato 24 horas
+                int minutes = calendar.get(Calendar.MINUTE);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String date = simpleDateFormat.format(calendar.getTime());
+                controller.setDataAppointment(date);
+                String stringHours = String.valueOf(hours).length() == 1 ? hours + "0" : String.valueOf(hours);
+                String stringMinutes = String.valueOf(minutes).length() == 1 ? minutes + "0" : String.valueOf(minutes);
+                controller.setHourText(stringHours);
+                controller.setMinuteText(stringMinutes);
+                controller.setCallback(() -> {
+                    AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
+                    controllerAppointment.setAppointmentDate(medicalAppointment.getVisitDate());
+                    controllerAppointment.setTextConfirm("Hora de cita seleccionada: " + stringHours + ":" + stringMinutes);
+                    controllerAppointment.setActualMediacalAppointment(medicalAppointment);
+                });
+                contenedorHBox2.getChildren().add(fragment);
+            }
 
 
         } catch (IncorrectDataException | NoSuchAlgorithmException | InvalidKeySpecException | NullArgumentException |
@@ -501,34 +506,41 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
     @Override
     public void addAppointment(ProfessionalUser professionalUser, Date date) {
-       try {
-           MedicalAppointment medicalAppointment = new MedicalAppointment(professionalUser, (NormalUser) person, date, Notificators.CITACREADA);
-           boolean insert=connect.insertMedicalAppointments(medicalAppointment);
-           if (insert) {
-               showInfo("Cita creada", "Su cita ha sido creada correctamente");
-           }
-       } catch (OperationsDBException e) {
-           showError("Error", e.getMessage());
-       }
+        try {
+            MedicalAppointment medicalAppointment = new MedicalAppointment(professionalUser, (NormalUser) person, date, Notificators.CITACREADA);
+            boolean insert = connect.insertMedicalAppointments(medicalAppointment);
+            if (insert) {
+                showInfo("Cita creada", "Su cita ha sido creada correctamente");
+                openAppointmentView();
+            }
+        } catch (OperationsDBException e) {
+            showError("Error", e.getMessage());
+        }
     }
 
     @Override
     public void editAppointment(MedicalAppointment medicalAppointment, Date dateNewAppointment) {
         try {
-            connect.updateMedicalAppointment(medicalAppointment, dateNewAppointment);
-            showInfo("Cita actualizada", "Su cita ha sido creada correctamente para el día   "+ dateNewAppointment);
+            boolean updateAppointment = connect.updateMedicalAppointment(medicalAppointment, dateNewAppointment);
+            if (updateAppointment) {
+                showInfo("Cita actualizada", "Su cita ha sido creada correctamente para el día   " + dateNewAppointment);
+
+            } else {
+                showError("Cita no actualizada", "No se ha podido actualizar correctamente la cita");
+            }
+
         } catch (OperationsDBException e) {
-           showError("Error", e.getMessage());
+            showError("Error", e.getMessage());
         }
     }
 
     @Override
-    public void searchAppointments(int idPerson, Date date) {
+    public void searchAppointments(int idPerson, Date date, boolean updateAppointment) {
         try {
             List<MedicalAppointment> notAvailableMedicalAppointments = connect.searchMedicalAppointments(idPerson, date);
             List<Date> availableMedicalAppointments = loadNextAvailableAppointments(notAvailableMedicalAppointments);
             AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
-            appointmentManegemenController.loadAppointments(availableMedicalAppointments);
+            appointmentManegemenController.loadAppointments(availableMedicalAppointments, updateAppointment);
         } catch (OperationsDBException e) {
             showError("Error", e.getMessage());
         } catch (IncorrectDataException | NoSuchAlgorithmException | InvalidKeySpecException |

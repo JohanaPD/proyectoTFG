@@ -19,11 +19,11 @@ public interface MediatorNotifiers {
 
     void editAppointment(MedicalAppointment medicalAppointment, Date appointmentDate) throws OperationsDBException;
 
-    void searchAppointments(int idPerson, Date date);
+    void searchAppointments(int idPerson, Date date, boolean updateAppointment);
 
     Parent loadProfessionalsInMediatorCalendar();
 
-    Parent loadAvailableAppointmentsInCalendar(List<Date> medicalAppointments);
+    Parent loadAvailableAppointmentsInCalendar(List<Date> medicalAppointments, boolean updateAppointment);
 
     Parent loadNotAvailableAppointmentsInCalendar(List<MedicalAppointment> medicalAppointments);
 

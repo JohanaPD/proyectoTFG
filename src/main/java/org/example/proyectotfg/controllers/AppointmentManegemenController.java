@@ -7,7 +7,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import org.example.proyectotfg.DAO.SqliteConnector;
 import org.example.proyectotfg.entities.MedicalAppointment;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
@@ -86,13 +85,14 @@ public class AppointmentManegemenController implements ViewController {
         Parent professionalUserBox = mediatorNotifiers.loadProfessionalsInMediatorCalendar();
         professionalsList.setContent(professionalUserBox);
     }
+
     public void loadMyAppointments() {
         Parent parent = mediatorNotifiers.myNextAppoinments();
         myAppointments.getChildren().add(parent);
     }
 
-    public void loadAppointments(List<Date> medicalAppointmentsAvailable) {
-        Parent availableAppointments = mediatorNotifiers.loadAvailableAppointmentsInCalendar(medicalAppointmentsAvailable);
+    public void loadAppointments(List<Date> medicalAppointmentsAvailable, boolean updateAppointment) {
+        Parent availableAppointments = mediatorNotifiers.loadAvailableAppointmentsInCalendar(medicalAppointmentsAvailable, updateAppointment);
         availableAppointmentsList.getChildren().add(availableAppointments);
     }
 
@@ -119,33 +119,40 @@ public class AppointmentManegemenController implements ViewController {
 
     @FXML
     void deleteAppoinment(ActionEvent event) throws OperationsDBException {
-    mediatorNotifiers.deleteAppointment(actualMediacalAppointment);
+        mediatorNotifiers.deleteAppointment(actualMediacalAppointment);
     }
+
     @FXML
     void editAppoinment(ActionEvent event) {
         //necesitamos tener el medical app, que ya estaría instanciado en el momento de hacer el callback
+        if (actualMediacalAppointment ==null) {
+            ((MainController) mediatorNotifiers).showInfo("Error", "Selecciona una de tus citas y pulsa \"editar\"");
+        }else {
+            datePicker.setValue(null);
 
-        datePicker.setValue(null);
-        if(datePicker.getValue()==null){
-            ((MainController) mediatorNotifiers).showInfo("Error", "Necesita seleccionar una nueva fecha");
-        }
-        datePicker.setOnAction(e ->{
+            if (datePicker.getValue() == null) {
+                ((MainController) mediatorNotifiers).showInfo("Error", "Necesita seleccionar una nueva fecha");
+            }
+            datePicker.setOnAction(e -> {
 
-            LocalDate localDate = datePicker.getValue();
-            Date nuevaFecha = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            ((MainController) mediatorNotifiers).searchAppointments(actualMediacalAppointment.getPsicologo().getIdPerson(), nuevaFecha);
+                LocalDate localDate = datePicker.getValue();
+                Date nuevaFecha = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                ((MainController) mediatorNotifiers).searchAppointments(actualMediacalAppointment.getPsicologo().getIdPerson(), nuevaFecha, true);
 
-            try {
+          /*  try {
                 mediatorNotifiers.editAppointment(actualMediacalAppointment, appointmentDate);
             } catch (OperationsDBException ex) {
                 ((MainController) mediatorNotifiers).showError("Error", ex.getMessage());
-            }
+            }*/
 
-        });
+            });
+        }
     }
+
     @FXML
     void saveAppoinment(ActionEvent event) {
         mediatorNotifiers.addAppointment(professionalUser, appointmentDate);
+
     }
 
     @FXML

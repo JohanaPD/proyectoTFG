@@ -917,6 +917,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return exist;
     }
+
     @Override
     public boolean updateMedicalAppointment(MedicalAppointment medicalAppointment, Date dateAppointment) throws OperationsDBException {
         boolean updated = false;
@@ -925,7 +926,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setInt(1, medicalAppointment.getIdCita());
-            preparetStmt.setDate(3, new java.sql.Date(medicalAppointment.getVisitDate().getTime()));
+            preparetStmt.setObject(2,  new Date(dateAppointment.getTime()));
             int affectedRows = preparetStmt.executeUpdate();
             if (affectedRows > 0) {
                 updated = true;
