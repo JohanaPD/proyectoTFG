@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox id="layoutMajor" maxHeight="654.0" maxWidth="360.0" prefHeight="654.0" prefWidth="360.0" styleClass="layoutFondoTotal" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.AppointmentManegemenController">
+<VBox id="layoutMajor" maxHeight="654.0" maxWidth="360.0" prefHeight="654.0" prefWidth="360.0" styleClass="layoutFondoTotal" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.AppointmentManegemenController">
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
     </padding>
@@ -18,7 +18,7 @@
         <AnchorPane prefHeight="100.0" prefWidth="360.0" stylesheets="@styles.css">
             <children>
                 <Label fx:id="username" layoutX="14.0" layoutY="14.0" styleClass="userGreeting" text="Hola, [Nombre del Usuario]" />
-                <Label layoutX="214.0" layoutY="33.0" styleClass="userInfo" text="Información del usuario" />
+                <Label layoutX="96.0" layoutY="44.0" styleClass="userInfo" text="Información de las citas del usuario" />
             </children>
         </AnchorPane>
 

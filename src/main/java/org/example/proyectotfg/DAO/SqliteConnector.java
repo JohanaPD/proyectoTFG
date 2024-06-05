@@ -215,7 +215,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                                 throw new IncorrectLoginEception("La contraseña es incorrecta");
                             }
                         } else {
-                            throw new NonexistingUser("No existe el usuario o no es el tipo correcto");
+                            throw new NonexistingUser("No existe el usuario o no es su tipo correcto");
                         }
                     } catch (SQLException | OperationsDBException | IncorrectDataException | NullArgumentException e) {
                         throw new OperationsDBException("Error al realizar las operaciones" + e.getMessage());
@@ -928,6 +928,10 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             preparetStmt.setInt(1, medicalAppointment.getIdCita());
             preparetStmt.setObject(2,  new Date(dateAppointment.getTime()));
             int affectedRows = preparetStmt.executeUpdate();
+            System.out.println("ID Cita: " + medicalAppointment.getIdCita());
+            System.out.println("Fecha: " + new Date(dateAppointment.getTime()));
+            System.out.println("Conexión a la base de datos: " + connection.getMetaData().getURL());
+            System.out.println("Consulta ejecutada: " + preparetStmt.toString());
             if (affectedRows > 0) {
                 updated = true;
             }

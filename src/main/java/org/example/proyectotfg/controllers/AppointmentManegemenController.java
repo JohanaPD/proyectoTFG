@@ -125,7 +125,7 @@ public class AppointmentManegemenController implements ViewController {
     @FXML
     void editAppoinment(ActionEvent event) {
         //necesitamos tener el medical app, que ya estaría instanciado en el momento de hacer el callback
-        if (actualMediacalAppointment ==null) {
+            if (actualMediacalAppointment ==null) {
             ((MainController) mediatorNotifiers).showInfo("Error", "Selecciona una de tus citas y pulsa \"editar\"");
         }else {
             datePicker.setValue(null);

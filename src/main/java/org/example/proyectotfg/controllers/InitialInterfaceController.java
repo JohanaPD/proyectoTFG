@@ -102,4 +102,7 @@ public class InitialInterfaceController implements ViewController, Initializable
     }
 
 
+    public void logOut(ActionEvent actionEvent) {
+        mediator.logOut();
+    }
 }

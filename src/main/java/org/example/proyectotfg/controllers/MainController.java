@@ -350,6 +350,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         return contenedorHBox2;
     }
 
+
     /*   ================================================================================================
        ======================================Appointment manager=====================================================*/
     @Override
@@ -359,7 +360,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
             loadView("/org/example/proyectotfg/appointment-manegement-view.fxml");
             AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
             appointmentManegemenController.setPerson(person);
-            appointmentManegemenController.setTitlePost(person.getNames());
+            appointmentManegemenController.setTitlePost("Hola, " + person.getNames());
             appointmentManegemenController.loadProfessionals();
             appointmentManegemenController.loadMyAppointments();
 
@@ -426,20 +427,24 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 calendar.setTime(date);
                 int hours = calendar.get(Calendar.HOUR_OF_DAY); // Hora en formato 24 horas
                 int minutes = calendar.get(Calendar.MINUTE);
+
                 String stringHours = String.valueOf(hours).length() == 1 ? hours + "0" : String.valueOf(hours);
                 String stringMinutes = String.valueOf(minutes).length() == 1 ? minutes + "0" : String.valueOf(minutes);
+
                 controller.setHourText(stringHours);
                 controller.setMinuteText(stringMinutes);
                 controller.setCallback(() -> {
                     AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
                     if (!updateAppointment) {
                         controllerAppointment.setAppointmentDate(date);
-                        controllerAppointment.setTextAppointment("Hora de cita seleccionada: " + stringHours + ":" + stringMinutes);
+                        controllerAppointment.setTextConfirm("Hora de cita seleccionada: " + stringHours + ":" + stringMinutes);
+
                     } else {
                         MedicalAppointment oldAppointment = controllerAppointment.getActualMediacalAppointment();
                         editAppointment(oldAppointment, date);
                     }
                 });
+
                 contenedorHBox2.getChildren().add(fragment);
             }
         } catch (IOException e) {
@@ -461,27 +466,29 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         try {
             List<MedicalAppointment> medicalAppointments = connect.searchMyAppointments(person);
 
-            for (MedicalAppointment medicalAppointment : medicalAppointments) {
+            for (MedicalAppointment medicalApp : medicalAppointments) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-appointment-hours-view.fxml"));
                 Node fragment = fxmlLoader.load();
                 ControllerFragmentApoinmentHours controller = fxmlLoader.getController();
                 //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
                 Calendar calendar = Calendar.getInstance();
-                calendar.setTime(medicalAppointment.getVisitDate());
+                Date date = medicalApp.getVisitDate();
+                calendar.setTime(date);
                 int hours = calendar.get(Calendar.HOUR_OF_DAY); // Hora en formato 24 horas
                 int minutes = calendar.get(Calendar.MINUTE);
+
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String date = simpleDateFormat.format(calendar.getTime());
-                controller.setDataAppointment(date);
+                String stringDate = simpleDateFormat.format(calendar.getTime());
+                controller.setDataAppointment(stringDate);
                 String stringHours = String.valueOf(hours).length() == 1 ? hours + "0" : String.valueOf(hours);
                 String stringMinutes = String.valueOf(minutes).length() == 1 ? minutes + "0" : String.valueOf(minutes);
                 controller.setHourText(stringHours);
                 controller.setMinuteText(stringMinutes);
                 controller.setCallback(() -> {
                     AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
-                    controllerAppointment.setAppointmentDate(medicalAppointment.getVisitDate());
-                    controllerAppointment.setTextConfirm("Hora de cita seleccionada: " + stringHours + ":" + stringMinutes);
-                    controllerAppointment.setActualMediacalAppointment(medicalAppointment);
+                    controllerAppointment.setAppointmentDate(medicalApp.getVisitDate());
+                    controllerAppointment.setTextAppointment("Cita seleccionada: Psicologo \"" + medicalApp.getPsicologo().getNames() + "\" el dia: " + stringDate + " a las " + stringHours + ":" + stringMinutes);
+                    controllerAppointment.setActualMediacalAppointment(medicalApp);
                 });
                 contenedorHBox2.getChildren().add(fragment);
             }
@@ -500,8 +507,13 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     }
 
     @Override
-    public void deleteAppointment(MedicalAppointment medicalAppointment) throws OperationsDBException {
-        connect.deleteMedicalAppointments(medicalAppointment.getIdCita(), person.getIdPerson(), medicalAppointment.getVisitDate());
+    public void deleteAppointment(MedicalAppointment medicalAppointment) {
+        try {
+            connect.deleteMedicalAppointments(medicalAppointment.getIdCita(), person.getIdPerson(), medicalAppointment.getVisitDate());
+        } catch (OperationsDBException e) {
+            showError("Error", e.getMessage());
+        }
+        openAppointmentView();
     }
 
     @Override
@@ -650,7 +662,7 @@ timer = new Timer();
             connect.updateProfesionalUser(user);
             showInfo("Actualización correcta", "Se ha actualizado correctamente el usuario");
             person = user;
-            fromFirstScreenToHome();
+            openLogin();
         } catch (OperationsDBException | SQLException e) {
             showError("Error en la operaciones", e.getMessage());
         }
@@ -755,7 +767,14 @@ timer = new Timer();
         postGeneratorController.setTitlePost(person.getNames());
     }
 
-
+    /*   ================================================================================================
+        ====================================== Log out =====================================================*/
+    @Override
+    public void logOut() {
+        actualappointment = null;
+        person = null;
+        volverIncio();
+    }
     /*   ================================================================================================
         ======================================show errors =====================================================*/
 

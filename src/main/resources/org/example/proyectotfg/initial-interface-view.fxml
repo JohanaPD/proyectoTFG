@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox id="layoutMajor" maxHeight="654.0" maxWidth="360.0" prefHeight="654.0" prefWidth="360.0" styleClass="layoutFondoTotal" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.InitialInterfaceController">
+<VBox id="layoutMajor" maxHeight="654.0" maxWidth="360.0" prefHeight="654.0" prefWidth="360.0" styleClass="layoutFondoTotal" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.InitialInterfaceController">
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
     </padding>
@@ -54,7 +54,7 @@
                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" />
                             </children>
                         </HBox>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="sigue cuidando tu salud" textAlignment="CENTER" wrappingWidth="381.33674705028534">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sigue cuidando tu salud" textAlignment="CENTER" wrappingWidth="381.33674705028534">
                             <font>
                                 <Font size="24.0" />
                             </font>
@@ -133,7 +133,7 @@
                         </Button>
                         <Button maxHeight="54.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="54.0" prefWidth="47.0" styleClass="buttonInterfaz" stylesheets="@styles.css" />
                         <Button maxHeight="54.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="54.0" prefWidth="50.0" styleClass="buttonInterfaz" stylesheets="@styles.css" />
-                        <Button layoutX="173.0" layoutY="10.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="41.0" prefWidth="63.0" styleClass="buttonInterfaz" stylesheets="@styles.css" />
+                        <Button layoutX="173.0" layoutY="10.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#logOut" prefHeight="41.0" prefWidth="63.0" styleClass="buttonInterfaz" stylesheets="@styles.css" />
                     </children>
                 </HBox>
             </children>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="MeetPsych.db" uuid="3025320a-2709-4df7-b85f-092a4d3d4f96">
+    <data-source source="LOCAL" name="MeetPsych.db" uuid="5d349713-1322-4fbc-9fd6-85f955cd4787">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:E:\TFG\proyectoTFG\src\main\resources\sqliteBBDD\MeetPsych.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/src/main/resources/sqliteBBDD/MeetPsych.db</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
       </jdbc-additional-properties>

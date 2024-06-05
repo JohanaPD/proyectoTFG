@@ -13,11 +13,11 @@ public interface MediatorNotifiers {
 
     void backFromNotifiersToHome();
 
-    void deleteAppointment(MedicalAppointment medicalAppointment) throws OperationsDBException;
+    void deleteAppointment(MedicalAppointment medicalAppointment);
 
     void addAppointment(ProfessionalUser professionalUser, Date date) ;
 
-    void editAppointment(MedicalAppointment medicalAppointment, Date appointmentDate) throws OperationsDBException;
+    void editAppointment(MedicalAppointment medicalAppointment, Date appointmentDate);
 
     void searchAppointments(int idPerson, Date date, boolean updateAppointment);
 

@@ -38,4 +38,6 @@ public interface MediatorFirstScreen {
 
     void updateAllDataPerson(NormalUser user) throws SQLException;
     public Parent loadSearchs(List<ProfessionalUser> professionalUsers);
+
+    public void logOut();
 }
