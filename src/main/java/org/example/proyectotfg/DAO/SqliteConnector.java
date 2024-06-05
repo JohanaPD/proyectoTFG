@@ -15,9 +15,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
@@ -921,12 +920,18 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     @Override
     public boolean updateMedicalAppointment(MedicalAppointment medicalAppointment, Date dateAppointment) throws OperationsDBException {
         boolean updated = false;
+        SimpleDateFormat outputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+        TimeZone cestTimeZone = TimeZone.getTimeZone("CEST");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dateAppointment);
+        cal.setTimeZone(cestTimeZone);
+        Date cestDate = cal.getTime();
         String consulta = "UPDATE medical_appointment SET visit_date = ?  WHERE id_appointment = ?";
 
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setInt(1, medicalAppointment.getIdCita());
-            preparetStmt.setObject(2,  new Date(dateAppointment.getTime()));
+            preparetStmt.setObject(2,  new Date(cestDate.getTime()));
             int affectedRows = preparetStmt.executeUpdate();
             System.out.println("ID Cita: " + medicalAppointment.getIdCita());
             System.out.println("Fecha: " + new Date(dateAppointment.getTime()));
