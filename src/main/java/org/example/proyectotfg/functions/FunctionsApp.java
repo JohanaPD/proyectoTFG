@@ -130,17 +130,17 @@ public class FunctionsApp {
         return htmlPasswordRecoverString;
     }
 
-    public static Date[] fillArray(int max_values) throws ParseException {
-        Date[] fillArray= new Date[7];
+    public static Date[] fillArray(int maxValues, int day, int month, int year) throws ParseException {
+        Date[] fillArray= new Date[maxValues];
 
         try {
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
             SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             List<Date> timesList = new ArrayList<>();
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.YEAR, 2024);
-            calendar.set(Calendar.MONTH, Calendar.JUNE); // Cambia esto según el mes deseado
-            calendar.set(Calendar.DAY_OF_MONTH, 2); // Cambia esto según el día deseado
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month); // Cambia esto según el mes deseado
+            calendar.set(Calendar.DAY_OF_MONTH, day); // Cambia esto según el día deseado
 
             for (int hour = 10; hour <= 18; hour++) {
                 if (hour >= 14 && hour < 16) {

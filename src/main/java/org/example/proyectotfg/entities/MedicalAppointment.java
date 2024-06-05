@@ -15,15 +15,7 @@ public class MedicalAppointment {
     private Date visitDate;
     private Notificators notificator;
     public final static  int MAX_APPOINTMENTS = 6;
-    public final static  java.util.Date[] TIMES;
 
-    static {
-        try {
-            TIMES = FunctionsApp.fillArray(6);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
     public MedicalAppointment(int idCita, ProfessionalUser psicologo, NormalUser usuario, Date visitDate, Notificators notificator) {
         this.idCita = idCita;
         this.psicologo = psicologo;

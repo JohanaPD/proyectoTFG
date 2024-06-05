@@ -860,8 +860,8 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                     int id_medical = resultSet.getInt("id_professional");
                     int id_user = resultSet.getInt("id_normal_user");
                     Date visit = resultSet.getDate("visit_date");
-                    String notification = resultSet.getString("notification");
-                    Notificators notificators = Notificators.valueOf(notification);
+                   /* String notification = resultSet.getString("notification");
+                    Notificators notificators = Notificators.valueOf(notification);*/
                     ProfessionalUser profesionalUser = chargeProfesionalUserById(id_medical);
                     NormalUser normalUser = searchNormalUserById(id_user);
                     MedicalAppointment medicalAppointment = new MedicalAppointment(
@@ -920,7 +920,9 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
     @Override
     public boolean updateMedicalAppointment(MedicalAppointment medicalAppointment, Date dateAppointment) throws OperationsDBException {
         boolean updated = false;
+/*
         SimpleDateFormat outputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+*/
         TimeZone cestTimeZone = TimeZone.getTimeZone("CEST");
         Calendar cal = Calendar.getInstance();
         cal.setTime(dateAppointment);
@@ -930,11 +932,11 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
-            preparetStmt.setInt(1, medicalAppointment.getIdCita());
-            preparetStmt.setObject(2,  new Date(cestDate.getTime()));
+            preparetStmt.setObject(1, new Date(cestDate.getTime()));
+            preparetStmt.setInt(2, medicalAppointment.getIdCita());
             int affectedRows = preparetStmt.executeUpdate();
             System.out.println("ID Cita: " + medicalAppointment.getIdCita());
-            System.out.println("Fecha: " + new Date(dateAppointment.getTime()));
+            System.out.println("Fecha: " + cestDate);
             System.out.println("Conexión a la base de datos: " + connection.getMetaData().getURL());
             System.out.println("Consulta ejecutada: " + preparetStmt.toString());
             if (affectedRows > 0) {

@@ -26,12 +26,12 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
-import static org.example.proyectotfg.entities.MedicalAppointment.TIMES;
 
 public class MainController implements Mediator, MediatorAccess, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction, MediatorNotifiers {
 
@@ -509,7 +509,11 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     @Override
     public void deleteAppointment(MedicalAppointment medicalAppointment) {
         try {
-            connect.deleteMedicalAppointments(medicalAppointment.getIdCita(), person.getIdPerson(), medicalAppointment.getVisitDate());
+            if (connect.deleteMedicalAppointments(medicalAppointment.getIdCita(), person.getIdPerson(), medicalAppointment.getVisitDate())) {
+                showInfo("Operación realizada", "Su cita se ha eliminado correctamente");
+            } else {
+                throw new OperationsDBException("No se ha podido eliminar");
+            }
         } catch (OperationsDBException e) {
             showError("Error", e.getMessage());
         }
@@ -536,7 +540,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
             boolean updateAppointment = connect.updateMedicalAppointment(medicalAppointment, dateNewAppointment);
             if (updateAppointment) {
                 showInfo("Cita actualizada", "Su cita ha sido creada correctamente para el día   " + dateNewAppointment);
-
+                openAppointmentView();
             } else {
                 showError("Cita no actualizada", "No se ha podido actualizar correctamente la cita");
             }
@@ -550,7 +554,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     public void searchAppointments(int idPerson, Date date, boolean updateAppointment) {
         try {
             List<MedicalAppointment> notAvailableMedicalAppointments = connect.searchMedicalAppointments(idPerson, date);
-            List<Date> availableMedicalAppointments = loadNextAvailableAppointments(notAvailableMedicalAppointments);
+            List<Date> availableMedicalAppointments = loadNextAvailableAppointments(notAvailableMedicalAppointments, date);
             AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
             appointmentManegemenController.loadAppointments(availableMedicalAppointments, updateAppointment);
         } catch (OperationsDBException e) {
@@ -562,26 +566,36 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     }
 
     //crear arraylist de citas disponibles
-    private List<Date> loadNextAvailableAppointments(List<MedicalAppointment> listAppointments) {
+    private List<Date> loadNextAvailableAppointments(List<MedicalAppointment> listAppointments, Date date) {
         List<Date> availableAppointments = new ArrayList<>();
-        if (listAppointments.size() >= MedicalAppointment.MAX_APPOINTMENTS) {
-            showInfo("Error ", "No quedan citas disponibles para la fecha elegida");
-        } else if (listAppointments.isEmpty()) {
-            for (int i = 0; i < TIMES.length; i++) {
-                availableAppointments.add(TIMES[i]);
-            }
-        } else if (listAppointments.size() > 0 && listAppointments.size() <= MedicalAppointment.MAX_APPOINTMENTS - 1) {
-            for (int i = 0; i < listAppointments.size(); i++) {
-                if (listAppointments.get(i) != null) {
-                    SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-                    String hora = format.format(listAppointments.get(i).getVisitDate().getTime());
-                    if (!hora.equals(TIMES)) {
-                        availableAppointments.add(listAppointments.get(i).getVisitDate());
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            int day = calendar.get(Calendar.DAY_OF_MONTH); // Hora en formato 24 horas
+            int month = calendar.get(Calendar.MONTH);
+            int year = calendar.get(Calendar.YEAR);
+            final Date[] TIMES = FunctionsApp.fillArray(6, day, month, year);
+            if (listAppointments.size() >= MedicalAppointment.MAX_APPOINTMENTS) {
+                showInfo("Error ", "No quedan citas disponibles para la fecha elegida");
+            } else if (listAppointments.isEmpty()) {
+                for (int i = 0; i < TIMES.length; i++) {
+                    availableAppointments.add(TIMES[i]);
+                }
+            } else if (listAppointments.size() > 0 && listAppointments.size() <= MedicalAppointment.MAX_APPOINTMENTS - 1) {
+                for (int i = 0; i < listAppointments.size(); i++) {
+                    if (listAppointments.get(i) != null) {
+                        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+                        String hora = format.format(listAppointments.get(i).getVisitDate().getTime());
+                        if (!hora.equals(TIMES)) {
+                            availableAppointments.add(listAppointments.get(i).getVisitDate());
+                        }
+                    } else {
+                        //todo: revisa
                     }
-                } else {
-                    //todo: revisa
                 }
             }
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         return availableAppointments;
     }
