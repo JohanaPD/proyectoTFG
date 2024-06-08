@@ -1,5 +1,6 @@
 package org.example.proyectotfg.controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -11,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.example.proyectotfg.DAO.SqliteConnector;
 import org.example.proyectotfg.entities.*;
 import org.example.proyectotfg.enumAndTypes.Notificators;
@@ -40,8 +42,10 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     ViewController actualController;
     Person person;
     String passWordApp = "j v g l r d n k f x kw m s b e";
-    MedicalAppointment actualappointment;
-
+    Timer timer;
+    TimerTask timerTask;
+    MedicalAppointment actualAppointment;
+    MedicalAppointment editedAppointment;
     public MainController(Stage mainStage) throws IOException {
         try {
             connect = new SqliteConnector();
@@ -488,8 +492,65 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                     AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
                     controllerAppointment.setAppointmentDate(medicalApp.getVisitDate());
                     controllerAppointment.setTextAppointment("Cita seleccionada: Psicologo \"" + medicalApp.getPsicologo().getNames() + "\" el dia: " + stringDate + " a las " + stringHours + ":" + stringMinutes);
+                    actualAppointment = medicalApp;
+                    editedAppointment = new MedicalAppointment(actualAppointment);
                     controllerAppointment.setActualMediacalAppointment(medicalApp);
+                    if (timer != null) {
+                        timer.cancel();
+                        timerTask.cancel();
+                    }
+                    timer = new Timer();
+
+                    timerTask = new TimerTask() {
+                        @Override
+                        public void run() {
+                            Platform.runLater(() -> {
+                                System.out.println("Ejecutando hilo");
+
+                                if (editedAppointment == null) {
+                                    timerTask.cancel();
+                                    timer.cancel();
+                                    showInfo("Operación realizada", "Su cita se ha eliminado correctamente");
+                                    openAppointmentView();
+                                } else {
+                                    if (actualAppointment.getVisitDate() != editedAppointment.getVisitDate()) {
+                                        timerTask.cancel();
+                                        timer.cancel();
+                                        showInfo("Cita modificada", "Su cita ha sido modificada al dia " + editedAppointment.getVisitDate());
+
+                                        openAppointmentView();
+
+                                    }
+                                }
+
+                            });
+
+                           /* int segundosActualesPrevios = cancionActual.getSegundosActuales();
+                            int segundosActuales = controladorVistaCancion.recogerValorProgreso();
+                            if (segundosActualesPrevios != segundosActuales) {
+                                player.stop();
+                                player.setStartTime(Duration.seconds(segundosActuales));
+                                player.play();
+                            }
+                            cancionActual.setSegundosActuales(segundosActuales + 1);
+
+                            //RUN LATER!! para repintar la pantalla
+                          *//*  Platform.runLater(() -> {
+                                if (cancionActual != null) {
+                                    controladorVistaCancion.establecerDuracion(cancionActual.getSegundosActuales(), cancionActual.getDuracion());
+                                }
+
+
+                            });*//*
+                            if (cancionActual.getSegundosActuales() == cancionActual.getDuracion()) {
+                                timerTask.cancel();
+                                timer.cancel();
+                            }*/
+                        }
+                    };
+                    timer.schedule(this.timerTask, 1000, 1000);
                 });
+
                 contenedorHBox2.getChildren().add(fragment);
             }
 
@@ -510,7 +571,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     public void deleteAppointment(MedicalAppointment medicalAppointment) {
         try {
             if (connect.deleteMedicalAppointments(medicalAppointment.getIdCita(), person.getIdPerson(), medicalAppointment.getVisitDate())) {
-                showInfo("Operación realizada", "Su cita se ha eliminado correctamente");
+                editedAppointment = null;
             } else {
                 throw new OperationsDBException("No se ha podido eliminar");
             }
@@ -538,9 +599,9 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     public void editAppointment(MedicalAppointment medicalAppointment, Date dateNewAppointment) {
         try {
             boolean updateAppointment = connect.updateMedicalAppointment(medicalAppointment, dateNewAppointment);
+
             if (updateAppointment) {
-                showInfo("Cita actualizada", "Su cita ha sido creada correctamente para el día   " + dateNewAppointment);
-                openAppointmentView();
+                editedAppointment.setVisitDate(dateNewAppointment);
             } else {
                 showError("Cita no actualizada", "No se ha podido actualizar correctamente la cita");
             }
@@ -599,38 +660,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
         return availableAppointments;
     }
-/*
-Código para el hilo
-timer = new Timer();
 
-            timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    int segundosActualesPrevios = cancionActual.getSegundosActuales();
-                    int segundosActuales = controladorVistaCancion.recogerValorProgreso();
-                    if (segundosActualesPrevios != segundosActuales) {
-                        player.stop();
-                        player.setStartTime(Duration.seconds(segundosActuales));
-                        player.play();
-                    }
-                    cancionActual.setSegundosActuales(segundosActuales + 1);
-
-                    //RUN LATER!! para repintar la pantalla
-                    Platform.runLater(() -> {
-                        if (cancionActual != null) {
-                            controladorVistaCancion.establecerDuracion(cancionActual.getSegundosActuales(), cancionActual.getDuracion());
-                        }
-
-
-                    });
-                    if (cancionActual.getSegundosActuales() == cancionActual.getDuracion()) {
-                        timerTask.cancel();
-                        timer.cancel();
-                    }
-                }
-            };
-            timer.schedule(this.timerTask, 1000, 1000);
- */
 
     /*   ================================================================================================
       ====================================== Update Data =====================================================*/
@@ -785,26 +815,26 @@ timer = new Timer();
         ====================================== Log out =====================================================*/
     @Override
     public void logOut() {
-        actualappointment = null;
+        actualAppointment = null;
         person = null;
         volverIncio();
     }
     /*   ================================================================================================
         ======================================show errors =====================================================*/
 
-    public void showError(String titleWindow, String menssage) {
+    public static void showError(String titleWindow, String menssage) {
         Alert alerta = new Alert(Alert.AlertType.ERROR);
         alerta.setTitle("Error");
         showMessage(titleWindow, menssage, alerta);
     }
 
-    public void showInfo(String titleWindow, String menssage) {
+    public static void showInfo(String titleWindow, String menssage) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle("Información");
         showMessage(titleWindow, menssage, alerta);
     }
 
-    private void showMessage(String titleWindow, String menssage, Alert alerta) {
+    private static void showMessage(String titleWindow, String menssage, Alert alerta) {
         alerta.setHeaderText(titleWindow);
         alerta.setContentText(menssage);
         alerta.showAndWait();

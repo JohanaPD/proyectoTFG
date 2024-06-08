@@ -37,6 +37,13 @@ public class MedicalAppointment {
         this.notificator = notificator;
     }
 
+    public MedicalAppointment(MedicalAppointment medicalAppointment) {
+        this.idCita = medicalAppointment.getIdCita();
+        this.psicologo = medicalAppointment.getPsicologo();
+        this.usuario = medicalAppointment.getUsuario();
+        this.visitDate = medicalAppointment.getVisitDate();
+        this.notificator = medicalAppointment.getNotificator();
+    }
 
 
     public MedicalAppointment() {
