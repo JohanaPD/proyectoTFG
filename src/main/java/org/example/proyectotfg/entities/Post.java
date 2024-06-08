@@ -24,10 +24,14 @@ public class Post {
         setTitle(title);
         setContent(content);
     }
-
-    public Post() {
-
+    public Post(int idPost,Person titular, String title, String content) throws NullArgumentException, IncorrectDataException {
+        setIdPost(idPost);
+        setTitular(titular);
+        setTitle(title);
+        setContent(content);
     }
+
+
 
     public int getIdPost() {
         return idPost;

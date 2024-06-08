@@ -18,9 +18,6 @@ public class History {
         setUser(user);
     }
 
-    public int getIdHistory() {
-        return idHistory;
-    }
 
     public void setIdHistory(int idHistory) throws IncorrectDataException {
         if (VerificatorSetter.numberVerificator(idHistory, 1000000000) && idHistory >= 0) {
@@ -41,15 +38,6 @@ public class History {
             throw new NullArgumentException("Has pasado un usuario nulo a la hora de crear el historial");
         }
     }
-
-    public void addpsychologist(ProfessionalUser psychologist) {
-        psychologists.add(psychologist);
-    }
-
-    public void addDiagnose(String diagnose) {
-        diagnoses.add(diagnose);
-    }
-
     @Override
     public String toString() {
         return "Historial{" + "id_historial=" + idHistory + ", paciente=" + user + '}';

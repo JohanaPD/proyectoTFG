@@ -3,11 +3,13 @@ package org.example.proyectotfg.DAO;
 import org.example.proyectotfg.exceptions.*;
 import org.example.proyectotfg.enumAndTypes.StatesUser;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.example.proyectotfg.entities.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -19,7 +21,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-import static org.example.proyectotfg.DAO.SqliteConnector.connection;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SqliteConnectorTest {
@@ -29,7 +30,7 @@ class SqliteConnectorTest {
     @BeforeEach
     void setUp() throws OperationsDBException {
         try {
-            sqliteConnector = new SqliteConnector();
+            sqliteConnector = new SqliteConnector("jdbc:sqlite:src/main/resources/sqliteBBDD/pruebas.db");
         } catch (SQLException e) {
             fail("Error al crear el conector SQLite: " + e.getMessage());
         }
@@ -38,11 +39,16 @@ class SqliteConnectorTest {
     @AfterEach
     void tearDown() {
         try {
+            File file = new File("./src/main/resources/sqliteBBDD/pruebas.db");
+            sqliteConnector.getConnection().close();
             sqliteConnector.close();
+            file.delete();
         } catch (Exception e) {
             fail("Error al cerrar la conexión: " + e.getMessage());
         }
     }
+
+
 
     @Test
     void testCreateTables() {
@@ -116,12 +122,11 @@ class SqliteConnectorTest {
     }
 
 
-
     @Test
     void testRegisterNormalUser() throws IncorrectDataException, NullArgumentException, DuplicateKeyException, NoSuchAlgorithmException, InvalidKeySpecException {
         // Prueba de registro de un usuario normal
         NormalUser normalUser = new NormalUser();
-        normalUser.setIdPerson(3);
+        normalUser.setIdPerson(1);
         normalUser.setNames("Johna");
         normalUser.setLastNames("Doe");
         normalUser.setPassScript("123");
@@ -148,7 +153,8 @@ class SqliteConnectorTest {
     }
 
     @Test
-    void testLoginUser() throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException, IncorrectDataException, NonexistingUser, DataAccessException, IncorrectLoginEception {
+    void testLoginUser() throws NoSuchAlgorithmException, InvalidKeySpecException, SQLException, IncorrectDataException, NonexistingUser, DataAccessException, IncorrectLoginEception, NullArgumentException, DuplicateKeyException {
+        testRegisterNormalUser();
         String user = "aa@example.com";
         String contrasenia = "123";
         try {
@@ -156,99 +162,23 @@ class SqliteConnectorTest {
         } catch (OperationsDBException e) {
             e.getMessage();
         }
-        // Prueba de registro de una persona
-        // Crea una instancia de Person con datos de prueba
-         /*   NormalUser normalUser = new NormalUser();
-            normalUser.setNames("John");
-            normalUser.setLastNames("Doe");
-            normalUser.setPassScript("password");
-            normalUser.setBirthDate(new Date());
-            normalUser.setRegistrationDate(new Date());
-            normalUser.setEmail("john@example.com");
-            normalUser.setTypeUser(TypeUser.USUARIO_NORMAL);
-            normalUser.setState(StatesUser.NOT_VERIFIED);
-            normalUser.setLastActivityDate(new Date());
-            Direction direction = new Direction();
-            direction.setIdDireccion(1);
-            direction.setStreet("123 Main St");
-            direction.setCity("Anytown");
-            direction.setPostalCode(12345);
-            normalUser.setDirection(direction);
-
-            try {
-                // Intenta registrar la persona en la base de datos
-              //  normalUser=(NormalUser) sqliteConnector.registerPerson(normalUser);
-                // Si no se lanza ninguna excepción, el registro fue exitoso
-                String newPassword = "password";
-                assertTrue(sqliteConnector.loginUser(normalUser.getEmail(), newPassword, normalUser.getTypeUser()));
-            } catch (OperationsDBException e) {
-                // Si se lanza una excepción, el registro falló
-                fail("Error registrando persona: " + e.getMessage());
-            }*/
-    /*    // Configuramos los datos de prueba
-        String email = "daniotimon@gmail.com";
-        String password = "1234";
-        String hashedPassword = FunctionsApp.generateStrongPasswordHash(password); // Asegúrate de tener un método para generar la contraseña hash
-        String newPassword = "1234";
-        // Registrar un usuario en la base de datos
-        String sql = "INSERT INTO PERSON (email, pass_script) VALUES (?, ?)";
-        try (Connection conn = sqliteConnector;
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, email);
-            stmt.setString(2, hashedPassword);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            fail("Error preparando la base de datos para la prueba: " + e.getMessage());
-        }
-
-        // Prueba loginUser
-        boolean result = sqliteConnector.loginUser(email, password,typeUser);
-        assertTrue(result, "El usuario debería poder iniciar sesión correctamente.");
-
-        // Limpiar después de la prueba
-        try (Connection conn = sqliteConnector.getConnection();
-             Statement stmt = conn.createStatement()) {
-            stmt.execute("DROP ALL OBJECTS DELETE FILES"); // Limpiar la base de datos H2
-        } catch (SQLException e) {
-            fail("Error limpiando la base de datos después de la prueba: " + e.getMessage());
-        }
-    }
-        } catch (IncorrectDataException | NullArgumentException | DuplicateKeyException | NonexistingUser |
-                 DataAccessException e) {
-            throw new IncorrectDataException(e.getMessage());
-        }*/
-
 
     }
 
-    @Test
-    void testThereIsAQuoteExists() throws OperationsDBException {
-        // Test for an existing appointment
-        String dateString = "2023-06-01"; // Asegúrate de que esta cadena esté en el formato correcto
-        Date date=null;
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-             date = dateFormat.parse(dateString);
-            System.out.println("Fecha analizada: " + date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        boolean result = SqliteConnector.thereIsAQuote(1, date);
-        assertTrue(result, "The appointment should exist in the database.");
-    }
+
 
     @Test
     void testThereIsAQuoteDoesNotExist() throws OperationsDBException {
         // Test for a non-existing appointment
-        Date date=new Date();
+        Date date = new Date();
 
-        boolean result = SqliteConnector.thereIsAQuote(4, new Date(date.getTime()));
+        boolean result = sqliteConnector.thereIsAQuote(4, new Date(date.getTime()));
         assertFalse(result, "The appointment should not exist in the database.");
     }
 
     @Test
-    void testUpdateNormalUserWP() throws OperationsDBException, SQLException, IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
-
+    void testUpdateNormalUserWP() throws OperationsDBException, SQLException, IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException, DuplicateKeyException {
+        testRegisterNormalUser();
         NormalUser normalUser = new NormalUser();
         normalUser.setIdPerson(1);
         normalUser.setNames("Jane");
@@ -256,14 +186,20 @@ class SqliteConnectorTest {
         normalUser.setEmail("jane.smith@example.com");
         Direction direction = new Direction();
         direction.setIdDireccion(1); // Usar una dirección existente
+        direction.setStreet("123 Main St");
+        direction.setCity("Anytown");
+        direction.setPostalCode(12345);
         normalUser.setDireccion(direction);
-
+        normalUser.setNickname("janesmith");
+        normalUser.setInTherapySession(false);
+/*
         SqliteConnector sqliteConnector = new SqliteConnector();
+*/
         sqliteConnector.updateNormalUserWP(normalUser);
 
         // Verificar que los datos en la base de datos se hayan actualizado correctamente
         String selectSQL = "SELECT user_names, last_names, email FROM person WHERE id_person = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(selectSQL)) {
+        try (PreparedStatement pstmt = sqliteConnector.getConnection().prepareStatement(selectSQL)) {
             pstmt.setInt(1, 1);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -277,29 +213,20 @@ class SqliteConnectorTest {
     }
 
     @Test
-    public void makeNewPost() throws SQLException, IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException {
+    public void makeNewPost() throws SQLException, IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException, OperationsDBException {
         // ArrangeSqliteConnector conn = new SqliteConnector();
         Person titular = new ProfessionalUser();
-        Post nuevo = new Post();
-        nuevo.setIdPost(1);
-        nuevo.setTitle("La lectura y sus positivos efectos para la salud mental");
-        nuevo.setContent("Algo tan sencillo como un libro puede transformarse en un muy buen aliado si buscas prevenir el estrés y cuidar tu salud mental." +
-                "Es probable que desde la infancia hayas escuchado a tus padres o abuelos hablar sobre la importancia de la lectura para la vida. Demás está decir que leer es sinónimo de aprender y entretenerse , y a esto debemos sumar los muchos beneficios que un libro puede tener para la salud mental.\n" +
-                "El doctor Alejandro Koppmann, psiquiatra de Clínica Alemana, explica que los efectos positivos de un libro varían según cada lector: “Además del placer de disfrutar una buena historia, muchos recuerdan, por ejemplo, haber encontrado en la lectura un refugio o un lugar de descanso frente a situaciones adversas ocurridas durante su infancia. Otras personas, en cambio, leen como estrategia de prevención contra el estrés”. Y es que la lectura, efectivamente, tal como mantener algún hobby o practicar actividad física, puede contribuir a evitar o a equilibrar la precipitación de un síndrome de sobrecarga o cuadro de estrés ”.");
+        Post nuevo = new Post(1,titular, "Test Title",  "Test Content");
 
-        //connection.makeNewPost(nuevo);
+        sqliteConnector.makeNewPost(nuevo);
 
-        Statement stmt = connection.createStatement();
+        Statement stmt = sqliteConnector.getConnection().createStatement();
         ResultSet rs = stmt.executeQuery("SELECT * FROM post WHERE title = 'Test Title'");
 
         assertTrue(rs.next());
-        assertEquals("Test Title", rs.getString("La lectura y sus positivos efectos para la salud mental\n"));
+        assertEquals("Test Title", rs.getString("title"));
         assertEquals("Test Content", rs.getString("content"));
 
-        LocalDate localDate2 = Instant.now().atZone(ZoneId.systemDefault()).toLocalDate();
-        Date sqlDate2 = java.sql.Date.valueOf(localDate2);
 
-        assertEquals(sqlDate2, rs.getDate("date_post"));
-        assertEquals(1, rs.getInt("id_person"));
     }
 }

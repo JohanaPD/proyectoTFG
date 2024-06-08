@@ -1,46 +1,42 @@
 package org.example.proyectotfg.entities;
 
 import org.example.proyectotfg.enumAndTypes.Notificators;
-import org.example.proyectotfg.functions.FunctionsApp;
 
-import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.Date;
 
 public class MedicalAppointment {
-    // que notificaciones vamos a enviar... serán enum? son unas para usuario profesional y otras para profesional
-    private int idCita;
-    private ProfessionalUser psicologo;
-    private NormalUser usuario;
+    private int idAppointment;
+    private ProfessionalUser professionalUser;
+    private NormalUser user;
     private Date visitDate;
     private Notificators notificator;
     public final static  int MAX_APPOINTMENTS = 6;
 
-    public MedicalAppointment(int idCita, ProfessionalUser psicologo, NormalUser usuario, Date visitDate, Notificators notificator) {
-        this.idCita = idCita;
-        this.psicologo = psicologo;
-        this.usuario = usuario;
+    public MedicalAppointment(int idAppointment, ProfessionalUser professionalUser, NormalUser user, Date visitDate, Notificators notificator) {
+        this.idAppointment = idAppointment;
+        this.professionalUser = professionalUser;
+        this.user = user;
         this.visitDate = visitDate;
         this.notificator = notificator;
     }
 
-    public MedicalAppointment(int idCita, ProfessionalUser psicologo, NormalUser usuario, Date visitDate) {
-        this.idCita = idCita;
-        this.psicologo = psicologo;
-        this.usuario = usuario;
+    public MedicalAppointment(int idAppointment, ProfessionalUser professionalUser, NormalUser user, Date visitDate) {
+        this.idAppointment = idAppointment;
+        this.professionalUser = professionalUser;
+        this.user = user;
         this.visitDate = visitDate;
     }
-    public MedicalAppointment( ProfessionalUser psicologo, NormalUser usuario, Date visitDate,Notificators notificator) {
-        this.psicologo = psicologo;
-        this.usuario = usuario;
+    public MedicalAppointment(ProfessionalUser professionalUser, NormalUser user, Date visitDate, Notificators notificator) {
+        this.professionalUser = professionalUser;
+        this.user = user;
         this.visitDate = visitDate;
         this.notificator = notificator;
     }
 
     public MedicalAppointment(MedicalAppointment medicalAppointment) {
-        this.idCita = medicalAppointment.getIdCita();
-        this.psicologo = medicalAppointment.getPsicologo();
-        this.usuario = medicalAppointment.getUsuario();
+        this.idAppointment = medicalAppointment.getIdAppointment();
+        this.professionalUser = medicalAppointment.getProfessionalUser();
+        this.user = medicalAppointment.getUser();
         this.visitDate = medicalAppointment.getVisitDate();
         this.notificator = medicalAppointment.getNotificator();
     }
@@ -53,28 +49,28 @@ public class MedicalAppointment {
 
 
     // Getters y Setters
-    public int getIdCita() {
-        return idCita;
+    public int getIdAppointment() {
+        return idAppointment;
     }
 
-    public void setIdCita(int idCita) {
-        this.idCita = idCita;
+    public void setIdAppointment(int idAppointment) {
+        this.idAppointment = idAppointment;
     }
 
-    public ProfessionalUser getPsicologo() {
-        return psicologo;
+    public ProfessionalUser getProfessionalUser() {
+        return professionalUser;
     }
 
-    public void setPsicologo(ProfessionalUser psicologo) {
-        this.psicologo = psicologo;
+    public void setProfessionalUser(ProfessionalUser professionalUser) {
+        this.professionalUser = professionalUser;
     }
 
-    public NormalUser getUsuario() {
-        return usuario;
+    public NormalUser getUser() {
+        return user;
     }
 
-    public void setUsuario(NormalUser usuario) {
-        this.usuario = usuario;
+    public void setUser(NormalUser user) {
+        this.user = user;
     }
 
     public Date getVisitDate() {
