@@ -948,6 +948,27 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         return updated;
     }
 
+    @Override
+    public String searchNameForPerson(int idPerson) throws OperationsDBException {
+        String completeName="";
+        String consulta = "SELECT user_names , last_names FROM person WHERE id_person = ?";
+        try (Connection connection = DriverManager.getConnection(URL);
+             PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
+            preparetStmt.setInt(1, idPerson);
+           try(ResultSet resultSet = preparetStmt.executeQuery()){
+            while (resultSet.next()) {
+                completeName = resultSet.getString("user_names");
+                completeName+=resultSet.getString("last_names");
+            }
+           }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return completeName;
+    }
+
     public boolean deleteMedicalAppointments(int id_appointment, int id_normal_user, Date date) throws OperationsDBException {
         boolean delete = false;
         String consulta = "DELETE FROM medical_appointment WHERE id_appointment = ? AND id_normal_user = ? and visit_date = ? ";
@@ -966,6 +987,8 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return delete;
     }
+
+
 
     @Override
     public void close() throws Exception {
