@@ -524,28 +524,6 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                                 }
 
                             });
-
-                           /* int segundosActualesPrevios = cancionActual.getSegundosActuales();
-                            int segundosActuales = controladorVistaCancion.recogerValorProgreso();
-                            if (segundosActualesPrevios != segundosActuales) {
-                                player.stop();
-                                player.setStartTime(Duration.seconds(segundosActuales));
-                                player.play();
-                            }
-                            cancionActual.setSegundosActuales(segundosActuales + 1);
-
-                            //RUN LATER!! para repintar la pantalla
-                          *//*  Platform.runLater(() -> {
-                                if (cancionActual != null) {
-                                    controladorVistaCancion.establecerDuracion(cancionActual.getSegundosActuales(), cancionActual.getDuracion());
-                                }
-
-
-                            });*//*
-                            if (cancionActual.getSegundosActuales() == cancionActual.getDuracion()) {
-                                timerTask.cancel();
-                                timer.cancel();
-                            }*/
                         }
                     };
                     timer.schedule(this.timerTask, 1000, 1000);
