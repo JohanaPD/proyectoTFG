@@ -21,6 +21,7 @@ import org.example.proyectotfg.exceptions.*;
 import org.example.proyectotfg.functions.FunctionsApp;
 import org.example.proyectotfg.functions.SenderReaderMail;
 import org.example.proyectotfg.mediators.*;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -31,6 +32,16 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
+/**
+ * Main controller class implementing various mediator interfaces.
+ *
+ * <p>This class serves as the main controller for the application, implementing several mediator interfaces
+ * to handle different aspects of the application's functionality.</p>
+ *
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
 public class MainController implements Mediator, MediatorAccess, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction, MediatorNotifiers {
 
     private Stage mainStage;
@@ -43,6 +54,12 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     MedicalAppointment actualAppointment;
     MedicalAppointment editedAppointment;
 
+    /**
+     * Constructs a new MainController object.
+     *
+     * @param mainStage the main stage of the application
+     * @throws IOException if an I/O error occurs while loading the first view
+     */
     public MainController(Stage mainStage) throws IOException {
         try {
             connect = new SqliteConnector();
@@ -55,6 +72,9 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     /*   ================================================================================================
         ======================================vistas principales =====================================================*/
 
+    /**
+     * Loads the first view of the application.
+     */
     public void loadFirstView() {
         try {
             loadView("/org/example/proyectotfg/entry-view.fxml");
@@ -66,6 +86,10 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
     /*   ================================================================================================
        ====================================CARGAR TODOS LOS SCENE ==============================*/
+
+    /**
+     * Loads the initial interface view of the application.
+     */
     private void loadInterfazInicial() {
         try {
             loadView("/org/example/proyectotfg/initial-interface-view.fxml");
@@ -79,6 +103,12 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
     }
 
+    /**
+     * Loads a view with the specified FXML file path.
+     *
+     * @param s the file path of the FXML file to load.
+     * @throws ThereIsNoView if the view does not exist or cannot be loaded.
+     */
     private void loadView(String s) throws ThereIsNoView {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(s));
@@ -93,6 +123,9 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
+    /**
+     * Opens the login view.
+     */
     @Override
     public void openLogin() {
         try {
@@ -106,6 +139,9 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     /*=======================================================================================================
      * ==========================================HACER REGISTRO =============================================*/
 
+    /**
+     * Opens the user registration view.
+     */
     @Override
     public void userRegister() {
         try {
@@ -118,6 +154,9 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     /*=======================================================================================================
      * ==========================================Recuperar Contraseña =============================================*/
 
+    /**
+     * Loads the password recovery view.
+     */
     @Override
     public void loadRecoverPassword() {
         try {
@@ -127,6 +166,13 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
             showError("Error", e.getMessage());
         }
     }
+
+    /**
+     * Recovers the password for a user with the given email address.
+     *
+     * @param mail the email address of the user.
+     * @param pass the new password for the user.
+     */
 
     @Override
     public void recoverPassword(String mail, String pass) {
@@ -147,6 +193,9 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
     }
 
+    /**
+     * Loads the view for displaying posts shared by the user.
+     */
     public void loadPostView() {
         try {
             loadView("/org/example/proyectotfg/post-view.fxml");
@@ -158,9 +207,13 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         } catch (ThereIsNoView | IncorrectDataException | NullArgumentException | OperationsDBException e) {
             showError("Error", e.getMessage());
         }
-
     }
 
+    /**
+     * Performs the registration process for a professional user and sends a confirmation email.
+     *
+     * @param user The ProfessionalUser object containing the registration details.
+     */
     @Override
     public void makeRecordRegister(ProfessionalUser user) {
         String mensaje = FunctionsApp.devolverStringMail(user);
@@ -176,6 +229,11 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         person = user;
     }
 
+    /**
+     * Performs the registration process for a normal user and sends a confirmation email.
+     *
+     * @param user The NormalUser object containing the registration details.
+     */
     @Override
     public void makeRecordRegister(NormalUser user) {
         String mensaje = FunctionsApp.devolverStringMail(user);
@@ -191,6 +249,13 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         person = user;
     }
 
+    /**
+     * Sends an email to the specified user with the provided message.
+     *
+     * @param sender  The SenderReaderMail object used to send the email.
+     * @param user    The email address of the recipient.
+     * @param mensaje The message content to be sent.
+     */
     private void enviarEmail(SenderReaderMail sender, String user, String mensaje) {
         try {
             sender.enviarMensajeHTML("meetpsychproject@gmail.com", user, "Verificación de Cuenta", mensaje, "meetpsychproject@gmail.com", passWordApp);
@@ -199,6 +264,9 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
+    /**
+     * Returns to the initial login screen.
+     */
     @Override
     public void volverIncio() {
         try {
@@ -212,6 +280,13 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
    /*   ================================================================================================
         ======================================vistas principales =====================================================*/
 
+    /**
+     * Logs in the user with the provided credentials.
+     *
+     * @param user     the username or email of the user.
+     * @param pass     the password of the user.
+     * @param typeuser the type of user logging in (e.g., NormalUser or ProfessionalUser).
+     */
     @Override
     public void loginUser(String user, String pass, TypeUser typeuser) {
         try {
@@ -230,6 +305,13 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
     /*   ================================================================================================
         ======================================Firs screen =====================================================*/
+
+    /**
+     * Initializes the services provided by the application.
+     *
+     * @param services a HashMap containing the services to be initialized, where the key is the service name and the value is the service description.
+     * @return the Parent node containing the initialized services.
+     */
     @Override
     public Parent initializeServices(HashMap<String, String> services) {
         HBox contenedorHBox = new HBox(4);
@@ -276,6 +358,14 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
     /*   ================================================================================================
           ======================================Search View=====================================================*/
+
+    /**
+     * Loads the search results of professional users.
+     *
+     * @param professionalUsers a List containing the professional users to be displayed in the search results.
+     * @return the Parent node containing the loaded search results.
+     */
+
     @Override
     public Parent loadSearchs(List<ProfessionalUser> professionalUsers) {
         StackPane stackPane = new StackPane();
@@ -310,12 +400,16 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         return contenedorHBox;
     }
 
+    /**
+     * Adds a professional user to the favorites list of a person.
+     *
+     * @param professionalUser the ProfessionalUser to be added to the favorites list.
+     * @param person           the Person who wants to add the professional user to their favorites list.
+     * @throws OperationsDBException if there is an error while adding the professional user to the favorites list.
+     */
     @Override
     public void addToFavorites(ProfessionalUser professionalUser, Person person) throws OperationsDBException {
         boolean addto = connect.addProfesionalUserInFavorites(professionalUser, person);
-        if (!addto) {
-            //TODO: Que mostrar??
-        }
     }
 
     @Override
@@ -354,6 +448,15 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
     /*   ================================================================================================
        ======================================Appointment manager=====================================================*/
+
+    /**
+     * Opens the appointment management view.
+     *
+     * <p>This method sets the title of the main stage to "Gestor de citas" and loads the appointment management view.
+     * It also initializes the AppointmentManegemenController, sets the person attribute, sets the title post, and loads the professionals and the person's appointments.</p>
+     *
+     * @throws ThereIsNoView if there is an error loading the appointment management view.
+     */
     @Override
     public void openAppointmentView() {
         try {
@@ -370,6 +473,15 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
+    /**
+     * Loads professionals in the mediator calendar.
+     *
+     * <p>This method loads a list of professional users into a horizontal box, each represented by a fragment-services-view.
+     * It sets the data for each professional user including their names and image path. It also sets a callback function to handle user interactions.
+     * When a professional user is selected, it retrieves the selected date from the appointment management controller and searches for appointments for that professional on that date.</p>
+     *
+     * @return The parent node containing the loaded professionals in the mediator calendar.
+     */
     @Override
     public Parent loadProfessionalsInMediatorCalendar() {
         HBox contenedorHBox2 = new HBox(6);
@@ -387,13 +499,10 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", imageIndex);
                 controller.setData(String.valueOf(us.getNames()), String.valueOf(imagePath));
 
-                //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
                 controller.setCallback(() -> {
-                    //como lo puedo pasar al callback
                     AppointmentManegemenController appointmentManegemenController = (AppointmentManegemenController) actualController;
                     appointmentManegemenController.setProfessionalUser(us);
                     LocalDate localDate = appointmentManegemenController.getDatePicker().getValue();
-                    //llama al metodo que verifica las citas??
                     if (localDate == null) {
                         showError("Error", "Tienes que seleccionar una" + " fecha antes de continuar);");
                     } else {
@@ -416,6 +525,17 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
     }
 
+    /**
+     * Loads available appointments in the calendar.
+     *
+     * <p>This method loads a list of available medical appointments into a horizontal box, each represented by a fragment-appointment-hours-view.
+     * It sets the hour and minute texts for each appointment based on the provided date. It also sets a callback function to handle user interactions.
+     * When an appointment is selected, it either sets the appointment date and confirmation text in the appointment management controller or edits the existing appointment if updateAppointment is true.</p>
+     *
+     * @param medicalAppointments The list of available medical appointments to be loaded.
+     * @param updateAppointment   A boolean value indicating whether to update the appointment.
+     * @return The parent node containing the loaded available appointments in the calendar.
+     */
     @Override
     public Parent loadAvailableAppointmentsInCalendar(List<Date> medicalAppointments, boolean updateAppointment) {
         HBox contenedorHBox2 = new HBox(6);
@@ -454,12 +574,17 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         return contenedorHBox2;
     }
 
-    @Override
-    public Parent loadNotAvailableAppointmentsInCalendar(List<MedicalAppointment> medicalAppointments) {
-        HBox contenedorHBox2 = new HBox(6);
-        return contenedorHBox2;
-    }
-
+    /**
+     * Loads the user's next appointments.
+     *
+     * <p>This method loads the user's next medical appointments into a horizontal box, each represented by a fragment-appointment-hours-view.
+     * It sets the date, hour, and minute texts for each appointment based on the appointment's visit date.
+     * It also sets a callback function to handle user interactions.
+     * When an appointment is selected, it sets the appointment date, appointment text, actual appointment, and edited appointment in the appointment management controller.
+     * It also starts a timer to monitor any changes to the appointment and updates the UI accordingly.</p>
+     *
+     * @return The parent node containing the loaded next appointments.
+     */
     @Override
     public Parent myNextAppoinments() {
         HBox contenedorHBox2 = new HBox(6);
@@ -471,11 +596,10 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/proyectotfg/fragment-appointment-hours-view.fxml"));
                 Node fragment = fxmlLoader.load();
                 ControllerFragmentApoinmentHours controller = fxmlLoader.getController();
-                //cambiar este callback para que el metodo permita acceder junto con la fecha, a la agenda del profesional
                 Calendar calendar = Calendar.getInstance();
                 Date date = medicalApp.getVisitDate();
                 calendar.setTime(date);
-                int hours = calendar.get(Calendar.HOUR_OF_DAY); // Hora en formato 24 horas
+                int hours = calendar.get(Calendar.HOUR_OF_DAY);
                 int minutes = calendar.get(Calendar.MINUTE);
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -488,7 +612,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 controller.setCallback(() -> {
                     AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
                     controllerAppointment.setAppointmentDate(medicalApp.getVisitDate());
-                    controllerAppointment.setTextAppointment("Psicologo \"" + medicalApp.getPsicologo().getNames() +medicalApp.getPsicologo().getLastNames()+ "\" " + stringDate + " " + stringHours + ":" + stringMinutes);
+                    controllerAppointment.setTextAppointment("Psicologo \"" + medicalApp.getPsicologo().getNames() + medicalApp.getPsicologo().getLastNames() + "\" " + stringDate + " " + stringHours + ":" + stringMinutes);
                     actualAppointment = medicalApp;
                     editedAppointment = new MedicalAppointment(actualAppointment);
                     controllerAppointment.setActualMediacalAppointment(medicalApp);
@@ -502,8 +626,6 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                         @Override
                         public void run() {
                             Platform.runLater(() -> {
-                                System.out.println("Ejecutando hilo");
-
                                 if (editedAppointment == null) {
                                     timerTask.cancel();
                                     timer.cancel();
@@ -528,8 +650,6 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
                 contenedorHBox2.getChildren().add(fragment);
             }
-
-
         } catch (IncorrectDataException | NoSuchAlgorithmException | InvalidKeySpecException | NullArgumentException |
                  OperationsDBException | IOException e) {
             throw new RuntimeException(e);
@@ -537,6 +657,12 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         return contenedorHBox2;
     }
 
+    /**
+     * Navigates back from the notifier screen to the home screen.
+     *
+     * <p>This method cancels any running timer tasks and timers.
+     * Then, it navigates back to the home screen using the {@code fromFirstScreenToHome()} method.</p>
+     */
     @Override
     public void backFromNotifiersToHome() {
         if (timer != null) {
@@ -546,6 +672,17 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         fromFirstScreenToHome();
     }
 
+    /**
+     * Deletes a medical appointment.
+     *
+     * @param medicalAppointment The medical appointment to be deleted.
+     *
+     *                           <p>This method attempts to delete the specified medical appointment from the database.
+     *                           If the deletion is successful, the {@code editedAppointment} variable is set to {@code null}.
+     *                           If the deletion fails, an {@code OperationsDBException} is thrown.</p>
+     *
+     *                           <p>After deletion, the method navigates back to the appointment view using the {@code openAppointmentView()} method.</p>
+     */
     @Override
     public void deleteAppointment(MedicalAppointment medicalAppointment) {
         try {
@@ -560,6 +697,17 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         openAppointmentView();
     }
 
+    /**
+     * Adds a new medical appointment.
+     *
+     * @param professionalUser The professional user for the appointment.
+     * @param date             The date of the appointment.
+     *
+     *                         <p>This method creates a new medical appointment with the specified professional user and date,
+     *                         and attempts to insert it into the database. If the insertion is successful,
+     *                         a success message is displayed, and the user is navigated back to the appointment view.
+     *                         If the insertion fails, an error message is shown.</p>
+     */
     @Override
     public void addAppointment(ProfessionalUser professionalUser, Date date) {
         try {
@@ -574,6 +722,16 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
+    /**
+     * Edits the details of a medical appointment.
+     *
+     * @param medicalAppointment The medical appointment to be edited.
+     * @param dateNewAppointment The new date for the appointment.
+     *
+     *                           <p>This method updates the date of the specified medical appointment
+     *                           to the new date provided. If the update is successful, the appointment's
+     *                           details are updated locally. If the update fails, an error message is displayed.</p>
+     */
     @Override
     public void editAppointment(MedicalAppointment medicalAppointment, Date dateNewAppointment) {
         try {
@@ -590,6 +748,19 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
+    /**
+     * Searches for available appointments for a given professional user and date.
+     *
+     * @param idPerson          The ID of the professional user.
+     * @param date              The date for which appointments are to be searched.
+     * @param updateAppointment A flag indicating whether the appointment needs to be updated.
+     *
+     *                          <p>This method searches for available appointments for the specified professional user
+     *                          on the given date. If the updateAppointment flag is set to true, it indicates that the
+     *                          appointment needs to be updated. The method loads the available appointments and updates
+     *                          the appointment management view accordingly. If an error occurs during the operation,
+     *                          an error message is displayed.</p>
+     */
     @Override
     public void searchAppointments(int idPerson, Date date, boolean updateAppointment) {
         try {
@@ -605,7 +776,18 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
-    //crear arraylist de citas disponibles
+    /**
+     * Loads the next available appointments based on the given list of appointments and date.
+     *
+     * @param listAppointments The list of existing appointments.
+     * @param date             The date for which appointments are to be loaded.
+     * @return A list of next available appointments.
+     *
+     * <p>This method loads the next available appointments based on the provided list of
+     * appointments and the specified date. It checks the existing appointments and returns
+     * a list of available appointment times. If no appointments are available, it returns
+     * an empty list. If an error occurs during the operation, it throws a runtime exception.</p>
+     */
     private List<Date> loadNextAvailableAppointments(List<MedicalAppointment> listAppointments, Date date) {
         List<Date> availableAppointments = new ArrayList<>();
         try {
@@ -630,12 +812,12 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                             availableAppointments.add(listAppointments.get(i).getVisitDate());
                         }
                     } else {
-                        //todo: revisa
+                        showError("Error", "Error con los datos recibidos ");
                     }
                 }
             }
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            showError("Error", e.getMessage());
         }
         return availableAppointments;
     }
@@ -643,6 +825,17 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
     /*   ================================================================================================
       ====================================== Update Data =====================================================*/
+
+    /**
+     * Updates the personal data of the user.
+     *
+     * @param user The user whose data needs to be updated.
+     * @throws OperationsDBException If an error occurs during the database operation.
+     *
+     *                               <p>This method updates the personal data of the specified user. It loads the view
+     *                               for updating user data and sets the user's information in the controller. If there
+     *                               is an error loading the view, it displays an error message.</p>
+     */
     @Override
     public void updatePersonalData(Person user) throws OperationsDBException {
         try {
@@ -655,6 +848,15 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
+    /**
+     * Updates the data of a normal user.
+     *
+     * @param user The normal user whose data needs to be updated.
+     *
+     *             <p>This method updates the data of the specified normal user in the database. It
+     *             sets the user's information and navigates back to the home screen after successful
+     *             update. If there is an error during the update operation, it displays an error message.</p>
+     */
     @Override
     public void updateDataPerson(NormalUser user) {
         try {
@@ -667,6 +869,15 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
+    /**
+     * Updates the data of a professional user.
+     *
+     * @param user The professional user whose data needs to be updated.
+     *
+     *             <p>This method updates the data of the specified professional user in the database. It
+     *             sets the user's information and navigates back to the home screen after successful
+     *             update. If there is an error during the update operation, it displays an error message.</p>
+     */
     @Override
     public void updateDataPerson(ProfessionalUser user) {
         try {
@@ -678,6 +889,16 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
             showError("Error en la operaciones", e.getMessage());
         }
     }
+
+    /**
+     * Updates all data of a professional user.
+     *
+     * @param user The professional user whose data needs to be updated.
+     *
+     *             <p>This method updates all the data of the specified professional user in the database.
+     *             It sets the user's information and navigates to the login screen after successful update.
+     *             If there is an error during the update operation, it displays an error message.</p>
+     */
 
     @Override
     public void updateAllDataPerson(ProfessionalUser user) {
@@ -691,6 +912,17 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
+    /**
+     * Updates all data of a normal user.
+     *
+     * @param user The normal user whose data needs to be updated.
+     * @throws SQLException If a database access error occurs.
+     *
+     *                      <p>This method updates all the data of the specified normal user in the database.
+     *                      It sets the user's information and navigates to the home screen after successful update.
+     *                      If there is an error during the update operation, it displays an error message.</p>
+     */
+
     @Override
     public void updateAllDataPerson(NormalUser user) throws SQLException {
         try {
@@ -703,6 +935,12 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
+    /**
+     * Navigates from the first screen to the home screen.
+     *
+     * <p>This method loads the initial interface view and sets the title to "MeetPsych!!".
+     * It then loads the initial interface, sets the mediator, and handles any errors that may occur during the process.</p>
+     */
 
     @Override
     public void fromFirstScreenToHome() {
@@ -716,10 +954,24 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
+    /**
+     * Returns to the home screen.
+     *
+     * <p>This method delegates the task to the {@code fromFirstScreenToHome()} method.</p>
+     */
+
     @Override
     public void returnHome() {
         fromFirstScreenToHome();
     }
+
+    /**
+     * Opens the search view with the specified search query.
+     *
+     * <p>This method searches for professional users based on the provided query and loads the search view if results are found.</p>
+     *
+     * @param busqueda The search query.
+     */
 
     @Override
     public void openSearch(String busqueda) {
@@ -737,6 +989,15 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
+    /**
+     * Opens the professional user information view.
+     *
+     * <p>This method loads the professional user information view with the details of the specified professional user.</p>
+     *
+     * @param professionalUser The professional user for whom the information is displayed.
+     * @param index            The index of the professional user.
+     */
+
     @Override
     public void openProfessionalUser(ProfessionalUser professionalUser, int index) {
         try {
@@ -752,6 +1013,14 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
   /*   ================================================================================================
         ======================================Hacer Post =====================================================*/
 
+    /**
+     * Creates a new post.
+     *
+     * <p>This method creates a new post and saves it to the database.</p>
+     *
+     * @param newPost The new post to be created.
+     */
+
     @Override
     public void makePost(Post newPost) {
         try {
@@ -762,6 +1031,14 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
 
+    /**
+     * Displays a list of posts.
+     *
+     * <p>This method generates a graphical view to display a list of posts.</p>
+     *
+     * @param posts The list of posts to be displayed.
+     * @return A graphical representation of the list of posts.
+     */
     @Override
     public Parent viewPost(List<Post> posts) {
         Parent parent = new VBox();
@@ -781,6 +1058,13 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         return parent;
     }
 
+    /**
+     * Loads the public post view.
+     *
+     * <p>This method loads the public post view, allowing users to create new posts.</p>
+     *
+     * @throws ThereIsNoView If the view cannot be loaded.
+     */
     private void loadPublicPostView() throws ThereIsNoView {
         mainStage.setTitle("¡Estamos construyendo nuevos espacios para ti!");
         loadView("/org/example/proyectotfg/post-generator-view.fxml");
@@ -792,6 +1076,12 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
     /*   ================================================================================================
         ====================================== Log out =====================================================*/
+
+    /**
+     * Logs out the current user.
+     *
+     * <p>This method clears the current appointment and person information and returns the user to the login screen.</p>
+     */
     @Override
     public void logOut() {
         actualAppointment = null;
@@ -801,24 +1091,49 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     /*   ================================================================================================
         ======================================show errors =====================================================*/
 
-    public static void showError(String titleWindow, String menssage) {
+    /**
+     * Displays an error message dialog.
+     *
+     * @param titleWindow the title of the error window
+     * @param message     the error message to display
+     */
+
+    public static void showError(String titleWindow, String message) {
         Alert alerta = new Alert(Alert.AlertType.ERROR);
         alerta.setTitle("Error");
-        showMessage(titleWindow, menssage, alerta);
+        showMessage(titleWindow, message, alerta);
     }
 
-    public static void showInfo(String titleWindow, String menssage) {
+    /**
+     * Displays an information message dialog.
+     *
+     * @param titleWindow the title of the information window
+     * @param message     the information message to display
+     */
+
+    public static void showInfo(String titleWindow, String message) {
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle("Información");
-        showMessage(titleWindow, menssage, alerta);
+        showMessage(titleWindow, message, alerta);
     }
 
-    private static void showMessage(String titleWindow, String menssage, Alert alerta) {
-        alerta.setHeaderText(titleWindow);
-        alerta.setContentText(menssage);
-        alerta.showAndWait();
+    /**
+     * Displays a message with a specified title and content in a given alert dialog.
+     *
+     * @param titleWindow the title of the alert window
+     * @param message     the message content to display
+     * @param alert       the Alert object used to display the message
+     */
+
+    private static void showMessage(String titleWindow, String message, Alert alert) {
+        alert.setHeaderText(titleWindow);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
+    /**
+     * Navigates back to the home screen.
+     */
 
     @Override
     public void backToHome() {
