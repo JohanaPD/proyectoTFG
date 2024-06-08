@@ -18,12 +18,9 @@ import org.example.proyectotfg.entities.*;
 import org.example.proyectotfg.enumAndTypes.Notificators;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
 import org.example.proyectotfg.exceptions.*;
-//import org.example.proyectotfg.functions.FirebaseInitializer;
 import org.example.proyectotfg.functions.FunctionsApp;
 import org.example.proyectotfg.functions.SenderReaderMail;
 import org.example.proyectotfg.mediators.*;
-
-//import javax.mail.MessagingException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -33,7 +30,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
-
 
 public class MainController implements Mediator, MediatorAccess, MediatorProfile, MediatorFirstScreen, MediatorPost, MediatorConstruction, MediatorNotifiers {
 
@@ -46,6 +42,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     TimerTask timerTask;
     MedicalAppointment actualAppointment;
     MedicalAppointment editedAppointment;
+
     public MainController(Stage mainStage) throws IOException {
         try {
             connect = new SqliteConnector();

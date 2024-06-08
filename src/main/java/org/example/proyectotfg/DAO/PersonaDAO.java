@@ -14,12 +14,6 @@ public interface PersonaDAO {
 
     void createTables() throws OperationsDBException;
 
-    void buscarPorNombreoEspecialidad(String tabla, String busqueda);
-
-    NormalUser buscarPaciente(String nombre) throws OperationsDBException;
-
-    ProfessionalUser buscarPsicologo(String nombre) throws OperationsDBException;
-
     void registerProfessionalUser(ProfessionalUser professionalUser, boolean update) throws OperationsDBException, DuplicateKeyException;
 
     void registerNormalUser(NormalUser normalUser, boolean update) throws OperationsDBException, DuplicateKeyException;
