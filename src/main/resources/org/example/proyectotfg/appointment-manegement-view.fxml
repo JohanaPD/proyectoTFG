@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox id="layoutMajor" maxHeight="776.0" maxWidth="421.0" prefHeight="776.0" prefWidth="421.0" styleClass="layoutFondoTotal" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.AppointmentManegemenController">
+<VBox id="layoutMajor" maxHeight="797.0" maxWidth="421.0" prefHeight="797.0" prefWidth="421.0" styleClass="layoutFondoTotal" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.AppointmentManegemenController">
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
     </padding>
@@ -30,7 +30,7 @@
                 <Label layoutX="21.0" layoutY="73.0" styleClass="sectionTitle" text="Psicólogos Seleccionados" />
             <AnchorPane fx:id="appointmentsList" layoutX="19.0" layoutY="100.0" prefHeight="100.0" prefWidth="351.0">
                <children>
-                  <ScrollPane fx:id="professionalsList" prefHeight="132.0" prefWidth="359.0" />
+                  <ScrollPane fx:id="professionalsList" prefHeight="146.0" prefWidth="359.0" />
                </children></AnchorPane>
             </children>
         </AnchorPane>
@@ -55,7 +55,7 @@
         </AnchorPane>
 
         <!-- Contenedor para las citas elegidas -->
-        <AnchorPane maxWidth="1.7976931348623157E308" prefHeight="177.0" prefWidth="411.0" stylesheets="@styles.css">
+        <AnchorPane maxWidth="1.7976931348623157E308" prefHeight="313.0" prefWidth="412.0" stylesheets="@styles.css">
             <children>
             <Label fx:id="textAppointment" layoutX="24.0" layoutY="186.0" prefHeight="31.0" prefWidth="351.0" text="Información de la cita" />
             <ScrollPane layoutX="16.0" layoutY="33.0" prefHeight="122.0" prefWidth="382.0">
@@ -72,7 +72,7 @@
         </AnchorPane>
 
         <!-- Contenedor con botones para confirmar o editar las citas -->
-        <AnchorPane layoutY="520.0" prefHeight="86.0" prefWidth="411.0" stylesheets="@styles.css">
+        <AnchorPane layoutY="520.0" prefHeight="82.0" prefWidth="412.0" stylesheets="@styles.css">
             <children>
                 <HBox id="containerButton" alignment="BASELINE_CENTER" layoutY="35.0" prefHeight="66.0" prefWidth="390.0" styleClass="buttonContainer" stylesheets="@styles.css">
                     <children>
