@@ -20,8 +20,8 @@ import java.util.*;
 
 /**
  * SqliteConnector  class of the application.
- *Class responsible for managing the connection to the SQLite database
- *  * and performing CRUD operations (Create, Read, Update, Delete) on all tables.
+ * Class responsible for managing the connection to the SQLite database
+ * and performing CRUD operations (Create, Read, Update, Delete) on all tables.
  * <p>This class implements the DAO (Data Access Object) pattern to provide
  *  * an abstract interface to the database. It handles establishing the connection,
  *  * as well as executing various SQL operations such as insert, update, and delete
