@@ -488,7 +488,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 controller.setCallback(() -> {
                     AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
                     controllerAppointment.setAppointmentDate(medicalApp.getVisitDate());
-                    controllerAppointment.setTextAppointment("Cita seleccionada: Psicologo \"" + medicalApp.getPsicologo().getNames() + "\" el dia: " + stringDate + " a las " + stringHours + ":" + stringMinutes);
+                    controllerAppointment.setTextAppointment("Psicologo \"" + medicalApp.getPsicologo().getNames() +medicalApp.getPsicologo().getLastNames()+ "\" " + stringDate + " " + stringHours + ":" + stringMinutes);
                     actualAppointment = medicalApp;
                     editedAppointment = new MedicalAppointment(actualAppointment);
                     controllerAppointment.setActualMediacalAppointment(medicalApp);
@@ -539,6 +539,10 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
     @Override
     public void backFromNotifiersToHome() {
+        if (timer != null) {
+            timerTask.cancel();
+            timer.cancel();
+        }
         fromFirstScreenToHome();
     }
 

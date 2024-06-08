@@ -205,7 +205,9 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      */
     @Override
     public Direction registerDirection(Direction direction) throws OperationsDBException {
+
         int idBBDD = searchIdDirection(direction);
+
         if (idBBDD == -1) {
             try {
                 String textoConsulta = "insert into direction(street,city,postal_code) values (?,?,?);";
@@ -219,6 +221,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                     if (resultSet.next()) {
                         direction.setIdDireccion(resultSet.getInt(1));
                     }
+
                 } catch (IncorrectDataException e) {
                     throw new OperationsDBException("El identificador supera el máximo permitido");
                 }
@@ -443,15 +446,40 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      */
     public static ProfessionalUser chargeProfesionalUserById(int id) throws OperationsDBException {
         ProfessionalUser professionalUser = null;
+        String consultaPerson = "SELECT * FROM person WHERE id_person=?";
         String consulta = "SELECT * FROM professional_user WHERE id_person=?;";
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (PreparedStatement statementPerson = connection.prepareStatement(consultaPerson);
+             PreparedStatement statement = connection.prepareStatement(consulta)) {
+            statementPerson.setInt(1, id);
+            try (ResultSet resultSet = statementPerson.executeQuery()) {
+                if (resultSet.next()) {
+                    String nombres = resultSet.getString("user_names");
+                    String apellidos = resultSet.getString("last_names");
+                    Date birrth = resultSet.getDate("date_birth");
+                    Date registration = resultSet.getDate("registration_date");
+                    String email = resultSet.getString("email");
+                    String scripp_pass = resultSet.getString("pass_script");
+                    String typeString = resultSet.getString("type_user");
+                    TypeUser type = TypeUser.valueOf(typeString);
+                    String typeState = resultSet.getString("user_state");
+                    StatesUser state = StatesUser.valueOf(typeState);
+                    Date last_activity = resultSet.getDate("last_activity");
+                    int idDirection = resultSet.getInt("id_direction");
+                    Direction direction = chargeDirection(idDirection);
+                    professionalUser = new ProfessionalUser(id, nombres, apellidos, scripp_pass, birrth, registration, email, type, state, direction, last_activity);
+                }
+            }
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                String collegiate = resultSet.getString("collegiate");
-                String specialty = resultSet.getString("specialty");
-                String description = resultSet.getString("description");
-                professionalUser = new ProfessionalUser(collegiate, specialty, description);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    String collegiate = resultSet.getString("collegiate");
+                    String specialty = resultSet.getString("specialty");
+                    String description = resultSet.getString("description");
+                    professionalUser.setCollegiate(collegiate);
+                    professionalUser.setSpecialty(specialty);
+                    professionalUser.setDescription(description);
+                }
+
             }
         } catch (SQLException | NullArgumentException | IncorrectDataException | NoSuchAlgorithmException |
                  InvalidKeySpecException e) {
@@ -472,15 +500,38 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      */
     public static NormalUser chargeNormalUserById(int id) throws OperationsDBException {
         NormalUser normalUser = null;
+        String consultaPerson = "SELECT * FROM person WHERE id_person=?";
         String consulta = "SELECT * FROM normal_user WHERE id_person=?;";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (PreparedStatement statementPerson = connection.prepareStatement(consultaPerson);
+             PreparedStatement statement = connection.prepareStatement(consulta)) {
+            statementPerson.setInt(1, id);
+            try (ResultSet resultSet = statementPerson.executeQuery()) {
+                if (resultSet.next()) {
+                    String nombres = resultSet.getString("user_names");
+                    String apellidos = resultSet.getString("last_names");
+                    Date birrth = resultSet.getDate("date_birth");
+                    Date registration = resultSet.getDate("registration_date");
+                    String email = resultSet.getString("email");
+                    String scripp_pass = resultSet.getString("pass_script");
+                    String typeString = resultSet.getString("type_user");
+                    TypeUser type = TypeUser.valueOf(typeString);
+                    String typeState = resultSet.getString("user_state");
+                    StatesUser state = StatesUser.valueOf(typeState);
+                    Date last_activity = resultSet.getDate("last_activity");
+                    int idDirection = resultSet.getInt("id_direction");
+                    Direction direction = chargeDirection(idDirection);
+                    normalUser = new NormalUser(id, nombres, apellidos, scripp_pass, birrth, registration, email, type, state, direction, last_activity);
+                }
+            }
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                String nickname = resultSet.getString("nickname");
-                String inTherapySession = resultSet.getString("in_therapy_session");
-                normalUser = new NormalUser(nickname, inTherapySession);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    String nickname = resultSet.getString("nickname");
+                    String inTherapySession = resultSet.getString("in_therapy_session");
+                    normalUser.setNickname(nickname);
+                    normalUser.setInTherapySession(Boolean.parseBoolean(inTherapySession));
+                }
             }
         } catch (SQLException | NullArgumentException | IncorrectDataException | NoSuchAlgorithmException |
                  InvalidKeySpecException e) {
@@ -1390,17 +1441,17 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      */
     @Override
     public String searchNameForPerson(int idPerson) throws OperationsDBException {
-        String completeName="";
+        String completeName = "";
         String consulta = "SELECT user_names , last_names FROM person WHERE id_person = ?";
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setInt(1, idPerson);
-           try(ResultSet resultSet = preparetStmt.executeQuery()){
-            while (resultSet.next()) {
-                completeName = resultSet.getString("user_names");
-                completeName+=resultSet.getString("last_names");
+            try (ResultSet resultSet = preparetStmt.executeQuery()) {
+                while (resultSet.next()) {
+                    completeName = resultSet.getString("user_names");
+                    completeName += resultSet.getString("last_names");
+                }
             }
-           }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
