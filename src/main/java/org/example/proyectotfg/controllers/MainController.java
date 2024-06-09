@@ -138,7 +138,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     public void openLogin() {
         try {
             mainStage.setTitle("Bienvenidos!!");
-            loadView("/org/example/proyectotfg/general-login-view.fxml");
+            loadView("/org/example/proyectotfg/login-view.fxml");
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
@@ -279,7 +279,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     public void volverIncio() {
         try {
             mainStage.setTitle("Te esperamos pronto!!");
-            loadView("/org/example/proyectotfg/general-login-view.fxml");
+            loadView("/org/example/proyectotfg/login-view.fxml");
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
         }
