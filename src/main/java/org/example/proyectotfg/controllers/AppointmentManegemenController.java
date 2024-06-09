@@ -7,7 +7,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import org.apache.tools.ant.Main;
 import org.example.proyectotfg.entities.MedicalAppointment;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
@@ -254,7 +253,7 @@ public class AppointmentManegemenController implements ViewController {
      */
     @FXML
     void saveAppoinment(ActionEvent event) {
-        if (professionalUser != null && actualMediacalAppointment != null) {
+        if (professionalUser != null && appointmentDate != null) {
             mediatorNotifiers.addAppointment(professionalUser, appointmentDate);
         } else {
             MainController.showError("Error","Elige primero la fecha, despues el psicólogo y por ultimo la hora de la cita");
