@@ -523,7 +523,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                     appointmentManegemenController.setProfessionalUser(us);
                     LocalDate localDate = appointmentManegemenController.getDatePicker().getValue();
                     if (localDate == null) {
-                        showError("Error", "Tienes que seleccionar una" + " fecha antes de continuar);");
+                        showError("Error", "Tienes que seleccionar una fecha antes de continuar;");
                     } else {
                         Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
                         searchAppointments(us.getIdPerson(), date, false);
