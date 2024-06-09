@@ -389,7 +389,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 FragmentInfoSerchController controller = fxmlLoader.getController();
                 controller.setProfessionalUser(us);
                 controller.setPerson(person);
-                controller.setData(String.valueOf(us.getNames()), String.valueOf(us.getSpecialty()), "/org/example/proyectotfg/imgUsuario/doctor3.png", 5);
+                controller.setData(String.valueOf(us.getNames()), String.valueOf(us.getSpecialty()), "/org/example/proyectotfg/img/psicologo.png", 5);
                 fragment.resize(340, 180);
                 controller.setCallback(() -> {
                     try {
