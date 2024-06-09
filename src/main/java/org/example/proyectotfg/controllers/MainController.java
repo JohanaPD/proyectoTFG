@@ -67,7 +67,7 @@ public class MainController implements Mediator, MediatorAcceso, MediatorProfile
             controllerActual.setMainController(this);
             ViewController controller = fxmlLoader.getController();
             controller.setMediator(this);
-            mainStage.setTitle("MeetPshyc!");
+            mainStage.setTitle("MeetPsych!");
             mainStage.setScene(scene);
             //controllerPrincipal.setControllers(fxmlLoader, controller);
 
