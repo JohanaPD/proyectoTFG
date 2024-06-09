@@ -21,6 +21,7 @@ import org.example.proyectotfg.functions.FunctionsApp;
 import org.example.proyectotfg.functions.SenderReaderMail;
 import org.example.proyectotfg.mediators.*;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -606,6 +607,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
      */
     @Override
     public Parent myNextAppoinments() {
+        SenderReaderMail sender= new SenderReaderMail();
         HBox contenedorHBox2 = new HBox(6);
 
         try {
@@ -645,17 +647,27 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                         @Override
                         public void run() {
                             Platform.runLater(() -> {
+                                String mensaje="";
                                 if (editedAppointment == null) {
                                     timerTask.cancel();
                                     timer.cancel();
+
                                     showInfo("Operación realizada", "Su cita se ha eliminado correctamente");
+
                                     openAppointmentView();
                                 } else {
                                     if (actualAppointment.getVisitDate() != editedAppointment.getVisitDate()) {
                                         timerTask.cancel();
                                         timer.cancel();
                                         showInfo("Cita modificada", "Su cita ha sido modificada al dia " + editedAppointment.getVisitDate());
-
+                                      mensaje=FunctionsApp.devolverStringMailAppointment(person);
+                                        try {
+                                            sender.enviarMensajeHTML("meetpsychproject@gmail.com", person.getNames(), "Cita modificada", mensaje, "meetpsychproject@gmail.com", passWordApp);
+                                        } catch (MessagingException e) {
+                                            throw new RuntimeException(e);
+                                        } catch (IOException e) {
+                                           showError("error ", e.getMessage());
+                                        }
                                         openAppointmentView();
 
                                     }

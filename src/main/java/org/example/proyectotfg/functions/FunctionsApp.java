@@ -264,4 +264,21 @@ public class FunctionsApp {
         return fillArray;
     }
 
+    public static String devolverStringMailAppointment(Person person) {
+        String htmlPasswordRecoverString =  "<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "<style>\n" +
+                "    body { font-family: Arial, sans-serif; }\n" +
+                "    input, button { margin-top: 10px; }\n" +
+                "</style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <h1>Cita modificada</h1>\n" +
+                "    <p>Hola " + person.getNames() + ",</p>\n" +
+                "    <p>Su cita se ha cambiado correctamente.</p>\n" +
+                "</body>\n" +
+                "</html>";
+        return htmlPasswordRecoverString;
+    }
 }
