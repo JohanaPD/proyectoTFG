@@ -9,6 +9,12 @@ import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorPost;
 import org.example.proyectotfg.mediators.ViewController;
 
+/**
+ * Manages posts in a fragment as a ViewController.
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
 public class FragmentPostController implements ViewController {
     @FXML
     private Text descripcion;

@@ -4,7 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import org.example.proyectotfg.mediators.Callback;
-
+/**
+ * Manages appointment hours within a fragment.
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
 public class ControllerFragmentApoinmentHours {
     @FXML
     private Text dataAppointment;

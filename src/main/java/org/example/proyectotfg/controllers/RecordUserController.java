@@ -23,6 +23,12 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
+/**
+ * Controls the user recording process.
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
 public class RecordUserController implements ViewController {
 
     private MediatorProfile mediator;

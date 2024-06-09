@@ -10,6 +10,12 @@ import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorFirstScreen;
 import org.example.proyectotfg.mediators.ViewController;
 
+/**
+ * Manages professional information as a ViewController.
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
 public class InfoProfesionalController implements ViewController {
     @FXML
     private ImageView image;

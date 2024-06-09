@@ -25,6 +25,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controls the initial interface and implements Initializable for JavaFX initialization.
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
 public class InitialInterfaceController implements ViewController, Initializable {
     @FXML
     private Text textSaludo;

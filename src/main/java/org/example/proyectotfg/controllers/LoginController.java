@@ -18,6 +18,12 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Controls the login interface.
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
 public class LoginController implements ViewController {
 
     private MediatorProfile mediator;

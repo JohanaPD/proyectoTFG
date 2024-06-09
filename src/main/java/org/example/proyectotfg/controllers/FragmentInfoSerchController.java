@@ -12,6 +12,12 @@ import org.example.proyectotfg.exceptions.OperationsDBException;
 import org.example.proyectotfg.mediators.Callback;
 
 
+/**
+ * Manages search information in a fragment as a ViewController.
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
 public class FragmentInfoSerchController {
     @FXML
     private Text especialidad;

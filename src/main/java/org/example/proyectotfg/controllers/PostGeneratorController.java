@@ -15,6 +15,12 @@ import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorPost;
 import org.example.proyectotfg.mediators.ViewController;
 
+/**
+ * Controls the post generation process.
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
 public class PostGeneratorController implements ViewController {
     @FXML
     private TextArea description;

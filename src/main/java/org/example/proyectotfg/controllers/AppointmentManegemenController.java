@@ -20,6 +20,13 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Manages appointment-related operations.
+ *
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
 public class AppointmentManegemenController implements ViewController {
 
     @FXML

@@ -16,9 +16,18 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.*;
-
+/**
+ * This class contains utility functions used in the application.
+ */
 public class FunctionsApp {
 
+    /**
+     * Calculates the age based on the current date and the birth date.
+     *
+     * @param currentDate The current date.
+     * @param birthDate   The birth date.
+     * @return The calculated age, or 0 if either currentDate or birthDate is null.
+     */
     public static int calculateAge(Date currentDate, Date birthDate) {
         if (birthDate != null && currentDate != null) {
             LocalDate localBirthDate = birthDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -30,6 +39,14 @@ public class FunctionsApp {
         }
     }
 
+    /**
+     * Generates a strong password hash using PBKDF2 algorithm.
+     *
+     * @param password The password to hash.
+     * @return The hashed password in hexadecimal format.
+     * @throws NoSuchAlgorithmException  If the algorithm used for the hash is not available.
+     * @throws InvalidKeySpecException   If the key specification is invalid.
+     */
     public static String generateStrongPasswordHash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         final int ITERATIONS = 1000;
         final int KEY_LENGTH = 256;
@@ -43,7 +60,16 @@ public class FunctionsApp {
 
         return toHex(salt) + "|" + toHex(hash);
     }
-
+    /**
+     * Validates a password against a stored hash with salt.
+     *
+     * @param enteredPassword       The password entered by the user.
+     * @param storedHashWithSalt   The stored hash with salt in hexadecimal format.
+     * @return                      True if the entered password matches the stored hash, false otherwise.
+     * @throws NoSuchAlgorithmException   If the algorithm used for the hash is not available.
+     * @throws InvalidKeySpecException    If the key specification is invalid.
+     * @throws IllegalArgumentException   If the format of the stored hash is not as expected.
+     */
     public static boolean validatePassword(String enteredPassword, String storedHashWithSalt) throws NoSuchAlgorithmException, InvalidKeySpecException {
         final int ITERATIONS = 1000;
         final int KEY_LENGTH = 256;
@@ -61,7 +87,12 @@ public class FunctionsApp {
 
         return Arrays.equals(storedHash, testHash);
     }
-
+    /**
+     * Converts a byte array to a hexadecimal string representation.
+     *
+     * @param array The byte array to be converted.
+     * @return The hexadecimal string representation of the byte array.
+     */
     private static String toHex(byte[] array) {
         StringBuilder hexString = new StringBuilder();
         for (byte b : array) {
@@ -74,6 +105,12 @@ public class FunctionsApp {
         return hexString.toString();
     }
 
+    /**
+     * Converts a hexadecimal string to a byte array.
+     *
+     * @param hex The hexadecimal string to be converted.
+     * @return The byte array representation of the hexadecimal string.
+     */
     private static byte[] fromHex(String hex) {
         byte[] bytes = new byte[hex.length() / 2];
         for (int i = 0; i < bytes.length; i++) {
@@ -81,7 +118,12 @@ public class FunctionsApp {
         }
         return bytes;
     }
-
+    /**
+     * Verifies if the provided password matches the hashed password stored in the database.
+     *
+     * @param pass1      The password entered by the user.
+     * @param hashedData The hashed password stored in the database.
+     */
     private static void verificatedPassScript(String pass1, String hashedData) {
         boolean authenticated = false;
         try {
@@ -96,22 +138,30 @@ public class FunctionsApp {
             System.out.println("¡Acceso concedido! Bienvenido!");
         } else {
             System.out.println("¡Acceso denegado! Usuario o contraseña incorrectos.");
-        }
+                    }
     }
-
+    /**
+     * Encrypts the provided password using a strong hashing algorithm.
+     *
+     * @param pass1 The password to be encrypted.
+     * @return The hashed password.
+     */
     public static String encriptPassScript(String pass1) {
         String hashedData = "";
         try {
             hashedData = FunctionsApp.generateStrongPasswordHash(pass1);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            System.err.println("Error al encriptar la contraseña.");
             e.printStackTrace();
             System.exit(1);
         }
-        System.out.println("Contraseña encriptada y hash generados. Guardando en la base de datos..." + "contraseña encriptada" + hashedData + "  ");
         return hashedData;
     }
-
+    /**
+     * Generates an HTML message based on the type of user.
+     *
+     * @param person The person object representing the user.
+     * @return The HTML message.
+     */
     public static String devolverStringMail(Person person) {
         String mensajeHtml1 = "<!DOCTYPE html>\n" + "<html>\n" + "<head>\n" + "<style>\n" + "    body { font-family: Arial, sans-serif; }\n" + "    input, button { margin-top: 10px; }\n" + "</style>\n" + "</head>\n" + "<body>\n" + "    <h1>¡Gracias por registrarte!</h1>\n" + "    <p>Gracias por registrarte, ya puedes contactar con los mejores profesionales.</p>\n" + "    <form action=\"https://https://edu-meetpshyc1.odoo/usuario/establecer-nickname\" method=\"POST\">\n" + "        <input type=\"text\" name=\"nickname\" placeholder=\"Escribe tu nickname aquí\" required>\n" + "        <button type=\"submit\">Enviar Nickname</button>\n" + "    </form>\n" + "    <p>Además, necesitamos que verifiques tu dirección de correo electrónico para completar el proceso de registro.</p>\n" + "    <p><a href=\"https://edu-meetpshyc1.odoo/usuario/verificar-email?email=email_del_destinatario\">Haz clic aquí para verificar tu correo electrónico</a></p>\n" + "</body>\n" + "</html>";
 
@@ -125,13 +175,44 @@ public class FunctionsApp {
 
     }
 
+
+
+    /**
+     * Generates an HTML string for password recovery email.
+     *
+     * @param person The person for whom the password recovery email is being generated.
+     * @return The HTML string for the password recovery email.
+     */
     public static String returnPasswordRecoverString(Person person) {
-        String htmlPasswordRecoverString = "";
+        String htmlPasswordRecoverString =  "<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "<style>\n" +
+                "    body { font-family: Arial, sans-serif; }\n" +
+                "    input, button { margin-top: 10px; }\n" +
+                "</style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <h1>Cambio de Contraseña</h1>\n" +
+                "    <p>Hola " + person.getNames() + ",</p>\n" +
+                "    <p>Su contraseña se ha cambiado correctamente.</p>\n" +
+                "</body>\n" +
+                "</html>";
         return htmlPasswordRecoverString;
     }
 
+    /**
+     * Fills an array with dates based on the given parameters.
+     *
+     * @param maxValues The maximum number of values in the array.
+     * @param day       The day of the month for the dates.
+     * @param month     The month of the year for the dates.
+     * @param year      The year for the dates.
+     * @return An array filled with dates.
+     * @throws ParseException If there is an error parsing the dates.
+     */
     public static Date[] fillArray(int maxValues, int day, int month, int year) throws ParseException {
-        Date[] fillArray= new Date[maxValues];
+        Date[] fillArray = new Date[maxValues];
 
         try {
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
@@ -139,12 +220,12 @@ public class FunctionsApp {
             List<Date> timesList = new ArrayList<>();
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.YEAR, year);
-            calendar.set(Calendar.MONTH, month); // Cambia esto según el mes deseado
-            calendar.set(Calendar.DAY_OF_MONTH, day); // Cambia esto según el día deseado
+            calendar.set(Calendar.MONTH, month); // Change this according to the desired month
+            calendar.set(Calendar.DAY_OF_MONTH, day); // Change this according to the desired day
 
             for (int hour = 10; hour <= 18; hour++) {
                 if (hour >= 14 && hour < 16) {
-                    continue; // Saltar horas de 14:00 a 16:00
+                    continue; // Skip hours from 14:00 to 16:00
                 }
                 String timeString = String.format("%02d:00:00", hour);
                 Date timeDate = timeFormat.parse(timeString);
@@ -167,4 +248,5 @@ public class FunctionsApp {
         }
         return fillArray;
     }
+
 }

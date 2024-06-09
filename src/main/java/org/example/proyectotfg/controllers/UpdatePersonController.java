@@ -22,6 +22,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 
+/**
+ * Controls the updating of person information.
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
+
 public class UpdatePersonController implements ViewController {
     @FXML
     private Label collegiateLabel;

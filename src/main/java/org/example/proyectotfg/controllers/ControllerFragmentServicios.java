@@ -13,6 +13,12 @@ import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages services within a fragment.
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
 public class ControllerFragmentServicios {
 
     @FXML

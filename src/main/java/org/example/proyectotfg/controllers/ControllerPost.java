@@ -18,6 +18,12 @@ import org.example.proyectotfg.mediators.ViewController;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages posts as a ViewController.
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
 public class ControllerPost implements ViewController {
     @FXML
     private AnchorPane mainContainer;

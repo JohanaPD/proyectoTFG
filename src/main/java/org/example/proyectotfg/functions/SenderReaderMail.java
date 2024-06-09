@@ -12,13 +12,17 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import com.sun.mail.imap.IMAPFolder;
-//import javax.mail.AddressException;
 
+/**
+ * This class manages sending and reading emails.
+ */
 public class SenderReaderMail {
 
     private Properties properties;
     private Session session;
-
+    /**
+     * Sets the properties for the SMTP server.
+     */
     public void setPropertiesServerSMTP() {
         properties = System.getProperties();
         properties.put("mail.smtp.auth", "true");
@@ -28,13 +32,31 @@ public class SenderReaderMail {
         session = Session.getInstance(properties, null);
     }
 
+    /**
+     * Connects to the SMTP server.
+     *
+     * @param directionEmail The email address used to connect.
+     * @param password       The password of the email address.
+     * @return The Transport object.
+     * @throws MessagingException If an error occurs during the connection process.
+     */
     private Transport connectServerSTMP(String directionEmail, String password) throws MessagingException {
         Transport t = (Transport) session.getTransport("smtp");
         t.connect(properties.getProperty("mail.smtp.host"), directionEmail, password);
         return t;
     }
 
-
+    /**
+     * Creates the first part of an email message.
+     *
+     * @param emitter     The sender's email address.
+     * @param destination The recipient's email address.
+     * @param subject     The subject of the email.
+     * @return The created Message object.
+     * @throws MessagingException If an error occurs while creating the message.
+     * @throws AddressException   If there is an error with the email addresses.
+     * @throws IOException        If an error occurs while reading input.
+     */
     public Message createFirstPartEmail(String emitter, String destination, String subject) throws MessagingException, AddressException, IOException {
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(emitter));
@@ -42,35 +64,78 @@ public class SenderReaderMail {
         message.setSubject(subject);
         return message;
     }
-
+    /**
+     * Creates a text message.
+     *
+     * @param emitter      The sender's email address.
+     * @param destination  The recipient's email address.
+     * @param subject      The subject of the email.
+     * @param textMessage  The text content of the email.
+     * @return The created Message object.
+     * @throws MessagingException If an error occurs while creating the message.
+     * @throws AddressException   If there is an error with the email addresses.
+     * @throws IOException        If an error occurs while reading input.
+     */
     private Message createTextMessage(String emitter, String destination, String subject, String textMessage) throws MessagingException, AddressException, IOException {
         Message message = createFirstPartEmail(emitter, destination, subject);
         message.setText(textMessage);
         return message;
     }
-
+    /**
+     * Creates an email message with attached files.
+     *
+     * @param emitter      The sender's email address.
+     * @param destination  The recipient's email address.
+     * @param subject      The subject of the email.
+     * @param textMessage  The text content of the email.
+     * @param pathFile     The path to the file to be attached.
+     * @return The created Message object.
+     * @throws MessagingException If an error occurs while creating the message.
+     * @throws AddressException   If there is an error with the email addresses.
+     * @throws IOException        If an error occurs while reading input.
+     */
     public Message createMessageWithAttachedFiles(String emitter, String destination, String subject, String textMessage, String pathFile) throws MessagingException, AddressException, IOException {
         Message message = createFirstPartEmail(emitter, destination, subject);
-        //Cuerpo del mensaje
         BodyPart bodyPart = new MimeBodyPart();
         bodyPart.setText(textMessage);
-        //Adjunto del mensaje
         MimeBodyPart mimeBodyPart = new MimeBodyPart();
         mimeBodyPart.attachFile(new File(pathFile));
-        //Composición del mensaje (Cuerpo+Adjunto)
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(bodyPart);
         multipart.addBodyPart(mimeBodyPart);
         message.setContent(multipart);
         return message;
     }
-
+    /**
+     * Creates an HTML email message.
+     *
+     * @param emitter      The sender's email address.
+     * @param destination  The recipient's email address.
+     * @param subject      The subject of the email.
+     * @param htmlContent  The HTML content of the email.
+     * @return The created Message object.
+     * @throws MessagingException If an error occurs while creating the message.
+     * @throws AddressException   If there is an error with the email addresses.
+     * @throws IOException        If an error occurs while reading input.
+     */
     private Message createMessageHTML(String emitter, String destination, String subject, String htmlContent) throws MessagingException, AddressException, IOException {
         Message mensaje = createFirstPartEmail(emitter, destination, subject);
         mensaje.setContent(htmlContent, "text/html; charset=utf-8");
         return mensaje;
     }
-
+    /**
+     * Sends an HTML email message.
+     *
+     * @param emitter       The sender's email address.
+     * @param destination   The recipient's email address.
+     * @param subject       The subject of the email.
+     * @param htmlContent   The HTML content of the email.
+     * @param directionHTML The email address used to connect.
+     * @param password      The password of the email address.
+     * @throws AddressException   If there is an error with the email addresses.
+     * @throws MessagingException If an error occurs while sending the message.
+     * @throws IOException        If an error occurs while reading input.
+     */
     public void enviarMensajeHTML(String emitter, String destination, String subject, String htmlContent, String directionHTML, String password) throws AddressException, MessagingException, IOException {
         setPropertiesServerSMTP();
         Message message = createMessageHTML(emitter, destination, subject, htmlContent);
@@ -78,7 +143,19 @@ public class SenderReaderMail {
         t.sendMessage(message, message.getAllRecipients());
         t.close();
     }
-
+    /**
+     * Sends a text message.
+     *
+     * @param emisor          The sender's email address.
+     * @param destinatario    The recipient's email address.
+     * @param asunto          The subject of the email.
+     * @param textoMensaje    The text content of the email.
+     * @param direccionEmail  The email address used to connect.
+     * @param password        The password of the email address.
+     * @throws AddressException   If there is an error with the email addresses.
+     * @throws MessagingException If an error occurs while sending the message.
+     * @throws IOException        If an error occurs while reading input.
+     */
     public void sendTextMessage(String emisor, String destinatario, String asunto, String textoMensaje, String direccionEmail, String password) throws AddressException, MessagingException, IOException {
         setPropertiesServerSMTP();
         Message mensaje = createTextMessage(emisor, destinatario, asunto, textoMensaje);
@@ -86,7 +163,20 @@ public class SenderReaderMail {
         t.sendMessage(mensaje, mensaje.getAllRecipients());
         t.close();
     }
-
+    /**
+     * Sends a message with attached files.
+     *
+     * @param emitter         The sender's email address.
+     * @param destination     The recipient's email address.
+     * @param subject         The subject of the email.
+     * @param textMessage     The text content of the email.
+     * @param directionEmail  The email address used to connect.
+     * @param password        The password of the email address.
+     * @param pathFile        The path to the file to be attached.
+     * @throws AddressException   If there is an error with the email addresses.
+     * @throws MessagingException If an error occurs while sending the message.
+     * @throws IOException        If an error occurs while reading input.
+     */
     public void sendMessageWithAttachedFiles(String emitter, String destination, String subject, String textMessage, String directionEmail, String password, String pathFile) throws AddressException, MessagingException, IOException {
         setPropertiesServerSMTP();
         Message message = createMessageWithAttachedFiles(emitter, destination, subject, textMessage, pathFile);
@@ -95,7 +185,11 @@ public class SenderReaderMail {
         t.close();
     }
 
-    //Leer Mensaje
+    /**
+     * Retrieves the session for IMAP.
+     *
+     * @return The IMAP session.
+     */
     private Session getSesionImap() {
         Properties properties = new Properties();
         properties.setProperty("mail.store.protocol", "imap");
@@ -106,7 +200,13 @@ public class SenderReaderMail {
         Session session = Session.getDefaultInstance(properties);
         return session;
     }
-
+    /**
+     * Reads the Inbox folder.
+     *
+     * @param mail     The email address.
+     * @param password The email password.
+     * @throws Exception If an error occurs while reading the Inbox folder.
+     */
     public void leerCarpetaInbox(String mail, String password) throws Exception {
 
         Session session = this.getSesionImap();
@@ -133,19 +233,40 @@ public class SenderReaderMail {
         }
     }
 
+    /**
+     * Sets the properties for the SMTP server.
+     *
+     * @param properties The properties to be set.
+     */
     public void setProperties(Properties properties) {
         this.properties = properties;
     }
 
+    /**
+     * Retrieves the properties.
+     *
+     * @return The properties.
+     */
     public Properties getProperties() {
         return properties;
     }
 
+    /**
+     * Retrieves the session.
+     *
+     * @return The session.
+     */
     public Session getSession() {
         return session;
     }
 
+    /**
+     * Sets the session.
+     *
+     * @param session The session to be set.
+     */
     public void setSession(Session session) {
         this.session = session;
     }
+
 }
