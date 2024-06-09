@@ -275,7 +275,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
      * @param user    The email address of the recipient.
      * @param mensaje The message content to be sent.
      */
-    private void enviarEmail(SenderReaderMail sender,String subject, String user, String mensaje) {
+    private void enviarEmail(SenderReaderMail sender,String user, String subject,  String mensaje) {
         try {
             sender.enviarMensajeHTML("meetpsychproject@gmail.com", user, subject, mensaje, "meetpsychproject@gmail.com", passWordApp);
         } catch (Exception e) {
