@@ -12,7 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.example.proyectotfg.DAO.SqliteConnector;
 import org.example.proyectotfg.entities.*;
 import org.example.proyectotfg.enumAndTypes.Notificators;
@@ -62,7 +61,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
      */
     public MainController(Stage mainStage) throws IOException {
         try {
-            connect = new SqliteConnector();
+            connect = new SqliteConnector("jdbc:sqlite:src/main/resources/sqliteBBDD/MeetPsych.db");
             this.mainStage = mainStage;
             loadFirstView();
         } catch (SQLException | OperationsDBException e) {
@@ -90,10 +89,11 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     /**
      * Loads the initial interface view of the application.
      */
-    private void loadInterfazInicial() {
+    private void loadInitialInterface() {
         try {
             loadView("/org/example/proyectotfg/initial-interface-view.fxml");
             InitialInterfaceController initialInterfaceController = (InitialInterfaceController) actualController;
+          initialInterfaceController.getProfessionals();
             initialInterfaceController.loadServices();
             initialInterfaceController.setTextWelcome(person.getNames());
             initialInterfaceController.setUser(person);
@@ -101,6 +101,14 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
             showError("Error", e.getMessage());
         }
 
+    }
+
+    @Override
+    public List<ProfessionalUser> getProfessionals() throws SQLException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NonexistingUser, NullArgumentException, OperationsDBException {
+        List<ProfessionalUser>
+                professionalUsers = connect.getProfessionals();
+
+        return professionalUsers;
     }
 
     /**
@@ -202,7 +210,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
             mainStage.setTitle("¡Estos son los posts que has compartido!");
             ControllerPost controllerPost = (ControllerPost) actualController;
             controllerPost.setPerson(person);
-            controllerPost.setPosts(SqliteConnector.serchPostByPerson(person));
+            controllerPost.setPosts(connect.serchPostByPerson(person));
             controllerPost.loadPosts();
         } catch (ThereIsNoView | IncorrectDataException | NullArgumentException | OperationsDBException e) {
             showError("Error", e.getMessage());
@@ -294,7 +302,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
             if (person != null) {
                 this.person = person;
                 mainStage.setTitle("Bienvenidos ");
-                loadInterfazInicial();
+                loadInitialInterface();
                 actualController.setMediator(this);
             }
         } catch (InvalidKeySpecException | NonexistingUser | IncorrectLoginEception | DataAccessException |
@@ -486,7 +494,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     public Parent loadProfessionalsInMediatorCalendar() {
         HBox contenedorHBox2 = new HBox(6);
         try {
-            List<ProfessionalUser> professionalUsers = SqliteConnector.getProfesionales();
+            List<ProfessionalUser> professionalUsers = connect.getProfessionals();
             contenedorHBox2.setAlignment(Pos.CENTER);
             contenedorHBox2.setMaxWidth(100);
             contenedorHBox2.setMaxHeight(130);
@@ -612,7 +620,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
                 controller.setCallback(() -> {
                     AppointmentManegemenController controllerAppointment = (AppointmentManegemenController) actualController;
                     controllerAppointment.setAppointmentDate(medicalApp.getVisitDate());
-                    controllerAppointment.setTextAppointment("Psicologo \"" + medicalApp.getPsicologo().getNames() + medicalApp.getPsicologo().getLastNames() + "\" " + stringDate + " " + stringHours + ":" + stringMinutes);
+                    controllerAppointment.setTextAppointment("Psicologo \"" + medicalApp.getProfessionalUser().getNames() + medicalApp.getProfessionalUser().getLastNames() + "\" " + stringDate + " " + stringHours + ":" + stringMinutes);
                     actualAppointment = medicalApp;
                     editedAppointment = new MedicalAppointment(actualAppointment);
                     controllerAppointment.setActualMediacalAppointment(medicalApp);
@@ -686,7 +694,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     @Override
     public void deleteAppointment(MedicalAppointment medicalAppointment) {
         try {
-            if (connect.deleteMedicalAppointments(medicalAppointment.getIdCita(), person.getIdPerson(), medicalAppointment.getVisitDate())) {
+            if (connect.deleteMedicalAppointments(medicalAppointment.getIdAppointment(), person.getIdPerson(), medicalAppointment.getVisitDate())) {
                 editedAppointment = null;
             } else {
                 throw new OperationsDBException("No se ha podido eliminar");
@@ -826,6 +834,12 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     /*   ================================================================================================
       ====================================== Update Data =====================================================*/
 
+    @Override
+    public ProfessionalUser chargeProfessionalUserById(int id) throws OperationsDBException {
+        ProfessionalUser professionalUser = connect.chargeProfessionalUserById(id);
+        return professionalUser;
+    }
+
     /**
      * Updates the personal data of the user.
      *
@@ -906,7 +920,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
             connect.updateProfesionalUser(user);
             showInfo("Actualización correcta", "Se ha actualizado correctamente el usuario");
             person = user;
-            openLogin();
+            fromFirstScreenToHome();
         } catch (OperationsDBException | SQLException e) {
             showError("Error en la operaciones", e.getMessage());
         }
@@ -947,7 +961,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         try {
             loadView("/org/example/proyectotfg/initial-interface-view.fxml");
             mainStage.setTitle("MeetPsych!!");
-            loadInterfazInicial();
+            loadInitialInterface();
             actualController.setMediator(this);
         } catch (ThereIsNoView e) {
             showError("Error", e.getMessage());
@@ -1025,7 +1039,8 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     public void makePost(Post newPost) {
         try {
             connect.makeNewPost(newPost);
-            loadInterfazInicial();
+            showInfo("Post publicado","Post publicado correctamente");
+            loadInitialInterface();
         } catch (OperationsDBException e) {
             throw new RuntimeException(e);
         }

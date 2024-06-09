@@ -114,7 +114,7 @@ public class UpdatePersonController implements ViewController {
         PostalCode.setText(String.valueOf(dir.getPostalCode()));
         comboTypeUser.setValue(person.getTypeUser());
         if (!person.getTypeUser().equals(TypeUser.USUARIO_NORMAL)) {
-            ProfessionalUser profesionalPerson = SqliteConnector.chargeProfesionalUserById(person.getIdPerson());
+            ProfessionalUser profesionalPerson = mediator.chargeProfessionalUserById(person.getIdPerson());
             specialtyTextField.setText(profesionalPerson.getSpecialty());
             collegiateTextField.setText(profesionalPerson.getCollegiate());
             descriptionTextArea.setText(profesionalPerson.getDescription());
@@ -230,7 +230,7 @@ public class UpdatePersonController implements ViewController {
     }
 
     private checkProfessionalUser getCheckProfessionalUser() throws OperationsDBException {
-        ProfessionalUser replace = SqliteConnector.chargeProfesionalUserById(person.getIdPerson());
+        ProfessionalUser replace = mediator.chargeProfessionalUserById(person.getIdPerson());
 
         String college = collegiateTextField.getText();
         if (college.equalsIgnoreCase("")) {
@@ -249,6 +249,7 @@ public class UpdatePersonController implements ViewController {
     }
 
     private record checkProfessionalUser(String college, String specialty, String description) {
+
     }
 
 

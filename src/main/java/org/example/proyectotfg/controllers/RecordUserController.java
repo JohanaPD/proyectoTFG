@@ -182,7 +182,6 @@ public class RecordUserController implements ViewController {
                             }
                         } else {
                             NormalUser nuevouser = new NormalUser(names, lastNames, pass1, birthd, registrationDate, mail, tipeUs, nueva);
-                            System.out.println(nuevouser.toString());
                             mediator.makeRecordRegister(nuevouser);
                         }
                     }

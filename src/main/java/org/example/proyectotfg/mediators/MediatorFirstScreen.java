@@ -4,9 +4,13 @@ import javafx.scene.Parent;
 import org.example.proyectotfg.entities.NormalUser;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
+import org.example.proyectotfg.exceptions.IncorrectDataException;
 import org.example.proyectotfg.exceptions.NonexistingUser;
+import org.example.proyectotfg.exceptions.NullArgumentException;
 import org.example.proyectotfg.exceptions.OperationsDBException;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +41,11 @@ public interface MediatorFirstScreen {
     void updateAllDataPerson(ProfessionalUser user);
 
     void updateAllDataPerson(NormalUser user) throws SQLException;
-    public Parent loadSearchs(List<ProfessionalUser> professionalUsers);
+     Parent loadSearchs(List<ProfessionalUser> professionalUsers);
 
-    public void logOut();
+     void logOut();
+
+    List<ProfessionalUser> getProfessionals() throws SQLException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NonexistingUser, NullArgumentException, OperationsDBException;
+
+    ProfessionalUser chargeProfessionalUserById(int id) throws OperationsDBException;
 }

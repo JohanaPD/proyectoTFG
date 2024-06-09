@@ -137,7 +137,7 @@ public class AppointmentManegemenController implements ViewController {
 
                 LocalDate localDate = datePicker.getValue();
                 Date nuevaFecha = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                ((MainController) mediatorNotifiers).searchAppointments(actualMediacalAppointment.getPsicologo().getIdPerson(), nuevaFecha, true);
+                ((MainController) mediatorNotifiers).searchAppointments(actualMediacalAppointment.getProfessionalUser().getIdPerson(), nuevaFecha, true);
 
           /*  try {
                 mediatorNotifiers.editAppointment(actualMediacalAppointment, appointmentDate);

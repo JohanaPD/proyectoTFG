@@ -56,8 +56,12 @@ public class InitialInterfaceController implements ViewController, Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         servicios = getServicio();
+
+    }
+
+    public void getProfessionals() {
         try {
-            usuariosEspecificos = SqliteConnector.getProfesionales();
+            usuariosEspecificos = mediator.getProfessionals();
         } catch (SQLException | IncorrectDataException | NonexistingUser | OperationsDBException |
                  NoSuchAlgorithmException | InvalidKeySpecException | NullArgumentException e) {
             ((MainController) mediator).showError("Error", e.getMessage());

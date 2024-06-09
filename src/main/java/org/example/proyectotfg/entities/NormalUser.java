@@ -44,18 +44,23 @@ public class NormalUser extends Person {
 
     public NormalUser(String names, String lastNames, String mail, TypeUser type, Direction nueva) throws IncorrectDataException, NullArgumentException {
         super(names, lastNames, mail, type, nueva);
+        setNickname(names+" "+lastNames);
     }
 
     public NormalUser(int idPerson, String names, String lastNames, String mail, Direction nueva) throws IncorrectDataException, NullArgumentException {
         super(idPerson, names, lastNames, mail, nueva);
+        setNickname(names+" "+lastNames);
     }
 
     public NormalUser(int idPerson, String names, String lastNames, String mail, Direction nueva, TypeUser typeUser) throws IncorrectDataException, NullArgumentException {
         super(idPerson, names, lastNames, mail, nueva, typeUser);
+        setNickname(names+" "+lastNames);
+
     }
 
     public NormalUser(int idP, String names, String lastNames, String pass1, String mail, Direction nueva, TypeUser type) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
         super(idP, names, lastNames, pass1, mail, nueva, type);
+        setNickname(names+" "+lastNames);
     }
 
     public NormalUser(String nickname, String inTherapySession) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {

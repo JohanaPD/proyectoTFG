@@ -15,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -23,9 +22,9 @@ import java.util.*;
  * Class responsible for managing the connection to the SQLite database
  * and performing CRUD operations (Create, Read, Update, Delete) on all tables.
  * <p>This class implements the DAO (Data Access Object) pattern to provide
- *  * an abstract interface to the database. It handles establishing the connection,
- *  * as well as executing various SQL operations such as insert, update, and delete
- *  * for different tables.</p>
+ * * an abstract interface to the database. It handles establishing the connection,
+ * * as well as executing various SQL operations such as insert, update, and delete
+ * * for different tables.</p>
  *
  * @author [JOhana Pardo, Daniel Ocaña]
  * @version Java 21
@@ -34,8 +33,8 @@ import java.util.*;
 
 public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
-    static final String URL = "jdbc:sqlite:src/main/resources/sqliteBBDD/MeetPsych.db";
-    static Connection connection;
+    public final String URL;
+    private Connection connection;
 
     /**
      * Constructor for the SQLIteConnector class.
@@ -43,18 +42,25 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * <p>Initializes the connection to the SQLite database and creates the necessary tables.
      * If the connection is successful, a confirmation message is printed to the console.</p>
      *
-     * @throws SQLException if a database access error occurs or the URL is incorrect.
+     * @throws SQLException          if a database access error occurs or the URL is incorrect.
      * @throws OperationsDBException if an error occurs while performing database operations.
      */
-    public SqliteConnector() throws SQLException, OperationsDBException {
-        this.connection = DriverManager.getConnection(URL);
+    public SqliteConnector(String url) throws SQLException, OperationsDBException {
+        URL = url;
+        this.connection = DriverManager.getConnection(url);
         createTables();
         if (connection != null) {
             System.out.println("Se ha conectado a ella exitosamente.");
         }
     }
-  /*   ================================================================================================
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    /*   ================================================================================================
         ======================================Crear BBDD y tablas =====================================================*/
+
     /**
      * Creates the necessary tables in the SQLite database if they do not already exist.
      *
@@ -126,8 +132,8 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      *
      * @param nameUser the search keyword to match against professional user names and specialties.
      * @return a list of {@link ProfessionalUser} objects that match the search criteria.
-     * @throws NonexistingUser if no professional users are found matching the search criteria.
-     * @throws DataAccessException if there is an error accessing the database.
+     * @throws NonexistingUser       if no professional users are found matching the search criteria.
+     * @throws DataAccessException   if there is an error accessing the database.
      * @throws OperationsDBException if there is an error processing the user data.
      */
     @Override
@@ -190,6 +196,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             throw new OperationsDBException("Error al encontrar la dirección");
         }
     }
+
     /**
      * Registers a new direction in the database if it does not already exist.
      *
@@ -201,7 +208,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * @param direction the {@link Direction} object to be registered.
      * @return the updated {@link Direction} object with its ID set.
      * @throws OperationsDBException if there is an error accessing the database or performing the query,
-     * or if there is an error setting the ID of the direction.
+     *                               or if there is an error setting the ID of the direction.
      */
     @Override
     public Direction registerDirection(Direction direction) throws OperationsDBException {
@@ -245,15 +252,15 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * information if the login credentials are correct. It distinguishes between normal users and professional users
      * based on the {@link TypeUser} parameter.</p>
      *
-     * @param email the email address of the user attempting to log in.
+     * @param email       the email address of the user attempting to log in.
      * @param scripp_pass the password of the user attempting to log in.
-     * @param typeUser the type of user attempting to log in (normal or professional).
+     * @param typeUser    the type of user attempting to log in (normal or professional).
      * @return the {@link Person} object representing the logged-in user, or null if the login fails.
-     * @throws IncorrectLoginEception if the provided password is incorrect.
-     * @throws InvalidKeySpecException if there is an error with the key specification during password validation.
-     * @throws NonexistingUser if the user does not exist or the user type is incorrect.
-     * @throws OperationsDBException if there is an error performing database operations.
-     * @throws DataAccessException if there is an error accessing the database.
+     * @throws IncorrectLoginEception   if the provided password is incorrect.
+     * @throws InvalidKeySpecException  if there is an error with the key specification during password validation.
+     * @throws NonexistingUser          if the user does not exist or the user type is incorrect.
+     * @throws OperationsDBException    if there is an error performing database operations.
+     * @throws DataAccessException      if there is an error accessing the database.
      * @throws NoSuchAlgorithmException if there is an error with the algorithm used for password validation.
      */
 
@@ -316,14 +323,14 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * and returns a {@link Person} object with the updated password. It distinguishes between normal
      * users and professional users based on the user type.</p>
      *
-     * @param email the email address of the user.
+     * @param email       the email address of the user.
      * @param newPassword the new password to set for the user.
      * @return the updated {@link Person} object with the new password set.
-     * @throws IncorrectLoginEception if the login credentials are incorrect.
+     * @throws IncorrectLoginEception  if the login credentials are incorrect.
      * @throws InvalidKeySpecException if there is an error with the key specification during password validation.
-     * @throws NonexistingUser if the user does not exist or the user type is incorrect.
-     * @throws OperationsDBException if there is an error performing database operations.
-     * @throws DataAccessException if there is an error accessing the database.
+     * @throws NonexistingUser         if the user does not exist or the user type is incorrect.
+     * @throws OperationsDBException   if there is an error performing database operations.
+     * @throws DataAccessException     if there is an error accessing the database.
      */
     public Person chargePersonWithNewPassword(String email, String newPassword) throws IncorrectLoginEception, InvalidKeySpecException, NonexistingUser, OperationsDBException, DataAccessException {
         Person person = null;
@@ -367,6 +374,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return person;
     }
+
     /**
      * Retrieves the nickname of a normal user based on their ID.
      *
@@ -392,6 +400,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return nickname;
     }
+
     /**
      * Constructs a ProfessionalUser object using the provided information retrieved from the database.
      *
@@ -399,21 +408,21 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * based on their ID. It constructs a {@link ProfessionalUser} object using the retrieved information and
      * returns it.</p>
      *
-     * @param id the ID of the professional user.
-     * @param nombres the names of the professional user.
-     * @param apellidos the last names of the professional user.
-     * @param scripp_pass the hashed password of the professional user.
-     * @param birrth the date of birth of the professional user.
-     * @param registration the registration date of the professional user.
-     * @param email the email address of the professional user.
-     * @param type the type of user (professional or normal).
-     * @param state the state of the professional user.
-     * @param direction the {@link Direction} object representing the address of the professional user.
+     * @param id            the ID of the professional user.
+     * @param nombres       the names of the professional user.
+     * @param apellidos     the last names of the professional user.
+     * @param scripp_pass   the hashed password of the professional user.
+     * @param birrth        the date of birth of the professional user.
+     * @param registration  the registration date of the professional user.
+     * @param email         the email address of the professional user.
+     * @param type          the type of user (professional or normal).
+     * @param state         the state of the professional user.
+     * @param direction     the {@link Direction} object representing the address of the professional user.
      * @param last_activity the last activity date of the professional user.
      * @return a {@link ProfessionalUser} object constructed using the retrieved information.
      * @throws OperationsDBException if there is an error accessing the database or performing the query.
      */
-    private static ProfessionalUser chargeProfesionalUser(int id, String nombres, String apellidos, String scripp_pass, Date birrth, Date registration, String email, TypeUser type, StatesUser state, Direction direction, Date last_activity) throws OperationsDBException {
+    private ProfessionalUser chargeProfesionalUser(int id, String nombres, String apellidos, String scripp_pass, Date birrth, Date registration, String email, TypeUser type, StatesUser state, Direction direction, Date last_activity) throws OperationsDBException {
         ProfessionalUser professionalUser = null;
         String consulta = "SELECT * FROM professional_user WHERE id_person=?;";
 
@@ -433,6 +442,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return professionalUser;
     }
+
     /**
      * Constructs a ProfessionalUser object using the information retrieved from the database based on the user ID.
      *
@@ -444,7 +454,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * @return a {@link ProfessionalUser} object constructed using the retrieved information.
      * @throws OperationsDBException if there is an error accessing the database or performing the query.
      */
-    public static ProfessionalUser chargeProfesionalUserById(int id) throws OperationsDBException {
+    public ProfessionalUser chargeProfessionalUserById(int id) throws OperationsDBException {
         ProfessionalUser professionalUser = null;
         String consultaPerson = "SELECT * FROM person WHERE id_person=?";
         String consulta = "SELECT * FROM professional_user WHERE id_person=?;";
@@ -478,6 +488,8 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                     professionalUser.setCollegiate(collegiate);
                     professionalUser.setSpecialty(specialty);
                     professionalUser.setDescription(description);
+                } else {
+                    return null;
                 }
 
             }
@@ -487,6 +499,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return professionalUser;
     }
+
     /**
      * Constructs a NormalUser object using the information retrieved from the database based on the user ID.
      *
@@ -498,7 +511,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * @return a {@link NormalUser} object constructed using the retrieved information.
      * @throws OperationsDBException if there is an error accessing the database or performing the query.
      */
-    public static NormalUser chargeNormalUserById(int id) throws OperationsDBException {
+    public NormalUser chargeNormalUserById(int id) throws OperationsDBException {
         NormalUser normalUser = null;
         String consultaPerson = "SELECT * FROM person WHERE id_person=?";
         String consulta = "SELECT * FROM normal_user WHERE id_person=?;";
@@ -531,6 +544,8 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                     String inTherapySession = resultSet.getString("in_therapy_session");
                     normalUser.setNickname(nickname);
                     normalUser.setInTherapySession(Boolean.parseBoolean(inTherapySession));
+                } else {
+                    return null;
                 }
             }
         } catch (SQLException | NullArgumentException | IncorrectDataException | NoSuchAlgorithmException |
@@ -539,6 +554,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return normalUser;
     }
+
     /**
      * Constructs a Direction object using the information retrieved from the database based on the direction ID.
      *
@@ -549,7 +565,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * @return a {@link Direction} object constructed using the retrieved information.
      * @throws OperationsDBException if there is an error accessing the database or performing the query.
      */
-    public static Direction chargeDirection(int idDirection) throws OperationsDBException {
+    public Direction chargeDirection(int idDirection) throws OperationsDBException {
         Direction direction = null;
         String consulta = "SELECT * FROM direction WHERE id_direction=?;";
         try (PreparedStatement statement = connection.prepareStatement(consulta)) {
@@ -593,6 +609,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             throw new OperationsDBException("Error al encontrar la dirección");
         }
     }
+
     /**
      * Retrieves a list of ProfessionalUser objects from the database.
      *
@@ -601,15 +618,15 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * which is then returned.</p>
      *
      * @return a list of {@link ProfessionalUser} objects retrieved from the database.
-     * @throws SQLException if a database access error occurs.
-     * @throws IncorrectDataException if there is incorrect data retrieved from the database.
+     * @throws SQLException             if a database access error occurs.
+     * @throws IncorrectDataException   if there is incorrect data retrieved from the database.
      * @throws NoSuchAlgorithmException if the hashing algorithm used for password validation is not available.
-     * @throws InvalidKeySpecException if the password specification is invalid.
-     * @throws NullArgumentException if a null argument is passed to a method that does not accept it.
-     * @throws OperationsDBException if there is an error accessing the database or performing the query.
-     * @throws NonexistingUser if the list is empty because there are no users in the database.
+     * @throws InvalidKeySpecException  if the password specification is invalid.
+     * @throws NullArgumentException    if a null argument is passed to a method that does not accept it.
+     * @throws OperationsDBException    if there is an error accessing the database or performing the query.
+     * @throws NonexistingUser          if the list is empty because there are no users in the database.
      */
-    public static List<ProfessionalUser> getProfesionales() throws SQLException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, OperationsDBException, NonexistingUser {
+    public List<ProfessionalUser> getProfessionals() throws SQLException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, OperationsDBException, NonexistingUser {
         List<ProfessionalUser> usuarios = new ArrayList<>();
         String query2 = "SELECT * FROM person WHERE id_person between 0 and 6";
         try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(query2)) {
@@ -640,6 +657,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return usuarios;
     }
+
     /**
      * Registers a new person in the database.
      *
@@ -688,6 +706,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return person;
     }
+
     /**
      * Registers a new professional user in the database.
      *
@@ -698,7 +717,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * professional user's information into the 'professional_user' table.</p>
      *
      * @param professionalUser the ProfessionalUser object to register.
-     * @param update a boolean value indicating whether to update an existing professional user or not.
+     * @param update           a boolean value indicating whether to update an existing professional user or not.
      * @throws OperationsDBException if there is an error accessing the database or performing the query.
      * @throws DuplicateKeyException if there is a duplicate key violation in the database.
      */
@@ -720,6 +739,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             throw new OperationsDBException("Se ha producido un error al guardar el usuario profesional,\ncomprueba que el colegiado no esté repetido y si continua el problema consulta con el soporte");
         }
     }
+
     /**
      * Registers a new normal user in the database.
      *
@@ -730,7 +750,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * normal user's information into the 'normal_user' table.</p>
      *
      * @param normalUser the NormalUser object to register.
-     * @param update a boolean value indicating whether to update an existing normal user or not.
+     * @param update     a boolean value indicating whether to update an existing normal user or not.
      * @throws OperationsDBException if there is an error accessing the database or performing the query.
      * @throws DuplicateKeyException if there is a duplicate key violation in the database.
      */
@@ -761,12 +781,12 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * information and adds them to the list. Finally, it returns the list of professional users.</p>
      *
      * @return a list of ProfessionalUser objects with their history for all users.
-     * @throws IncorrectDataException if there is incorrect data retrieved from the database.
+     * @throws IncorrectDataException   if there is incorrect data retrieved from the database.
      * @throws NoSuchAlgorithmException if there is an error with the algorithm used.
-     * @throws InvalidKeySpecException if there is an error with the key specifications.
-     * @throws NullArgumentException if a null argument is passed where it is not allowed.
-     * @throws SQLException if there is an error accessing the database or performing the query.
-     * @throws OperationsDBException if there is an error performing operations on the database.
+     * @throws InvalidKeySpecException  if there is an error with the key specifications.
+     * @throws NullArgumentException    if a null argument is passed where it is not allowed.
+     * @throws SQLException             if there is an error accessing the database or performing the query.
+     * @throws OperationsDBException    if there is an error performing operations on the database.
      */
 
     private List<ProfessionalUser> cargarHistorialesParaUsuarios() throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, SQLException, OperationsDBException {
@@ -804,13 +824,13 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      *
      * @param person the ProfessionalUser object to search professional information for.
      * @return the ProfessionalUser object with updated professional information if found, otherwise the same object.
-     * @throws IncorrectDataException if there is incorrect data retrieved from the database.
+     * @throws IncorrectDataException   if there is incorrect data retrieved from the database.
      * @throws NoSuchAlgorithmException if there is an error with the algorithm used.
-     * @throws InvalidKeySpecException if there is an error with the key specifications.
-     * @throws NullArgumentException if a null argument is passed where it is not allowed.
-     * @throws OperationsDBException if there is an error accessing the database or performing the query.
+     * @throws InvalidKeySpecException  if there is an error with the key specifications.
+     * @throws NullArgumentException    if a null argument is passed where it is not allowed.
+     * @throws OperationsDBException    if there is an error accessing the database or performing the query.
      */
-    private static ProfessionalUser searchProfesionalPersonForId(ProfessionalUser person) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, OperationsDBException {
+    private ProfessionalUser searchProfesionalPersonForId(ProfessionalUser person) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, OperationsDBException {
         String consulta = "SELECT * FROM professional_user WHERE id_person=?;";
         try (PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setInt(1, person.getIdPerson());
@@ -838,11 +858,11 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      *
      * @param person the ID of the normal user to search for.
      * @return a NormalUser object with the information retrieved from the database.
-     * @throws IncorrectDataException if there is incorrect data retrieved from the database.
+     * @throws IncorrectDataException   if there is incorrect data retrieved from the database.
      * @throws NoSuchAlgorithmException if there is an error with the algorithm used.
-     * @throws InvalidKeySpecException if there is an error with the key specifications.
-     * @throws NullArgumentException if a null argument is passed where it is not allowed.
-     * @throws OperationsDBException if there is an error accessing the database or performing the query.
+     * @throws InvalidKeySpecException  if there is an error with the key specifications.
+     * @throws NullArgumentException    if a null argument is passed where it is not allowed.
+     * @throws OperationsDBException    if there is an error accessing the database or performing the query.
      */
     public NormalUser searchNormalUserById(int person) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, OperationsDBException {
         String consulta = "SELECT * FROM normal_user WHERE id_person=?;";
@@ -867,6 +887,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return newNormalUser;
     }
+
     /**
      * Updates the information of a professional user in the database.
      *
@@ -880,7 +901,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      *
      * @param nuevo the ProfessionalUser object containing the updated information.
      * @throws OperationsDBException if there is an error updating the user information in the database.
-     * @throws SQLException if a database access error occurs.
+     * @throws SQLException          if a database access error occurs.
      */
     public void updateProfesionalUserWP(ProfessionalUser nuevo) throws OperationsDBException, SQLException {
         String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, email = ?, id_direction = ?, type_user=? WHERE id_person = ?";
@@ -908,7 +929,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             updatePersonStmt.executeUpdate();
             updateDirectionStmt.executeUpdate();
             int isUpdated = updateProfessionalUserStmt.executeUpdate();
-            if (isUpdated == 0 && chargeProfesionalUserById(nuevo.getIdPerson()) == null) {
+            if (isUpdated == 0 || chargeProfessionalUserById(nuevo.getIdPerson()) == null) {
                 try {
                     connection.commit();
                     connection.close();
@@ -941,7 +962,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      *
      * @param user the ProfessionalUser object containing the updated information.
      * @throws OperationsDBException if there is an error updating the user information in the database.
-     * @throws SQLException if there is an error accessing the database.
+     * @throws SQLException          if there is an error accessing the database.
      */
 
     public void updateProfesionalUser(ProfessionalUser user) throws OperationsDBException, SQLException {
@@ -966,11 +987,12 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             updateProfessionalUserStmt.setString(1, user.getCollegiate());
             updateProfessionalUserStmt.setString(2, user.getSpecialty());
             updateProfessionalUserStmt.setString(3, user.getDescription());
+            updateProfessionalUserStmt.setInt(4, user.getIdPerson());
 
             updatePersonStmt.executeUpdate();
             updateDireccionStmt.executeUpdate();
             int isUpdate = updateProfessionalUserStmt.executeUpdate();
-            if (isUpdate == 0 && chargeProfesionalUserById(user.getIdPerson()) == null) {
+            if (isUpdate == 0 || chargeProfessionalUserById(user.getIdPerson()) == null) {
                 try {
                     connection.commit();
                     connection.close();
@@ -987,6 +1009,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             deleteNormalUser(user.getIdPerson());
         }
     }
+
     /**
      * Updates the information of a normal user in the database.
      *
@@ -999,7 +1022,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      *
      * @param user the NormalUser object containing the updated information.
      * @throws OperationsDBException if there is an error updating the user information in the database.
-     * @throws SQLException if there is an error accessing the database.
+     * @throws SQLException          if there is an error accessing the database.
      */
     public void updateDataPerson(NormalUser user) throws OperationsDBException, SQLException {
         String updatePersonSQL = "UPDATE person SET user_names = ?, last_names = ?, pass_script = ? ,email = ?, id_direction = ?, type_user=? WHERE id_person = ?";
@@ -1037,10 +1060,11 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             connection.rollback();
             throw new OperationsDBException("La cuenta ya existe en la base de datos");
         }
-        if (user.getTypeUser() == TypeUser.USUARIO_NORMAL && chargeProfesionalUserById(user.getIdPerson()) != null) {
+        if (user.getTypeUser() == TypeUser.USUARIO_NORMAL && chargeProfessionalUserById(user.getIdPerson()) != null) {
             deleteProfessionalUser(user.getIdPerson());
         }
     }
+
     /**
      * Updates the information of a normal user in the database.
      *
@@ -1055,7 +1079,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      *
      * @param nuevo the NormalUser object containing the updated information.
      * @throws OperationsDBException if there is an error updating the user information in the database.
-     * @throws SQLException if there is an error accessing the database.
+     * @throws SQLException          if there is an error accessing the database.
      */
 
     public void updateNormalUserWP(NormalUser nuevo) throws OperationsDBException, SQLException {
@@ -1093,10 +1117,11 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             connection.rollback();
             throw new OperationsDBException("La cuenta ya existe");
         }
-        if (nuevo.getTypeUser() == TypeUser.USUARIO_NORMAL && chargeProfesionalUserById(nuevo.getIdPerson()) != null) {
+        if (nuevo.getTypeUser() == TypeUser.USUARIO_NORMAL && chargeProfessionalUserById(nuevo.getIdPerson()) != null) {
             deleteProfessionalUser(nuevo.getIdPerson());
         }
     }
+
     /**
      * Deletes a professional user from the database.
      *
@@ -1117,6 +1142,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
         }
     }
+
     /**
      * Deletes a normal user from the database.
      *
@@ -1162,6 +1188,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             }
         }
     }
+
     /**
      * Searches for a post by its title in the database.
      *
@@ -1189,6 +1216,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return existe;
     }
+
     /**
      * Searches for posts created by a specific person in the database.
      *
@@ -1198,13 +1226,13 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * @param person the Person object representing the creator of the posts to search for.
      * @return a list of Post objects created by the specified person.
      * @throws IncorrectDataException if there is incorrect data during the operation.
-     * @throws NullArgumentException if a null argument is provided.
-     * @throws OperationsDBException if there is an error performing the database operation.
+     * @throws NullArgumentException  if a null argument is provided.
+     * @throws OperationsDBException  if there is an error performing the database operation.
      */
-    public static List<Post> serchPostByPerson(Person person) throws IncorrectDataException, NullArgumentException, OperationsDBException {
+    public List<Post> serchPostByPerson(Person person) throws IncorrectDataException, NullArgumentException, OperationsDBException {
         List<Post> listaPost = new ArrayList<>();
         String consulta = "SELECT * FROM post WHERE id_person = ?";
-        try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
+        try (PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setInt(1, person.getIdPerson());
             try (ResultSet resultSet = preparetStmt.executeQuery()) {
                 while (resultSet.next()) {
@@ -1221,6 +1249,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return listaPost;
     }
+
     /**
      * Adds a professional user to the favorites list of a normal user in the database.
      *
@@ -1229,7 +1258,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * the professional user.</p>
      *
      * @param professionalUser the ProfessionalUser object to add to the favorites list.
-     * @param person the Person object representing the normal user whose favorites list will be updated.
+     * @param person           the Person object representing the normal user whose favorites list will be updated.
      * @return true if the professional user was successfully added to the favorites list, false otherwise.
      * @throws OperationsDBException if there is an error performing the database operation.
      */
@@ -1245,20 +1274,21 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
             throw new OperationsDBException("Error al realizar las operaciones: " + e.getMessage());
         }
     }
+
     /**
      * Searches for medical appointments for a given professional and date in the database.
      *
      * <p>This method retrieves medical appointments from the database for a specific professional and date.
      * It executes a SQL query with the professional ID and visit date as parameters.</p>
      *
-     * @param id the ID of the professional for whom medical appointments will be searched.
+     * @param id   the ID of the professional for whom medical appointments will be searched.
      * @param date the date for which medical appointments will be searched.
      * @return a list of MedicalAppointment objects representing the found appointments.
-     * @throws OperationsDBException if there is an error performing the database operation.
-     * @throws IncorrectDataException if incorrect data is encountered during processing.
+     * @throws OperationsDBException    if there is an error performing the database operation.
+     * @throws IncorrectDataException   if incorrect data is encountered during processing.
      * @throws NoSuchAlgorithmException if a required cryptographic algorithm is not available.
-     * @throws InvalidKeySpecException if an invalid key specification is encountered.
-     * @throws NullArgumentException if a required argument is null.
+     * @throws InvalidKeySpecException  if an invalid key specification is encountered.
+     * @throws NullArgumentException    if a required argument is null.
      */
     @Override
     public List<MedicalAppointment> searchMedicalAppointments(int id, Date date) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
@@ -1276,7 +1306,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                     Date visit = resultSet.getDate("visit_date");
                     String notification = resultSet.getString("notification");
                     Notificators notificators = Notificators.valueOf(notification);
-                    ProfessionalUser profesionalUser = chargeProfesionalUserById(id_medical);
+                    ProfessionalUser profesionalUser = chargeProfessionalUserById(id_medical);
                     NormalUser normalUser = searchNormalUserById(id_user);
                     MedicalAppointment medicalAppointment = new MedicalAppointment(
                             id_appointment, profesionalUser, normalUser, visit);
@@ -1290,6 +1320,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
         return listOfDates;
     }
+
     /**
      * Searches for medical appointments associated with a specific user in the database.
      *
@@ -1298,11 +1329,11 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      *
      * @param person the Person object representing the user for whom medical appointments will be searched.
      * @return a list of MedicalAppointment objects representing the found appointments.
-     * @throws OperationsDBException if there is an error performing the database operation.
-     * @throws IncorrectDataException if incorrect data is encountered during processing.
+     * @throws OperationsDBException    if there is an error performing the database operation.
+     * @throws IncorrectDataException   if incorrect data is encountered during processing.
      * @throws NoSuchAlgorithmException if a required cryptographic algorithm is not available.
-     * @throws InvalidKeySpecException if an invalid key specification is encountered.
-     * @throws NullArgumentException if a required argument is null.
+     * @throws InvalidKeySpecException  if an invalid key specification is encountered.
+     * @throws NullArgumentException    if a required argument is null.
      */
     @Override
     public List<MedicalAppointment> searchMyAppointments(Person person) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException {
@@ -1318,7 +1349,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
                     int id_medical = resultSet.getInt("id_professional");
                     int id_user = resultSet.getInt("id_normal_user");
                     Date visit = resultSet.getDate("visit_date");
-                    ProfessionalUser profesionalUser = chargeProfesionalUserById(id_medical);
+                    ProfessionalUser profesionalUser = chargeProfessionalUserById(id_medical);
                     NormalUser normalUser = searchNormalUserById(id_user);
                     MedicalAppointment medicalAppointment = new MedicalAppointment(
                             id_appointment, profesionalUser, normalUser, visit);
@@ -1332,6 +1363,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
 
         return listOfDates;
     }
+
     /**
      * Inserts a new medical appointment into the database.
      *
@@ -1349,8 +1381,8 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         String consulta = "INSERT INTO medical_appointment(id_professional, id_normal_user, visit_date, notification) VALUES(?,?,?,?)  ";
 
         try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
-            preparetStmt.setInt(1, medicalAppointment.getPsicologo().getIdPerson());
-            preparetStmt.setInt(2, medicalAppointment.getUsuario().getIdPerson());
+            preparetStmt.setInt(1, medicalAppointment.getProfessionalUser().getIdPerson());
+            preparetStmt.setInt(2, medicalAppointment.getUser().getIdPerson());
             preparetStmt.setObject(3, new Date(medicalAppointment.getVisitDate().getTime()));
             preparetStmt.setString(4, String.valueOf(medicalAppointment.getNotificator()));
             int affectedRows = preparetStmt.executeUpdate();
@@ -1362,6 +1394,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return existe;
     }
+
     /**
      * Checks if there is a medical appointment for a professional on a specific date.
      *
@@ -1369,28 +1402,30 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * on the given date. It executes an SQL SELECT query to search for the appointment.</p>
      *
      * @param idProfesional the ID of the professional.
-     * @param date the date of the appointment.
+     * @param date          the date of the appointment.
      * @return true if there is an appointment for the professional on the specified date, false otherwise.
      * @throws OperationsDBException if there is an error performing the database operation.
      */
-    public static boolean thereIsAQuote(int idProfesional, Date date) throws OperationsDBException {
+    public boolean thereIsAQuote(int idProfesional, Date date) throws OperationsDBException {
         boolean exist = false;
         String consulta = "SELECT * FROM medical_appointment WHERE id_professional = ? AND visit_date = ?";
 
-        try (Connection connection = DriverManager.getConnection(URL); PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
+        try (PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setInt(1, idProfesional);
 
             preparetStmt.setObject(2, new Date(date.getTime()));
 
-            int affectedRows = preparetStmt.executeUpdate();
-            if (affectedRows > 0) {
-                exist = true;
+            try (ResultSet resultSet = preparetStmt.executeQuery()) {
+                if (resultSet.next()) {
+                    exist = true;
+                }
             }
         } catch (SQLException e) {
             throw new OperationsDBException(e.getMessage());
         }
         return exist;
     }
+
     /**
      * Updates the date of a medical appointment.
      *
@@ -1398,7 +1433,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      * and the ID of the appointment to be updated, then executes an SQL UPDATE query to update the appointment.</p>
      *
      * @param medicalAppointment the medical appointment object containing the ID of the appointment to be updated.
-     * @param dateAppointment the new date for the appointment.
+     * @param dateAppointment    the new date for the appointment.
      * @return true if the appointment is successfully updated, false otherwise.
      * @throws OperationsDBException if there is an error performing the database operation.
      */
@@ -1410,14 +1445,15 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         cal.setTime(dateAppointment);
         cal.setTimeZone(cestTimeZone);
         Date cestDate = cal.getTime();
-        String consulta = "UPDATE medical_appointment SET visit_date = ?  WHERE id_appointment = ?";
+        String consulta = "UPDATE medical_appointment SET visit_date = ?, notification=?  WHERE id_appointment = ?";
 
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement preparetStmt = connection.prepareStatement(consulta)) {
             preparetStmt.setObject(1, new Date(cestDate.getTime()));
-            preparetStmt.setInt(2, medicalAppointment.getIdCita());
+            preparetStmt.setString(2, String.valueOf(Notificators.CITAEDITADA));
+            preparetStmt.setInt(3, medicalAppointment.getIdAppointment());
             int affectedRows = preparetStmt.executeUpdate();
-            System.out.println("ID Cita: " + medicalAppointment.getIdCita());
+            System.out.println("ID Cita: " + medicalAppointment.getIdAppointment());
             System.out.println("Fecha: " + cestDate);
             System.out.println("Conexión a la base de datos: " + connection.getMetaData().getURL());
             System.out.println("Consulta ejecutada: " + preparetStmt.toString());
@@ -1429,6 +1465,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return updated;
     }
+
     /**
      * Searches for the full name of a person by their ID in the database.
      *
@@ -1457,6 +1494,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return completeName;
     }
+
     /**
      * Deletes a medical appointment from the database.
      *
@@ -1465,7 +1503,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
      *
      * @param id_appointment the ID of the medical appointment to delete.
      * @param id_normal_user the ID of the user associated with the appointment.
-     * @param date the date of the medical appointment.
+     * @param date           the date of the medical appointment.
      * @return true if the appointment was successfully deleted, false otherwise.
      * @throws OperationsDBException if there is an error performing the database operation.
      */
@@ -1486,6 +1524,7 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
         return delete;
     }
+
     /**
      * Closes the database connection.
      *
