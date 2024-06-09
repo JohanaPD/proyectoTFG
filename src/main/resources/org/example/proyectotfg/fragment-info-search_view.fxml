@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -25,7 +26,7 @@
                                 </ImageView>
                             </children>
                         </VBox>
-                        <VBox prefHeight="178.0" prefWidth="172.0">
+                        <VBox prefHeight="178.0" prefWidth="170.0">
                             <children>
                                 <Text id="nombreMedico" fx:id="nombreMedico" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="179.17303466796875">
                                     <VBox.margin>
@@ -45,7 +46,7 @@
                                 </Text>
                             </children>
                         </VBox>
-                  <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="55.0">
+                  <VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="78.0">
                      <children>
                         <Button alignment="CENTER" mnemonicParsing="false" onAction="#addToFavorites" onMouseClicked="#addToFavorites" prefHeight="40.0" prefWidth="58.0">
                            <graphic>
@@ -59,6 +60,7 @@
                               <Insets bottom="20.0" />
                            </VBox.margin>
                         </Button>
+                        <Label prefHeight="15.0" prefWidth="70.0" text="Valoración:" />
                         <Text id="nombreMedico" fx:id="valoraciones1" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="98.37298583984375">
                            <font>
                               <Font size="16.0" />
