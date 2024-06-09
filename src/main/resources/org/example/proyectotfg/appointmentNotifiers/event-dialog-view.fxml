@@ -11,13 +11,13 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.appointmentNotifiers.EventDialogController">
     <center>
-        <VBox fx:id="bodyPane" spacing="10" padding="10">
+        <VBox fx:id="bodyPane" >
             <!-- This VBox will be dynamically loaded with AddEventDialog.fxml content -->
             <!-- You can add a label or any other components as placeholders or additional content -->
         </VBox>
     </center>
     <bottom>
-        <HBox alignment="CENTER_RIGHT" spacing="10" padding="20">
+        <HBox alignment="CENTER_RIGHT" spacing="10" >
             <Button fx:id="cancelButton" text="Cancel">
                 <graphic>
                     <ImageView>

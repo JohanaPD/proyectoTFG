@@ -4,30 +4,26 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.geometry.Insets?>
-
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.layout.Pane?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.appointmentNotifiers.JFXCalendarController">
+
+
+<BorderPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.appointmentNotifiers.JFXCalendarController">
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="15" padding="10">
-            <Button fx:id="menuButton" >
-            </Button>
+        <HBox>
+            <Button fx:id="menuButton" />
             <Label text="Calendar" fx:id="calendarLabel" />
             <Pane HBox.hgrow="ALWAYS" />
             <Button text="Today" fx:id="todayButton" />
-            <Button >
-            </Button>
-            <Button >
-            </Button>
+            <Button />
+            <Button />
             <Label text="Date" fx:id="dateLabel" />
         </HBox>
     </top>
     <left>
-        <VBox fx:id="leftPane" spacing="5" padding="10" minWidth="200">
+        <VBox fx:id="leftPane" spacing="5" minWidth="200">
             <Label text="Events" style="-fx-font-size: 16;"/>
             <CheckBox text="Optional" fx:id="optionalCheckBox"/>
             <CheckBox text="Normal" fx:id="standardCheckBox"/>
@@ -35,15 +31,9 @@
             <CheckBox text="Urgent" fx:id="criticalCheckBox"/>
             <CheckBox text="Completed" fx:id="completedCheckBox"/>
             <Separator/>
-            <Label text=" Semanal" graphicTextGap="10">
-
-            </Label>
-            <Label text=" Mensual" graphicTextGap="10">
-
-            </Label>
-            <Label text=" Anual" graphicTextGap="10">
-
-            </Label>
+            <Label text=" Semanal" />
+            <Label text=" Mensual" />
+            <Label text=" Anual" />
         </VBox>
     </left>
     <center>
