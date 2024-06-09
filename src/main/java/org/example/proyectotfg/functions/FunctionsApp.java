@@ -171,12 +171,15 @@ public class FunctionsApp {
                 + "</style>\n"
                 + "</head>\n" +
                 "<body>\n" + "    " +
-                "<h1>¡Gracias por registrarte!</h1>\n" + "    " +
+                "<h1>¡Gracias por registrarte "+person.getNames()+"!</h1>\n" + "    " +
                 "<p> A partir de este momento, ya puedes contactar con los mejores profesionales.</p>\n"
                + "</body>\n"
                 + "</html>";
 
-        String mensajeHtml2 = "<!DOCTYPE html>\n" + "<html>\n" + "<head>\n" + "<style>\n" + "    body { font-family: Arial, sans-serif; }\n" + "    input, button { margin-top: 10px; }\n" + "</style>\n" + "</head>\n" + "<body>\n" + "    <h1>¡Gracias por registrarte, [Nombre del Usuario]!</h1>\n" + "    <p>Gracias por registrarte, ya puedes prestar tus servicios a nuestra comunidad.</p>"
+        String mensajeHtml2 = "<!DOCTYPE html>\n" + "<html>\n" + "<head>\n" + "<style>\n" + "    body { font-family: Arial, sans-serif; }\n"
+                + "    input, button { margin-top: 10px; }\n" + "</style>\n" + "</head>\n" + "<body>\n"
+                + "    <h1>¡Gracias por registrarte, " +person.getNames()+"!</h1>\n"
+                + "    <p>Gracias por registrarte , ya puedes prestar tus servicios a nuestra comunidad.</p>"
                 +"</body>\n" + "</html>";
 
         if (person.getTypeUser().equals(TypeUser.USUARIO_NORMAL)) {
