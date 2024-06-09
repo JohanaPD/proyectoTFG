@@ -7,6 +7,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import org.apache.tools.ant.Main;
 import org.example.proyectotfg.entities.MedicalAppointment;
 import org.example.proyectotfg.entities.Person;
 import org.example.proyectotfg.entities.ProfessionalUser;
@@ -214,6 +215,9 @@ public class AppointmentManegemenController implements ViewController {
      */
     @FXML
     void deleteAppoinment(ActionEvent event) throws OperationsDBException {
+        if (actualMediacalAppointment == null) {
+            MainController.showInfo("Error", "Selecciona una de tus citas y pulsa \"Borrar\"");
+        }
         mediatorNotifiers.deleteAppointment(actualMediacalAppointment);
     }
 
@@ -250,7 +254,11 @@ public class AppointmentManegemenController implements ViewController {
      */
     @FXML
     void saveAppoinment(ActionEvent event) {
-        mediatorNotifiers.addAppointment(professionalUser, appointmentDate);
+        if (professionalUser != null && actualMediacalAppointment != null) {
+            mediatorNotifiers.addAppointment(professionalUser, appointmentDate);
+        } else {
+            MainController.showError("Error","Elige primero la fecha, despues el psicólogo y por ultimo la hora de la cita");
+        }
     }
 
     /**
