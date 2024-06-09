@@ -97,6 +97,7 @@ public class UpdatePersonController implements ViewController {
             setConditionalVisibility(newVal);
         });
     }
+
     /**
      * Sets the conditional visibility of fields based on the selected user type.
      *
@@ -114,11 +115,11 @@ public class UpdatePersonController implements ViewController {
         descriptionLabel.setVisible(visible);
         descriptionTextArea.setVisible(visible);
     }
+
     /**
      * Loads user data for editing.
      *
      * @param person the Person object containing user data.
-     * @throws OperationsDBException if a database access error occurs.
      */
     public void chargePerson(Person person) throws OperationsDBException {
         textName.setText(person.getNames());
@@ -138,58 +139,58 @@ public class UpdatePersonController implements ViewController {
         }
         this.person = person;
     }
+
     /**
      * Updates user data.
      *
      * @param actionEvent the action event triggering the update.
-     * @throws IncorrectDataException if incorrect data is provided.
-     * @throws NullArgumentException if a null argument is provided.
-     * @throws NoSuchAlgorithmException if the specified hash algorithm is not found.
-     * @throws InvalidKeySpecException if an error occurs while processing the key.
-     * @throws OperationsDBException if a database access error occurs.
-     * @throws SQLException if an SQL error occurs.
      */
-    public void updateData(ActionEvent actionEvent) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException, OperationsDBException, SQLException {
-        boolean correctDirection = true;
-        String names = textName.getText();
-        if (names.equalsIgnoreCase("")) {
-            names = person.getNames();
-        }
-        String lastNames = textLastNames.getText();
-        if (lastNames.equalsIgnoreCase("")) {
-            lastNames = person.getLastNames();
-        }
-        String calle = textStreet.getText();
-        if (calle.equalsIgnoreCase("")) {
-            calle = person.getDirection().getStreet();
-        }
-        String city = textCity.getText();
-        if (city.equalsIgnoreCase("")) {
-            city = person.getDirection().getCity();
-        }
-        String postalCode = PostalCode.getText();
-        if (city.equalsIgnoreCase("")) {
-            postalCode = String.valueOf(person.getDirection().getPostalCode());
-        }
-        Direction newDirection = null;
+    public void updateData(ActionEvent actionEvent) {
         try {
-            newDirection = new Direction(person.getDirection().getIdDireccion(), calle, city, Integer.parseInt(postalCode));
-        } catch (NumberFormatException e) {
-            correctDirection = false;
-        }
-        if (correctDirection) {
-            String mail = email.getText();
-            if (mail.equalsIgnoreCase("")) {
-                mail = person.getEmail();
+            boolean correctDirection = true;
+            String names = textName.getText();
+            if (names.equalsIgnoreCase("")) {
+                names = person.getNames();
             }
-            String confirMail = confirmEmail.getText();
-            String pass1 = textPassword.getText().trim();
-            String pass2 = textPassword2.getText().trim();
+            String lastNames = textLastNames.getText();
+            if (lastNames.equalsIgnoreCase("")) {
+                lastNames = person.getLastNames();
+            }
+            String calle = textStreet.getText();
+            if (calle.equalsIgnoreCase("")) {
+                calle = person.getDirection().getStreet();
+            }
+            String city = textCity.getText();
+            if (city.equalsIgnoreCase("")) {
+                city = person.getDirection().getCity();
+            }
+            String postalCode = PostalCode.getText();
+            if (city.equalsIgnoreCase("")) {
+                postalCode = String.valueOf(person.getDirection().getPostalCode());
+            }
+            Direction newDirection = null;
+            try {
+                newDirection = new Direction(person.getDirection().getIdDireccion(), calle, city, Integer.parseInt(postalCode));
+            } catch (NumberFormatException | NullArgumentException | IncorrectDataException e) {
+                correctDirection = false;
+            }
+            if (correctDirection) {
+                String mail = email.getText();
+                if (mail.equalsIgnoreCase("")) {
+                    mail = person.getEmail();
+                }
+                String confirMail = confirmEmail.getText();
+                String pass1 = textPassword.getText().trim();
+                String pass2 = textPassword2.getText().trim();
 
-            String errores = verificatorData(names, lastNames, mail, confirMail, pass1, pass2, newDirection);
-            if (!errores.isEmpty()) {
-                ((MainController) mediator).showError("Errores en el registro", errores);
+                String errores = verificatorData(names, lastNames, mail, confirMail, pass1, pass2, newDirection);
+                if (!errores.isEmpty()) {
+                    ((MainController) mediator).showError("Errores en la actualización", errores);
+                }
             }
+        } catch (SQLException | IncorrectDataException | NoSuchAlgorithmException | InvalidKeySpecException |
+                 NullArgumentException | OperationsDBException e) {
+            ((MainController)mediator).showError("Error en la actualización", e.getMessage());
         }
     }
 
@@ -204,14 +205,8 @@ public class UpdatePersonController implements ViewController {
      * @param pass2        the second entered password.
      * @param newDirection the new user direction.
      * @return a string with any errors encountered, if any.
-     * @throws OperationsDBException if a database access error occurs.
-     * @throws IncorrectDataException if incorrect data is provided.
-     * @throws NoSuchAlgorithmException if the specified hash algorithm is not found.
-     * @throws InvalidKeySpecException if an error occurs while processing the key.
-     * @throws NullArgumentException if a null argument is provided.
-     * @throws SQLException if an SQL error occurs.
      */
-    private String verificatorData(String names, String lastNames, String mail, String confirMail, String pass1, String pass2, Direction newDirection) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, SQLException {
+    private String verificatorData(String names, String lastNames, String mail, String confirMail, String pass1, String pass2, Direction newDirection) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, SQLException, OperationsDBException {
         StringBuilder errors = new StringBuilder();
         if (!VerificatorSetter.stringVerificator(names, 100)) {
             errors.append("El nombre no puede contener números ni caracteres especiales.\n");
@@ -277,7 +272,6 @@ public class UpdatePersonController implements ViewController {
      * Gets the data of a professional user for updating.
      *
      * @return a checkProfessionalUser object with the professional user data.
-     * @throws OperationsDBException if a database access error occurs.
      */
     private checkProfessionalUser getCheckProfessionalUser() throws OperationsDBException {
         ProfessionalUser replace = mediator.chargeProfessionalUserById(person.getIdPerson());
