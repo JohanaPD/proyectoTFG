@@ -77,7 +77,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     public void loadFirstView() {
         try {
             loadView("/org/example/proyectotfg/entry-view.fxml");
-            mainStage.setTitle("MeetPshyc!");
+            mainStage.setTitle("MeetPsych!");
         } catch (ThereIsNoView e) {
             showError("Error", "Error al cargar la aplicación");
         }
@@ -93,7 +93,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         try {
             loadView("/org/example/proyectotfg/initial-interface-view.fxml");
             InitialInterfaceController initialInterfaceController = (InitialInterfaceController) actualController;
-          initialInterfaceController.getProfessionals();
+            initialInterfaceController.getProfessionals();
             initialInterfaceController.loadServices();
             initialInterfaceController.setTextWelcome(person.getNames());
             initialInterfaceController.setUser(person);
@@ -1039,7 +1039,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     public void makePost(Post newPost) {
         try {
             connect.makeNewPost(newPost);
-            showInfo("Post publicado","Post publicado correctamente");
+            showInfo("Post publicado", "Post publicado correctamente");
             loadInitialInterface();
         } catch (OperationsDBException e) {
             throw new RuntimeException(e);
