@@ -254,9 +254,6 @@ public class FunctionsApp {
 
             fillArray = timesList.toArray(new Date[0]);
 
-            for (Date date : fillArray) {
-                System.out.println(dateTimeFormat.format(date));
-            }
 
         } catch (ParseException e) {
             e.printStackTrace();
