@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox id="layoutMajor" maxHeight="797.0" maxWidth="421.0" prefHeight="797.0" prefWidth="421.0" styleClass="layoutFondoTotal" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.AppointmentManegemenController">
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+    <children>
+        <!-- Contenedor con saludo y info del usuario -->
+        <AnchorPane prefHeight="100.0" prefWidth="360.0" stylesheets="@styles.css">
+            <children>
+                <Label fx:id="username" layoutX="14.0" layoutY="14.0" styleClass="userGreeting" text="Hola, [Nombre del Usuario]" />
+                <Label layoutX="96.0" layoutY="44.0" styleClass="userInfo" text="Información de las citas del usuario" />
+            </children>
+        </AnchorPane>
+
+              <!-- Contenedor para los psicólogos seleccionados -->
+        <AnchorPane prefHeight="100.0" prefWidth="360.0" stylesheets="@styles.css">
+            <children>
+                <Label layoutX="14.0" layoutY="14.0" styleClass="sectionTitle" text="Selecciona una Fecha" />
+                <DatePicker fx:id="datePicker" layoutX="20.0" layoutY="40.0" prefHeight="23.0" prefWidth="351.0" />
+                <Label layoutX="21.0" layoutY="73.0" styleClass="sectionTitle" text="Psicólogos Seleccionados" />
+            <AnchorPane fx:id="appointmentsList" layoutX="19.0" layoutY="100.0" prefHeight="100.0" prefWidth="351.0">
+               <children>
+                  <ScrollPane fx:id="professionalsList" prefHeight="146.0" prefWidth="359.0" />
+               </children></AnchorPane>
+            </children>
+        </AnchorPane>
+
+        <!-- Contenedor para el DatePicker y citas disponibles -->
+        <AnchorPane prefHeight="170.0" prefWidth="412.0" stylesheets="@styles.css">
+            <children>
+                <Label fx:id="textConfirm" layoutX="17.0" layoutY="11.0" styleClass="sectionTitle" text="Citas Disponibles" />
+            <ScrollPane layoutX="19.0" layoutY="31.0" prefHeight="122.0" prefWidth="359.0">
+               <content>
+                  <AnchorPane fx:id="availableAppointmentsList" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="102.0" prefWidth="344.0" />
+               </content>
+               <padding>
+                  <Insets bottom="5.0" top="10.0" />
+               </padding>
+            </ScrollPane>
+            <Label fx:id="textAppointmentToSelect" layoutX="30.0" layoutY="159.0" prefHeight="15.0" prefWidth="351.0" text="Fecha de cita seleccionada" />
+            </children>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+        </AnchorPane>
+
+        <!-- Contenedor para las citas elegidas -->
+        <AnchorPane maxWidth="1.7976931348623157E308" prefHeight="313.0" prefWidth="412.0" stylesheets="@styles.css">
+            <children>
+            <Label fx:id="textAppointment" layoutX="24.0" layoutY="186.0" prefHeight="31.0" prefWidth="351.0" text="Información de la cita" />
+            <ScrollPane layoutX="16.0" layoutY="33.0" prefHeight="122.0" prefWidth="382.0">
+               <content>
+                  <AnchorPane fx:id="myAppointments" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="100.0" prefWidth="354.0" />
+               </content>
+               <padding>
+                  <Insets bottom="5.0" top="10.0" />
+               </padding>
+            </ScrollPane>
+            <Label fx:id="textConfirm1" layoutX="16.0" layoutY="5.0" styleClass="sectionTitle" text="Citas Confirmadas" />
+            <Label layoutX="24.0" layoutY="178.0" prefHeight="15.0" prefWidth="166.0" text="Cita seleccionada:" />
+            </children>
+        </AnchorPane>
+
+        <!-- Contenedor con botones para confirmar o editar las citas -->
+        <AnchorPane layoutY="520.0" prefHeight="82.0" prefWidth="412.0" stylesheets="@styles.css">
+            <children>
+                <HBox id="containerButton" alignment="BASELINE_CENTER" layoutY="35.0" prefHeight="66.0" prefWidth="390.0" styleClass="buttonContainer" stylesheets="@styles.css">
+                    <children>
+                  <Button layoutX="67.0" layoutY="20.0" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveAppoinment" prefHeight="40.0" prefWidth="103.0" styleClass="buttonIntroInicio" stylesheets="@styles.css" text="Guardar" />
+                        <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#editAppoinment" prefHeight="30.0" styleClass="buttonIntroInicio" stylesheets="@styles.css" text="Editar" />
+                        <Button layoutX="135.0" layoutY="20.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteAppoinment" prefHeight="33.0" styleClass="buttonIntroInicio" stylesheets="@styles.css" text="Borrar" />
+                  <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#goToHome" prefHeight="30.0" styleClass="buttonIntroInicio" stylesheets="@styles.css" text="Volver" />
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets top="20.0" />
+            </padding>
+        </AnchorPane>
+    </children>
+</VBox>

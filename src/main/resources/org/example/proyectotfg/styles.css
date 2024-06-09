@@ -111,6 +111,12 @@
     -fx-padding: 10;
 }
 
+.scrollpanePsico {
+    -fx-border: none;
+    -fx-border-radius: 10;
+
+}
+
 .buttonInterfaz{
     -fx-background-color: rgba(158, 34, 144, 0.7);
     -fx-border-radius: 5; /* Radio de esquinas para redondear el botón */
@@ -127,6 +133,16 @@
 .buttonInterfaz.iconIntro {
     -fx-font-size:1.5em; /* Tamaño del fuente del icono */
     -fx-padding: 0 5; /* Ajuste de espaciado interno del icono */
+}
+
+/*Fragment servicios*/
+.fragmentServices{
+    -fx-border-width: 0.5;
+    -fx-border-color: gray;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 5;
+
 }
 
 /*Interfaz de usuario medico, perfil */
@@ -157,7 +173,7 @@
 
 .fondosearch {
 
-    -fx-background-color: rgba(245, 240, 244, 0.7);
+    -fx-background-color: rgba(255, 255, 255, 0.7);
     -fx-background-size: cover;
 }
 .fragmentSearch{
@@ -186,9 +202,57 @@
     -fx-alignment: center;
 }
 
+.botonCalendar2{
+    -fx-background-color: rgba(200, 200, 200, 0.5); /* Color de fondo suave */
+    -fx-text-fill: #9E228F; /* Color del texto */
+    -fx-font-size: 10px; /* Tamaño de fuente */
+     /* Relleno */
+    -fx-border-color: #9E228F; /* Color del borde */
+    -fx-border-width: 0.5px; /* Ancho del borde */
+    -fx-border-radius: 8px; /* Borde redondeado */
+    -fx-background-radius: 20px; /* Borde redondeado */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0); /* Sombra */
+    -fx-cursor: hand; /* Cursor al pasar el ratón */
+    -fx-alignment: center;
+}
 .botonCalendar:hover {
     -fx-background-color: rgba(158, 34, 144, 0.7); /* Cambio de color de fondo al pasar el ratón */
     -fx-border-color: rgb(255, 255, 255); /* Cambio de color del borde al pasar el ratón */
     -fx-border-color: rgb(255, 255, 255);
+}
+.botonCalendar2:hover {
+    -fx-background-color: rgba(158, 34, 144, 0.7); /* Cambio de color de fondo al pasar el ratón */
+    -fx-border-color: rgb(255, 255, 255); /* Cambio de color del borde al pasar el ratón */
+    -fx-border-color: rgb(255, 255, 255);
+}
+.hourBox{
+    -fx-border-radius: 5;
+    -fx-padding: 2;
+    -fx-background-radius: 10;
+    -fx-background-color:  rgb(255, 255, 255)   ;
+}
+
+
+.centrarTexto {
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+
+}
+.text-flow {
+    -fx-text-alignment: justify;
+    -fx-padding: 10;
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.text-flow .text {
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial";
+    -fx-fill: #333333;
+}
+.fragment {
+   -fx-background-color: #FFFF;
 }
 

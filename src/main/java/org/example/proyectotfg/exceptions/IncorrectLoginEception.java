@@ -5,7 +5,6 @@
 package org.example.proyectotfg.exceptions;
 
 /**
- *
  * @author Sergio Cuesta
  */
 public class IncorrectLoginEception extends Exception {

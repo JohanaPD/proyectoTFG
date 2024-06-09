@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="410.0" spacing="10" styleClass="main-vbox" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.ControllerPost">
+    <children>
+    </children>
+    <ScrollPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="626.0" prefWidth="370.0">
+      <padding>
+         <Insets left="5.0" right="5.0" />
+      </padding>
+      <content>
+         <AnchorPane fx:id="mainContainer" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="611.0" prefWidth="340.0" />
+      </content></ScrollPane>
+    <Button fx:id="botonCerrar" cancelButton="true" mnemonicParsing="false" onAction="#volverIncio" styleClass="buttonIntro" stylesheets="@styles.css" text="Cerrar">
+        <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@img/icons_home.png" />
+                </image>
+            </ImageView>
+        </graphic>
+    </Button>
+
+    <!-- Estilos de la vista -->
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+</VBox>

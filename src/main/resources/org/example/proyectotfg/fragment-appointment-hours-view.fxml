@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="CENTER" fillWidth="false" maxWidth="156.0" minWidth="40" prefHeight="79.0" prefWidth="80.0" spacing="20.0" styleClass="layoutFondoTotal" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.ControllerFragmentApoinmentHours">
+    <children>
+        <Text fx:id="dataAppointment" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha" textAlignment="CENTER" wrappingWidth="40" />
+
+        <!-- HBox for the time selection -->
+        <HBox alignment="CENTER" spacing="5.0">
+            <children>
+                <VBox alignment="CENTER" prefHeight="50.0" prefWidth="15.0" style="-fx-border-color: black; -fx-border-width: 0.2;" styleClass="hourBox">
+                    <children>
+                        <Text fx:id="hourText" text="00" wrappingWidth="17.514829874038696" />
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="50.0" prefWidth="10.0" style="-fx-border-color: black; -fx-border-width: 0.2;" styleClass="hourBox">
+                    <children>
+                        <Text text=":">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="50.0" prefWidth="15.0" style="-fx-border-color: black; -fx-border-width: 0.2;" styleClass="hourBox">
+                    <children>
+                        <Text fx:id="minuteText" text="00" wrappingWidth="23.914928436279297">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                        </Text>
+                    </children>
+                </VBox>
+            </children>
+         <VBox.margin>
+            <Insets top="-15.0" />
+         </VBox.margin>
+        </HBox>
+
+        <!-- Button at the bottom -->
+        <Button onAction="#confirmar" prefHeight="20.0" prefWidth="92.0" styleClass="botonCalendar2" text="Seleccionar">
+            <font>
+                <Font size="5.0" />
+            </font>
+         <VBox.margin>
+            <Insets bottom="10.0" top="-10.0" />
+         </VBox.margin>
+        </Button>
+    </children>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</VBox>

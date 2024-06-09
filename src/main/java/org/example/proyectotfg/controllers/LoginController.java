@@ -9,47 +9,46 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.example.proyectotfg.enumAndTypes.TypeUser;
-import org.example.proyectotfg.exceptions.DataAccessException;
-import org.example.proyectotfg.exceptions.NonexistingUser;
-import org.example.proyectotfg.exceptions.OperationsDBException;
 import org.example.proyectotfg.exceptions.ThereIsNoView;
 import org.example.proyectotfg.mediators.Mediator;
 import org.example.proyectotfg.mediators.MediatorProfile;
 import org.example.proyectotfg.mediators.ViewController;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Controls the login interface.
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
 public class LoginController implements ViewController {
-    private MediatorProfile mediator;
 
+    private MediatorProfile mediator;
     @FXML
     TextField reciveUser;
     @FXML
     PasswordField recivePasswor;
     @FXML
     private ComboBox<String> tipoUsuario;
-    //recuperar contraseña
-    @FXML
-    private Hyperlink recoverLink;
 
+    /**
+     * Initializes the controller.
+     */
     public void initialize() {
-        // Creamos un Stream de elementos para el ComboBox
         Stream<String> opcionesStream = Stream.of("PSICOLOGO", "COACH", "USUARIO_NORMAL", "ENTRENADOR_PERSONAL", "MINDFULNESS");
-
-        // Convertimos el Stream a ObservableList directamente
         ObservableList<String> opcionesList = opcionesStream.collect(Collectors.toCollection(FXCollections::observableArrayList));
-
-        // Asignamos las opciones al ComboBox
         tipoUsuario.setItems(opcionesList);
-
-        // Si quieres seleccionar un ítem por defecto (opcional)
         tipoUsuario.getSelectionModel().selectFirst();
     }
 
+    /**
+     * Handles the action when the hello button is clicked.
+     *
+     * @param event the action event.
+     */
     @FXML
     void onHelloButtonClick(ActionEvent event) {
         String usuario = reciveUser.getText().toString();
@@ -59,31 +58,37 @@ public class LoginController implements ViewController {
         mediator.loginUser(usuario, pass, typeUserEnum);
     }
 
+    /**
+     * Handles the action to register a user.
+     *
+     * @param event the action event.
+     * @throws IOException      if an I/O error occurs.
+     * @throws ThereIsNoView   if there is no view.
+     */
     @FXML
     void userRegister(ActionEvent event) throws IOException, ThereIsNoView {
         mediator.userRegister();
     }
 
+    /**
+     * Handles the action to recover password.
+     *
+     * @param event the action event.
+     * @throws IOException      if an I/O error occurs.
+     * @throws ThereIsNoView   if there is no view.
+     */
     @FXML
     void recovLink(ActionEvent event) throws IOException, ThereIsNoView {
-        mediator.recoverPassword();
-
+        mediator.loadRecoverPassword();
     }
 
+    /**
+     * Sets the mediator.
+     *
+     * @param mediador the mediator to set.
+     */
     @Override
     public void setMediator(Mediator mediador) {
         this.mediator = (MediatorProfile) mediador;
     }
-
-    @Override
-    public MainController getMainController() {
-        return null;
-    }
-
-    @Override
-    public void setMainController(MainController mainController) {
-
-    }
-
-
 }

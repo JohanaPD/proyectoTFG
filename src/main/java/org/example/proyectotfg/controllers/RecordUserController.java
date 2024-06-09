@@ -23,8 +23,16 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
+/**
+ * Controls the user recording process.
+ * <p>Authors: Johana Pardo, Daniel Ocaña</p>
+ * <p>Version: Java 21</p>
+ * <p>Since: 2024-06-08</p>
+ */
 public class RecordUserController implements ViewController {
+
     private MediatorProfile mediator;
+
     private MainController mainController;
 
     @FXML
@@ -54,7 +62,6 @@ public class RecordUserController implements ViewController {
     @FXML
     private TextField colegiadoTextField;
 
-
     @FXML
     private TextField especialidadTextField;
 
@@ -78,19 +85,23 @@ public class RecordUserController implements ViewController {
     @FXML
     private Label descripcionLabel;
 
-    ProfessionalUser psycologist;
-    NormalUser normalUser;
-
+    /**
+     * Initializes the controller.
+     */
     public void initialize() {
         comboTypeUser.setItems(FXCollections.observableArrayList(TypeUser.values()));
         comboTypeUser.getSelectionModel().select(TypeUser.USUARIO_NORMAL);
-        setConditionalVisibility(comboTypeUser.getValue());  // Set initial visibility based on default selection
-
+        setConditionalVisibility(comboTypeUser.getValue());
         comboTypeUser.valueProperty().addListener((obs, oldVal, newVal) -> {
             setConditionalVisibility(newVal);
         });
     }
 
+    /**
+     * Sets the conditional visibility based on the type of user.
+     *
+     * @param typeUser the type of user.
+     */
     private void setConditionalVisibility(TypeUser typeUser) {
         boolean visible = typeUser != TypeUser.USUARIO_NORMAL;
         colegiadoTextField.setText("");
@@ -102,11 +113,13 @@ public class RecordUserController implements ViewController {
         descripcionTextArea.setText("");
         descripcionLabel.setVisible(visible);
         descripcionTextArea.setVisible(visible);
-        /*dateNacimiento.setEditable(false);*/
-
-
     }
 
+    /**
+     * Handles the action to make a registration.
+     *
+     * @param event the action event.
+     */
     @FXML
     public void makeRegister(ActionEvent event) {
         try {
@@ -127,17 +140,13 @@ public class RecordUserController implements ViewController {
                 String confirMail = confirmarMail.getText();
                 String pass1 = textPassword.getText().trim();
                 String pass2 = textPassword2.getText().trim();
-
                 LocalDate birthDate = dateNacimiento.getValue();
                 Date birthd = null;
                 if (birthDate != null) {
                     ZoneId zoneId = ZoneId.systemDefault();
                     birthd = Date.from(birthDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                    //recoger hora actual
                     LocalDateTime currentDateTime = LocalDateTime.now();
                     Date registrationDate = Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
-                    //cambiarlo a enum
-                    //hago el psicologo
                     String errores = verificatorData(names, lastNames, mail, confirMail, registrationDate, birthd, pass1, pass2, nueva);
                     if (!errores.isEmpty()) {
                         ((MainController) mediator).showError("Errores en el registro", errores);
@@ -152,25 +161,34 @@ public class RecordUserController implements ViewController {
                  IncompleteDataInRecord | IOException | DataAccessException | OperationsDBException | ThereIsNoView e) {
             ((MainController) mediator).showError("Error", e.getMessage());
         }
-
     }
-
+    /**
+     * Verifies the user data before registration.
+     *
+     * @param names the user's names.
+     * @param lastNames the user's last names.
+     * @param mail the user's email.
+     * @param confirMail the user's confirmed email.
+     * @param registrationDate the user's registration date.
+     * @param birthd the user's birth date.
+     * @param pass1 the user's password.
+     * @param pass2 the user's confirmed password.
+     * @param nueva the user's address.
+     * @return a string indicating any errors found during verification.
+     */
     private String verificatorData(String names, String lastNames, String mail, String confirMail, Date registrationDate, Date birthd, String pass1, String pass2, Direction nueva) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, IncompleteDataInRecord, IOException, DataAccessException, OperationsDBException, ThereIsNoView {
         StringBuilder errores = new StringBuilder();
-        System.out.println(errores);
         if (names.isEmpty()) {
-            /*textNombre.setText("El nombre es requerido.\n");*/
             errores.append("El nombre es requerido.\n");
         } else if (!VerificatorSetter.stringVerificator(names, 100)) {
             errores.append("El nombre no puede contener números ni caracteres especiales");
         }
         if (lastNames.isEmpty()) {
-            /*textNombre.setText("El nombre es requerido.\n");*/
             errores.append("El apellido es requerido.\n");
         } else if (!VerificatorSetter.stringVerificator(lastNames, 100)) {
             errores.append("El apellido no puede contener números ni caracteres especiales");
         }
-        if (VerificatorSetter.validarCorreoElectronico(mail) && VerificatorSetter.validarCorreoElectronico(confirMail)) {
+        if (VerificatorSetter.validateEmailAddress(mail) && VerificatorSetter.validateEmailAddress(confirMail)) {
             if (mail.equalsIgnoreCase(confirMail)) {
                 int calculatorAge = FunctionsApp.calculateAge(registrationDate, birthd);
                 if (calculatorAge >= 18 && calculatorAge <= 100) {
@@ -181,27 +199,23 @@ public class RecordUserController implements ViewController {
                     } else {
                         TypeUser tipeUs = comboTypeUser.getValue();
                         String tipeUser = tipeUs.toString();
-                        System.out.println(tipeUser);
                         if (!tipeUser.equalsIgnoreCase(String.valueOf(TypeUser.USUARIO_NORMAL))) {
                             String college = colegiadoTextField.getText();
                             String especialidad = especialidadTextField.getText();
                             String descripcion = descripcionTextArea.getText();
-                            if (VerificatorSetter.stringVerificator(especialidad, 150)) {
-                                if (VerificatorSetter.stringVerificator(descripcion, 2000)) {
+                            if (VerificatorSetter.stringVerificatorletterAndNumbers(especialidad, 150)) {
+                                if (VerificatorSetter.stringVerificatorletterAndNumbers(descripcion, 7000)) {
                                     ProfessionalUser nuevo = new ProfessionalUser(names, lastNames, pass1, birthd, registrationDate, mail, tipeUs, nueva, college, especialidad, descripcion);
-                                    System.out.println(nuevo.toString());
                                     mediator.makeRecordRegister(nuevo);
                                 } else {
-                                    //corregir
+                                    ((MainController) mediator).showError("Error", "Revise la descripción, puede contener carácteres no adecuados o ser superior a 2000 caracteres");
                                 }
                             }
                         } else {
                             NormalUser nuevouser = new NormalUser(names, lastNames, pass1, birthd, registrationDate, mail, tipeUs, nueva);
-                            System.out.println(nuevouser.toString());
                             mediator.makeRecordRegister(nuevouser);
                         }
                     }
-                    /*     }*/
 
                 } else {
                     ((MainController) mediator).showError("Error", "Para inscribirte necesitas tener 18 años");
@@ -212,26 +226,42 @@ public class RecordUserController implements ViewController {
         } else {
             ((MainController) mediator).showError("Error", "No has introducido o no tiene el formato correcto el correo");
         }
-
-
         return errores.toString();
     }
 
-
+    /**
+     * Handles the action to return to the home screen.
+     *
+     * @param event the action event.
+     * @throws ThereIsNoView if there is no view available.
+     */
     @FXML
     void volverHome(ActionEvent event) throws ThereIsNoView {
         mediator.volverIncio();
     }
-
+    /**
+     * Sets the mediator for communication with other controllers.
+     *
+     * @param mediador the mediator.
+     */
     @Override
     public void setMediator(Mediator mediador) {
         this.mediator = (MediatorProfile) mediador;
     }
 
+    /**
+     * Gets the main controller.
+     *
+     * @return the main controller.
+     */
     public MainController getMainController() {
         return mainController;
     }
-
+    /**
+     * Sets the main controller.
+     *
+     * @param mainController the main controller.
+     */
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }

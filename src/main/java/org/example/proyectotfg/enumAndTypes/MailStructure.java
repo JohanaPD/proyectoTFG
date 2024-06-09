@@ -1,7 +1,5 @@
 package org.example.proyectotfg.enumAndTypes;
 
 public enum MailStructure {
-    titulo,
-    mensaje,
-    despedida
+    titulo, mensaje, despedida
 }

@@ -4,10 +4,7 @@
  */
 package org.example.proyectotfg.exceptions;
 
-/**
- *
- * @author Sergio Cuesta
- */
+
 public class DataDestFullException extends Exception {
     public DataDestFullException(String message) {
         super(message);

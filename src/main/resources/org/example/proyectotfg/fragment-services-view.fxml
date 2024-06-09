@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<HBox maxHeight="90.0" maxWidth="-80" onMouseClicked="#openFragmentInDetail" prefHeight="90.0" prefWidth="80.0"
+      styleClass="fragmentServices" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.proyectotfg.controllers.ControllerFragmentServicios">
+    <children>
+        <AnchorPane maxHeight="1.7976931348623157E308" prefHeight="90.0" prefWidth="80.0" stylesheets="@styles.css">
+            <children>
+                <VBox maxHeight="1.7976931348623157E308" prefHeight="116.0" prefWidth="80.0">
+                    <children>
+                        <ImageView id="iconFragmen" fx:id="imgService" fitHeight="130.0" fitWidth="80.0"
+                                   onMouseClicked="#cargarServicio" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/publica_post.png"/>
+                            </image>
+                            <VBox.margin>
+                                <Insets bottom="10.0"/>
+                            </VBox.margin>
+                        </ImageView>
+                        <Text fx:id="titleService" strokeType="OUTSIDE" strokeWidth="0.0" text="SERVICIO"
+                              textAlignment="CENTER" wrappingWidth="80.0"/>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </children>
+</HBox>
