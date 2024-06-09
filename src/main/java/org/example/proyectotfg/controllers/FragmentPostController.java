@@ -23,16 +23,34 @@ public class FragmentPostController implements ViewController {
     private Text titulo;
 
     private MediatorPost mediator;
-
+    /**
+     * Sets the mediator.
+     *
+     * @param mediador the mediator to set.
+     */
     @Override
     public void setMediator(Mediator mediador) {
         this.mediator = (MediatorPost) mediador;
     }
 
+    /**
+     * Gets the mediator.
+     *
+     * @return the mediator.
+     */
     public MediatorPost getMediador() {
         return (MediatorPost) mediator;
     }
 
+    /**
+     * Sets the data for the post.
+     *
+     * @param tit the title of the post.
+     * @param name the name associated with the post.
+     * @param cont the content of the post.
+     * @param imagePath the path to the image.
+     * @throws NotFoundImage if the image cannot be found.
+     */
     public void setData(String tit, String name, String cont, String imagePath) throws NotFoundImage {
         Image image = new Image(getClass().getResourceAsStream(imagePath));
         if (image != null) {
@@ -44,6 +62,5 @@ public class FragmentPostController implements ViewController {
         titulo.setText(tit);
         descripcion.setText(cont);
     }
-
 
 }

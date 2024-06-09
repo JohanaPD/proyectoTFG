@@ -40,25 +40,48 @@ public class InitialInterfaceController implements ViewController, Initializable
     List<ProfessionalUser> usuariosEspecificos = new ArrayList<>();
     private Person user;
 
+    /**
+     * Gets the user.
+     *
+     * @return the user.
+     */
     public Person getUser() {
         return user;
     }
 
+    /**
+     * Sets the user.
+     *
+     * @param user the user to set.
+     */
     public void setUser(Person user) {
         this.user = user;
     }
 
+    /**
+     * Sets the mediator.
+     *
+     * @param mediador the mediator to set.
+     */
     @Override
     public void setMediator(Mediator mediador) {
         this.mediator = (MediatorFirstScreen) mediador;
     }
 
+    /**
+     * Initializes the controller.
+     *
+     * @param url the URL.
+     * @param resourceBundle the resource bundle.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         servicios = getServicio();
-
     }
 
+    /**
+     * Retrieves the professionals.
+     */
     public void getProfessionals() {
         try {
             usuariosEspecificos = mediator.getProfessionals();
@@ -68,10 +91,18 @@ public class InitialInterfaceController implements ViewController, Initializable
         }
     }
 
+    /**
+     * Sets the welcome text.
+     *
+     * @param name the name to set.
+     */
     public void setTextWelcome(String name) {
         textSaludo.setText("Hola, " + name);
     }
 
+    /**
+     * Loads the services.
+     */
     public void loadServices() {
         Parent listaServicios = mediator.initializeServices(servicios);
         containerServicesList.getChildren().add(listaServicios);
@@ -83,6 +114,11 @@ public class InitialInterfaceController implements ViewController, Initializable
         }
     }
 
+    /**
+     * Retrieves the service data.
+     *
+     * @return the service data.
+     */
     public HashMap<String, String> getServicio() {
         HashMap<String, String> servicios = new HashMap<>();
         servicios.put("Foros", "/org/example/proyectotfg/img/factores.png");
@@ -92,21 +128,42 @@ public class InitialInterfaceController implements ViewController, Initializable
         return servicios;
     }
 
+    /**
+     * Opens the search view.
+     *
+     * @param actionEvent the action event.
+     */
     public void openSearch(ActionEvent actionEvent) {
         String textoBusqueda = serchBuscar.getText();
         mediator.openSearch(textoBusqueda);
     }
 
+    /**
+     * Handles the action to update personal data.
+     *
+     * @param actionEvent the action event.
+     * @throws OperationsDBException if there is an error updating personal data.
+     */
     public void adminSetting(ActionEvent actionEvent) throws OperationsDBException {
         mediator.updatePersonalData(user);
     }
 
+    /**
+     * Opens the appointment calendar view.
+     *
+     * @param actionEvent the action event.
+     */
     public void openCalendar(ActionEvent actionEvent) {
         mediator.openAppointmentView();
     }
 
-
+    /**
+     * Logs out the user.
+     *
+     * @param actionEvent the action event.
+     */
     public void logOut(ActionEvent actionEvent) {
         mediator.logOut();
     }
+
 }

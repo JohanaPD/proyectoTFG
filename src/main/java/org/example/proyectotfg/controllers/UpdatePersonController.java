@@ -35,7 +35,6 @@ public class UpdatePersonController implements ViewController {
     @FXML
     private TextField confirmEmail;
 
-
     @FXML
     private Label descriptionLabel;
 
@@ -80,7 +79,9 @@ public class UpdatePersonController implements ViewController {
         this.mediator = (MediatorFirstScreen) mediator;
     }
 
-
+    /**
+     * Initializes the controller after its root element has been loaded.
+     */
     public void initialize() {
         comboTypeUser.setItems(FXCollections.observableArrayList(TypeUser.values()));
         comboTypeUser.getSelectionModel().select(TypeUser.USUARIO_NORMAL);
@@ -89,7 +90,11 @@ public class UpdatePersonController implements ViewController {
             setConditionalVisibility(newVal);
         });
     }
-
+    /**
+     * Sets the conditional visibility of fields based on the selected user type.
+     *
+     * @param typeUser the selected user type.
+     */
     private void setConditionalVisibility(TypeUser typeUser) {
         boolean visible = typeUser != TypeUser.USUARIO_NORMAL;
         collegiateTextField.setText("");
@@ -102,7 +107,12 @@ public class UpdatePersonController implements ViewController {
         descriptionLabel.setVisible(visible);
         descriptionTextArea.setVisible(visible);
     }
-
+    /**
+     * Loads user data for editing.
+     *
+     * @param person the Person object containing user data.
+     * @throws OperationsDBException if a database access error occurs.
+     */
     public void chargePerson(Person person) throws OperationsDBException {
         textName.setText(person.getNames());
         textLastNames.setText(person.getLastNames());
@@ -121,7 +131,17 @@ public class UpdatePersonController implements ViewController {
         }
         this.person = person;
     }
-
+    /**
+     * Updates user data.
+     *
+     * @param actionEvent the action event triggering the update.
+     * @throws IncorrectDataException if incorrect data is provided.
+     * @throws NullArgumentException if a null argument is provided.
+     * @throws NoSuchAlgorithmException if the specified hash algorithm is not found.
+     * @throws InvalidKeySpecException if an error occurs while processing the key.
+     * @throws OperationsDBException if a database access error occurs.
+     * @throws SQLException if an SQL error occurs.
+     */
     public void updateData(ActionEvent actionEvent) throws IncorrectDataException, NullArgumentException, NoSuchAlgorithmException, InvalidKeySpecException, OperationsDBException, SQLException {
         boolean correctDirection = true;
         String names = textName.getText();
@@ -166,7 +186,24 @@ public class UpdatePersonController implements ViewController {
         }
     }
 
-
+    /**
+     * Verifies data before updating.
+     *
+     * @param names        the user's names.
+     * @param lastNames    the user's last names.
+     * @param mail         the user's email.
+     * @param confirMail   the user's email confirmation.
+     * @param pass1        the first entered password.
+     * @param pass2        the second entered password.
+     * @param newDirection the new user direction.
+     * @return a string with any errors encountered, if any.
+     * @throws OperationsDBException if a database access error occurs.
+     * @throws IncorrectDataException if incorrect data is provided.
+     * @throws NoSuchAlgorithmException if the specified hash algorithm is not found.
+     * @throws InvalidKeySpecException if an error occurs while processing the key.
+     * @throws NullArgumentException if a null argument is provided.
+     * @throws SQLException if an SQL error occurs.
+     */
     private String verificatorData(String names, String lastNames, String mail, String confirMail, String pass1, String pass2, Direction newDirection) throws OperationsDBException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, SQLException {
         StringBuilder errors = new StringBuilder();
         if (!VerificatorSetter.stringVerificator(names, 100)) {
@@ -202,12 +239,12 @@ public class UpdatePersonController implements ViewController {
                             }
                         }
                     } else {
-                        // Actualizar sin contraseña
+
                         if (tipeUser.equalsIgnoreCase(String.valueOf(TypeUser.USUARIO_NORMAL))) {
                             NormalUser newUser = new NormalUser(person.getIdPerson(), names, lastNames, mail, newDirection, typeUser);
                             mediator.updateDataPerson(newUser);
                         } else {
-                            // ProfessionalUser
+
                             checkProfessionalUser result = getCheckProfessionalUser();
 
                             if (!result.college().equalsIgnoreCase("") || !result.specialty().equalsIgnoreCase("") || !result.description().equalsIgnoreCase("")) {
@@ -229,6 +266,12 @@ public class UpdatePersonController implements ViewController {
         return errors.toString();
     }
 
+    /**
+     * Gets the data of a professional user for updating.
+     *
+     * @return a checkProfessionalUser object with the professional user data.
+     * @throws OperationsDBException if a database access error occurs.
+     */
     private checkProfessionalUser getCheckProfessionalUser() throws OperationsDBException {
         ProfessionalUser replace = mediator.chargeProfessionalUserById(person.getIdPerson());
 
@@ -248,11 +291,18 @@ public class UpdatePersonController implements ViewController {
         return result;
     }
 
+    /**
+     * Record class to hold professional user data.
+     */
     private record checkProfessionalUser(String college, String specialty, String description) {
 
     }
 
-
+    /**
+     * Returns to the home screen.
+     *
+     * @param actionEvent the action event triggering the return.
+     */
     public void returnHome(ActionEvent actionEvent) {
         mediator.fromFirstScreenToHome();
     }

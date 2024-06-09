@@ -28,6 +28,9 @@ public class LoginController implements ViewController {
     @FXML
     private ComboBox<String> tipoUsuario;
 
+    /**
+     * Initializes the controller.
+     */
     public void initialize() {
         Stream<String> opcionesStream = Stream.of("PSICOLOGO", "COACH", "USUARIO_NORMAL", "ENTRENADOR_PERSONAL", "MINDFULNESS");
         ObservableList<String> opcionesList = opcionesStream.collect(Collectors.toCollection(FXCollections::observableArrayList));
@@ -35,6 +38,11 @@ public class LoginController implements ViewController {
         tipoUsuario.getSelectionModel().selectFirst();
     }
 
+    /**
+     * Handles the action when the hello button is clicked.
+     *
+     * @param event the action event.
+     */
     @FXML
     void onHelloButtonClick(ActionEvent event) {
         String usuario = reciveUser.getText().toString();
@@ -44,20 +52,37 @@ public class LoginController implements ViewController {
         mediator.loginUser(usuario, pass, typeUserEnum);
     }
 
+    /**
+     * Handles the action to register a user.
+     *
+     * @param event the action event.
+     * @throws IOException      if an I/O error occurs.
+     * @throws ThereIsNoView   if there is no view.
+     */
     @FXML
     void userRegister(ActionEvent event) throws IOException, ThereIsNoView {
         mediator.userRegister();
     }
 
+    /**
+     * Handles the action to recover password.
+     *
+     * @param event the action event.
+     * @throws IOException      if an I/O error occurs.
+     * @throws ThereIsNoView   if there is no view.
+     */
     @FXML
     void recovLink(ActionEvent event) throws IOException, ThereIsNoView {
         mediator.loadRecoverPassword();
     }
 
+    /**
+     * Sets the mediator.
+     *
+     * @param mediador the mediator to set.
+     */
     @Override
     public void setMediator(Mediator mediador) {
         this.mediator = (MediatorProfile) mediador;
     }
-
-
 }

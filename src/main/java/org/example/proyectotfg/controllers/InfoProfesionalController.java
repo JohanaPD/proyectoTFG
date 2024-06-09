@@ -21,15 +21,28 @@ public class InfoProfesionalController implements ViewController {
     private Text description;
     private MediatorFirstScreen mediator;
 
+    /**
+     * Initializes the controller.
+     */
     public void initialize() {
     }
 
+    /**
+     * Sets the mediator.
+     *
+     * @param mediador the mediator to set.
+     */
     @Override
     public void setMediator(Mediator mediador) {
         this.mediator = (MediatorFirstScreen) mediador;
     }
 
-
+    /**
+     * Sets the elements for the professional user.
+     *
+     * @param professionalUser the professional user.
+     * @param index the index.
+     */
     public void setElementsPerson(ProfessionalUser professionalUser, int index) {
         String imagePath = String.format("/org/example/proyectotfg/imgUsuario/doctor%d.png", index);
         Image imageProfessional = new Image(getClass().getResourceAsStream(imagePath));
@@ -39,7 +52,13 @@ public class InfoProfesionalController implements ViewController {
         description.setText(professionalUser.getDescription());
     }
 
+    /**
+     * Returns to the home view.
+     *
+     * @param actionEvent the action event.
+     */
     public void volverHome(ActionEvent actionEvent) {
         mediator.fromFirstScreenToHome();
     }
+
 }

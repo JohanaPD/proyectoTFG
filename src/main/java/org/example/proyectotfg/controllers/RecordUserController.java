@@ -79,7 +79,9 @@ public class RecordUserController implements ViewController {
     @FXML
     private Label descripcionLabel;
 
-
+    /**
+     * Initializes the controller.
+     */
     public void initialize() {
         comboTypeUser.setItems(FXCollections.observableArrayList(TypeUser.values()));
         comboTypeUser.getSelectionModel().select(TypeUser.USUARIO_NORMAL);
@@ -89,6 +91,11 @@ public class RecordUserController implements ViewController {
         });
     }
 
+    /**
+     * Sets the conditional visibility based on the type of user.
+     *
+     * @param typeUser the type of user.
+     */
     private void setConditionalVisibility(TypeUser typeUser) {
         boolean visible = typeUser != TypeUser.USUARIO_NORMAL;
         colegiadoTextField.setText("");
@@ -102,6 +109,11 @@ public class RecordUserController implements ViewController {
         descripcionTextArea.setVisible(visible);
     }
 
+    /**
+     * Handles the action to make a registration.
+     *
+     * @param event the action event.
+     */
     @FXML
     public void makeRegister(ActionEvent event) {
         try {
@@ -144,7 +156,20 @@ public class RecordUserController implements ViewController {
             ((MainController) mediator).showError("Error", e.getMessage());
         }
     }
-
+    /**
+     * Verifies the user data before registration.
+     *
+     * @param names the user's names.
+     * @param lastNames the user's last names.
+     * @param mail the user's email.
+     * @param confirMail the user's confirmed email.
+     * @param registrationDate the user's registration date.
+     * @param birthd the user's birth date.
+     * @param pass1 the user's password.
+     * @param pass2 the user's confirmed password.
+     * @param nueva the user's address.
+     * @return a string indicating any errors found during verification.
+     */
     private String verificatorData(String names, String lastNames, String mail, String confirMail, Date registrationDate, Date birthd, String pass1, String pass2, Direction nueva) throws IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NullArgumentException, IncompleteDataInRecord, IOException, DataAccessException, OperationsDBException, ThereIsNoView {
         StringBuilder errores = new StringBuilder();
         if (names.isEmpty()) {
@@ -198,21 +223,39 @@ public class RecordUserController implements ViewController {
         return errores.toString();
     }
 
-
+    /**
+     * Handles the action to return to the home screen.
+     *
+     * @param event the action event.
+     * @throws ThereIsNoView if there is no view available.
+     */
     @FXML
     void volverHome(ActionEvent event) throws ThereIsNoView {
         mediator.volverIncio();
     }
-
+    /**
+     * Sets the mediator for communication with other controllers.
+     *
+     * @param mediador the mediator.
+     */
     @Override
     public void setMediator(Mediator mediador) {
         this.mediator = (MediatorProfile) mediador;
     }
 
+    /**
+     * Gets the main controller.
+     *
+     * @return the main controller.
+     */
     public MainController getMainController() {
         return mainController;
     }
-
+    /**
+     * Sets the main controller.
+     *
+     * @param mainController the main controller.
+     */
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }

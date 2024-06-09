@@ -46,85 +46,178 @@ public class AppointmentManegemenController implements ViewController {
     private Date appointmentDate;
 
 
+    /**
+     * Gets the DatePicker object.
+     *
+     * @return the date picker.
+     */
     public DatePicker getDatePicker() {
         return datePicker;
     }
 
+    /**
+     * Sets the DatePicker object.
+     *
+     * @param datePicker the date picker to set.
+     */
     public void setDatePicker(DatePicker datePicker) {
     }
 
+    /**
+     * Gets the Person object.
+     *
+     * @return the person.
+     */
     public Person getPerson() {
         return person;
     }
 
+    /**
+     * Sets the Person object.
+     *
+     * @param person the person to set.
+     */
     public void setPerson(Person person) {
         this.person = person;
     }
 
+    /**
+     * Sets the title post.
+     *
+     * @param names the name to set as the title.
+     */
     public void setTitlePost(String names) {
         username.setText(names);
     }
 
+    /**
+     * Gets the current medical appointment.
+     *
+     * @return the current medical appointment.
+     */
     public MedicalAppointment getActualMediacalAppointment() {
         return actualMediacalAppointment;
     }
 
+    /**
+     * Sets the current medical appointment.
+     *
+     * @param actualMediacalAppointment the medical appointment to set.
+     */
     public void setActualMediacalAppointment(MedicalAppointment actualMediacalAppointment) {
         this.actualMediacalAppointment = actualMediacalAppointment;
     }
 
+    /**
+     * Sets the confirmation text.
+     *
+     * @param text the text to set.
+     */
     public void setTextConfirm(String text) {
         textAppointmentToSelect.setText(text);
     }
 
+    /**
+     * Sets the appointment text.
+     *
+     * @param textAppointment the text to set.
+     */
     public void setTextAppointment(String textAppointment) {
         this.textAppointment.setText(textAppointment);
     }
 
+    /**
+     * Loads the list of professionals.
+     */
     public void loadProfessionals() {
         Parent professionalUserBox = mediatorNotifiers.loadProfessionalsInMediatorCalendar();
         professionalsList.setContent(professionalUserBox);
     }
 
+    /**
+     * Loads the user's appointments.
+     */
     public void loadMyAppointments() {
         Parent parent = mediatorNotifiers.myNextAppoinments();
         myAppointments.getChildren().add(parent);
     }
 
+    /**
+     * Loads the available appointments.
+     *
+     * @param medicalAppointmentsAvailable the list of available medical appointments.
+     * @param updateAppointment a flag indicating whether to update the appointment.
+     */
     public void loadAppointments(List<Date> medicalAppointmentsAvailable, boolean updateAppointment) {
         Parent availableAppointments = mediatorNotifiers.loadAvailableAppointmentsInCalendar(medicalAppointmentsAvailable, updateAppointment);
         availableAppointmentsList.getChildren().add(availableAppointments);
     }
 
+    /**
+     * Gets the professional user.
+     *
+     * @return the professional user.
+     */
     public ProfessionalUser getProfessionalUser() {
         return professionalUser;
     }
 
+    /**
+     * Sets the professional user.
+     *
+     * @param professionalUser the professional user to set.
+     */
     public void setProfessionalUser(ProfessionalUser professionalUser) {
         this.professionalUser = professionalUser;
     }
 
+    /**
+     * Gets the appointment date.
+     *
+     * @return the appointment date.
+     */
     public Date getAppointmentDate() {
         return appointmentDate;
     }
 
+    /**
+     * Sets the appointment date.
+     *
+     * @param appointmentDate the appointment date to set.
+     */
     public void setAppointmentDate(Date appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
 
+    /**
+     * Sets the mediator.
+     *
+     * @param mediador the mediator to set.
+     */
     @Override
     public void setMediator(Mediator mediador) {
         this.mediatorNotifiers = (MediatorNotifiers) mediador;
     }
 
+    /**
+     * Deletes the appointment.
+     *
+     * @param event the action event.
+     * @throws OperationsDBException if there is an error deleting the appointment.
+     */
     @FXML
     void deleteAppoinment(ActionEvent event) throws OperationsDBException {
         mediatorNotifiers.deleteAppointment(actualMediacalAppointment);
     }
 
+    /**
+     * Edits the appointment.
+     *
+     * @param event the action event.
+     */
     @FXML
     void editAppoinment(ActionEvent event) {
-        //necesitamos tener el medical app, que ya estaría instanciado en el momento de hacer el callback
+
         if (actualMediacalAppointment == null) {
             ((MainController) mediatorNotifiers).showInfo("Error", "Selecciona una de tus citas y pulsa \"editar\"");
         } else {
@@ -134,31 +227,33 @@ public class AppointmentManegemenController implements ViewController {
                 ((MainController) mediatorNotifiers).showInfo("Error", "Necesita seleccionar una nueva fecha");
             }
             datePicker.setOnAction(e -> {
-
                 LocalDate localDate = datePicker.getValue();
                 Date nuevaFecha = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
                 ((MainController) mediatorNotifiers).searchAppointments(actualMediacalAppointment.getProfessionalUser().getIdPerson(), nuevaFecha, true);
-
-          /*  try {
-                mediatorNotifiers.editAppointment(actualMediacalAppointment, appointmentDate);
-            } catch (OperationsDBException ex) {
-                ((MainController) mediatorNotifiers).showError("Error", ex.getMessage());
-            }*/
-
             });
         }
     }
 
+    /**
+     * Saves the appointment.
+     *
+     * @param event the action event.
+     */
     @FXML
     void saveAppoinment(ActionEvent event) {
         mediatorNotifiers.addAppointment(professionalUser, appointmentDate);
-
     }
 
+    /**
+     * Navigates back to the home screen.
+     *
+     * @param event the action event.
+     */
     @FXML
     void goToHome(ActionEvent event) {
         mediatorNotifiers.backFromNotifiersToHome();
     }
+
 }
 
 

@@ -26,7 +26,7 @@ import java.util.*;
  * * as well as executing various SQL operations such as insert, update, and delete
  * * for different tables.</p>
  *
- * @author [JOhana Pardo, Daniel Ocaña]
+ * @author [Johana Pardo, Daniel Ocaña]
  * @version Java 21
  * @since 2024-06-08
  */

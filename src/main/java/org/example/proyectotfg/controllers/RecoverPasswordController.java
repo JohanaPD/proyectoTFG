@@ -19,7 +19,11 @@ public class RecoverPasswordController implements ViewController {
     @FXML
     private PasswordField pass2;
 
-
+    /**
+     * Handles the action to recover the password.
+     *
+     * @param event the action event.
+     */
     @FXML
     void recoverPassword(ActionEvent event) {
         String stringEmail = mail.getText();
@@ -35,14 +39,24 @@ public class RecoverPasswordController implements ViewController {
         }
     }
 
+    /**
+     * Sets the mediator for communication with other controllers.
+     *
+     * @param mediador the mediator.
+     */
     @Override
     public void setMediator(Mediator mediador) {
-
         mediator = (MediatorProfile) mediador;
     }
 
-
+    /**
+     * Handles the action to return to the first screen.
+     *
+     * @param actionEvent the action event.
+     */
     public void firtScreen(ActionEvent actionEvent) {
         mediator.volverIncio();
     }
 }
+
+
