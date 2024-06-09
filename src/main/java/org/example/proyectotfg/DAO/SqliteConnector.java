@@ -54,6 +54,11 @@ public class SqliteConnector implements AutoCloseable, PersonaDAO {
         }
     }
 
+    /**
+     * Retrieves the database connection.
+     *
+     * @return The database connection.
+     */
     public Connection getConnection() {
         return connection;
     }

@@ -102,7 +102,18 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
 
     }
-
+    /**
+     * Retrieves a list of professional users from the database.
+     *
+     * @return A list of professional users.
+     * @throws SQLException              If an SQL exception occurs.
+     * @throws IncorrectDataException    If incorrect data is encountered.
+     * @throws NoSuchAlgorithmException If a required cryptographic algorithm is not available.
+     * @throws InvalidKeySpecException   If an invalid key specification is encountered.
+     * @throws NonexistingUser           If the user does not exist.
+     * @throws NullArgumentException    If a null argument is encountered.
+     * @throws OperationsDBException     If an error occurs during database operations.
+     */
     @Override
     public List<ProfessionalUser> getProfessionals() throws SQLException, IncorrectDataException, NoSuchAlgorithmException, InvalidKeySpecException, NonexistingUser, NullArgumentException, OperationsDBException {
         List<ProfessionalUser>
@@ -193,7 +204,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
             } else {
                 updateAllDataPerson((ProfessionalUser) person);
             }
-            enviarEmail(sender, person.getEmail(), messageHTML);
+            enviarEmail(sender, person.getEmail(), "Cambio de Contraseña Confirmado", messageHTML);
         } catch (InvalidKeySpecException | NonexistingUser | IncorrectLoginEception | DataAccessException |
                  OperationsDBException | SQLException e) {
             showError("Error", e.getMessage());
@@ -226,7 +237,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     public void makeRecordRegister(ProfessionalUser user) {
         String mensaje = FunctionsApp.devolverStringMail(user);
         SenderReaderMail sender = new SenderReaderMail();
-        enviarEmail(sender, user.getEmail(), mensaje);
+        enviarEmail(sender, user.getEmail(), "Verificación de Cuenta",  mensaje);
         try {
             connect.registerProfessionalUser(user, false);
             showInfo("Registro correcto", "Se ha registrado correctamente el usuario");
@@ -246,7 +257,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     public void makeRecordRegister(NormalUser user) {
         String mensaje = FunctionsApp.devolverStringMail(user);
         SenderReaderMail sender = new SenderReaderMail();
-        enviarEmail(sender, user.getEmail(), mensaje);
+        enviarEmail(sender, user.getEmail(), "Verificación de Cuenta", mensaje);
         try {
             connect.registerNormalUser(user, false);
             showInfo("Registro correcto", "Se ha registrado correctamente el usuario");
@@ -264,9 +275,9 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
      * @param user    The email address of the recipient.
      * @param mensaje The message content to be sent.
      */
-    private void enviarEmail(SenderReaderMail sender, String user, String mensaje) {
+    private void enviarEmail(SenderReaderMail sender,String subject, String user, String mensaje) {
         try {
-            sender.enviarMensajeHTML("meetpsychproject@gmail.com", user, "Verificación de Cuenta", mensaje, "meetpsychproject@gmail.com", passWordApp);
+            sender.enviarMensajeHTML("meetpsychproject@gmail.com", user, subject, mensaje, "meetpsychproject@gmail.com", passWordApp);
         } catch (Exception e) {
             showError("Error", "Error al enviar el mensaje: " + e.getMessage());
         }
@@ -833,7 +844,13 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
     /*   ================================================================================================
       ====================================== Update Data =====================================================*/
-
+    /**
+     * Retrieves a professional user by their ID from the database.
+     *
+     * @param id The ID of the professional user to retrieve.
+     * @return The professional user with the specified ID.
+     * @throws OperationsDBException If an error occurs during database operations.
+     */
     @Override
     public ProfessionalUser chargeProfessionalUserById(int id) throws OperationsDBException {
         ProfessionalUser professionalUser = connect.chargeProfessionalUserById(id);
