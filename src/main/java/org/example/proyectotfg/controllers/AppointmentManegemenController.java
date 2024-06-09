@@ -226,17 +226,19 @@ public class AppointmentManegemenController implements ViewController {
     void editAppoinment(ActionEvent event) {
 
         if (actualMediacalAppointment == null) {
-            ((MainController) mediatorNotifiers).showInfo("Error", "Selecciona una de tus citas y pulsa \"editar\"");
+            MainController.showInfo("Error", "Selecciona una de tus citas y pulsa \"editar\"");
         } else {
             datePicker.setValue(null);
 
             if (datePicker.getValue() == null) {
-                ((MainController) mediatorNotifiers).showInfo("Error", "Necesita seleccionar una nueva fecha");
+                MainController.showInfo("Actualizando cita", "Selecciona la fecha en la parte de arriba para cambiar la cita");
             }
             datePicker.setOnAction(e -> {
                 LocalDate localDate = datePicker.getValue();
+                MainController.showInfo("Actualizando cita", "Ahora elige la hora de la cita abajo para que se actualice");
+
                 Date nuevaFecha = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                ((MainController) mediatorNotifiers).searchAppointments(actualMediacalAppointment.getProfessionalUser().getIdPerson(), nuevaFecha, true);
+                mediatorNotifiers.searchAppointments(actualMediacalAppointment.getProfessionalUser().getIdPerson(), nuevaFecha, true);
             });
         }
     }
