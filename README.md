@@ -6,6 +6,10 @@ El presente documento explica los requisitos necesarios para poder ejecutar corr
 
 Antes de proceder con la ejecución del proyecto hay que asegurarse de cumplir con los siguientes requisitos en el sistema operativo:
 
+### Dependencia ant
+
+El proyecto requiere la dependencia ant en el momento de la carga.
+
 ### Sistema Operativo
 
 El proyecto es compatible con sistemas operativos Windows y Linux.
@@ -34,16 +38,21 @@ Para garantizar el correcto funcionamiento de la aplicación, previamente hay qu
 
 1. Descarga desde el [sitio oficial de Java](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html) la versión del JDK mencionada anteriormente. Si ya dispones de una versión superior, puedes omitir este paso y continuar con la versión que tienes.
 2. Verifica la configuración de las variables del sistema:
-    - Accede a través de `Windows + Pausa`.
-    - Selecciona `Configuración avanzada del sistema`.
-    - Luego, `Variables de entorno`.
-    - Dentro de `Variables del sistema`, elige la variable `Path` y añade la ruta donde se ubica la carpeta `bin` de tu JDK, como se ilustra en la figura adjunta.
-    - Propiedades del sistema. Editar las variables del sistema.
+   - Accede a través de `Windows + Pausa`.
+   - Selecciona `Configuración avanzada del sistema`.
+   - Luego, `Variables de entorno`.
+   - Dentro de `Variables del sistema`, elige la variable `Path` y añade la ruta donde se ubica la carpeta `bin` de tu JDK, como se ilustra en la figura adjunta.
+   - Propiedades del sistema. Editar las variables del sistema.
 
 #### En Linux
 
 1. Abrir un terminal (`Ctrl+Alt+T`) e introducir el siguiente comando:
 
-```sh
+### sh
 # Comando para instalar JDK (puede variar según la distribución)
 sudo apt-get install openjdk-17-jdk
+
+### Cargar la aplicación
+
+Puedes cargar la aplicación, tras seguir las indicaciones, dando al play del MainApplication.
+
