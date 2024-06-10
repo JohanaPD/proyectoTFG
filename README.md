@@ -58,7 +58,7 @@ Puedes cargar la aplicación, tras seguir las indicaciones, dando al play del Ma
 
 ### Instalación de Ant
 
-1. si estás cargando el programa desde InteliJ, simplemente desde ir a File> projectStructure> y descarga la dependencia ant.
+1.   Si estás cargando el programa desde InteliJ, simplemente desde ir a File> projectStructure> entra en libraries> pulsa el + y busca en New Project Library  y  la opción From Maven> pon el nombre de la dependencia y pulsa en la lupa> seleccion ant-1.6.5.jar y selecciona ok. Así ya tendrás la dependencia incorporada en el programa.
 
 
 
