@@ -56,3 +56,9 @@ sudo apt-get install openjdk-17-jdk
 
 Puedes cargar la aplicación, tras seguir las indicaciones, dando al play del MainApplication.
 
+### Instalación de Ant
+
+1. si estás cargando el programa desde InteliJ, simplemente desde ir a File> projectStructure> y descarga la dependencia ant.
+
+
+
