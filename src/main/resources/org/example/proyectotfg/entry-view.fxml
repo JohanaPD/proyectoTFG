@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="455.0" prefWidth="360" styleClass="layoutFondoTotal" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.EntryController">
+<AnchorPane prefHeight="455.0" prefWidth="360" styleClass="layoutFondoTotal" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectotfg.controllers.EntryController">
     <children>
         <VBox maxHeight="-Infinity" maxWidth="360" prefHeight="522.0" prefWidth="402.0" stylesheets="@styles.css">
             <children>
@@ -29,7 +29,7 @@
                     <center>
                         <ImageView fitHeight="97.0" fitWidth="395.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                             <image>
-                                <Image url="@img/logo.png" />
+                                <Image url="@img/logo2.png" />
                             </image>
                             <BorderPane.margin>
                                 <Insets bottom="20.0" top="20.0" />
