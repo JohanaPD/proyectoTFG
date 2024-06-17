@@ -69,7 +69,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
     /*   ================================================================================================
-        ======================================vistas principales =====================================================*/
+        ====================================== Main Views =====================================================*/
 
     /**
      * Loads the first view of the application.
@@ -84,7 +84,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     }
 
     /*   ================================================================================================
-       ====================================CARGAR TODOS LOS SCENE ==============================*/
+       ==================================== Load Scenes ==============================*/
 
     /**
      * Loads the initial interface view of the application.
@@ -156,7 +156,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     }
 
     /*=======================================================================================================
-     * ==========================================HACER REGISTRO =============================================*/
+     * ========================================== Make Register =============================================*/
 
     /**
      * Opens the user registration view.
@@ -171,7 +171,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
         }
     }
     /*=======================================================================================================
-     * ==========================================Recuperar Contraseña =============================================*/
+     * ========================================== Recover Password =============================================*/
 
     /**
      * Loads the password recovery view.
@@ -297,7 +297,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     }
 
    /*   ================================================================================================
-        ======================================vistas principales =====================================================*/
+        ====================================== Main Views =====================================================*/
 
     /**
      * Logs in the user with the provided credentials.
@@ -323,7 +323,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     }
 
     /*   ================================================================================================
-        ======================================Firs screen =====================================================*/
+        ======================================First Screen =====================================================*/
 
     /**
      * Initializes the services provided by the application.
@@ -376,7 +376,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
     }
 
     /*   ================================================================================================
-          ======================================Search View=====================================================*/
+          ====================================== Search View =====================================================*/
 
     /**
      * Loads the search results of professional users.
@@ -466,7 +466,7 @@ public class MainController implements Mediator, MediatorAccess, MediatorProfile
 
 
     /*   ================================================================================================
-       ======================================Appointment manager=====================================================*/
+       ======================================Appointment Manager=====================================================*/
 
     /**
      * Opens the appointment management view.

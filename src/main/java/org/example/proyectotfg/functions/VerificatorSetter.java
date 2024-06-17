@@ -77,40 +77,7 @@ public class VerificatorSetter {
         String pattern = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return Pattern.matches(pattern, mail);
     }
-    /**
-     * Verifies if a given age is greater than 18.
-     *
-     * @param edad The age to verify.
-     * @return True if the age is greater than 18, otherwise false.
-     */
-    public static boolean esMayorDeEdad(int edad) {
-        return edad > 18;
-    }
 
-    /**
-     * Verifies if a string can be parsed into a number.
-     *
-     * @param cadena The string to verify.
-     * @return True if the string can be parsed into a number, otherwise false.
-     */
-    public static boolean esNumero(String cadena) {
-        try {
-            Double.parseDouble(cadena);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-    /**
-     * Verifies if a given date string has a valid format (dd/MM/yyyy).
-     *
-     * @param fecha The date string to verify.
-     * @return True if the date string has a valid format, otherwise false.
-     */
-    public static boolean formatoFechaValido(String fecha) {
-        String pattern = "\\d{2}/\\d{2}/\\d{4}";
-        return Pattern.matches(pattern, fecha);
-    }
     /**
      * Verifies if a given birthday date is valid.
      *

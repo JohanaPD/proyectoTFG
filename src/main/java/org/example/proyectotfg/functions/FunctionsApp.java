@@ -5,7 +5,6 @@ import org.example.proyectotfg.enumAndTypes.TypeUser;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -118,44 +117,7 @@ public class FunctionsApp {
         }
         return bytes;
     }
-    /**
-     * Verifies if the provided password matches the hashed password stored in the database.
-     *
-     * @param pass1      The password entered by the user.
-     * @param hashedData The hashed password stored in the database.
-     */
-    private static void verificatedPassScript(String pass1, String hashedData) {
-        boolean authenticated = false;
-        try {
-            authenticated = FunctionsApp.validatePassword(pass1, hashedData);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            System.err.println("Error al validar la contraseña.");
-            e.printStackTrace();
-            System.exit(1);
-        }
 
-        if (authenticated) {
-            System.out.println("¡Acceso concedido! Bienvenido!");
-        } else {
-            System.out.println("¡Acceso denegado! Usuario o contraseña incorrectos.");
-                    }
-    }
-    /**
-     * Encrypts the provided password using a strong hashing algorithm.
-     *
-     * @param pass1 The password to be encrypted.
-     * @return The hashed password.
-     */
-    public static String encriptPassScript(String pass1) {
-        String hashedData = "";
-        try {
-            hashedData = FunctionsApp.generateStrongPasswordHash(pass1);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
-        return hashedData;
-    }
     /**
      * Generates an HTML message based on the type of user.
      *
@@ -261,21 +223,4 @@ public class FunctionsApp {
         return fillArray;
     }
 
-    public static String devolverStringMailAppointment(Person person) {
-        String htmlPasswordRecoverString =  "<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "<head>\n" +
-                "<style>\n" +
-                "    body { font-family: Arial, sans-serif; }\n" +
-                "    input, button { margin-top: 10px; }\n" +
-                "</style>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "    <h1>Cita modificada</h1>\n" +
-                "    <p>Hola " + person.getNames() + ",</p>\n" +
-                "    <p>Su cita se ha cambiado correctamente.</p>\n" +
-                "</body>\n" +
-                "</html>";
-        return htmlPasswordRecoverString;
-    }
 }
