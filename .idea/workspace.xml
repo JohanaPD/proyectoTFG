@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a1dd8481-587b-42c0-a67b-183190563535" name="Changes" comment="&quot;2-6&quot;">
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sqliteBBDD/MeetPsych.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sqliteBBDD/MeetPsych.db" afterDir="false" />
+    </list>
+    <list id="f5dabb2a-f169-42c8-9753-2be9d378bd58" name="Changes by larac" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;daniotimon28&quot;
+  }
+}</component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1717960881" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="search" />
+                    <option name="lastUsedInstant" value="1717954196" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="appointmentNotifiers" />
+                    <option name="lastUsedInstant" value="1717849933" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/JohanaPD/proyectoTFG.git&quot;,
+    &quot;accountId&quot;: &quot;d56ab8cf-f2a7-4ecf-9541-af87154266f3&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/22-ea+16/javafx-graphics-22-ea+16-sources.jar!/com/sun/glass/ui/win/WinApplication.java" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2gYgxQfZug9gekM9RrvJhcDzTIT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.MainApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MeetPsych.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.DirectionTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.FunctionsAppTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MedicalAppointmentTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RecordUserControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SenderReaderMailTest.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.SqliteConnectorTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SqliteConnectorTest.makeNewPost.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.SqliteConnectorTest.testCreateTables.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SqliteConnectorTest.testLoginUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SqliteConnectorTest.testRegisterNormalUser.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SqliteConnectorTest.testRegisterPerson.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SqliteConnectorTest.testThereIsAQuoteDoesNotExist.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SqliteConnectorTest.testThereIsAQuoteExists.executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.SqliteConnectorTest.testUpdateNormalUserWP.executor&quot;: &quot;Debug&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/danio/Downloads/proyectoFinalJohanaPardoDanielOcana/proyectoFinalJohanaPardoDanielOcana&quot;,
+    &quot;mysql-explain.agentPath&quot;: &quot;C:\\Users\\danio\\AppData\\Roaming\\JetBrains\\IntelliJIdea2024.1\\plugins\\mysql-explain-intellij-plugin\\lib\\mysql-explain-agent-1.1.1-with-dependencies.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.25859374&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.52679473&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;,
+      &quot;sqlite&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.example.proyectotfg.entities" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.MeetPsych">
+    <configuration name="MeetPsych" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="org.example.proyectotfg.MainApplication" />
+      <module name="proyectoTFG" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DirectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="proyectoTFG" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.proyectotfg.entities.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.proyectotfg.entities" />
+      <option name="MAIN_CLASS_NAME" value="org.example.proyectotfg.entities.DirectionTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FunctionsAppTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="proyectoTFG" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.proyectotfg.functions.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.proyectotfg.functions" />
+      <option name="MAIN_CLASS_NAME" value="org.example.proyectotfg.functions.FunctionsAppTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MedicalAppointmentTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="proyectoTFG" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.proyectotfg.entities.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.proyectotfg.entities" />
+      <option name="MAIN_CLASS_NAME" value="org.example.proyectotfg.entities.MedicalAppointmentTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SenderReaderMailTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="proyectoTFG" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.proyectotfg.functions.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.proyectotfg.functions" />
+      <option name="MAIN_CLASS_NAME" value="org.example.proyectotfg.functions.SenderReaderMailTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SqliteConnectorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="proyectoTFG" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.proyectotfg.DAO.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.proyectotfg.DAO" />
+      <option name="MAIN_CLASS_NAME" value="org.example.proyectotfg.DAO.SqliteConnectorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.SenderReaderMailTest" />
+        <item itemvalue="JUnit.FunctionsAppTest" />
+        <item itemvalue="JUnit.DirectionTest" />
+        <item itemvalue="JUnit.MedicalAppointmentTest" />
+        <item itemvalue="JUnit.SqliteConnectorTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a1dd8481-587b-42c0-a67b-183190563535" name="Changes" comment="" />
+      <created>1715880173320</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1715880173320</updated>
+      <workItem from="1715880173667" duration="288000" />
+      <workItem from="1715880465700" duration="149000" />
+      <workItem from="1715880700387" duration="134000" />
+      <workItem from="1715880837792" duration="213000" />
+      <workItem from="1715881067074" duration="193000" />
+      <workItem from="1715881266629" duration="5620000" />
+      <workItem from="1715887080971" duration="3075000" />
+      <workItem from="1715892529928" duration="39000" />
+      <workItem from="1715967004737" duration="3417000" />
+      <workItem from="1715970441390" duration="50000" />
+      <workItem from="1715970505080" duration="19000" />
+      <workItem from="1715970563310" duration="30000" />
+      <workItem from="1715970641608" duration="229000" />
+      <workItem from="1715970889835" duration="34000" />
+      <workItem from="1715970941900" duration="1038000" />
+      <workItem from="1715972010509" duration="192000" />
+      <workItem from="1715972226470" duration="140000" />
+      <workItem from="1715972399758" duration="181000" />
+      <workItem from="1715972595872" duration="1550000" />
+      <workItem from="1716027365786" duration="44000" />
+      <workItem from="1716027522207" duration="1958000" />
+      <workItem from="1716030745828" duration="7288000" />
+      <workItem from="1716056712322" duration="615000" />
+      <workItem from="1716057338308" duration="2460000" />
+      <workItem from="1716059830510" duration="2974000" />
+      <workItem from="1716063671657" duration="44000" />
+      <workItem from="1716063845497" duration="504000" />
+      <workItem from="1716064362893" duration="1944000" />
+      <workItem from="1716066381457" duration="109000" />
+      <workItem from="1716066495442" duration="232000" />
+      <workItem from="1716066819762" duration="121000" />
+      <workItem from="1716066946350" duration="861000" />
+      <workItem from="1716114726551" duration="717000" />
+      <workItem from="1716117421684" duration="27000" />
+      <workItem from="1716117500595" duration="11000" />
+      <workItem from="1716117603896" duration="13000" />
+      <workItem from="1716117620708" duration="732000" />
+      <workItem from="1716118367119" duration="1592000" />
+      <workItem from="1716119976994" duration="91000" />
+      <workItem from="1716120079411" duration="854000" />
+      <workItem from="1716121416648" duration="297000" />
+      <workItem from="1716121719641" duration="315000" />
+      <workItem from="1716145712280" duration="145000" />
+      <workItem from="1716145911721" duration="1085000" />
+      <workItem from="1716147398492" duration="451000" />
+      <workItem from="1716148093215" duration="4977000" />
+      <workItem from="1716238470472" duration="4211000" />
+      <workItem from="1716314727803" duration="5050000" />
+      <workItem from="1716320340908" duration="766000" />
+      <workItem from="1716321247568" duration="851000" />
+      <workItem from="1716322162430" duration="1683000" />
+      <workItem from="1716323860744" duration="239000" />
+      <workItem from="1716400138147" duration="39000" />
+      <workItem from="1716400306391" duration="165000" />
+      <workItem from="1716400514032" duration="82000" />
+      <workItem from="1716400617199" duration="18000" />
+      <workItem from="1716400649791" duration="453000" />
+      <workItem from="1716401164072" duration="642000" />
+      <workItem from="1716402286918" duration="2394000" />
+      <workItem from="1716404708364" duration="2079000" />
+      <workItem from="1716407114582" duration="1158000" />
+      <workItem from="1716408411443" duration="177000" />
+      <workItem from="1716408810720" duration="57000" />
+      <workItem from="1716408901626" duration="1746000" />
+      <workItem from="1716490612110" duration="1166000" />
+      <workItem from="1716491855705" duration="3768000" />
+      <workItem from="1716495632933" duration="12000" />
+      <workItem from="1716495658049" duration="32000" />
+      <workItem from="1716495714390" duration="44000" />
+      <workItem from="1716495770242" duration="541000" />
+      <workItem from="1716571423482" duration="34000" />
+      <workItem from="1716632276591" duration="94000" />
+      <workItem from="1716634145279" duration="426000" />
+      <workItem from="1716634589836" duration="1746000" />
+      <workItem from="1716638720688" duration="666000" />
+      <workItem from="1716662658703" duration="767000" />
+      <workItem from="1716663811675" duration="646000" />
+      <workItem from="1716672356606" duration="12000" />
+      <workItem from="1716672466597" duration="1037000" />
+      <workItem from="1716718905434" duration="1530000" />
+      <workItem from="1716720487661" duration="91000" />
+      <workItem from="1716720612313" duration="319000" />
+      <workItem from="1716720969368" duration="7481000" />
+      <workItem from="1716745579457" duration="4705000" />
+      <workItem from="1716753994360" duration="938000" />
+      <workItem from="1716754935445" duration="1052000" />
+      <workItem from="1716917933485" duration="3360000" />
+      <workItem from="1716921342578" duration="5457000" />
+      <workItem from="1717005964598" duration="6200000" />
+      <workItem from="1717237223775" duration="42000" />
+      <workItem from="1717237730424" duration="5122000" />
+      <workItem from="1717242872863" duration="6672000" />
+      <workItem from="1717264244880" duration="4723000" />
+      <workItem from="1717272838633" duration="8020000" />
+      <workItem from="1717280900083" duration="64000" />
+      <workItem from="1717323688701" duration="1986000" />
+      <workItem from="1717325747820" duration="3907000" />
+      <workItem from="1717343720666" duration="15528000" />
+      <workItem from="1717359567715" duration="132000" />
+      <workItem from="1717359703096" duration="100000" />
+      <workItem from="1717359822043" duration="615000" />
+      <workItem from="1717502338690" duration="67000" />
+      <workItem from="1717523925856" duration="5754000" />
+      <workItem from="1717529754248" duration="2182000" />
+      <workItem from="1717586789606" duration="56000" />
+      <workItem from="1717586907954" duration="91000" />
+      <workItem from="1717587015508" duration="18441000" />
+      <workItem from="1717792010309" duration="12188000" />
+      <workItem from="1717842084801" duration="7197000" />
+      <workItem from="1717849382403" duration="122000" />
+      <workItem from="1717849507884" duration="109000" />
+      <workItem from="1717849619397" duration="20000" />
+      <workItem from="1717849656973" duration="32000" />
+      <workItem from="1717849712400" duration="80000" />
+      <workItem from="1717849824122" duration="33000" />
+      <workItem from="1717849872218" duration="75000" />
+      <workItem from="1717849963381" duration="576000" />
+      <workItem from="1717850561976" duration="3591000" />
+      <workItem from="1717878093456" duration="2020000" />
+      <workItem from="1717880121883" duration="39000" />
+      <workItem from="1717880177524" duration="839000" />
+      <workItem from="1717884050099" duration="8798000" />
+      <workItem from="1717924494819" duration="2247000" />
+      <workItem from="1717929051615" duration="278000" />
+      <workItem from="1717930227033" duration="244000" />
+      <workItem from="1717930473872" duration="102000" />
+      <workItem from="1717930578796" duration="20000" />
+      <workItem from="1717930624509" duration="1976000" />
+      <workItem from="1717932619040" duration="98000" />
+      <workItem from="1717932737128" duration="56000" />
+      <workItem from="1717932810696" duration="3986000" />
+      <workItem from="1717937532693" duration="817000" />
+      <workItem from="1717938354877" duration="462000" />
+      <workItem from="1717938833825" duration="1498000" />
+      <workItem from="1717953757029" duration="1349000" />
+      <workItem from="1717955347811" duration="149000" />
+      <workItem from="1717955500183" duration="4443000" />
+      <workItem from="1717960035526" duration="1137000" />
+      <workItem from="1717961227150" duration="914000" />
+      <workItem from="1717962160332" duration="1512000" />
+      <workItem from="1717964047429" duration="31000" />
+      <workItem from="1718620892482" duration="823000" />
+    </task>
+    <task id="LOCAL-00001" summary="&quot;Probando el buen funcionamiento&quot;">
+      <option name="closed" value="true" />
+      <created>1715880850892</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1715880850892</updated>
+    </task>
+    <task id="LOCAL-00002" summary="&quot;Probando el buen funcionamiento&quot;">
+      <option name="closed" value="true" />
+      <created>1715880942611</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1715880942611</updated>
+    </task>
+    <task id="LOCAL-00003" summary="&quot;Arreglada la búsqueda&quot;">
+      <option name="closed" value="true" />
+      <created>1715969563982</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1715969563982</updated>
+    </task>
+    <task id="LOCAL-00004" summary="&quot;18-3&quot;">
+      <option name="closed" value="true" />
+      <created>1716066448008</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1716066448008</updated>
+    </task>
+    <task id="LOCAL-00005" summary="&quot;Mensaje de información&quot;">
+      <option name="closed" value="true" />
+      <created>1716121648526</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1716121648526</updated>
+    </task>
+    <task id="LOCAL-00006" summary="&quot;Actualizado el recover password&quot;">
+      <option name="closed" value="true" />
+      <created>1716921284565</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1716921284565</updated>
+    </task>
+    <task id="LOCAL-00007" summary="&quot;2-6&quot;">
+      <option name="closed" value="true" />
+      <created>1717359639966</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1717359639966</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="&quot;Probando el buen funcionamiento&quot;" />
+    <MESSAGE value="&quot;Arreglada la búsqueda&quot;" />
+    <MESSAGE value="&quot;18-3&quot;" />
+    <MESSAGE value="&quot;Mensaje de información&quot;" />
+    <MESSAGE value="&quot;Actualizado el recover password&quot;" />
+    <MESSAGE value="&quot;2-6&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;2-6&quot;" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/proyectotfg/controllers/appointmentNotifiers/JFXCalendarController.java</url>
+          <line>66</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/proyectotfg/controllers/FragmentInfoSerchController.java</url>
+          <line>91</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/proyectotfg/controllers/RecordUserController.java</url>
+          <line>186</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/proyectotfg/controllers/AppointmentManegemenController.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/proyectotfg/controllers/AppointmentManegemenController.java</url>
+          <line>112</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/proyectotfg/controllers/AppointmentManegemenController.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="139" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/proyectotfg/controllers/AppointmentManegemenController.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="140" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/proyectotfg/controllers/AppointmentManegemenController.java</url>
+          <line>49</line>
+          <option name="timeStamp" value="147" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/org/example/proyectotfg/DAO/SqliteConnectorTest.java</url>
+          <line>212</line>
+          <option name="timeStamp" value="175" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/org/example/proyectotfg/functions/SenderReaderMailTest.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="177" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/proyectotfg/functions/SenderReaderMail.java</url>
+          <line>106</line>
+          <option name="timeStamp" value="178" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/proyectotfg/controllers/MainController.java</url>
+          <line>75</line>
+          <option name="timeStamp" value="187" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/proyectotfg/controllers/MainController.java</url>
+          <line>829</line>
+          <option name="timeStamp" value="188" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/proyectotfg/controllers/MainController.java</url>
+          <line>815</line>
+          <option name="timeStamp" value="189" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/proyectotfg/controllers/MainController.java</url>
+          <line>788</line>
+          <option name="timeStamp" value="190" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/proyectotfg/controllers/appointmentNotifiers/JFXCalendarController.java</url>
+          <line>18</line>
+          <properties field="menuButton" class="org.example.proyectotfg.controllers.appointmentNotifiers.JFXCalendarController" />
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="org.example.proyectotfg.entities.MedicalAppointment" memberName="usuario" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+</project>
